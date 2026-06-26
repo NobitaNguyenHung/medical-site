@@ -39,7 +39,7 @@ export default defineConfig({
 							items: [
 								{ label: '1 · Lý thuyết tóm tắt', items: [{ autogenerate: { directory: 'books/on-benh/tom-tat' } }] },
 								{ label: '2 · Lý thuyết nguyên thủy', items: [{ autogenerate: { directory: 'books/on-benh/nguyen-thuy' } }] },
-								{ label: '3 · Câu hỏi lượng giá', slug: 'books/on-benh/luong-gia' },
+								{ label: '3 · Câu hỏi lượng giá', items: [{ autogenerate: { directory: 'books/on-benh/luong-gia' } }] },
 							],
 						},
 						// ░░ thêm sách mới ở đây ░░
