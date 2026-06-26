@@ -53,11 +53,24 @@ export default defineConfig({
 		AstroPWA({
 			registerType: 'autoUpdate',
 			workbox: {
-				// cache asset build -> đọc offline sau lần đầu
-				globPatterns: [
-					'**/*.{html,js,css,svg,png,jpg,jpeg,webp,avif,woff,woff2,json,wasm,pf_meta}',
+				// KHÔNG precache .html -> trang LUÔN lấy bản mới khi online (hết stale)
+				globPatterns: ['**/*.{js,css,svg,png,jpg,jpeg,webp,avif,woff,woff2,wasm}'],
+				cleanupOutdatedCaches: true,
+				runtimeCaching: [
+					{
+						// điều hướng trang: ưu tiên mạng, offline mới fallback cache
+						urlPattern: ({ request }) => request.mode === 'navigate',
+						handler: 'NetworkFirst',
+						options: { cacheName: 'pages', networkTimeoutSeconds: 4 },
+					},
+					{
+						// asset tĩnh: dùng cache nhưng nền tự cập nhật
+						urlPattern: ({ request }) =>
+							['style', 'script', 'image', 'font'].includes(request.destination),
+						handler: 'StaleWhileRevalidate',
+						options: { cacheName: 'assets' },
+					},
 				],
-				navigateFallback: '/medical-site/index.html',
 				maximumFileSizeToCacheInBytes: 5_000_000,
 			},
 			manifest: {
