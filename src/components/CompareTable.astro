@@ -1,0 +1,14 @@
+---
+interface Props {
+	title?: string;
+}
+
+const { title = 'Bảng phân biệt' } = Astro.props;
+---
+
+<section class="medical-box">
+	<p class="medical-box__title">{title}</p>
+	<div class="compare-table">
+		<slot />
+	</div>
+</section>

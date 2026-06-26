@@ -1,0 +1,106 @@
+<svg viewBox="0 0 820 560" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#6B7280"/>
+    </marker>
+    <marker id="arrow-red" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#EF4444"/>
+    </marker>
+    <marker id="arrow-orange" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#F59E0B"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="820" height="560" fill="#F9FAFB" rx="12"/>
+  <text x="410" y="32" text-anchor="middle" font-size="17" font-weight="700" fill="#111827">XUÂN ÔN — CƠ CHẾ SINH BỆNH (春温 病機)</text>
+
+  <!-- ===== NGUYÊN NHÂN ROW ===== -->
+  <!-- Box: Hàn tà mùa đông -->
+  <rect x="30" y="60" width="200" height="70" rx="10" fill="#DBEAFE" stroke="#3B82F6" stroke-width="1.5"/>
+  <text x="130" y="84" text-anchor="middle" font-size="13" font-weight="600" fill="#1D4ED8">Hàn tà mùa đông</text>
+  <text x="130" y="102" text-anchor="middle" font-size="11" fill="#1E40AF">Cảm nhẹ → không phát</text>
+  <text x="130" y="118" text-anchor="middle" font-size="11" fill="#1E40AF">liền → tàng phục</text>
+
+  <!-- Box: Âm tinh hư tổn -->
+  <rect x="310" y="60" width="200" height="70" rx="10" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1.5"/>
+  <text x="410" y="84" text-anchor="middle" font-size="13" font-weight="600" fill="#92400E">Âm tinh hư tổn</text>
+  <text x="410" y="102" text-anchor="middle" font-size="11" fill="#78350F">Chính khí bất túc</text>
+  <text x="410" y="118" text-anchor="middle" font-size="11" fill="#78350F">Bản hư → tà dễ xâm</text>
+
+  <!-- Box: Ngoại tà mùa xuân -->
+  <rect x="590" y="60" width="200" height="70" rx="10" fill="#FCE7F3" stroke="#EC4899" stroke-width="1.5"/>
+  <text x="690" y="84" text-anchor="middle" font-size="13" font-weight="600" fill="#9D174D">Ngoại tà mùa xuân</text>
+  <text x="690" y="102" text-anchor="middle" font-size="11" fill="#831843">Phong nhiệt tà dẫn động</text>
+  <text x="690" y="118" text-anchor="middle" font-size="11" fill="#831843">Tân cảm dẫn phát</text>
+
+  <!-- Arrows down to mechanism -->
+  <line x1="130" y1="130" x2="130" y2="168" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="410" y1="130" x2="410" y2="168" stroke="#F59E0B" stroke-width="1.5" marker-end="url(#arrow-orange)"/>
+  <line x1="690" y1="130" x2="690" y2="168" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Label: Phục tà -->
+  <rect x="60" y="170" width="140" height="32" rx="6" fill="#BFDBFE" stroke="#3B82F6"/>
+  <text x="130" y="191" text-anchor="middle" font-size="12" font-weight="600" fill="#1D4ED8">Phục tà (伏邪)</text>
+
+  <!-- Label: Nội hư -->
+  <rect x="340" y="170" width="140" height="32" rx="6" fill="#FDE68A" stroke="#F59E0B"/>
+  <text x="410" y="191" text-anchor="middle" font-size="12" font-weight="600" fill="#92400E">Nội hư (内虚)</text>
+
+  <!-- Label: Tân tà -->
+  <rect x="620" y="170" width="140" height="32" rx="6" fill="#FBCFE8" stroke="#EC4899"/>
+  <text x="690" y="191" text-anchor="middle" font-size="12" font-weight="600" fill="#9D174D">Tân tà (新感)</text>
+
+  <!-- Converge lines to central -->
+  <line x1="200" y1="186" x2="320" y2="186" stroke="#6B7280" stroke-width="1"/>
+  <line x1="480" y1="186" x2="600" y2="186" stroke="#6B7280" stroke-width="1"/>
+  <line x1="320" y1="186" x2="320" y2="230" stroke="#6B7280" stroke-width="1"/>
+  <line x1="480" y1="186" x2="480" y2="230" stroke="#6B7280" stroke-width="1"/>
+  <line x1="320" y1="230" x2="480" y2="230" stroke="#6B7280" stroke-width="1"/>
+  <line x1="400" y1="230" x2="400" y2="258" stroke="#EF4444" stroke-width="2" marker-end="url(#arrow-red)"/>
+
+  <!-- Hàn → Nhiệt label -->
+  <text x="120" y="158" text-anchor="middle" font-size="10" fill="#6B7280" font-style="italic">Hàn uất → hóa nhiệt</text>
+
+  <!-- Central: Phục nhiệt nội uất -->
+  <rect x="270" y="260" width="260" height="55" rx="12" fill="#FEE2E2" stroke="#EF4444" stroke-width="2"/>
+  <text x="400" y="282" text-anchor="middle" font-size="14" font-weight="700" fill="#B91C1C">Phục nhiệt nội uất (伏熱内鬱)</text>
+  <text x="400" y="302" text-anchor="middle" font-size="11" fill="#7F1D1D">Tà nhiệt tích thịnh từ bên trong</text>
+
+  <!-- Two paths: Tự phát vs Dẫn phát -->
+  <!-- Path left: Phục tà tự phát -->
+  <line x1="310" y1="315" x2="200" y2="360" stroke="#EF4444" stroke-width="1.5" marker-end="url(#arrow-red)"/>
+  <rect x="100" y="362" width="195" height="52" rx="8" fill="#FFF7ED" stroke="#F97316" stroke-width="1.5"/>
+  <text x="198" y="382" text-anchor="middle" font-size="12" font-weight="600" fill="#C2410C">Phục tà tự phát</text>
+  <text x="198" y="398" text-anchor="middle" font-size="10" fill="#9A3412">Sơ khởi: LÝ NHIỆT liền</text>
+  <text x="198" y="411" text-anchor="middle" font-size="10" fill="#9A3412">Không qua vệ biểu</text>
+
+  <!-- Path right: Tân cảm dẫn phát -->
+  <line x1="490" y1="315" x2="600" y2="360" stroke="#EC4899" stroke-width="1.5" marker-end="url(#arrow-red)"/>
+  <rect x="520" y="362" width="195" height="52" rx="8" fill="#FDF4FF" stroke="#A855F7" stroke-width="1.5"/>
+  <text x="618" y="382" text-anchor="middle" font-size="12" font-weight="600" fill="#7E22CE">Tân cảm dẫn phát</text>
+  <text x="618" y="398" text-anchor="middle" font-size="10" fill="#6B21A8">Sơ khởi: LÝ NHIỆT + biểu</text>
+  <text x="618" y="411" text-anchor="middle" font-size="10" fill="#6B21A8">Ố hàn, đau đầu ngắn</text>
+
+  <!-- Both converge to result -->
+  <line x1="198" y1="414" x2="300" y2="455" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="618" y1="414" x2="500" y2="455" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Result box -->
+  <rect x="240" y="455" width="320" height="60" rx="12" fill="#7F1D1D" stroke="#991B1B"/>
+  <text x="400" y="477" text-anchor="middle" font-size="13" font-weight="700" fill="white">ĐẶC ĐIỂM SƠ KHỞI</text>
+  <text x="400" y="496" text-anchor="middle" font-size="12" fill="#FCA5A5">Lý nhiệt tích thịnh — phát bệnh cấp — bệnh nặng</text>
+  <text x="400" y="513" text-anchor="middle" font-size="11" fill="#FCA5A5">Sốt cao · tâm phiền · khát · lưỡi đỏ rêu vàng</text>
+
+  <!-- Right side note -->
+  <rect x="660" y="260" width="145" height="100" rx="8" fill="#F0FDF4" stroke="#22C55E" stroke-width="1.5"/>
+  <text x="732" y="280" text-anchor="middle" font-size="11" font-weight="600" fill="#15803D">Mấu chốt</text>
+  <line x1="660" y1="288" x2="805" y2="288" stroke="#22C55E" stroke-width="1"/>
+  <text x="732" y="304" text-anchor="middle" font-size="10" fill="#166534">Hàn tà → uất nhiệt</text>
+  <text x="732" y="320" text-anchor="middle" font-size="10" fill="#166534">Không qua vệ biểu</text>
+  <text x="732" y="336" text-anchor="middle" font-size="10" fill="#166534">Phát tại KHÍ hoặc</text>
+  <text x="732" y="352" text-anchor="middle" font-size="10" fill="#166534">DINH phần ngay</text>
+
+  <!-- Footer -->
+  <text x="410" y="545" text-anchor="middle" font-size="10" fill="#9CA3AF">Nguồn: Giáo trình Ôn Bệnh — TS.BS. Lê Minh Hoàng; BS. CKII. Lê Thị Ngoan</text>
+</svg>

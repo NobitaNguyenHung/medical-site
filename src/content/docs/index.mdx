@@ -1,0 +1,32 @@
+---
+title: Học liệu Y khoa
+description: Thư viện học liệu y khoa cá nhân — đọc offline mọi thiết bị.
+template: splash
+hero:
+  tagline: Sách · Case · Update · Search — đọc offline sau lần đầu.
+  actions:
+    - text: Vào Ôn bệnh
+      link: /on-benh/phong-ôn--bài-giảng-chuyên-sâu/
+      icon: right-arrow
+    - text: Tìm kiếm
+      link: '#'
+      icon: magnifier
+      variant: minimal
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+<CardGrid>
+	<Card title="Đổ Markdown" icon="pencil">
+		Bỏ file `.md` vào `notes_on_benh/` (KB) → `npm run build`. Trang tự hiện.
+	</Card>
+	<Card title="Tìm kiếm" icon="magnifier">
+		Pagefind full-text, gõ phím tắt hoặc nút search trên thanh trên.
+	</Card>
+	<Card title="Offline" icon="laptop">
+		Mở 1 lần khi có mạng → PWA cache → đọc offline laptop/iPad/phone.
+	</Card>
+	<Card title="Callout · Mermaid · Wikilink" icon="open-book">
+		Note Obsidian cũ paste vào chạy nguyên — không phải viết lại.
+	</Card>
+</CardGrid>

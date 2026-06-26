@@ -1,0 +1,13 @@
+---
+interface Props {
+	level?: string;
+	title?: string;
+}
+
+const { level, title = 'Mức chứng cứ' } = Astro.props;
+---
+
+<aside class="medical-box medical-box--evidence">
+	<p class="medical-box__title">{level ? `${title}: ${level}` : title}</p>
+	<slot />
+</aside>

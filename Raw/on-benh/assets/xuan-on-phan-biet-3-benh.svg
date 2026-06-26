@@ -1,0 +1,137 @@
+<svg viewBox="0 0 860 520" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, sans-serif">
+  <rect width="860" height="520" fill="#F8FAFC" rx="12"/>
+  <text x="430" y="30" text-anchor="middle" font-size="17" font-weight="700" fill="#111827">CHẨN ĐOÁN PHÂN BIỆT — XUÂN ÔN / PHONG ÔN / THỬ ÔN</text>
+
+  <!-- Column headers -->
+  <rect x="20" y="45" width="180" height="44" rx="8" fill="#E5E7EB" stroke="#9CA3AF"/>
+  <text x="110" y="73" text-anchor="middle" font-size="13" font-weight="700" fill="#374151">TIÊU CHÍ</text>
+
+  <rect x="210" y="45" width="200" height="44" rx="8" fill="#FEE2E2" stroke="#EF4444" stroke-width="2"/>
+  <text x="310" y="63" text-anchor="middle" font-size="14" font-weight="700" fill="#B91C1C">XUÂN ÔN</text>
+  <text x="310" y="80" text-anchor="middle" font-size="11" fill="#7F1D1D">春温 (Phục khí ôn bệnh)</text>
+
+  <rect x="420" y="45" width="200" height="44" rx="8" fill="#DBEAFE" stroke="#3B82F6" stroke-width="2"/>
+  <text x="520" y="63" text-anchor="middle" font-size="14" font-weight="700" fill="#1D4ED8">PHONG ÔN</text>
+  <text x="520" y="80" text-anchor="middle" font-size="11" fill="#1E40AF">風溫 (Tân cảm ôn bệnh)</text>
+
+  <rect x="630" y="45" width="210" height="44" rx="8" fill="#FEF3C7" stroke="#F59E0B" stroke-width="2"/>
+  <text x="735" y="63" text-anchor="middle" font-size="14" font-weight="700" fill="#92400E">THỬ ÔN</text>
+  <text x="735" y="80" text-anchor="middle" font-size="11" fill="#78350F">暑溫 (Thử nhiệt ôn bệnh)</text>
+
+  <!-- ROW BACKGROUNDS alternating -->
+  <rect x="20" y="98" width="820" height="50" rx="4" fill="#F9FAFB"/>
+  <rect x="20" y="148" width="820" height="50" rx="4" fill="white"/>
+  <rect x="20" y="198" width="820" height="50" rx="4" fill="#F9FAFB"/>
+  <rect x="20" y="248" width="820" height="65" rx="4" fill="white"/>
+  <rect x="20" y="313" width="820" height="65" rx="4" fill="#F9FAFB"/>
+  <rect x="20" y="378" width="820" height="65" rx="4" fill="white"/>
+  <rect x="20" y="443" width="820" height="50" rx="4" fill="#F9FAFB"/>
+
+  <!-- Row divider lines -->
+  <line x1="20" y1="98" x2="840" y2="98" stroke="#E5E7EB" stroke-width="1"/>
+  <line x1="20" y1="148" x2="840" y2="148" stroke="#E5E7EB" stroke-width="1"/>
+  <line x1="20" y1="198" x2="840" y2="198" stroke="#E5E7EB" stroke-width="1"/>
+  <line x1="20" y1="248" x2="840" y2="248" stroke="#E5E7EB" stroke-width="1"/>
+  <line x1="20" y1="313" x2="840" y2="313" stroke="#E5E7EB" stroke-width="1"/>
+  <line x1="20" y1="378" x2="840" y2="378" stroke="#E5E7EB" stroke-width="1"/>
+  <line x1="20" y1="443" x2="840" y2="443" stroke="#E5E7EB" stroke-width="1"/>
+  <line x1="20" y1="493" x2="840" y2="493" stroke="#E5E7EB" stroke-width="1"/>
+
+  <!-- Col divider lines -->
+  <line x1="205" y1="45" x2="205" y2="493" stroke="#D1D5DB" stroke-width="1"/>
+  <line x1="415" y1="45" x2="415" y2="493" stroke="#D1D5DB" stroke-width="1"/>
+  <line x1="625" y1="45" x2="625" y2="493" stroke="#D1D5DB" stroke-width="1"/>
+
+  <!-- ROW 1: Mùa phát bệnh -->
+  <text x="30" y="113" font-size="12" font-weight="600" fill="#374151">Mùa phát bệnh</text>
+  <text x="30" y="129" font-size="10" fill="#6B7280">季節</text>
+  <text x="310" y="121" text-anchor="middle" font-size="12" fill="#B91C1C" font-weight="600">Xuân / Đông–Xuân</text>
+  <text x="310" y="136" text-anchor="middle" font-size="10" fill="#991B1B">giao thời Xuân–Hạ</text>
+  <text x="520" y="121" text-anchor="middle" font-size="12" fill="#1D4ED8" font-weight="600">Xuân (cũng có)</text>
+  <text x="520" y="136" text-anchor="middle" font-size="10" fill="#1E40AF">+ Thu, Đông ấm</text>
+  <text x="735" y="121" text-anchor="middle" font-size="12" fill="#92400E" font-weight="600">Hạ (sau Hạ chí)</text>
+  <text x="735" y="136" text-anchor="middle" font-size="10" fill="#78350F">Tháng 6–8</text>
+
+  <!-- ROW 2: Loại ôn bệnh -->
+  <text x="30" y="163" font-size="12" font-weight="600" fill="#374151">Loại bệnh</text>
+  <text x="30" y="179" font-size="10" fill="#6B7280">分類</text>
+  <rect x="225" y="152" width="175" height="36" rx="6" fill="#FEE2E2"/>
+  <text x="312" y="168" text-anchor="middle" font-size="12" fill="#B91C1C" font-weight="700">Phục khí ôn bệnh</text>
+  <text x="312" y="182" text-anchor="middle" font-size="10" fill="#991B1B">Tà phục từ trước</text>
+  <rect x="435" y="152" width="175" height="36" rx="6" fill="#DBEAFE"/>
+  <text x="522" y="168" text-anchor="middle" font-size="12" fill="#1D4ED8" font-weight="700">Tân cảm ôn bệnh</text>
+  <text x="522" y="182" text-anchor="middle" font-size="10" fill="#1E40AF">Cảm tà mới phát</text>
+  <rect x="645" y="152" width="180" height="36" rx="6" fill="#FEF3C7"/>
+  <text x="735" y="168" text-anchor="middle" font-size="12" fill="#92400E" font-weight="700">Tân cảm + Thử</text>
+  <text x="735" y="182" text-anchor="middle" font-size="10" fill="#78350F">Thử nhiệt trực trúng</text>
+
+  <!-- ROW 3: Sơ khởi -->
+  <text x="30" y="213" font-size="12" font-weight="600" fill="#374151">Sơ khởi</text>
+  <text x="30" y="229" font-size="10" fill="#6B7280">初起表現</text>
+  <text x="310" y="213" text-anchor="middle" font-size="12" fill="#B91C1C" font-weight="700">LÝ NHIỆT tích thịnh</text>
+  <text x="310" y="229" text-anchor="middle" font-size="10" fill="#991B1B">Không qua vệ biểu</text>
+  <text x="520" y="213" text-anchor="middle" font-size="12" fill="#1D4ED8" font-weight="700">PHẾ VỆ biểu nhiệt</text>
+  <text x="520" y="229" text-anchor="middle" font-size="10" fill="#1E40AF">Ho + sốt + ố phong nhẹ</text>
+  <text x="735" y="213" text-anchor="middle" font-size="12" fill="#92400E" font-weight="700">DƯƠNG MINH lý nhiệt</text>
+  <text x="735" y="229" text-anchor="middle" font-size="10" fill="#78350F">Sốt cao + mồ hôi nhiều</text>
+
+  <!-- ROW 4: Triệu chứng đặc trưng -->
+  <text x="30" y="265" font-size="12" font-weight="600" fill="#374151">Triệu chứng</text>
+  <text x="30" y="279" font-size="10" fill="#6B7280">特徵症狀</text>
+  <text x="30" y="292" font-size="10" fill="#6B7280">đặc trưng</text>
+  <text x="310" y="263" text-anchor="middle" font-size="11" fill="#B91C1C">• Sốt + tâm phiền + khát</text>
+  <text x="310" y="278" text-anchor="middle" font-size="11" fill="#B91C1C">• Lưỡi đỏ rêu vàng</text>
+  <text x="310" y="293" text-anchor="middle" font-size="11" fill="#B91C1C">• Ban chẩn, thần hôn</text>
+  <text x="310" y="308" text-anchor="middle" font-size="10" fill="#7F1D1D">• Co giật, cổ cứng</text>
+  <text x="520" y="263" text-anchor="middle" font-size="11" fill="#1D4ED8">• Ho khan, đau họng</text>
+  <text x="520" y="278" text-anchor="middle" font-size="11" fill="#1D4ED8">• Tổn thương Phế → Vị</text>
+  <text x="520" y="293" text-anchor="middle" font-size="11" fill="#1D4ED8">• Rêu vàng mỏng</text>
+  <text x="520" y="308" text-anchor="middle" font-size="10" fill="#1E40AF">• Hậu kỳ: Phế Vị âm hư</text>
+  <text x="735" y="263" text-anchor="middle" font-size="11" fill="#92400E">• Thử nhiệt kèm thấp</text>
+  <text x="735" y="278" text-anchor="middle" font-size="11" fill="#92400E">• Nôn, tiêu chảy, mệt</text>
+  <text x="735" y="293" text-anchor="middle" font-size="11" fill="#92400E">• Thương âm + tổn khí</text>
+  <text x="735" y="308" text-anchor="middle" font-size="10" fill="#78350F">• Bụng đầy, lưỡi đỏ dày</text>
+
+  <!-- ROW 5: Trọng tâm tạng phủ -->
+  <text x="30" y="328" font-size="12" font-weight="600" fill="#374151">Trọng tâm</text>
+  <text x="30" y="342" font-size="10" fill="#6B7280">tạng phủ</text>
+  <text x="310" y="333" text-anchor="middle" font-size="12" fill="#B91C1C" font-weight="600">Tâm – Thận</text>
+  <text x="310" y="350" text-anchor="middle" font-size="11" fill="#991B1B">Can – Thận (hậu kỳ)</text>
+  <text x="310" y="367" text-anchor="middle" font-size="10" fill="#7F1D1D">→ Thần hôn · phong động</text>
+  <text x="520" y="333" text-anchor="middle" font-size="12" fill="#1D4ED8" font-weight="600">Phế – Vị</text>
+  <text x="520" y="350" text-anchor="middle" font-size="11" fill="#1E40AF">Phế → Tim → Can</text>
+  <text x="520" y="367" text-anchor="middle" font-size="10" fill="#1E40AF">→ Phế âm hư hậu kỳ</text>
+  <text x="735" y="333" text-anchor="middle" font-size="12" fill="#92400E" font-weight="600">Tỳ – Vị – Tâm</text>
+  <text x="735" y="350" text-anchor="middle" font-size="11" fill="#78350F">Thử thấp trung tiêu</text>
+  <text x="735" y="367" text-anchor="middle" font-size="10" fill="#78350F">→ Khí âm lưỡng hư</text>
+
+  <!-- ROW 6: Nguyên tắc điều trị -->
+  <text x="30" y="393" font-size="12" font-weight="600" fill="#374151">Nguyên tắc</text>
+  <text x="30" y="407" font-size="10" fill="#6B7280">trị pháp</text>
+  <text x="310" y="393" text-anchor="middle" font-size="11" fill="#B91C1C" font-weight="600">Thanh tiết lý nhiệt</text>
+  <text x="310" y="408" text-anchor="middle" font-size="11" fill="#991B1B">Cố hộ âm dịch</text>
+  <text x="310" y="423" text-anchor="middle" font-size="10" fill="#7F1D1D">Thấu tà ngoại xuất</text>
+  <text x="310" y="437" text-anchor="middle" font-size="10" fill="#7F1D1D">KHÔNG dùng tân ôn</text>
+  <text x="520" y="393" text-anchor="middle" font-size="11" fill="#1D4ED8" font-weight="600">Tuyên Phế thanh nhiệt</text>
+  <text x="520" y="408" text-anchor="middle" font-size="11" fill="#1E40AF">Tư dưỡng Phế Vị âm</text>
+  <text x="520" y="423" text-anchor="middle" font-size="10" fill="#1E40AF">Phế vệ → Ngân kiều tán</text>
+  <text x="520" y="437" text-anchor="middle" font-size="10" fill="#1E40AF">Hậu kỳ → Sa sâm mạch đông</text>
+  <text x="735" y="393" text-anchor="middle" font-size="11" fill="#92400E" font-weight="600">Thanh thử giải nhiệt</text>
+  <text x="735" y="408" text-anchor="middle" font-size="11" fill="#78350F">Hoá thấp, ích khí</text>
+  <text x="735" y="423" text-anchor="middle" font-size="10" fill="#78350F">Bạch hổ gia Nhân sâm</text>
+  <text x="735" y="437" text-anchor="middle" font-size="10" fill="#78350F">Thanh thử ích khí thang</text>
+
+  <!-- ROW 7: Tây y -->
+  <text x="30" y="460" font-size="12" font-weight="600" fill="#374151">Tây y</text>
+  <text x="30" y="475" font-size="10" fill="#6B7280">tương đương</text>
+  <text x="310" y="461" text-anchor="middle" font-size="10" fill="#B91C1C">Viêm màng não mủ · Viêm não</text>
+  <text x="310" y="476" text-anchor="middle" font-size="10" fill="#991B1B">Nhiễm trùng huyết · Cúm nặng</text>
+  <text x="520" y="461" text-anchor="middle" font-size="10" fill="#1D4ED8">Viêm phổi · Cúm (J10–J11)</text>
+  <text x="520" y="476" text-anchor="middle" font-size="10" fill="#1E40AF">Viêm hô hấp trên (J06)</text>
+  <text x="735" y="461" text-anchor="middle" font-size="10" fill="#92400E">Sốc nhiệt · Say nắng</text>
+  <text x="735" y="476" text-anchor="middle" font-size="10" fill="#78350F">Viêm dạ dày ruột cấp mùa hè</text>
+
+  <!-- KEY DIFFERENTIATOR box -->
+  <rect x="20" y="495" width="820" height="20" rx="4" fill="#1F2937"/>
+  <text x="430" y="509" text-anchor="middle" font-size="11" fill="white" font-weight="600">ĐIỂM PHÂN BIỆT CHÍNH: Mùa phát bệnh + Sơ khởi tại VỆ (Phong Ôn) vs LÝ (Xuân Ôn) vs DƯƠNG MINH (Thử Ôn)</text>
+</svg>

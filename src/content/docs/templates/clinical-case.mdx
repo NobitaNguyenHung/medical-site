@@ -1,0 +1,65 @@
+---
+title: "Template: Clinical Case"
+description: "Khuôn MDX cho ca lâm sàng."
+type: "template"
+category: "templates"
+status: "draft"
+draft: true
+pagefind: false
+sidebar:
+  hidden: true
+---
+
+import ClinicalCase from '~/components/ClinicalCase.astro';
+import KeyPoints from '~/components/KeyPoints.astro';
+import RedFlags from '~/components/RedFlags.astro';
+import CompareTable from '~/components/CompareTable.astro';
+import SelfCheck from '~/components/SelfCheck.astro';
+
+<ClinicalCase>
+
+## Tóm tắt ca
+
+## Dữ kiện chính
+
+<KeyPoints>
+
+- Dữ kiện then chốt 1
+- Dữ kiện then chốt 2
+- Dữ kiện then chốt 3
+
+</KeyPoints>
+
+## Vấn đề cần giải quyết
+
+## Chẩn đoán phân biệt
+
+<CompareTable title="Chẩn đoán phân biệt">
+
+| Khả năng | Ủng hộ | Chống lại | Cần kiểm tra |
+|---|---|---|---|
+| Chẩn đoán A |  |  |  |
+| Chẩn đoán B |  |  |  |
+
+</CompareTable>
+
+## Quyết định xử trí
+
+<RedFlags>
+
+- Cờ đỏ cần chuyển tuyến hoặc xử trí khẩn.
+
+</RedFlags>
+
+## Bài học rút ra
+
+## Câu hỏi phản biện
+
+<SelfCheck>
+
+1. Nếu dữ kiện X thay đổi thì chẩn đoán có đổi không?
+2. Dấu hiệu nào không được bỏ sót?
+
+</SelfCheck>
+
+</ClinicalCase>

@@ -1,0 +1,12 @@
+---
+interface Props {
+	title?: string;
+}
+
+const { title = 'Điểm cốt lõi' } = Astro.props;
+---
+
+<aside class="medical-box medical-box--key-points">
+	<p class="medical-box__title">{title}</p>
+	<slot />
+</aside>

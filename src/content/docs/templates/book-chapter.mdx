@@ -1,0 +1,84 @@
+---
+title: "Template: Book Chapter"
+description: "Khuôn MDX cho chương sách hoặc bài hệ thống hóa."
+type: "template"
+category: "templates"
+status: "draft"
+draft: true
+pagefind: false
+sidebar:
+  hidden: true
+---
+
+import MedicalNote from '~/components/MedicalNote.astro';
+import KeyPoints from '~/components/KeyPoints.astro';
+import RedFlags from '~/components/RedFlags.astro';
+import EvidenceBox from '~/components/EvidenceBox.astro';
+import ClinicalPearl from '~/components/ClinicalPearl.astro';
+import CompareTable from '~/components/CompareTable.astro';
+import SourceNote from '~/components/SourceNote.astro';
+import SelfCheck from '~/components/SelfCheck.astro';
+
+<MedicalNote>
+
+<KeyPoints>
+
+- Điểm cốt lõi 1
+- Điểm cốt lõi 2
+- Điểm cốt lõi 3
+
+</KeyPoints>
+
+## TL;DR
+
+## Bản đồ khái niệm
+
+## 20% cốt lõi
+
+## Nội dung chính
+
+<ClinicalPearl>
+
+- Mẹo lâm sàng cần nhớ.
+
+</ClinicalPearl>
+
+<CompareTable>
+
+| Tiêu chí | Nhóm A | Nhóm B |
+|---|---|---|
+| Dấu hiệu chính |  |  |
+| Cơ chế |  |  |
+| Xử trí |  |  |
+
+</CompareTable>
+
+<RedFlags>
+
+- Dấu hiệu nguy cấp.
+
+</RedFlags>
+
+<EvidenceBox level="B-C">
+
+- Ghi mức chứng cứ, guideline, RCT, meta-analysis hoặc expert opinion.
+
+</EvidenceBox>
+
+<SourceNote>
+
+- Nguồn chính:
+- Nguồn bổ sung:
+- Ngày rà soát:
+
+</SourceNote>
+
+<SelfCheck>
+
+1. Câu hỏi tự kiểm 1?
+2. Câu hỏi tự kiểm 2?
+3. Câu hỏi tự kiểm 3?
+
+</SelfCheck>
+
+</MedicalNote>

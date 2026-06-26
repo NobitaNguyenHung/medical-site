@@ -1,0 +1,12 @@
+---
+interface Props {
+	title?: string;
+}
+
+const { title = 'Câu hỏi tự kiểm' } = Astro.props;
+---
+
+<section class="medical-box self-check">
+	<p class="medical-box__title">{title}</p>
+	<slot />
+</section>

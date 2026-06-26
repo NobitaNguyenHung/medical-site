@@ -1,0 +1,71 @@
+---
+title: "Template: Treatment Update"
+description: "Khuôn MDX cho cập nhật điều trị hoặc guideline."
+type: "template"
+category: "templates"
+status: "draft"
+draft: true
+pagefind: false
+sidebar:
+  hidden: true
+---
+
+import TreatmentUpdate from '~/components/TreatmentUpdate.astro';
+import KeyPoints from '~/components/KeyPoints.astro';
+import RedFlags from '~/components/RedFlags.astro';
+import EvidenceBox from '~/components/EvidenceBox.astro';
+import AlgorithmBox from '~/components/AlgorithmBox.astro';
+import SourceNote from '~/components/SourceNote.astro';
+
+<TreatmentUpdate>
+
+## Có gì mới?
+
+<KeyPoints>
+
+- Thay đổi chính 1
+- Thay đổi chính 2
+- Thay đổi chính 3
+
+</KeyPoints>
+
+## Ai bị ảnh hưởng?
+
+## Khuyến cáo chính
+
+<EvidenceBox level="A/B/C">
+
+- Nêu guideline, RCT, meta-analysis hoặc đồng thuận chuyên gia.
+
+</EvidenceBox>
+
+## Mức chứng cứ
+
+## Thay đổi thực hành
+
+<AlgorithmBox>
+
+1. Bước 1
+2. Bước 2
+3. Bước 3
+
+</AlgorithmBox>
+
+## Điểm cần cảnh giác
+
+<RedFlags>
+
+- Tình huống không áp dụng khuyến cáo.
+- Dấu hiệu cần chuyển tuyến hoặc hội chẩn.
+
+</RedFlags>
+
+<SourceNote>
+
+- Guideline:
+- Tài liệu gốc:
+- Ngày rà soát:
+
+</SourceNote>
+
+</TreatmentUpdate>

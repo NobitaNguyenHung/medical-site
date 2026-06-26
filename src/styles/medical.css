@@ -1,0 +1,95 @@
+/* ── Layout: nội dung giữa rộng hơn, 2 sidebar hẹp lại ── */
+:root {
+	--sl-content-width: 56rem;   /* mặc định 45rem -> rộng cho bảng/h1 dài */
+	--sl-sidebar-width: 16rem;   /* mặc định 18.75rem -> nav trái hẹp lại */
+}
+
+/* TOC phải (Trên trang này) hẹp lại + canh chữ gọn */
+@media (min-width: 72em) {
+	.right-sidebar-container {
+		--sl-sidebar-width: 14rem;
+	}
+}
+
+.medical-note,
+.clinical-case,
+.treatment-update,
+.medical-box {
+	border: 1px solid var(--sl-color-gray-5);
+	border-radius: 8px;
+	background: var(--sl-color-bg);
+}
+
+.medical-note {
+	padding: 1.25rem;
+}
+
+.medical-note > :first-child,
+.medical-box > :first-child {
+	margin-top: 0;
+}
+
+.medical-note > :last-child,
+.medical-box > :last-child {
+	margin-bottom: 0;
+}
+
+.medical-box {
+	margin: 1rem 0;
+	padding: 1rem;
+	border-inline-start: 4px solid var(--medical-accent, var(--sl-color-accent));
+}
+
+.medical-box__title {
+	margin: 0 0 0.5rem;
+	color: var(--medical-accent, var(--sl-color-accent));
+	font-size: 0.95rem;
+	font-weight: 700;
+	letter-spacing: 0;
+}
+
+.medical-box--key-points {
+	--medical-accent: #2e7d5f;
+	background: color-mix(in srgb, #2e7d5f 10%, var(--sl-color-bg));
+}
+
+.medical-box--red-flags {
+	--medical-accent: #c2410c;
+	background: color-mix(in srgb, #c2410c 10%, var(--sl-color-bg));
+}
+
+.medical-box--evidence {
+	--medical-accent: #2563eb;
+	background: color-mix(in srgb, #2563eb 9%, var(--sl-color-bg));
+}
+
+.medical-box--pearl {
+	--medical-accent: #7c3aed;
+	background: color-mix(in srgb, #7c3aed 8%, var(--sl-color-bg));
+}
+
+.medical-box--algorithm {
+	--medical-accent: #0f766e;
+	background: color-mix(in srgb, #0f766e 9%, var(--sl-color-bg));
+}
+
+.medical-box--source {
+	--medical-accent: #64748b;
+	background: color-mix(in srgb, #64748b 10%, var(--sl-color-bg));
+}
+
+.compare-table {
+	overflow-x: auto;
+}
+
+.compare-table table {
+	min-width: 42rem;
+}
+
+.self-check {
+	counter-reset: self-check;
+}
+
+.self-check :where(ol, ul) {
+	padding-inline-start: 1.25rem;
+}

@@ -1,0 +1,792 @@
+<!doctype html>
+<html lang="vi" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+<title>Thử Thấp (暑湿) — Bài Giảng Chuyên Sâu</title>
+<style>
+:root{
+  --bg:#f6f7f9; --surface:#fff; --ink:#1d232b; --muted:#5b6672; --line:#e3e7ec;
+  --brand:#0e7490; --brand-soft:#e0f2f7; --accent:#b58900;
+  --maxw:780px; --fs:17px; --radius:14px;
+  --shadow:0 1px 3px rgba(16,24,40,.06),0 8px 24px rgba(16,24,40,.05);
+}
+[data-theme="dark"]{
+  --bg:#0f141a; --surface:#161d26; --ink:#e6ebf1; --muted:#9aa6b2; --line:#27313d;
+  --brand:#38bdf8; --brand-soft:#0c2733; --accent:#e3b341; --shadow:0 1px 2px rgba(0,0,0,.4);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:var(--fs)/1.7 system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;word-break:break-word;overflow-wrap:anywhere}
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--brand);z-index:60;transition:width .1s}
+
+/* topbar */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:8px;padding:8px 12px;background:color-mix(in srgb,var(--surface) 88%,transparent);backdrop-filter:saturate(1.4) blur(8px);border-bottom:1px solid var(--line)}
+.topbar-title{flex:1;font-weight:700;font-size:.86rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--muted)}
+.topbar-tools{display:flex;gap:4px}
+.icon-btn{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:9px;min-width:34px;height:34px;padding:0 8px;font-size:.82rem;font-weight:600;cursor:pointer}
+.icon-btn:active{transform:scale(.94)}
+
+/* toc drawer */
+.toc{position:fixed;top:0;left:0;height:100dvh;width:min(82vw,320px);transform:translateX(-105%);transition:transform .25s;background:var(--surface);border-right:1px solid var(--line);z-index:70;padding:16px 14px;overflow:auto}
+.toc.open{transform:none;box-shadow:var(--shadow)}
+.toc-head{font-size:.72rem;letter-spacing:.12em;color:var(--muted);font-weight:700;margin:6px 4px 12px}
+.toc-link{display:block;padding:9px 10px;border-radius:9px;color:var(--ink);text-decoration:none;font-size:.92rem;border-left:3px solid transparent}
+.toc-link:active{background:var(--brand-soft)}
+.toc-link.active{background:var(--brand-soft);border-left-color:var(--brand);color:var(--brand);font-weight:600}
+.toc-actions{display:flex;gap:8px;margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.mini-btn{flex:1;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:8px;padding:8px;font-size:.78rem;cursor:pointer}
+#scrim{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:65;opacity:0;pointer-events:none;transition:opacity .25s}
+#scrim.show{opacity:1;pointer-events:auto}
+
+/* page */
+.page{max-width:var(--maxw);margin:0 auto;padding:18px 16px 40px}
+.doc-header{margin:6px 0 22px}
+.doc-title{font-size:1.6rem;line-height:1.25;margin:.2em 0 .3em;letter-spacing:-.01em}
+.doc-sub{color:var(--muted);margin:.2em 0 .8em}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin:.4em 0}
+.tag{font-size:.7rem;background:var(--brand-soft);color:var(--brand);padding:3px 9px;border-radius:999px;font-weight:600}
+.meta-card{margin-top:14px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);padding:10px 14px;box-shadow:var(--shadow)}
+.meta-row{display:flex;gap:10px;padding:4px 0;font-size:.82rem;border-bottom:1px dashed var(--line)}
+.meta-row:last-child{border-bottom:0}
+.meta-k{color:var(--muted);min-width:92px;font-weight:600}
+.meta-v{flex:1}
+
+/* sections (accordion) */
+.section{margin:14px 0;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow);overflow:hidden}
+.section>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;padding:14px 16px;font-weight:700;font-size:1.06rem}
+.section>summary::-webkit-details-marker{display:none}
+.section>summary::before{content:"›";font-size:1.3em;color:var(--brand);transition:transform .2s;display:inline-block}
+.section[open]>summary::before{transform:rotate(90deg)}
+.section>summary:active{background:var(--brand-soft)}
+.section .section-body{padding:2px 16px 16px}
+.step-num{font-variant-numeric:tabular-nums;background:var(--brand);color:#fff;border-radius:8px;font-size:.78rem;padding:2px 8px;font-weight:800}
+
+/* typography */
+.doc h3{font-size:1.04rem;margin:1.3em 0 .4em;color:var(--brand)}
+.doc h4{font-size:.97rem;margin:1.1em 0 .3em;border-left:3px solid var(--accent);padding-left:9px}
+.doc p{margin:.6em 0}
+.doc a{color:var(--brand)}
+.doc strong{font-weight:700}
+.doc code{background:var(--brand-soft);padding:.1em .4em;border-radius:6px;font-size:.88em;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.doc ul,.doc ol{padding-left:1.3em;margin:.5em 0}
+.doc li{margin:.45em 0}
+.enum-indent{display:inline-block;width:1.3em}
+.doc hr{display:none}
+.doc blockquote{margin:.8em 0;padding:.5em 1em;border-left:3px solid var(--line);color:var(--muted)}
+
+/* wikilink chip */
+.wikilink{display:inline;color:var(--brand);text-decoration:none;border-bottom:1px dotted var(--brand);font-weight:500}
+.wikilink::before{content:"🔗 ";font-size:.8em;opacity:.6}
+
+/* out-of-KB badge */
+.kb-ext{display:inline-block;background:#fff4e0;color:#8a5a00;border:1px solid #f0d28a;border-radius:7px;padding:0 6px;font-size:.78em;font-weight:700}
+[data-theme="dark"] .kb-ext{background:#2a2410;color:#e3b341;border-color:#5a4a1a}
+
+/* tables */
+.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:1em 0;border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow)}
+table{border-collapse:collapse;width:100%;font-size:.86rem;min-width:max-content}
+th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--brand-soft);color:var(--brand);font-weight:700;position:sticky;top:0;white-space:nowrap}
+tbody tr:nth-child(even){background:color-mix(in srgb,var(--brand-soft) 30%,transparent)}
+td:first-child{font-weight:600}
+
+/* callouts */
+.callout{margin:1em 0;border-radius:12px;padding:12px 14px 12px 16px;border:1px solid var(--line);border-left-width:4px;background:var(--surface)}
+.callout-title{font-weight:800;font-size:.92rem;display:flex;align-items:center;gap:8px;margin-bottom:.3em}
+.callout-title .ico{font-size:1.05em}
+.callout .callout-body>:first-child{margin-top:0}
+.callout .callout-body>:last-child{margin-bottom:0}
+.c-info{border-left-color:#0e7490;background:linear-gradient(0deg,transparent,#0e74900a)}
+.c-tip{border-left-color:#0a8a4a;background:#0a8a4a0d}
+.c-note{border-left-color:#6b7280}
+.c-important{border-left-color:#7c3aed;background:#7c3aed0d}
+.c-warning,.c-caution{border-left-color:#d97706;background:#d977060f}
+.c-question{border-left-color:#0e7490;background:#0e74900d}
+.c-quote{border-left-color:var(--accent);font-style:italic;background:#b589000a}
+.c-info .callout-title{color:#0e7490}.c-tip .callout-title{color:#0a8a4a}
+.c-important .callout-title{color:#7c3aed}.c-warning .callout-title,.c-caution .callout-title{color:#b45309}
+.c-question .callout-title{color:#0e7490}.c-quote .callout-title{color:var(--accent)}
+[data-theme="dark"] .c-info .callout-title{color:#38bdf8}
+[data-theme="dark"] .c-important .callout-title{color:#a78bfa}
+[data-theme="dark"] .c-warning .callout-title,[data-theme="dark"] .c-caution .callout-title{color:#fbbf24}
+
+/* TL;DR special */
+.tldr{background:linear-gradient(135deg,var(--brand),#0891b2);color:#fff;border:0}
+.tldr .section-body{padding-top:6px}
+.tldr ul li{margin:.5em 0}
+.tldr strong{color:#fff;text-decoration:underline;text-decoration-color:rgba(255,255,255,.5)}
+.tldr code{background:rgba(255,255,255,.18);color:#fff}
+.tldr>summary{color:#fff}.tldr>summary::before{color:#fff}
+.tldr a{color:#fff}
+
+/* diagrams */
+figure.diagram{margin:1.1em 0;padding:10px;background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);position:relative;cursor:zoom-in;overflow:hidden}
+figure.diagram svg{width:100%;height:auto;display:block}
+figure.diagram::after{content:"⤢ chạm để phóng";position:absolute;right:10px;bottom:8px;font-size:.7rem;color:var(--muted);background:var(--bg);padding:2px 8px;border-radius:999px;border:1px solid var(--line)}
+.diagram-err{color:#b45309;font-size:.85rem;padding:10px}
+
+/* lightbox */
+.lightbox{position:fixed;inset:0;z-index:90;background:rgba(8,12,18,.94);display:flex;flex-direction:column}
+.lightbox[hidden]{display:none}
+.lb-tools{display:flex;justify-content:center;gap:10px;padding:12px}
+.lb-btn{width:46px;height:46px;border-radius:50%;border:0;background:#ffffff1a;color:#fff;font-size:1.3rem;cursor:pointer}
+.lb-close{background:#ffffff2e}
+.lb-stage{flex:1;overflow:hidden;display:flex;align-items:center;justify-content:center;touch-action:none}
+.lb-canvas{background:#fff;padding:16px;border-radius:14px;transform-origin:center;will-change:transform;box-shadow:0 10px 40px rgba(0,0,0,.5)}
+.lb-canvas svg{max-width:none;display:block}
+
+@media(min-width:880px){
+  .topbar{display:none}
+  .toc{transform:none;top:0;border-right:1px solid var(--line);width:280px}
+  #scrim{display:none}
+  .page{margin-left:280px;max-width:calc(var(--maxw) + 40px);padding-top:34px}
+}
+@media print{.topbar,.toc,#progress,#scrim,figure.diagram::after{display:none}.page{margin:0}.section,.callout,.table-wrap{break-inside:avoid;box-shadow:none}.section{border:1px solid #ccc}details{open:true}}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+
+<header class="topbar">
+  <button id="tocBtn" class="icon-btn" aria-label="Mục lục">☰</button>
+  <span class="topbar-title">Thử Thấp (暑湿) — Bài Giảng Chuyên Sâu</span>
+  <div class="topbar-tools">
+    <button id="fontDown" class="icon-btn" aria-label="Giảm cỡ chữ">A−</button>
+    <button id="fontUp" class="icon-btn" aria-label="Tăng cỡ chữ">A+</button>
+    <button id="themeBtn" class="icon-btn" aria-label="Đổi nền">◐</button>
+  </div>
+</header>
+
+<nav id="toc" class="toc">
+  <div class="toc-head">MỤC LỤC</div>
+  <a href="#sec-1" class="toc-link" data-target="sec-1">⚡ TL;DR — Nắm trong 60 giây</a><a href="#sec-2" class="toc-link" data-target="sec-2">BƯỚC 1 — Định nghĩa & Phạm vi</a><a href="#sec-3" class="toc-link" data-target="sec-3">BƯỚC 2 — Cơ chế Sinh lý / Bệnh lý</a><a href="#sec-4" class="toc-link" data-target="sec-4">BƯỚC 3 — Biểu hiện Lâm sàng</a><a href="#sec-5" class="toc-link" data-target="sec-5">BƯỚC 4 — Chẩn đoán</a><a href="#sec-6" class="toc-link" data-target="sec-6">BƯỚC 5 — Điều trị Tích hợp (Biện chứng luận trị 7 thể)</a><a href="#sec-7" class="toc-link" data-target="sec-7">BƯỚC 6 — Bằng chứng Khoa học</a><a href="#sec-8" class="toc-link" data-target="sec-8">BƯỚC 7 — Điểm Cần Nhớ & Câu Hỏi Phản Biện</a><a href="#sec-9" class="toc-link" data-target="sec-9">🔗 Liên kết</a>
+  <div class="toc-actions">
+    <button id="expandAll" class="mini-btn">Mở hết</button>
+    <button id="collapseAll" class="mini-btn">Gập hết</button>
+  </div>
+</nav>
+<div id="scrim"></div>
+
+<main class="page">
+  <article class="doc">
+    <div class="doc-header">
+      <h1 class="doc-title">Thử Thấp (暑湿) — Bài Giảng Chuyên Sâu</h1>
+      <p class="doc-sub">Thử thấp · Thử thấp bệnh · Summer-heat damp warm disease · 暑湿</p>
+      <div class="tags"><span class="tag">on-benh</span><span class="tag">yhct</span><span class="tag">ngoai-cam-nhiet-benh</span><span class="tag">thu-thap</span><span class="tag">mua-he</span><span class="tag">thap-nhiet</span><span class="tag">giao-su-y-khoa</span></div>
+      <div class="meta-card"><div class="meta-row"><span class="meta-k">Chuyên khoa</span><span class="meta-v">YHCT — Ôn bệnh học</span></div><div class="meta-row"><span class="meta-k">Nguồn KB</span><span class="meta-v">Giáo trình Ôn Bệnh (TS.BS Lê Minh Hoàng; BS.CKII Lê Thị Ngoan) — Bài 6 Thử Thấp</span></div><div class="meta-row"><span class="meta-k">Chunk</span><span class="meta-v"><code>kb/on_benh_dai_cuong/02_benh-lam-sang/thu-thap_001.md</code></span></div><div class="meta-row"><span class="meta-k">Ngày</span><span class="meta-v">Thu Jun 25 2026 07:00:00 GMT+0700 (Indochina Time)</span></div><div class="meta-row"><span class="meta-k">Mục đích</span><span class="meta-v">Giáo dục — áp dụng lâm sàng cần cá thể hóa</span></div></div>
+    </div>
+    <div class="preamble"><div class="callout c-info"><div class="callout-title"><span class="ico">ℹ️</span>Định vị nguồn</div><div class="callout-body"><p>KB <code>on_benh_dai_cuong</code> có <strong>chương biện chứng lâm sàng ĐẦY ĐỦ cho Thử Thấp</strong> (Bài 6 — file <code>thu-thap_001.md</code>): khái niệm, lịch sử học thuật, nguyên nhân cơ chế, chẩn đoán, chẩn đoán phân biệt và <strong>7 thể biện chứng luận trị</strong> kèm cổ phương. Đây là một trong số ít bệnh ôn được KB chép nguyên vẹn phần biện chứng.
+→ Các đoạn ngoài KB (đối chiếu Tây y chi tiết, châm cứu, bằng chứng hiện đại) được đánh dấu <span class="kb-ext">🔸 Kiến thức nền — ngoài KB</span>.</p>
+</div></div>
+
+
+<hr>
+</div><details class="section tldr" id="sec-1" open><summary>⚡ TL;DR — Nắm trong 60 giây</summary><div class="section-body"><ul>
+<li><strong>Thử thấp = ngoại cảm nhiệt bệnh cấp tính mùa hè do <em>thử thấp bệnh tà</em></strong> (thử nhiệt <strong>KÈM</strong> thấp tà). Biểu hiện = <strong>thấp nhiệt chứng + thấp tà uất trở chứng</strong>.</li>
+<li><strong>Dấu ấn kép:</strong> vừa mang tính <strong>thử</strong> (viêm nhiệt khốc liệt, truyền biến nhanh, hao khí thương tân) vừa mang tính <strong>thấp</strong> (trọng – trọc – nê: thân nặng, rêu nê, mạch nhu, dễ phạm trung tiêu, dai dẳng khó khỏi).</li>
+<li><strong>Phân biệt cốt lõi:</strong> Thử ôn = thử nhiệt <strong>thuần</strong>;<br><span class="enum-indent"></span>Thử thấp = thử nhiệt <strong>+ thấp</strong>;<br><span class="enum-indent"></span>Thấp ôn = thấp nhiệt khởi từ từ;<br><span class="enum-indent"></span>Phục thử = thử thấp <strong>phục tàng</strong>, sau Lập thu mới phát.</li>
+<li><strong>Pháp trị xương sống:</strong> <strong>THANH THỬ TIẾT NHIỆT</strong> (vị trí đầu tiên) <strong>+ TUYÊN HÓA THẤP TÀ</strong> — không được trị thử mà bỏ thấp (Dụ Gia Ngôn: <em>&quot;trị trúng thử mà không kiêng trị thấp là quá dở&quot;</em>).</li>
+<li><strong>Tây y tương ứng:</strong> viêm hô hấp trên mùa hè, viêm dạ dày-ruột cấp, <strong>bệnh xoắn khuẩn (Leptospirosis)</strong>, viêm não Nhật Bản B.</li>
+<li><strong>7 thể KB:</strong><br><span class="enum-indent"></span>① Tại vệ<br><span class="enum-indent"></span>② Tà cán nhiễu vị trường<br><span class="enum-indent"></span>③ Khôn trở trung tiêu<br><span class="enum-indent"></span>④ Tràn lan tam tiêu<br><span class="enum-indent"></span>⑤ Thương phế lạc<br><span class="enum-indent"></span>⑥ Thương khí<br><span class="enum-indent"></span>⑦ Dư tà chưa sạch.</li>
+</ul>
+<hr>
+</div></details>
+<details class="section" id="sec-2" open><summary><span class="step-num">BƯỚC 1</span> Định nghĩa &amp; Phạm vi</summary><div class="section-body"><h3>1.1. Định nghĩa YHCT</h3>
+<blockquote>
+<p><strong>Theo KB (Bài 6 — Khái niệm):</strong>
+<em>&quot;Thử thấp là do cảm thụ thử thấp bệnh tà gây ra một dạng ngoại cảm nhiệt bệnh cấp tính với biểu hiện rõ nhất là <strong>thấp nhiệt chứng kèm thêm thấp tà uất trở chứng</strong>. Trên lâm sàng ngoài những biểu hiện thấp nhiệt ra còn có hung bĩ, thân thể nặng nề, rêu lưỡi nê, mạch nhu... Thử thấp đa số phát trong mùa hè hoặc giao thời hè thu.&quot;</em></p>
+</blockquote>
+<p><strong>Diễn giải:</strong> Thử thấp (暑湿) là <strong>ngoại cảm nhiệt bệnh cấp tính</strong> phát mùa hè/giao hè-thu, do mùa hè khí hậu <strong>viêm nhiệt + mưa nhiều ẩm thấp</strong> khiến thấp khí và thử nhiệt kết hợp thành <strong>thử thấp bệnh tà</strong>. Bệnh mang đồng thời hai bản chất:</p>
+<ul>
+<li><strong>Tính thử (hỏa nhiệt):</strong> viêm nhiệt khốc liệt, truyền biến nhanh, hao khí thương tân.</li>
+<li><strong>Tính thấp (trọng – trọc):</strong> nặng nề, nhớp dơ, dễ phạm trung tiêu, lan tỏa tam tiêu, bệnh trình dai dẳng.</li>
+</ul>
+<h3>1.2. Mạch nguồn học thuật (theo KB)</h3>
+<p>KB chép lại tiến trình nhận thức về thử thấp qua các đời — nắm để hiểu vì sao &quot;trị thử phải kiêm trị thấp&quot;:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Y gia / Tác phẩm</th>
+<th>Đóng góp về thử thấp</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Trần Vô Trạch</strong> — <em>Tam nhân phương</em></td>
+<td>Lần đầu nêu thử <strong>kết hợp phong thấp</strong> thành bệnh &quot;thử thấp phong ôn&quot;; chủ trương <strong>Phục linh bạch truật thang</strong></td>
+</tr>
+<tr>
+<td><strong>Trương Nguyên Tố</strong> — <em>Y học khải nguyên</em></td>
+<td>Hè-thu thuộc <strong>thái âm thấp thổ</strong> → phát thử đa số kèm thấp → trị bằng <strong>thẩm tiết, Ngũ linh tán</strong></td>
+</tr>
+<tr>
+<td><strong>Lý Đông Hằng</strong> — <em>Tỳ vị luận</em></td>
+<td>Mô tả chi tiết thử hợp thấp gây bệnh; trị thanh táo bằng <strong>Thanh thử ích khí thang</strong></td>
+</tr>
+<tr>
+<td><strong>Vương Luân</strong> — <em>Minh y tạp trước</em></td>
+<td>Trị thử tốt nhất = <strong>thanh tâm, lợi tiểu tiện</strong></td>
+</tr>
+<tr>
+<td><strong>Lý Đình</strong> — <em>Y học nhập môn</em></td>
+<td>Mùa hè ăn lạnh nhiều → trị nên <strong>lợi thấp + tiêu đạo</strong> (Hương nhu tán, Hoàng liên giải độc thang...)</td>
+</tr>
+<tr>
+<td><strong>Dụ Gia Ngôn</strong> — <em>Y môn pháp luật</em></td>
+<td>4 quy luật chữa thử; nhấn: <em><strong>&quot;trị trúng thử mà không kiêng trị thấp là quá dở&quot;</strong></em></td>
+</tr>
+<tr>
+<td><strong>Diệp Thiên Sĩ</strong></td>
+<td><em>&quot;Thử tất kiêm thấp&quot;</em>; <em>&quot;Thử thấp thương khí, phế tiên thụ bệnh&quot;</em></td>
+</tr>
+<tr>
+<td><strong>Tào Bình Chương</strong> — <em>Thử bệnh chứng trị yếu lược</em></td>
+<td>Chia thử thấp <strong>13 chứng</strong>, hệ thống hóa nhân–chứng–mạch–trị</td>
+</tr>
+</tbody></table></div>
+<h3>1.3. Định nghĩa Tây y (đối chiếu)</h3>
+<blockquote>
+<p><strong>Theo KB:</strong> <em>&quot;Căn cứ vào mùa phát bệnh thử thấp và biểu hiện lâm sàng thì tương đương một số bệnh tây y: viêm hô hấp trên (mùa hè), viêm tiêu hóa cấp, bệnh xoắn khuẩn móc câu (Leptospirosis), viêm não B.&quot;</em></p>
+</blockquote>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Bệnh cảnh thử thấp</th>
+<th>Tương ứng Tây y</th>
+<th>ICD-10 (tham khảo 🔸)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Sốt + thân nặng + tiêu hóa rối loạn nhẹ mùa hè</td>
+<td><strong>Viêm hô hấp trên mùa hè / nhiễm virus mùa hè</strong></td>
+<td>J06.x</td>
+</tr>
+<tr>
+<td>Sốt + đau bụng + nôn + tiêu chảy phân hôi</td>
+<td><strong>Viêm dạ dày-ruột cấp</strong> (acute gastroenteritis)</td>
+<td>A09</td>
+</tr>
+<tr>
+<td>Sốt + đau cơ bắp chân + mắt đỏ + vàng da + xuất huyết</td>
+<td><strong>Bệnh xoắn khuẩn (Leptospirosis)</strong> ⭐ điển hình</td>
+<td>A27.x</td>
+</tr>
+<tr>
+<td>Cao nhiệt + hôn mê + co giật mùa hè</td>
+<td><strong>Viêm não Nhật Bản B</strong></td>
+<td>A83.0</td>
+</tr>
+</tbody></table></div>
+<div class="callout c-tip"><div class="callout-title"><span class="ico">💡</span>Vì sao Leptospirosis là &quot;khuôn mặt Tây y&quot; rõ nhất của thử thấp?</div><div class="callout-body"><p>KB mô tả &quot;tam chứng&quot; bệnh xoắn khuẩn trùng khít bệnh cảnh thử thấp nặng: <strong>hàn nhiệt + đau mỏi toàn thân + mệt mỏi uể oải</strong>, kèm <strong>mắt đỏ, đau chân, ấn đau cơ bắp chân, sưng hạch lâm ba</strong>, và xét nghiệm <strong>bạch cầu ↑, trung tính ↑, máu lắng ↑, protein/hồng cầu niệu, urê máu ↑, men gan bất thường</strong>. Đây là bộ ba kinh điển <em>fever – myalgia (calf) – conjunctival suffusion</em> của Leptospirosis. Dịch tễ &quot;heo và chuột đồng mang mầm, ô nhiễm nguồn nước&quot; (mục 7 KB) cũng đúng y bệnh học xoắn khuẩn.</p>
+</div></div>
+
+
+<h3>1.4. Bản đồ định nghĩa</h3>
+<figure class="diagram"><svg id="mmd_0" width="100%" xmlns="http://www.w3.org/2000/svg" class="flowchart" style="max-width: 1292.515625px;" viewBox="0 0 1292.515625 294" role="graphics-document document" aria-roledescription="flowchart-v2"><style>#mmd_0{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:16px;fill:#333;}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#mmd_0 .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#mmd_0 .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#mmd_0 .error-icon{fill:hsl(220.5882352941, 100%, 98.3333333333%);}#mmd_0 .error-text{fill:rgb(8.5000000002, 5.7500000001, 0);stroke:rgb(8.5000000002, 5.7500000001, 0);}#mmd_0 .edge-thickness-normal{stroke-width:1px;}#mmd_0 .edge-thickness-thick{stroke-width:3.5px;}#mmd_0 .edge-pattern-solid{stroke-dasharray:0;}#mmd_0 .edge-thickness-invisible{stroke-width:0;fill:none;}#mmd_0 .edge-pattern-dashed{stroke-dasharray:3;}#mmd_0 .edge-pattern-dotted{stroke-dasharray:2;}#mmd_0 .marker{fill:#0b0b0b;stroke:#0b0b0b;}#mmd_0 .marker.cross{stroke:#0b0b0b;}#mmd_0 svg{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:16px;}#mmd_0 p{margin:0;}#mmd_0 .label{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#333;}#mmd_0 .cluster-label text{fill:rgb(8.5000000002, 5.7500000001, 0);}#mmd_0 .cluster-label span{color:rgb(8.5000000002, 5.7500000001, 0);}#mmd_0 .cluster-label span p{background-color:transparent;}#mmd_0 .label text,#mmd_0 span{fill:#333;color:#333;}#mmd_0 .node rect,#mmd_0 .node circle,#mmd_0 .node ellipse,#mmd_0 .node polygon,#mmd_0 .node path{fill:#fff4dd;stroke:hsl(40.5882352941, 60%, 83.3333333333%);stroke-width:1px;}#mmd_0 .rough-node .label text,#mmd_0 .node .label text,#mmd_0 .image-shape .label,#mmd_0 .icon-shape .label{text-anchor:middle;}#mmd_0 .node .katex path{fill:#000;stroke:#000;stroke-width:1px;}#mmd_0 .rough-node .label,#mmd_0 .node .label,#mmd_0 .image-shape .label,#mmd_0 .icon-shape .label{text-align:center;}#mmd_0 .node.clickable{cursor:pointer;}#mmd_0 .root .anchor path{fill:#0b0b0b!important;stroke-width:0;stroke:#0b0b0b;}#mmd_0 .arrowheadPath{fill:#0b0b0b;}#mmd_0 .edgePath .path{stroke:#0b0b0b;stroke-width:1px;}#mmd_0 .flowchart-link{stroke:#0b0b0b;fill:none;}#mmd_0 .edgeLabel{background-color:hsl(-79.4117647059, 100%, 93.3333333333%);text-align:center;}#mmd_0 .edgeLabel p{background-color:hsl(-79.4117647059, 100%, 93.3333333333%);}#mmd_0 .edgeLabel rect{opacity:0.5;background-color:hsl(-79.4117647059, 100%, 93.3333333333%);fill:hsl(-79.4117647059, 100%, 93.3333333333%);}#mmd_0 .labelBkg{background-color:rgba(243.9999999999, 220.9999999998, 255, 0.5);}#mmd_0 .cluster rect{fill:hsl(220.5882352941, 100%, 98.3333333333%);stroke:hsl(220.5882352941, 60%, 88.3333333333%);stroke-width:1px;}#mmd_0 .cluster text{fill:rgb(8.5000000002, 5.7500000001, 0);}#mmd_0 .cluster span{color:rgb(8.5000000002, 5.7500000001, 0);}#mmd_0 div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:12px;background:hsl(220.5882352941, 100%, 98.3333333333%);border:1px solid hsl(220.5882352941, 60%, 88.3333333333%);border-radius:2px;pointer-events:none;z-index:100;}#mmd_0 .flowchartTitleText{text-anchor:middle;font-size:18px;fill:#333;}#mmd_0 rect.text{fill:none;stroke-width:0;}#mmd_0 .icon-shape,#mmd_0 .image-shape{background-color:hsl(-79.4117647059, 100%, 93.3333333333%);text-align:center;}#mmd_0 .icon-shape p,#mmd_0 .image-shape p{background-color:hsl(-79.4117647059, 100%, 93.3333333333%);padding:2px;}#mmd_0 .icon-shape .label rect,#mmd_0 .image-shape .label rect{opacity:0.5;background-color:hsl(-79.4117647059, 100%, 93.3333333333%);fill:hsl(-79.4117647059, 100%, 93.3333333333%);}#mmd_0 .label-icon{display:inline-block;height:1em;overflow:visible;vertical-align:-0.125em;}#mmd_0 .node .label-icon path{fill:currentColor;stroke:revert;stroke-width:revert;}#mmd_0 .node .neo-node{stroke:hsl(40.5882352941, 60%, 83.3333333333%);}#mmd_0 [data-look="neo"].node rect,#mmd_0 [data-look="neo"].cluster rect,#mmd_0 [data-look="neo"].node polygon{stroke:url(#mmd_0-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mmd_0 [data-look="neo"].swimlane.cluster rect{filter:none;}#mmd_0 [data-look="neo"].node path{stroke:url(#mmd_0-gradient);stroke-width:1px;}#mmd_0 [data-look="neo"].node .outer-path{filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mmd_0 [data-look="neo"].node .neo-line path{stroke:hsl(40.5882352941, 60%, 83.3333333333%);filter:none;}#mmd_0 [data-look="neo"].node circle{stroke:url(#mmd_0-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mmd_0 [data-look="neo"].node circle .state-start{fill:#000000;}#mmd_0 [data-look="neo"].icon-shape .icon{fill:url(#mmd_0-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mmd_0 [data-look="neo"].icon-shape .icon-neo path{stroke:url(#mmd_0-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mmd_0 :root{--mermaid-font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;}#mmd_0 .yhct>*{fill:rgb(255, 242, 204)!important;stroke:rgb(181, 137, 0)!important;color:rgb(90, 69, 0)!important;}#mmd_0 .yhct span{fill:rgb(255, 242, 204)!important;stroke:rgb(181, 137, 0)!important;color:rgb(90, 69, 0)!important;}#mmd_0 .yhct tspan{fill:rgb(90, 69, 0)!important;}#mmd_0 .ty>*{fill:rgb(218, 232, 252)!important;stroke:rgb(29, 90, 150)!important;color:rgb(19, 49, 79)!important;}#mmd_0 .ty span{fill:rgb(218, 232, 252)!important;stroke:rgb(29, 90, 150)!important;color:rgb(19, 49, 79)!important;}#mmd_0 .ty tspan{fill:rgb(19, 49, 79)!important;}</style><g><marker id="mmd_0_flowchart-v2-pointEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker><marker id="mmd_0_flowchart-v2-pointStart" class="marker flowchart-v2" viewBox="0 0 10 10" refX="4.5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 5 L 10 10 L 10 0 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker><marker id="mmd_0_flowchart-v2-pointEnd-margin" class="marker flowchart-v2" viewBox="0 0 11.5 14" refX="11.5" refY="7" markerUnits="userSpaceOnUse" markerWidth="10.5" markerHeight="14" orient="auto"><path d="M 0 0 L 11.5 7 L 0 14 z" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></path></marker><marker id="mmd_0_flowchart-v2-pointStart-margin" class="marker flowchart-v2" viewBox="0 0 11.5 14" refX="1" refY="7" markerUnits="userSpaceOnUse" markerWidth="11.5" markerHeight="14" orient="auto"><polygon points="0,7 11.5,14 11.5,0" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></polygon></marker><marker id="mmd_0_flowchart-v2-circleEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="11" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></circle></marker><marker id="mmd_0_flowchart-v2-circleStart" class="marker flowchart-v2" viewBox="0 0 10 10" refX="-1" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></circle></marker><marker id="mmd_0_flowchart-v2-circleEnd-margin" class="marker flowchart-v2" viewBox="0 0 10 10" refY="5" refX="12.25" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></circle></marker><marker id="mmd_0_flowchart-v2-circleStart-margin" class="marker flowchart-v2" viewBox="0 0 10 10" refX="-2" refY="5" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></circle></marker><marker id="mmd_0_flowchart-v2-crossEnd" class="marker cross flowchart-v2" viewBox="0 0 11 11" refX="12" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"></path></marker><marker id="mmd_0_flowchart-v2-crossStart" class="marker cross flowchart-v2" viewBox="0 0 11 11" refX="-1" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"></path></marker><marker id="mmd_0_flowchart-v2-crossEnd-margin" class="marker cross flowchart-v2" viewBox="0 0 15 15" refX="17.7" refY="7.5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 1,1 L 14,14 M 1,14 L 14,1" class="arrowMarkerPath" style="stroke-width: 2.5;"></path></marker><marker id="mmd_0_flowchart-v2-crossStart-margin" class="marker cross flowchart-v2" viewBox="0 0 15 15" refX="-3.5" refY="7.5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 1,1 L 14,14 M 1,14 L 14,1" class="arrowMarkerPath" style="stroke-width: 2.5; stroke-dasharray: 1, 0;"></path></marker><g class="root"><g class="clusters"></g><g class="edgePaths"><path d="M122.284,102L130.533,94.833C138.783,87.667,155.282,73.333,167.47,66.167C179.659,59,187.536,59,191.475,59L195.414,59" id="mmd_0-L_A_B_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_A_B_0" data-points="W3sieCI6MTIyLjI4MzcyNzEzNDE0NjM1LCJ5IjoxMDJ9LHsieCI6MTcxLjc4MTI1LCJ5Ijo1OX0seyJ4IjoxOTkuNDE0MDYyNSwieSI6NTl9XQ==" data-look="classic" marker-end="url(#mmd_0_flowchart-v2-pointEnd)"></path><path d="M122.284,180L130.533,187.167C138.783,194.333,155.282,208.667,167.032,215.833C178.781,223,185.781,223,189.281,223L192.781,223" id="mmd_0-L_A_C_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_A_C_0" data-points="W3sieCI6MTIyLjI4MzcyNzEzNDE0NjM1LCJ5IjoxODB9LHsieCI6MTcxLjc4MTI1LCJ5IjoyMjN9LHsieCI6MTk2Ljc4MTI1LCJ5IjoyMjN9XQ==" data-look="classic" marker-end="url(#mmd_0_flowchart-v2-pointEnd)"></path><path d="M395.508,59L400.113,59C404.719,59,413.93,59,426.854,59C439.779,59,456.417,59,464.736,59L473.055,59" id="mmd_0-L_B_D_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_B_D_0" data-points="W3sieCI6Mzk1LjUwNzgxMjUsInkiOjU5fSx7IngiOjQyMy4xNDA2MjUsInkiOjU5fSx7IngiOjQ3Ny4wNTQ2ODc1LCJ5Ijo1OX1d" data-look="classic" marker-end="url(#mmd_0_flowchart-v2-pointEnd)"></path><path d="M398.141,223L402.307,223C406.474,223,414.807,223,422.474,223C430.141,223,437.141,223,440.641,223L444.141,223" id="mmd_0-L_C_E_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_C_E_0" data-points="W3sieCI6Mzk4LjE0MDYyNSwieSI6MjIzfSx7IngiOjQyMy4xNDA2MjUsInkiOjIyM30seyJ4Ijo0NDguMTQwNjI1LCJ5IjoyMjN9XQ==" data-look="classic" marker-end="url(#mmd_0_flowchart-v2-pointEnd)"></path><path d="M679.227,59L688.212,59C697.198,59,715.169,59,733.332,63.855C751.495,68.71,769.849,78.42,779.026,83.275L788.202,88.129" id="mmd_0-L_D_F_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_D_F_0" data-points="W3sieCI6Njc5LjIyNjU2MjUsInkiOjU5fSx7IngiOjczMy4xNDA2MjUsInkiOjU5fSx7IngiOjc5MS43MzgxODU5NzU2MDk4LCJ5Ijo5MH1d" data-look="classic" marker-end="url(#mmd_0_flowchart-v2-pointEnd)"></path><path d="M708.141,223L712.307,223C716.474,223,724.807,223,738.151,218.145C751.495,213.29,769.849,203.58,779.026,198.725L788.202,193.871" id="mmd_0-L_E_F_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_E_F_0" data-points="W3sieCI6NzA4LjE0MDYyNSwieSI6MjIzfSx7IngiOjczMy4xNDA2MjUsInkiOjIyM30seyJ4Ijo3OTEuNzM4MTg1OTc1NjA5OCwieSI6MTkyfV0=" data-look="classic" marker-end="url(#mmd_0_flowchart-v2-pointEnd)"></path><path d="M964.15,90L977.315,81.167C990.48,72.333,1016.81,54.667,1038.44,45.833C1060.07,37,1077,37,1085.465,37L1093.93,37" id="mmd_0-L_F_G_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_F_G_0" data-points="W3sieCI6OTY0LjE1MDI0MDM4NDYxNTQsInkiOjkwfSx7IngiOjEwNDMuMTQwNjI1LCJ5IjozN30seyJ4IjoxMDk3LjkyOTY4NzUsInkiOjM3fV0=" data-look="classic" marker-end="url(#mmd_0_flowchart-v2-pointEnd)"></path><path d="M1018.141,141L1022.307,141C1026.474,141,1034.807,141,1042.474,141C1050.141,141,1057.141,141,1060.641,141L1064.141,141" id="mmd_0-L_F_H_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_F_H_0" data-points="W3sieCI6MTAxOC4xNDA2MjUsInkiOjE0MX0seyJ4IjoxMDQzLjE0MDYyNSwieSI6MTQxfSx7IngiOjEwNjguMTQwNjI1LCJ5IjoxNDF9XQ==" data-look="classic" marker-end="url(#mmd_0_flowchart-v2-pointEnd)"></path><path d="M964.15,192L977.315,200.833C990.48,209.667,1016.81,227.333,1039.689,236.167C1062.568,245,1081.995,245,1091.708,245L1101.422,245" id="mmd_0-L_F_I_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_F_I_0" data-points="W3sieCI6OTY0LjE1MDI0MDM4NDYxNTQsInkiOjE5Mn0seyJ4IjoxMDQzLjE0MDYyNSwieSI6MjQ1fSx7IngiOjExMDUuNDIxODc1LCJ5IjoyNDV9XQ==" data-look="classic" marker-end="url(#mmd_0_flowchart-v2-pointEnd)"></path></g><g class="edgeLabels"><g class="edgeLabel"><g class="label" data-id="L_A_B_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_A_C_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_B_D_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_C_E_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_D_F_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_E_F_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_F_G_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_F_H_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_F_I_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g></g><g class="nodes"><g class="node default yhct " id="mmd_0-flowchart-A-0" data-look="classic" transform="translate(77.390625, 141)"><rect class="basic label-container" style="fill:#fff2cc !important;stroke:#b58900 !important" x="-69.390625" y="-39" width="138.78125" height="78"></rect><g class="label" style="color:#5a4500 !important" transform="translate(-39.390625, -24)"><rect></rect><foreignObject width="78.78125" height="48"><div style="color: rgb(90, 69, 0) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#5a4500 !important" class="nodeLabel "><p>THỬ THẤP<br/>暑湿</p></span></div></foreignObject></g></g><g class="node default yhct " id="mmd_0-flowchart-B-2" data-look="classic" transform="translate(297.4609375, 59)"><rect class="basic label-container" style="fill:#fff2cc !important;stroke:#b58900 !important" x="-98.046875" y="-39" width="196.09375" height="78"></rect><g class="label" style="color:#5a4500 !important" transform="translate(-68.046875, -24)"><rect></rect><foreignObject width="136.09375" height="48"><div style="color: rgb(90, 69, 0) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#5a4500 !important" class="nodeLabel "><p>THỬ nhiệt tà<br/>(hỏa nhiệt mùa hè)</p></span></div></foreignObject></g></g><g class="node default yhct " id="mmd_0-flowchart-C-4" data-look="classic" transform="translate(297.4609375, 223)"><rect class="basic label-container" style="fill:#fff2cc !important;stroke:#b58900 !important" x="-100.6796875" y="-39" width="201.359375" height="78"></rect><g class="label" style="color:#5a4500 !important" transform="translate(-70.6796875, -24)"><rect></rect><foreignObject width="141.359375" height="48"><div style="color: rgb(90, 69, 0) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#5a4500 !important" class="nodeLabel "><p>THẤP tà<br/>(ẩm thấp mùa mưa)</p></span></div></foreignObject></g></g><g class="node default yhct " id="mmd_0-flowchart-D-6" data-look="classic" transform="translate(578.140625, 59)"><rect class="basic label-container" style="fill:#fff2cc !important;stroke:#b58900 !important" x="-101.0859375" y="-51" width="202.171875" height="102"></rect><g class="label" style="color:#5a4500 !important" transform="translate(-71.0859375, -36)"><rect></rect><foreignObject width="142.171875" height="72"><div style="color: rgb(90, 69, 0) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#5a4500 !important" class="nodeLabel "><p>Viêm nhiệt khốc liệt<br/>truyền biến nhanh<br/>hao khí thương tân</p></span></div></foreignObject></g></g><g class="node default yhct " id="mmd_0-flowchart-E-8" data-look="classic" transform="translate(578.140625, 223)"><rect class="basic label-container" style="fill:#fff2cc !important;stroke:#b58900 !important" x="-130" y="-63" width="260" height="126"></rect><g class="label" style="color:#5a4500 !important" transform="translate(-100, -48)"><rect></rect><foreignObject width="200" height="96"><div style="color: rgb(90, 69, 0) !important; display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#5a4500 !important" class="nodeLabel "><p>Trọng–trọc–nê<br/>thân nặng, rêu nê, mạch nhu<br/>phạm trung tiêu, dai dẳng</p></span></div></foreignObject></g></g><g class="node default yhct " id="mmd_0-flowchart-F-10" data-look="classic" transform="translate(888.140625, 141)"><rect class="basic label-container" style="fill:#fff2cc !important;stroke:#b58900 !important" x="-130" y="-51" width="260" height="102"></rect><g class="label" style="color:#5a4500 !important" transform="translate(-100, -36)"><rect></rect><foreignObject width="200" height="72"><div style="color: rgb(90, 69, 0) !important; display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#5a4500 !important" class="nodeLabel "><p>THẤP NHIỆT CHỨNG<br/>+ THẤP TÀ UẤT TRỞ CHỨNG</p></span></div></foreignObject></g></g><g class="node default ty " id="mmd_0-flowchart-G-14" data-look="classic" transform="translate(1176.328125, 37)"><rect class="basic label-container" style="fill:#dae8fc !important;stroke:#1d5a96 !important" x="-78.3984375" y="-27" width="156.796875" height="54"></rect><g class="label" style="color:#13314f !important" transform="translate(-48.3984375, -12)"><rect></rect><foreignObject width="96.796875" height="24"><div style="color: rgb(19, 49, 79) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#13314f !important" class="nodeLabel "><p>Leptospirosis</p></span></div></foreignObject></g></g><g class="node default ty " id="mmd_0-flowchart-H-16" data-look="classic" transform="translate(1176.328125, 141)"><rect class="basic label-container" style="fill:#dae8fc !important;stroke:#1d5a96 !important" x="-108.1875" y="-27" width="216.375" height="54"></rect><g class="label" style="color:#13314f !important" transform="translate(-78.1875, -12)"><rect></rect><foreignObject width="156.375" height="24"><div style="color: rgb(19, 49, 79) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#13314f !important" class="nodeLabel "><p>Viêm dạ dày-ruột cấp</p></span></div></foreignObject></g></g><g class="node default ty " id="mmd_0-flowchart-I-18" data-look="classic" transform="translate(1176.328125, 245)"><rect class="basic label-container" style="fill:#dae8fc !important;stroke:#1d5a96 !important" x="-70.90625" y="-27" width="141.8125" height="54"></rect><g class="label" style="color:#13314f !important" transform="translate(-40.90625, -12)"><rect></rect><foreignObject width="81.8125" height="24"><div style="color: rgb(19, 49, 79) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#13314f !important" class="nodeLabel "><p>Viêm não B</p></span></div></foreignObject></g></g></g></g></g><defs><filter id="mmd_0-drop-shadow" height="130%" width="130%"><feDropShadow dx="4" dy="4" stdDeviation="0" flood-opacity="0.06" flood-color="#000000"></feDropShadow></filter></defs><defs><filter id="mmd_0-drop-shadow-small" height="150%" width="150%"><feDropShadow dx="2" dy="2" stdDeviation="0" flood-opacity="0.06" flood-color="#000000"></feDropShadow></filter></defs><linearGradient id="mmd_0-gradient" gradientUnits="objectBoundingBox" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="hsl(40.5882352941, 60%, 83.3333333333%)" stop-opacity="1"></stop><stop offset="100%" stop-color="hsl(-79.4117647059, 60%, 83.3333333333%)" stop-opacity="1"></stop></linearGradient></svg></figure>
+<hr>
+</div></details>
+<details class="section" id="sec-3" open><summary><span class="step-num">BƯỚC 2</span> Cơ chế Sinh lý / Bệnh lý</summary><div class="section-body"><h3>2.1. YHCT — Hình thành &amp; đặc tính gây bệnh</h3>
+<blockquote>
+<p><strong>Theo KB (mục 2):</strong> <em>&quot;Mùa hè khí hậu viêm nhiệt mà mưa nhiều ẩm thấp, thấp khí và thử nhiệt kết hợp hình thành thử thấp bệnh tà... thử tà viêm nhiệt khốc liệt, truyền biến nhanh; thấp tà trọng (nặng), trọc (dơ) dễ phạm trung tiêu, lan tỏa tam tiêu, thể bệnh dai dẳng.&quot;</em></p>
+</blockquote>
+<p><strong>Ngoại nhân (tà khí):</strong></p>
+<ul>
+<li><strong>Thử nhiệt</strong> = hỏa nhiệt chi tà → bốc lên, thiêu đốt, hao khí thương tân.</li>
+<li><strong>Thấp</strong> = âm ngưng trọng trọc chi tà → dính trệ, hướng xuống, cản khí cơ.</li>
+<li>Hai tà tương kết → bệnh biến <strong>dai dẳng khó khỏi</strong>, lại <strong>dễ hóa nhiệt hóa táo, thương lạc, uất kết phát hoàng</strong>.</li>
+</ul>
+<p><strong>Nội nhân (chính khí):</strong></p>
+<blockquote>
+<p><strong>Theo KB:</strong> <em>&quot;Chính khí suy nhược, đặc biệt tỳ vị hư nhược, nguyên khí bất túc là nguyên nhân nội tại.&quot;</em></p>
+</blockquote>
+<p>Mùa hè thử thấp thịnh → tỳ vị vận hóa chậm trễ + ăn uống không điều độ → <strong>tỳ vị càng hư</strong> → dễ cảm thử thấp. Trích Tào Bình Chương: <em>&quot;nguyên khí mạnh, tam tiêu tinh khí xung túc thì kháng được tà; nguyên khí hư thì tà không chạy thoát đi đâu&quot;</em>.</p>
+<p><strong>Yếu tố thúc đẩy thử thấp kiêm hàn:</strong> mùa hè nóng → tìm chỗ mát, uống lạnh quá nhiều, gặp mưa gió → hàn tà xâm phạm → sơ khởi có <strong>thử thấp kiêm hàn chứng</strong>.</p>
+<h3>2.2. Vị trí khởi bệnh &amp; đường truyền biến</h3>
+<blockquote>
+<p><strong>Theo KB (trích Diệp Thiên Sĩ):</strong> <em>&quot;Thử thấp thương khí, phế tiên thụ bệnh, chư khí giai tỳ&quot;</em> — thử thấp xâm nhập <strong>qua miệng mũi → phạm phế đầu tiên</strong> (thượng tiêu), rồi <em>&quot;hoặc úng trệ phế lạc, hoặc lan tỏa tam tiêu, hoặc tà xâm phạm vị trường — đặc biệt đa số khôn trở trung tiêu&quot;</em>.</p>
+</blockquote>
+<p>Đặc điểm truyền biến <strong>khác hẳn ôn bệnh tuần tự Vệ→Khí→Dinh→Huyết</strong>: thử thấp lan tỏa <strong>mờ mịt tam tiêu</strong>, trọng tâm ở <strong>trung tiêu (tỳ vị)</strong>, và có thể:</p>
+<ul>
+<li><strong>Hóa táo hóa hỏa</strong> → nhập dinh huyết phần → <strong>nội hãm huyết phần tổn thương phế lạc → khạc máu</strong>.</li>
+<li><strong>Uất kết phát hoàng</strong> (thử thấp → can kinh → hoàng đản).</li>
+<li><strong>Hao khí thương âm</strong> kéo dài → sốt không lui, tự hãn, miệng khô khát, lưỡi đỏ.</li>
+<li><strong>Hồi phục:</strong> dư tà mông che thanh khiếu → hoa mắt, buồn ngủ, khó chịu.</li>
+</ul>
+<figure class="diagram"><svg id="mmd_1" width="100%" xmlns="http://www.w3.org/2000/svg" class="flowchart" style="max-width: 896px;" viewBox="0 0 896 1066" role="graphics-document document" aria-roledescription="flowchart-v2"><style>#mmd_1{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:16px;fill:#333;}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#mmd_1 .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#mmd_1 .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#mmd_1 .error-icon{fill:hsl(220.5882352941, 100%, 98.3333333333%);}#mmd_1 .error-text{fill:rgb(8.5000000002, 5.7500000001, 0);stroke:rgb(8.5000000002, 5.7500000001, 0);}#mmd_1 .edge-thickness-normal{stroke-width:1px;}#mmd_1 .edge-thickness-thick{stroke-width:3.5px;}#mmd_1 .edge-pattern-solid{stroke-dasharray:0;}#mmd_1 .edge-thickness-invisible{stroke-width:0;fill:none;}#mmd_1 .edge-pattern-dashed{stroke-dasharray:3;}#mmd_1 .edge-pattern-dotted{stroke-dasharray:2;}#mmd_1 .marker{fill:#0b0b0b;stroke:#0b0b0b;}#mmd_1 .marker.cross{stroke:#0b0b0b;}#mmd_1 svg{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:16px;}#mmd_1 p{margin:0;}#mmd_1 .label{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#333;}#mmd_1 .cluster-label text{fill:rgb(8.5000000002, 5.7500000001, 0);}#mmd_1 .cluster-label span{color:rgb(8.5000000002, 5.7500000001, 0);}#mmd_1 .cluster-label span p{background-color:transparent;}#mmd_1 .label text,#mmd_1 span{fill:#333;color:#333;}#mmd_1 .node rect,#mmd_1 .node circle,#mmd_1 .node ellipse,#mmd_1 .node polygon,#mmd_1 .node path{fill:#fff4dd;stroke:hsl(40.5882352941, 60%, 83.3333333333%);stroke-width:1px;}#mmd_1 .rough-node .label text,#mmd_1 .node .label text,#mmd_1 .image-shape .label,#mmd_1 .icon-shape .label{text-anchor:middle;}#mmd_1 .node .katex path{fill:#000;stroke:#000;stroke-width:1px;}#mmd_1 .rough-node .label,#mmd_1 .node .label,#mmd_1 .image-shape .label,#mmd_1 .icon-shape .label{text-align:center;}#mmd_1 .node.clickable{cursor:pointer;}#mmd_1 .root .anchor path{fill:#0b0b0b!important;stroke-width:0;stroke:#0b0b0b;}#mmd_1 .arrowheadPath{fill:#0b0b0b;}#mmd_1 .edgePath .path{stroke:#0b0b0b;stroke-width:1px;}#mmd_1 .flowchart-link{stroke:#0b0b0b;fill:none;}#mmd_1 .edgeLabel{background-color:hsl(-79.4117647059, 100%, 93.3333333333%);text-align:center;}#mmd_1 .edgeLabel p{background-color:hsl(-79.4117647059, 100%, 93.3333333333%);}#mmd_1 .edgeLabel rect{opacity:0.5;background-color:hsl(-79.4117647059, 100%, 93.3333333333%);fill:hsl(-79.4117647059, 100%, 93.3333333333%);}#mmd_1 .labelBkg{background-color:rgba(243.9999999999, 220.9999999998, 255, 0.5);}#mmd_1 .cluster rect{fill:hsl(220.5882352941, 100%, 98.3333333333%);stroke:hsl(220.5882352941, 60%, 88.3333333333%);stroke-width:1px;}#mmd_1 .cluster text{fill:rgb(8.5000000002, 5.7500000001, 0);}#mmd_1 .cluster span{color:rgb(8.5000000002, 5.7500000001, 0);}#mmd_1 div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:12px;background:hsl(220.5882352941, 100%, 98.3333333333%);border:1px solid hsl(220.5882352941, 60%, 88.3333333333%);border-radius:2px;pointer-events:none;z-index:100;}#mmd_1 .flowchartTitleText{text-anchor:middle;font-size:18px;fill:#333;}#mmd_1 rect.text{fill:none;stroke-width:0;}#mmd_1 .icon-shape,#mmd_1 .image-shape{background-color:hsl(-79.4117647059, 100%, 93.3333333333%);text-align:center;}#mmd_1 .icon-shape p,#mmd_1 .image-shape p{background-color:hsl(-79.4117647059, 100%, 93.3333333333%);padding:2px;}#mmd_1 .icon-shape .label rect,#mmd_1 .image-shape .label rect{opacity:0.5;background-color:hsl(-79.4117647059, 100%, 93.3333333333%);fill:hsl(-79.4117647059, 100%, 93.3333333333%);}#mmd_1 .label-icon{display:inline-block;height:1em;overflow:visible;vertical-align:-0.125em;}#mmd_1 .node .label-icon path{fill:currentColor;stroke:revert;stroke-width:revert;}#mmd_1 .node .neo-node{stroke:hsl(40.5882352941, 60%, 83.3333333333%);}#mmd_1 [data-look="neo"].node rect,#mmd_1 [data-look="neo"].cluster rect,#mmd_1 [data-look="neo"].node polygon{stroke:url(#mmd_1-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mmd_1 [data-look="neo"].swimlane.cluster rect{filter:none;}#mmd_1 [data-look="neo"].node path{stroke:url(#mmd_1-gradient);stroke-width:1px;}#mmd_1 [data-look="neo"].node .outer-path{filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mmd_1 [data-look="neo"].node .neo-line path{stroke:hsl(40.5882352941, 60%, 83.3333333333%);filter:none;}#mmd_1 [data-look="neo"].node circle{stroke:url(#mmd_1-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mmd_1 [data-look="neo"].node circle .state-start{fill:#000000;}#mmd_1 [data-look="neo"].icon-shape .icon{fill:url(#mmd_1-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mmd_1 [data-look="neo"].icon-shape .icon-neo path{stroke:url(#mmd_1-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mmd_1 :root{--mermaid-font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;}#mmd_1 .tho>*{fill:rgb(253, 232, 215)!important;stroke:rgb(192, 103, 14)!important;color:rgb(90, 50, 16)!important;}#mmd_1 .tho span{fill:rgb(253, 232, 215)!important;stroke:rgb(192, 103, 14)!important;color:rgb(90, 50, 16)!important;}#mmd_1 .tho tspan{fill:rgb(90, 50, 16)!important;}#mmd_1 .dh>*{fill:rgb(247, 214, 214)!important;stroke:rgb(163, 21, 21)!important;color:rgb(90, 10, 10)!important;}#mmd_1 .dh span{fill:rgb(247, 214, 214)!important;stroke:rgb(163, 21, 21)!important;color:rgb(90, 10, 10)!important;}#mmd_1 .dh tspan{fill:rgb(90, 10, 10)!important;}#mmd_1 .q>*{fill:rgb(255, 248, 225)!important;stroke:rgb(181, 137, 0)!important;color:rgb(90, 69, 0)!important;}#mmd_1 .q span{fill:rgb(255, 248, 225)!important;stroke:rgb(181, 137, 0)!important;color:rgb(90, 69, 0)!important;}#mmd_1 .q tspan{fill:rgb(90, 69, 0)!important;}#mmd_1 .hp>*{fill:rgb(220, 232, 245)!important;stroke:rgb(29, 90, 150)!important;color:rgb(19, 49, 79)!important;}#mmd_1 .hp span{fill:rgb(220, 232, 245)!important;stroke:rgb(29, 90, 150)!important;color:rgb(19, 49, 79)!important;}#mmd_1 .hp tspan{fill:rgb(19, 49, 79)!important;}</style><g><marker id="mmd_1_flowchart-v2-pointEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker><marker id="mmd_1_flowchart-v2-pointStart" class="marker flowchart-v2" viewBox="0 0 10 10" refX="4.5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 5 L 10 10 L 10 0 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker><marker id="mmd_1_flowchart-v2-pointEnd-margin" class="marker flowchart-v2" viewBox="0 0 11.5 14" refX="11.5" refY="7" markerUnits="userSpaceOnUse" markerWidth="10.5" markerHeight="14" orient="auto"><path d="M 0 0 L 11.5 7 L 0 14 z" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></path></marker><marker id="mmd_1_flowchart-v2-pointStart-margin" class="marker flowchart-v2" viewBox="0 0 11.5 14" refX="1" refY="7" markerUnits="userSpaceOnUse" markerWidth="11.5" markerHeight="14" orient="auto"><polygon points="0,7 11.5,14 11.5,0" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></polygon></marker><marker id="mmd_1_flowchart-v2-circleEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="11" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></circle></marker><marker id="mmd_1_flowchart-v2-circleStart" class="marker flowchart-v2" viewBox="0 0 10 10" refX="-1" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></circle></marker><marker id="mmd_1_flowchart-v2-circleEnd-margin" class="marker flowchart-v2" viewBox="0 0 10 10" refY="5" refX="12.25" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></circle></marker><marker id="mmd_1_flowchart-v2-circleStart-margin" class="marker flowchart-v2" viewBox="0 0 10 10" refX="-2" refY="5" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></circle></marker><marker id="mmd_1_flowchart-v2-crossEnd" class="marker cross flowchart-v2" viewBox="0 0 11 11" refX="12" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"></path></marker><marker id="mmd_1_flowchart-v2-crossStart" class="marker cross flowchart-v2" viewBox="0 0 11 11" refX="-1" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"></path></marker><marker id="mmd_1_flowchart-v2-crossEnd-margin" class="marker cross flowchart-v2" viewBox="0 0 15 15" refX="17.7" refY="7.5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 1,1 L 14,14 M 1,14 L 14,1" class="arrowMarkerPath" style="stroke-width: 2.5;"></path></marker><marker id="mmd_1_flowchart-v2-crossStart-margin" class="marker cross flowchart-v2" viewBox="0 0 15 15" refX="-3.5" refY="7.5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 1,1 L 14,14 M 1,14 L 14,1" class="arrowMarkerPath" style="stroke-width: 2.5; stroke-dasharray: 1, 0;"></path></marker><g class="root"><g class="clusters"></g><g class="edgePaths"><path d="M448,86L448,90.167C448,94.333,448,102.667,448,110.333C448,118,448,125,448,128.5L448,132" id="mmd_1-L_XN_PHE_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_XN_PHE_0" data-points="W3sieCI6NDQ4LCJ5Ijo4Nn0seyJ4Ijo0NDgsInkiOjExMX0seyJ4Ijo0NDgsInkiOjEzNn1d" data-look="classic" marker-end="url(#mmd_1_flowchart-v2-pointEnd)"></path><path d="M337.034,262L329.695,266.167C322.356,270.333,307.678,278.667,300.339,286.333C293,294,293,301,293,304.5L293,308" id="mmd_1-L_PHE_TT_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_PHE_TT_0" data-points="W3sieCI6MzM3LjAzNDA5MDkwOTA5MDksInkiOjI2Mn0seyJ4IjoyOTMsInkiOjI4N30seyJ4IjoyOTMsInkiOjMxMn1d" data-look="classic" marker-end="url(#mmd_1_flowchart-v2-pointEnd)"></path><path d="M558.966,262L566.305,266.167C573.644,270.333,588.322,278.667,595.661,288.333C603,298,603,309,603,314.5L603,320" id="mmd_1-L_PHE_TAM_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_PHE_TAM_0" data-points="W3sieCI6NTU4Ljk2NTkwOTA5MDkwOTEsInkiOjI2Mn0seyJ4Ijo2MDMsInkiOjI4N30seyJ4Ijo2MDMsInkiOjMyNH1d" data-look="classic" marker-end="url(#mmd_1_flowchart-v2-pointEnd)"></path><path d="M293,486L293,490.167C293,494.333,293,502.667,310.816,518.098C328.632,533.529,364.264,556.057,382.08,567.321L399.896,578.586" id="mmd_1-L_TT_HOA_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_TT_HOA_0" data-points="W3sieCI6MjkzLCJ5Ijo0ODZ9LHsieCI6MjkzLCJ5Ijo1MTF9LHsieCI6NDAzLjI3NjY3OTg0MTg5NzI1LCJ5Ijo1ODAuNzIzMzIwMTU4MTAyOH1d" data-look="classic" marker-end="url(#mmd_1_flowchart-v2-pointEnd)"></path><path d="M603,474L603,480.167C603,486.333,603,498.667,585.184,516.098C567.368,533.529,531.736,556.057,513.92,567.321L496.104,578.586" id="mmd_1-L_TAM_HOA_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_TAM_HOA_0" data-points="W3sieCI6NjAzLCJ5Ijo0NzR9LHsieCI6NjAzLCJ5Ijo1MTF9LHsieCI6NDkyLjcyMzMyMDE1ODEwMjc1LCJ5Ijo1ODAuNzIzMzIwMTU4MTAyOH1d" data-look="classic" marker-end="url(#mmd_1_flowchart-v2-pointEnd)"></path><path d="M394.119,628.119L351.433,643.266C308.746,658.413,223.373,688.706,180.687,709.353C138,730,138,741,138,746.5L138,752" id="mmd_1-L_HOA_HH_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_HOA_HH_0" data-points="W3sieCI6Mzk0LjExOTA0NzYxOTA0NzYsInkiOjYyOC4xMTkwNDc2MTkwNDc2fSx7IngiOjEzOCwieSI6NzE5fSx7IngiOjEzOCwieSI6NzU2fV0=" data-look="classic" marker-end="url(#mmd_1_flowchart-v2-pointEnd)"></path><path d="M448,682L448,688.167C448,694.333,448,706.667,448,718.333C448,730,448,741,448,746.5L448,752" id="mmd_1-L_HOA_HD_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_HOA_HD_0" data-points="W3sieCI6NDQ4LCJ5Ijo2ODJ9LHsieCI6NDQ4LCJ5Ijo3MTl9LHsieCI6NDQ4LCJ5Ijo3NTZ9XQ==" data-look="classic" marker-end="url(#mmd_1_flowchart-v2-pointEnd)"></path><path d="M501.881,628.119L544.567,643.266C587.254,658.413,672.627,688.706,715.313,709.353C758,730,758,741,758,746.5L758,752" id="mmd_1-L_HOA_TK_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_HOA_TK_0" data-points="W3sieCI6NTAxLjg4MDk1MjM4MDk1MjQsInkiOjYyOC4xMTkwNDc2MTkwNDc2fSx7IngiOjc1OCwieSI6NzE5fSx7IngiOjc1OCwieSI6NzU2fV0=" data-look="classic" marker-end="url(#mmd_1_flowchart-v2-pointEnd)"></path><path d="M138,882L138,886.167C138,890.333,138,898.667,167.359,911.167C196.717,923.668,255.435,940.336,284.793,948.67L314.152,957.004" id="mmd_1-L_HH_HP_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_HH_HP_0" data-points="W3sieCI6MTM4LCJ5Ijo4ODJ9LHsieCI6MTM4LCJ5Ijo5MDd9LHsieCI6MzE4LCJ5Ijo5NTguMDk2Nzc0MTkzNTQ4NH1d" data-look="classic" marker-end="url(#mmd_1_flowchart-v2-pointEnd)"></path><path d="M448,882L448,886.167C448,890.333,448,898.667,448,906.333C448,914,448,921,448,924.5L448,928" id="mmd_1-L_HD_HP_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_HD_HP_0" data-points="W3sieCI6NDQ4LCJ5Ijo4ODJ9LHsieCI6NDQ4LCJ5Ijo5MDd9LHsieCI6NDQ4LCJ5Ijo5MzJ9XQ==" data-look="classic" marker-end="url(#mmd_1_flowchart-v2-pointEnd)"></path><path d="M758,882L758,886.167C758,890.333,758,898.667,728.641,911.167C699.283,923.668,640.565,940.336,611.207,948.67L581.848,957.004" id="mmd_1-L_TK_HP_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_TK_HP_0" data-points="W3sieCI6NzU4LCJ5Ijo4ODJ9LHsieCI6NzU4LCJ5Ijo5MDd9LHsieCI6NTc4LCJ5Ijo5NTguMDk2Nzc0MTkzNTQ4NH1d" data-look="classic" marker-end="url(#mmd_1_flowchart-v2-pointEnd)"></path></g><g class="edgeLabels"><g class="edgeLabel"><g class="label" data-id="L_XN_PHE_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_PHE_TT_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_PHE_TAM_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_TT_HOA_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_TAM_HOA_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(138, 719)"><g class="label" data-id="L_HOA_HH_0" transform="translate(-58, -12)"><foreignObject width="116" height="24"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "><p>hóa táo hóa hỏa</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(448, 719)"><g class="label" data-id="L_HOA_HD_0" transform="translate(-63.453125, -12)"><foreignObject width="126.90625" height="24"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "><p>uất kết thành độc</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(758, 719)"><g class="label" data-id="L_HOA_TK_0" transform="translate(-65.7578125, -12)"><foreignObject width="131.515625" height="24"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "><p>tà luyến hao chính</p></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_HH_HP_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_HD_HP_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_TK_HP_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g></g><g class="nodes"><g class="node default tho " id="mmd_1-flowchart-XN-0" data-look="classic" transform="translate(448, 47)"><rect class="basic label-container" style="fill:#fde8d7 !important;stroke:#c0670e !important" x="-127.0234375" y="-39" width="254.046875" height="78"></rect><g class="label" style="color:#5a3210 !important" transform="translate(-97.0234375, -24)"><rect></rect><foreignObject width="194.046875" height="48"><div style="color: rgb(90, 50, 16) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#5a3210 !important" class="nodeLabel "><p>Thử thấp tà<br/>xâm nhập qua MIỆNG–MŨI</p></span></div></foreignObject></g></g><g class="node default tho " id="mmd_1-flowchart-PHE-1" data-look="classic" transform="translate(448, 199)"><rect class="basic label-container" style="fill:#fde8d7 !important;stroke:#c0670e !important" x="-130" y="-63" width="260" height="126"></rect><g class="label" style="color:#5a3210 !important" transform="translate(-100, -48)"><rect></rect><foreignObject width="200" height="96"><div style="color: rgb(90, 50, 16) !important; display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#5a3210 !important" class="nodeLabel "><p>THƯỢNG TIÊU — PHẾ VỆ<br/>(phế tiên thụ bệnh)<br/>sốt, ố phong hàn nhẹ, thân nặng</p></span></div></foreignObject></g></g><g class="node default tho " id="mmd_1-flowchart-TT-5" data-look="classic" transform="translate(293, 399)"><rect class="basic label-container" style="fill:#fde8d7 !important;stroke:#c0670e !important" x="-130" y="-87" width="260" height="174"></rect><g class="label" style="color:#5a3210 !important" transform="translate(-100, -72)"><rect></rect><foreignObject width="200" height="144"><div style="color: rgb(90, 50, 16) !important; display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#5a3210 !important" class="nodeLabel "><p>TRUNG TIÊU — TỲ VỊ ★trọng tâm★<br/>khôn trở khí cơ: quản bĩ, nôn,<br/>đau bụng, tiêu chảy phân hôi</p></span></div></foreignObject></g></g><g class="node default tho " id="mmd_1-flowchart-TAM-7" data-look="classic" transform="translate(603, 399)"><rect class="basic label-container" style="fill:#fde8d7 !important;stroke:#c0670e !important" x="-130" y="-75" width="260" height="150"></rect><g class="label" style="color:#5a3210 !important" transform="translate(-100, -60)"><rect></rect><foreignObject width="200" height="120"><div style="color: rgb(90, 50, 16) !important; display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#5a3210 !important" class="nodeLabel "><p>LAN TỎA TAM TIÊU<br/>mờ mịt thượng–trung–hạ:<br/>tai điếc, hoa mắt, ngực tức,<br/>tiểu ngắn đỏ, đại tiện lỏng hôi</p></span></div></foreignObject></g></g><g class="node default q " id="mmd_1-flowchart-HOA-9" data-look="classic" transform="translate(448, 609)"><polygon points="73,0 146,-73 73,-146 0,-73" class="label-container" transform="translate(-72.5, 73)" style="fill:#fff8e1 !important;stroke:#b58900 !important"></polygon><g class="label" style="color:#5a4500 !important" transform="translate(-34, -24)"><rect></rect><foreignObject width="68" height="48"><div style="color: rgb(90, 69, 0) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#5a4500 !important" class="nodeLabel "><p>Diễn biến<br/>nặng?</p></span></div></foreignObject></g></g><g class="node default dh " id="mmd_1-flowchart-HH-13" data-look="classic" transform="translate(138, 819)"><rect class="basic label-container" style="fill:#f7d6d6 !important;stroke:#a31515 !important" x="-130" y="-63" width="260" height="126"></rect><g class="label" style="color:#5a0a0a !important" transform="translate(-100, -48)"><rect></rect><foreignObject width="200" height="96"><div style="color: rgb(90, 10, 10) !important; display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#5a0a0a !important" class="nodeLabel "><p>NHẬP DINH HUYẾT<br/>tổn thương phế lạc → khạc máu,<br/>động huyết, xuất huyết</p></span></div></foreignObject></g></g><g class="node default dh " id="mmd_1-flowchart-HD-15" data-look="classic" transform="translate(448, 819)"><rect class="basic label-container" style="fill:#f7d6d6 !important;stroke:#a31515 !important" x="-130" y="-63" width="260" height="126"></rect><g class="label" style="color:#5a0a0a !important" transform="translate(-100, -48)"><rect></rect><foreignObject width="200" height="96"><div style="color: rgb(90, 10, 10) !important; display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#5a0a0a !important" class="nodeLabel "><p>UẤT KẾT PHÁT HOÀNG<br/>độc nhập can → hoàng đản nặng,<br/>sưng gan, xuất huyết</p></span></div></foreignObject></g></g><g class="node default dh " id="mmd_1-flowchart-TK-17" data-look="classic" transform="translate(758, 819)"><rect class="basic label-container" style="fill:#f7d6d6 !important;stroke:#a31515 !important" x="-130" y="-63" width="260" height="126"></rect><g class="label" style="color:#5a0a0a !important" transform="translate(-100, -48)"><rect></rect><foreignObject width="200" height="96"><div style="color: rgb(90, 10, 10) !important; display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#5a0a0a !important" class="nodeLabel "><p>HAO KHÍ THƯƠNG ÂM<br/>sốt dai, tự hãn, khô khát,<br/>tứ chi rã rời (thử thương khí)</p></span></div></foreignObject></g></g><g class="node default hp " id="mmd_1-flowchart-HP-19" data-look="classic" transform="translate(448, 995)"><rect class="basic label-container" style="fill:#dce8f5 !important;stroke:#1d5a96 !important" x="-130" y="-63" width="260" height="126"></rect><g class="label" style="color:#13314f !important" transform="translate(-100, -48)"><rect></rect><foreignObject width="200" height="96"><div style="color: rgb(19, 49, 79) !important; display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#13314f !important" class="nodeLabel "><p>HẬU KỲ<br/>dư tà mông che thanh khiếu<br/>hoa mắt, buồn ngủ</p></span></div></foreignObject></g></g></g></g></g><defs><filter id="mmd_1-drop-shadow" height="130%" width="130%"><feDropShadow dx="4" dy="4" stdDeviation="0" flood-opacity="0.06" flood-color="#000000"></feDropShadow></filter></defs><defs><filter id="mmd_1-drop-shadow-small" height="150%" width="150%"><feDropShadow dx="2" dy="2" stdDeviation="0" flood-opacity="0.06" flood-color="#000000"></feDropShadow></filter></defs><linearGradient id="mmd_1-gradient" gradientUnits="objectBoundingBox" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="hsl(40.5882352941, 60%, 83.3333333333%)" stop-opacity="1"></stop><stop offset="100%" stop-color="hsl(-79.4117647059, 60%, 83.3333333333%)" stop-opacity="1"></stop></linearGradient></svg></figure>
+<h3>2.3. Tây y — Sinh lý bệnh đối chiếu</h3>
+<p><span class="kb-ext">🔸 Kiến thức nền — ngoài KB</span></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>YHCT</th>
+<th>Diễn giải sinh lý bệnh Tây y</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Thử nhiệt viêm nhiệt</td>
+<td>Phản ứng sốt + viêm hệ thống do nhiễm trùng/nhiễm độc</td>
+</tr>
+<tr>
+<td>Thấp khôn trở trung tiêu</td>
+<td>Rối loạn tiêu hóa: viêm dạ dày-ruột, buồn nôn, tiêu chảy, chướng bụng</td>
+</tr>
+<tr>
+<td>Hao khí thương tân (nôn, tả, hãn)</td>
+<td>Mất nước – mất điện giải, giảm thể tích tuần hoàn</td>
+</tr>
+<tr>
+<td>Uất kết phát hoàng</td>
+<td>Tổn thương gan-mật (Lepto: vàng da do tổn thương tế bào gan + tan máu)</td>
+</tr>
+<tr>
+<td>Tổn thương phế lạc → khạc máu</td>
+<td>Xuất huyết phổi (Lepto thể nặng — Weil), viêm phổi xuất huyết</td>
+</tr>
+<tr>
+<td>Thử thấp mông che thanh khiếu</td>
+<td>Bệnh não do nhiễm độc / viêm màng não-não, rối loạn ý thức nhẹ</td>
+</tr>
+</tbody></table></div>
+<hr>
+</div></details>
+<details class="section" id="sec-4" open><summary><span class="step-num">BƯỚC 3</span> Biểu hiện Lâm sàng</summary><div class="section-body"><h3>3.1. Tứ chẩn đặc trưng</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Chẩn</th>
+<th>Biểu hiện thử thấp điển hình</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Vọng</strong></td>
+<td>Mặt/mắt đỏ; <strong>lưỡi đỏ – rêu trắng nê hoặc vàng nê</strong> (dấu ấn thấp); nặng → lưỡi đỏ thẫm. Da: có thể vàng (hoàng đản), ban xuất huyết</td>
+</tr>
+<tr>
+<td><strong>Văn</strong></td>
+<td>Hơi thở thô gấp; nôn ói; (nặng) chiêm ngữ</td>
+</tr>
+<tr>
+<td><strong>Vấn</strong></td>
+<td><strong>Hàn nhiệt, đau mình</strong> (sơ khởi) → sốt cao, tâm phiền, <strong>miệng khát nhưng không nhiều</strong> (đặc thù thấp), thân nặng, ngực bụng bĩ muộn, tiểu ngắn đỏ, đại tiện lỏng hôi. Hỏi <strong>mùa + tiếp xúc nước/bùn/chuột</strong></td>
+</tr>
+<tr>
+<td><strong>Thiết</strong></td>
+<td><strong>Mạch nhu</strong> (mềm — dấu ấn thấp) / nhu sác / hoạt sác; <strong>thân thể nặng nề</strong>, các khớp đau mỏi, ấn đau cơ bắp chân</td>
+</tr>
+</tbody></table></div>
+<div class="callout c-note"><div class="callout-title"><span class="ico">📝</span>Hai dấu ấn THẤP để không nhầm với thử ôn thuần</div><div class="callout-body"><p>① <strong>Miệng khát mà không muốn uống nhiều</strong> (thấp ngăn tân không thiếu thực sự).
+② <strong>Mạch nhu + rêu nê + thân nặng</strong>. Thử ôn thuần thì khát dữ, mạch hồng đại, rêu vàng khô.</p>
+</div></div>
+
+
+<h3>3.2. Triệu chứng cơ năng vs thực thể</h3>
+<p><strong>Cơ năng (chủ quan):</strong> thân nặng mỏi, đau mình đau khớp, ngực bụng đầy tức, buồn nôn, tâm phiền, khát ít, hoa mắt chóng mặt.</p>
+<p><strong>Thực thể (khách quan):</strong> sốt, đổ mồ hôi không thông sướng, nôn, tiêu chảy phân hôi, vàng da (nếu hoàng đản), xuất huyết (máu cam, khạc máu, tiểu máu), ấn đau cơ bắp chân, sưng hạch, gan to.</p>
+<hr>
+</div></details>
+<details class="section" id="sec-5" open><summary><span class="step-num">BƯỚC 4</span> Chẩn đoán</summary><div class="section-body"><h3>4.1. Chẩn đoán xác định (theo KB)</h3>
+<ol>
+<li><strong>Phát vào mùa hè</strong> thử thấp thịnh.</li>
+<li>Bệnh nhân <strong>có/không sẵn hư nhược tỳ vị</strong>; tiền sử <strong>lao quyện quá độ, dầm mưa gió, thích ăn uống lạnh</strong> hỗ trợ chẩn đoán.</li>
+<li><strong>Khởi bệnh cấp</strong> — sơ khởi <strong>hàn nhiệt, đau mình</strong> là chủ yếu; nhập khí phần → <strong>sốt, tâm phiền, tiểu đỏ</strong> (thử nhiệt nội thịnh).</li>
+<li>Trong quá trình bệnh đa số có <strong>hoàng đản, xuất huyết</strong>, kèm đầy cứng bụng, rêu lưỡi nê.</li>
+<li><strong>Bệnh xoắn khuẩn:</strong> tam chứng <strong>hàn nhiệt – đau mỏi toàn thân – mệt mỏi uể oải</strong> + mắt đỏ, đau chân, ấn đau bắp chân, sưng hạch; <strong>XN:</strong> BC↑, trung tính↑, máu lắng↑, protein/HC niệu, urê↑, men gan bất thường.</li>
+</ol>
+<h3>4.2. Biện chứng (Bát cương + Vệ-Khí-Dinh-Huyết)</h3>
+<ul>
+<li><strong>Bát cương:</strong> Biểu→Lý;<br><span class="enum-indent"></span><strong>Nhiệt</strong> (kèm Thấp);<br><span class="enum-indent"></span>Thực (giai đoạn đầu) → có thể chuyển Hư (thương khí tân).</li>
+<li><strong>VKDH/Tam tiêu:</strong> khởi tại <strong>vệ</strong> (thoáng) → trọng tâm <strong>khí phần trung tiêu/tam tiêu</strong> → có thể nghịch truyền <strong>dinh-huyết</strong> khi hóa táo hóa hỏa.</li>
+</ul>
+<h3>4.3. Chẩn đoán phân biệt — 4 ôn bệnh mùa hè</h3>
+<blockquote>
+<p><strong>Theo KB (mục 4):</strong> nguyên văn so sánh thử thấp ↔ thử ôn ↔ thấp ôn ↔ phục thử.</p>
+</blockquote>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Tiêu chí</th>
+<th><strong>Thử thấp</strong> ⭐</th>
+<th><strong>Thử ôn</strong></th>
+<th><strong>Thấp ôn</strong></th>
+<th><strong>Phục thử</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Tà khí</td>
+<td><strong>Thử + thấp</strong> (cảm tức phát)</td>
+<td>Thử nhiệt <strong>thuần</strong></td>
+<td>Thấp nhiệt</td>
+<td>Thử thấp <strong>phục tàng</strong></td>
+</tr>
+<tr>
+<td>Mùa</td>
+<td>Hè / giao hè-thu</td>
+<td>Hè (cảm tức phát)</td>
+<td>Trường hạ (cuối hè-thu)</td>
+<td><strong>Sau Lập thu</strong> mới phát</td>
+</tr>
+<tr>
+<td>Khởi bệnh</td>
+<td><strong>Cấp</strong></td>
+<td><strong>Cấp, bùng nổ</strong></td>
+<td><strong>Từ từ, âm ỉ</strong></td>
+<td>Phát là <strong>lý nhiệt ngay</strong></td>
+</tr>
+<tr>
+<td>Nhiệt</td>
+<td>Thử nhiệt + thân nặng</td>
+<td><strong>Sốt cao nổi bật</strong>, phiền khát, mạch hồng đại</td>
+<td>Nhiệt <strong>ẩn trong thấp</strong>, lúc đầu không rõ</td>
+<td>Cao nhiệt, tâm phiền, lưỡi đỏ</td>
+</tr>
+<tr>
+<td>Thấp chứng</td>
+<td><strong>Rõ:</strong> thân nặng, rêu nê, mạch nhu, quản bĩ</td>
+<td><strong>Không / không rõ</strong></td>
+<td><strong>Rất rõ</strong>, bệnh tại tỳ vị</td>
+<td>Có thấp uất kèm</td>
+</tr>
+<tr>
+<td>Vệ biểu</td>
+<td>Có hàn nhiệt đau mình</td>
+<td>Thoáng qua</td>
+<td>Vệ chứng kéo dài hơn</td>
+<td>Vệ chứng <strong>chỉ thoáng</strong></td>
+</tr>
+<tr>
+<td>Bệnh trình</td>
+<td><strong>Dai dẳng</strong></td>
+<td>Cấp, ngắn nhưng nặng</td>
+<td><strong>Dài, dai dẳng nhất</strong></td>
+<td>Dài, dai dẳng</td>
+</tr>
+</tbody></table></div>
+<div class="callout c-warning"><div class="callout-title"><span class="ico">⚠️</span>Bẫy lâm sàng (KB nhấn mạnh)</div><div class="callout-body"><p><em>&quot;Khi thử thấp <strong>hóa táo hóa hỏa</strong> thì biểu hiện lâm sàng lại <strong>rất giống thử ôn</strong>.&quot;</em> Một bộ phận bệnh nhân thử thấp hãm dinh động huyết sẽ &quot;giống thử ôn / thấp ôn / phục thử ở giai đoạn dinh phần&quot; → <strong>phải truy tiền sử có giai đoạn thấp chứng</strong> (thân nặng, rêu nê) để không bỏ sót gốc thấp.</p>
+</div></div>
+
+
+
+
+<figure class="diagram"><svg id="mmd_2" width="100%" xmlns="http://www.w3.org/2000/svg" class="flowchart" style="max-width: 806.5546875px;" viewBox="0 0 806.5546875 1132.34375" role="graphics-document document" aria-roledescription="flowchart-v2"><style>#mmd_2{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:16px;fill:#333;}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#mmd_2 .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#mmd_2 .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#mmd_2 .error-icon{fill:hsl(220.5882352941, 100%, 98.3333333333%);}#mmd_2 .error-text{fill:rgb(8.5000000002, 5.7500000001, 0);stroke:rgb(8.5000000002, 5.7500000001, 0);}#mmd_2 .edge-thickness-normal{stroke-width:1px;}#mmd_2 .edge-thickness-thick{stroke-width:3.5px;}#mmd_2 .edge-pattern-solid{stroke-dasharray:0;}#mmd_2 .edge-thickness-invisible{stroke-width:0;fill:none;}#mmd_2 .edge-pattern-dashed{stroke-dasharray:3;}#mmd_2 .edge-pattern-dotted{stroke-dasharray:2;}#mmd_2 .marker{fill:#0b0b0b;stroke:#0b0b0b;}#mmd_2 .marker.cross{stroke:#0b0b0b;}#mmd_2 svg{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:16px;}#mmd_2 p{margin:0;}#mmd_2 .label{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#333;}#mmd_2 .cluster-label text{fill:rgb(8.5000000002, 5.7500000001, 0);}#mmd_2 .cluster-label span{color:rgb(8.5000000002, 5.7500000001, 0);}#mmd_2 .cluster-label span p{background-color:transparent;}#mmd_2 .label text,#mmd_2 span{fill:#333;color:#333;}#mmd_2 .node rect,#mmd_2 .node circle,#mmd_2 .node ellipse,#mmd_2 .node polygon,#mmd_2 .node path{fill:#fff4dd;stroke:hsl(40.5882352941, 60%, 83.3333333333%);stroke-width:1px;}#mmd_2 .rough-node .label text,#mmd_2 .node .label text,#mmd_2 .image-shape .label,#mmd_2 .icon-shape .label{text-anchor:middle;}#mmd_2 .node .katex path{fill:#000;stroke:#000;stroke-width:1px;}#mmd_2 .rough-node .label,#mmd_2 .node .label,#mmd_2 .image-shape .label,#mmd_2 .icon-shape .label{text-align:center;}#mmd_2 .node.clickable{cursor:pointer;}#mmd_2 .root .anchor path{fill:#0b0b0b!important;stroke-width:0;stroke:#0b0b0b;}#mmd_2 .arrowheadPath{fill:#0b0b0b;}#mmd_2 .edgePath .path{stroke:#0b0b0b;stroke-width:1px;}#mmd_2 .flowchart-link{stroke:#0b0b0b;fill:none;}#mmd_2 .edgeLabel{background-color:hsl(-79.4117647059, 100%, 93.3333333333%);text-align:center;}#mmd_2 .edgeLabel p{background-color:hsl(-79.4117647059, 100%, 93.3333333333%);}#mmd_2 .edgeLabel rect{opacity:0.5;background-color:hsl(-79.4117647059, 100%, 93.3333333333%);fill:hsl(-79.4117647059, 100%, 93.3333333333%);}#mmd_2 .labelBkg{background-color:rgba(243.9999999999, 220.9999999998, 255, 0.5);}#mmd_2 .cluster rect{fill:hsl(220.5882352941, 100%, 98.3333333333%);stroke:hsl(220.5882352941, 60%, 88.3333333333%);stroke-width:1px;}#mmd_2 .cluster text{fill:rgb(8.5000000002, 5.7500000001, 0);}#mmd_2 .cluster span{color:rgb(8.5000000002, 5.7500000001, 0);}#mmd_2 div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:12px;background:hsl(220.5882352941, 100%, 98.3333333333%);border:1px solid hsl(220.5882352941, 60%, 88.3333333333%);border-radius:2px;pointer-events:none;z-index:100;}#mmd_2 .flowchartTitleText{text-anchor:middle;font-size:18px;fill:#333;}#mmd_2 rect.text{fill:none;stroke-width:0;}#mmd_2 .icon-shape,#mmd_2 .image-shape{background-color:hsl(-79.4117647059, 100%, 93.3333333333%);text-align:center;}#mmd_2 .icon-shape p,#mmd_2 .image-shape p{background-color:hsl(-79.4117647059, 100%, 93.3333333333%);padding:2px;}#mmd_2 .icon-shape .label rect,#mmd_2 .image-shape .label rect{opacity:0.5;background-color:hsl(-79.4117647059, 100%, 93.3333333333%);fill:hsl(-79.4117647059, 100%, 93.3333333333%);}#mmd_2 .label-icon{display:inline-block;height:1em;overflow:visible;vertical-align:-0.125em;}#mmd_2 .node .label-icon path{fill:currentColor;stroke:revert;stroke-width:revert;}#mmd_2 .node .neo-node{stroke:hsl(40.5882352941, 60%, 83.3333333333%);}#mmd_2 [data-look="neo"].node rect,#mmd_2 [data-look="neo"].cluster rect,#mmd_2 [data-look="neo"].node polygon{stroke:url(#mmd_2-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mmd_2 [data-look="neo"].swimlane.cluster rect{filter:none;}#mmd_2 [data-look="neo"].node path{stroke:url(#mmd_2-gradient);stroke-width:1px;}#mmd_2 [data-look="neo"].node .outer-path{filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mmd_2 [data-look="neo"].node .neo-line path{stroke:hsl(40.5882352941, 60%, 83.3333333333%);filter:none;}#mmd_2 [data-look="neo"].node circle{stroke:url(#mmd_2-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mmd_2 [data-look="neo"].node circle .state-start{fill:#000000;}#mmd_2 [data-look="neo"].icon-shape .icon{fill:url(#mmd_2-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mmd_2 [data-look="neo"].icon-shape .icon-neo path{stroke:url(#mmd_2-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mmd_2 :root{--mermaid-font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;}#mmd_2 .on>*{fill:rgb(253, 232, 215)!important;stroke:rgb(192, 103, 14)!important;color:rgb(90, 50, 16)!important;}#mmd_2 .on span{fill:rgb(253, 232, 215)!important;stroke:rgb(192, 103, 14)!important;color:rgb(90, 50, 16)!important;}#mmd_2 .on tspan{fill:rgb(90, 50, 16)!important;}#mmd_2 .tg>*{fill:rgb(231, 240, 217)!important;stroke:rgb(90, 125, 30)!important;color:rgb(47, 67, 16)!important;}#mmd_2 .tg span{fill:rgb(231, 240, 217)!important;stroke:rgb(90, 125, 30)!important;color:rgb(47, 67, 16)!important;}#mmd_2 .tg tspan{fill:rgb(47, 67, 16)!important;}#mmd_2 .q>*{fill:rgb(255, 248, 225)!important;stroke:rgb(181, 137, 0)!important;color:rgb(90, 69, 0)!important;}#mmd_2 .q span{fill:rgb(255, 248, 225)!important;stroke:rgb(181, 137, 0)!important;color:rgb(90, 69, 0)!important;}#mmd_2 .q tspan{fill:rgb(90, 69, 0)!important;}</style><g><marker id="mmd_2_flowchart-v2-pointEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker><marker id="mmd_2_flowchart-v2-pointStart" class="marker flowchart-v2" viewBox="0 0 10 10" refX="4.5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 5 L 10 10 L 10 0 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker><marker id="mmd_2_flowchart-v2-pointEnd-margin" class="marker flowchart-v2" viewBox="0 0 11.5 14" refX="11.5" refY="7" markerUnits="userSpaceOnUse" markerWidth="10.5" markerHeight="14" orient="auto"><path d="M 0 0 L 11.5 7 L 0 14 z" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></path></marker><marker id="mmd_2_flowchart-v2-pointStart-margin" class="marker flowchart-v2" viewBox="0 0 11.5 14" refX="1" refY="7" markerUnits="userSpaceOnUse" markerWidth="11.5" markerHeight="14" orient="auto"><polygon points="0,7 11.5,14 11.5,0" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></polygon></marker><marker id="mmd_2_flowchart-v2-circleEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="11" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></circle></marker><marker id="mmd_2_flowchart-v2-circleStart" class="marker flowchart-v2" viewBox="0 0 10 10" refX="-1" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></circle></marker><marker id="mmd_2_flowchart-v2-circleEnd-margin" class="marker flowchart-v2" viewBox="0 0 10 10" refY="5" refX="12.25" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></circle></marker><marker id="mmd_2_flowchart-v2-circleStart-margin" class="marker flowchart-v2" viewBox="0 0 10 10" refX="-2" refY="5" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></circle></marker><marker id="mmd_2_flowchart-v2-crossEnd" class="marker cross flowchart-v2" viewBox="0 0 11 11" refX="12" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"></path></marker><marker id="mmd_2_flowchart-v2-crossStart" class="marker cross flowchart-v2" viewBox="0 0 11 11" refX="-1" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"></path></marker><marker id="mmd_2_flowchart-v2-crossEnd-margin" class="marker cross flowchart-v2" viewBox="0 0 15 15" refX="17.7" refY="7.5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 1,1 L 14,14 M 1,14 L 14,1" class="arrowMarkerPath" style="stroke-width: 2.5;"></path></marker><marker id="mmd_2_flowchart-v2-crossStart-margin" class="marker cross flowchart-v2" viewBox="0 0 15 15" refX="-3.5" refY="7.5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 1,1 L 14,14 M 1,14 L 14,1" class="arrowMarkerPath" style="stroke-width: 2.5; stroke-dasharray: 1, 0;"></path></marker><g class="root"><g class="clusters"></g><g class="edgePaths"><path d="M255.07,62L255.07,66.167C255.07,70.333,255.07,78.667,255.07,86.333C255.07,94,255.07,101,255.07,104.5L255.07,108" id="mmd_2-L_A_B_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_A_B_0" data-points="W3sieCI6MjU1LjA3MDMxMjUsInkiOjYyfSx7IngiOjI1NS4wNzAzMTI1LCJ5Ijo4N30seyJ4IjoyNTUuMDcwMzEyNSwieSI6MTEyfV0=" data-look="classic" marker-end="url(#mmd_2_flowchart-v2-pointEnd)"></path><path d="M193.203,352.132L181.765,368.61C170.328,385.088,147.453,418.044,136.016,447.256C124.578,476.469,124.578,501.938,124.578,514.672L124.578,527.406" id="mmd_2-L_B_THUON_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_B_THUON_0" data-points="W3sieCI6MTkzLjIwMjc5NzEwNzY0ODM0LCJ5IjozNTIuMTMyNDg0NjA3NjQ4MzR9LHsieCI6MTI0LjU3ODEyNSwieSI6NDUxfSx7IngiOjEyNC41NzgxMjUsInkiOjUzMS40MDYyNX1d" data-look="classic" marker-end="url(#mmd_2_flowchart-v2-pointEnd)"></path><path d="M316.938,352.132L328.375,368.61C339.813,385.088,362.688,418.044,374.125,440.022C385.563,462,385.563,473,385.563,478.5L385.563,484" id="mmd_2-L_B_C_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_B_C_0" data-points="W3sieCI6MzE2LjkzNzgyNzg5MjM1MTY2LCJ5IjozNTIuMTMyNDg0NjA3NjQ4MzR9LHsieCI6Mzg1LjU2MjUsInkiOjQ1MX0seyJ4IjozODUuNTYyNSwieSI6NDg4fV0=" data-look="classic" marker-end="url(#mmd_2_flowchart-v2-pointEnd)"></path><path d="M336.974,628.224L321.847,642.489C306.72,656.754,276.465,685.283,261.338,715.009C246.211,744.734,246.211,775.656,246.211,791.117L246.211,806.578" id="mmd_2-L_C_THAPON_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_C_THAPON_0" data-points="W3sieCI6MzM2Ljk3NDIxMjQ2MDY4NjE1LCJ5Ijo2MjguMjI0MjEyNDYwNjg2Mn0seyJ4IjoyNDYuMjEwOTM3NSwieSI6NzEzLjgxMjV9LHsieCI6MjQ2LjIxMDkzNzUsInkiOjgxMC41NzgxMjV9XQ==" data-look="classic" marker-end="url(#mmd_2_flowchart-v2-pointEnd)"></path><path d="M434.151,628.224L449.278,642.489C464.405,656.754,494.66,685.283,509.787,705.048C524.914,724.813,524.914,735.813,524.914,741.313L524.914,746.813" id="mmd_2-L_C_D_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_C_D_0" data-points="W3sieCI6NDM0LjE1MDc4NzUzOTMxMzg1LCJ5Ijo2MjguMjI0MjEyNDYwNjg2Mn0seyJ4Ijo1MjQuOTE0MDYyNSwieSI6NzEzLjgxMjV9LHsieCI6NTI0LjkxNDA2MjUsInkiOjc1MC44MTI1fV0=" data-look="classic" marker-end="url(#mmd_2_flowchart-v2-pointEnd)"></path><path d="M474.139,897.569L458.662,912.198C443.184,926.827,412.229,956.086,396.751,978.215C381.273,1000.344,381.273,1015.344,381.273,1022.844L381.273,1030.344" id="mmd_2-L_D_THUTHAP_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_D_THUTHAP_0" data-points="W3sieCI6NDc0LjEzOTQwNjk0NTUzMTg1LCJ5Ijo4OTcuNTY5MDk0NDQ1NTMxOH0seyJ4IjozODEuMjczNDM3NSwieSI6OTg1LjM0Mzc1fSx7IngiOjM4MS4yNzM0Mzc1LCJ5IjoxMDM0LjM0Mzc1fV0=" data-look="classic" marker-end="url(#mmd_2_flowchart-v2-pointEnd)"></path><path d="M575.689,897.569L591.166,912.198C606.644,926.827,637.599,956.086,653.077,976.215C668.555,996.344,668.555,1007.344,668.555,1012.844L668.555,1018.344" id="mmd_2-L_D_PHUCTHU_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_D_PHUCTHU_0" data-points="W3sieCI6NTc1LjY4ODcxODA1NDQ2ODIsInkiOjg5Ny41NjkwOTQ0NDU1MzE4fSx7IngiOjY2OC41NTQ2ODc1LCJ5Ijo5ODUuMzQzNzV9LHsieCI6NjY4LjU1NDY4NzUsInkiOjEwMjIuMzQzNzV9XQ==" data-look="classic" marker-end="url(#mmd_2_flowchart-v2-pointEnd)"></path></g><g class="edgeLabels"><g class="edgeLabel"><g class="label" data-id="L_A_B_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(124.578125, 451)"><g class="label" data-id="L_B_THUON_0" transform="translate(-28.5078125, -12)"><foreignObject width="57.015625" height="24"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "><p>KHÔNG</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(385.5625, 451)"><g class="label" data-id="L_B_C_0" transform="translate(-11.5859375, -12)"><foreignObject width="23.171875" height="24"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "><p>CÓ</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(246.2109375, 713.8125)"><g class="label" data-id="L_C_THAPON_0" transform="translate(-48.203125, -12)"><foreignObject width="96.40625" height="24"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "><p>âm ỉ, nhiệt ẩn</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(524.9140625, 713.8125)"><g class="label" data-id="L_C_D_0" transform="translate(-13.3046875, -12)"><foreignObject width="26.609375" height="24"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "><p>cấp</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(381.2734375, 985.34375)"><g class="label" data-id="L_D_THUTHAP_0" transform="translate(-78.5546875, -12)"><foreignObject width="157.109375" height="24"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "><p>trong hè / giao hè-thu</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(668.5546875, 985.34375)"><g class="label" data-id="L_D_PHUCTHU_0" transform="translate(-92.296875, -12)"><foreignObject width="184.59375" height="24"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "><p>sau Lập thu, lý nhiệt ngay</p></span></div></foreignObject></g></g></g><g class="nodes"><g class="node default  " id="mmd_2-flowchart-A-0" data-look="classic" transform="translate(255.0703125, 35)"><rect class="basic label-container" style="" x="-86.390625" y="-27" width="172.78125" height="54"></rect><g class="label" style="" transform="translate(-56.390625, -12)"><rect></rect><foreignObject width="112.78125" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel "><p>Sốt cấp mùa hè</p></span></div></foreignObject></g></g><g class="node default q " id="mmd_2-flowchart-B-1" data-look="classic" transform="translate(255.0703125, 263)"><polygon points="151,0 302,-151 151,-302 0,-151" class="label-container" transform="translate(-150.5, 151)" style="fill:#fff8e1 !important;stroke:#b58900 !important"></polygon><g class="label" style="color:#5a4500 !important" transform="translate(-100, -36)"><rect></rect><foreignObject width="200" height="72"><div style="color: rgb(90, 69, 0) !important; display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#5a4500 !important" class="nodeLabel "><p>Có thấp chứng rõ?<br/>thân nặng · rêu nê · mạch nhu · quản bĩ</p></span></div></foreignObject></g></g><g class="node default on " id="mmd_2-flowchart-THUON-3" data-look="classic" transform="translate(124.578125, 582.40625)"><rect class="basic label-container" style="fill:#fde8d7 !important;stroke:#c0670e !important" x="-116.578125" y="-51" width="233.15625" height="102"></rect><g class="label" style="color:#5a3210 !important" transform="translate(-86.578125, -36)"><rect></rect><foreignObject width="173.15625" height="72"><div style="color: rgb(90, 50, 16) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#5a3210 !important" class="nodeLabel "><p>THỬ ÔN<br/>sốt cao, mạch hồng đại,<br/>phát tự Dương minh</p></span></div></foreignObject></g></g><g class="node default q " id="mmd_2-flowchart-C-5" data-look="classic" transform="translate(385.5625, 582.40625)"><polygon points="94.40625,0 188.8125,-94.40625 94.40625,-188.8125 0,-94.40625" class="label-container" transform="translate(-93.90625, 94.40625)" style="fill:#fff8e1 !important;stroke:#b58900 !important"></polygon><g class="label" style="color:#5a4500 !important" transform="translate(-67.40625, -12)"><rect></rect><foreignObject width="134.8125" height="24"><div style="color: rgb(90, 69, 0) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#5a4500 !important" class="nodeLabel "><p>Khởi cấp hay âm ỉ?</p></span></div></foreignObject></g></g><g class="node default tg " id="mmd_2-flowchart-THAPON-7" data-look="classic" transform="translate(246.2109375, 849.578125)"><rect class="basic label-container" style="fill:#e7f0d9 !important;stroke:#5a7d1e !important" x="-129.9375" y="-39" width="259.875" height="78"></rect><g class="label" style="color:#2f4310 !important" transform="translate(-99.9375, -24)"><rect></rect><foreignObject width="199.875" height="48"><div style="color: rgb(47, 67, 16) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#2f4310 !important" class="nodeLabel "><p>THẤP ÔN<br/>bệnh tại tỳ vị, dai dẳng nhất</p></span></div></foreignObject></g></g><g class="node default q " id="mmd_2-flowchart-D-9" data-look="classic" transform="translate(524.9140625, 849.578125)"><polygon points="98.765625,0 197.53125,-98.765625 98.765625,-197.53125 0,-98.765625" class="label-container" transform="translate(-98.265625, 98.765625)" style="fill:#fff8e1 !important;stroke:#b58900 !important"></polygon><g class="label" style="color:#5a4500 !important" transform="translate(-71.765625, -12)"><rect></rect><foreignObject width="143.53125" height="24"><div style="color: rgb(90, 69, 0) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#5a4500 !important" class="nodeLabel "><p>Phát thời điểm nào?</p></span></div></foreignObject></g></g><g class="node default tg " id="mmd_2-flowchart-THUTHAP-11" data-look="classic" transform="translate(381.2734375, 1073.34375)"><rect class="basic label-container" style="fill:#e7f0d9 !important;stroke:#5a7d1e !important" x="-107.28125" y="-39" width="214.5625" height="78"></rect><g class="label" style="color:#2f4310 !important" transform="translate(-77.28125, -24)"><rect></rect><foreignObject width="154.5625" height="48"><div style="color: rgb(47, 67, 16) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#2f4310 !important" class="nodeLabel "><p>THỬ THẤP<br/>thử + thấp song hành</p></span></div></foreignObject></g></g><g class="node default tg " id="mmd_2-flowchart-PHUCTHU-13" data-look="classic" transform="translate(668.5546875, 1073.34375)"><rect class="basic label-container" style="fill:#e7f0d9 !important;stroke:#5a7d1e !important" x="-130" y="-51" width="260" height="102"></rect><g class="label" style="color:#2f4310 !important" transform="translate(-100, -36)"><rect></rect><foreignObject width="200" height="72"><div style="color: rgb(47, 67, 16) !important; display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#2f4310 !important" class="nodeLabel "><p>PHỤC THỬ<br/>tà phục, vệ chứng chỉ thoáng</p></span></div></foreignObject></g></g></g></g></g><defs><filter id="mmd_2-drop-shadow" height="130%" width="130%"><feDropShadow dx="4" dy="4" stdDeviation="0" flood-opacity="0.06" flood-color="#000000"></feDropShadow></filter></defs><defs><filter id="mmd_2-drop-shadow-small" height="150%" width="150%"><feDropShadow dx="2" dy="2" stdDeviation="0" flood-opacity="0.06" flood-color="#000000"></feDropShadow></filter></defs><linearGradient id="mmd_2-gradient" gradientUnits="objectBoundingBox" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="hsl(40.5882352941, 60%, 83.3333333333%)" stop-opacity="1"></stop><stop offset="100%" stop-color="hsl(-79.4117647059, 60%, 83.3333333333%)" stop-opacity="1"></stop></linearGradient></svg></figure>
+<hr>
+</div></details>
+<details class="section" id="sec-6" open><summary><span class="step-num">BƯỚC 5</span> Điều trị Tích hợp (Biện chứng luận trị 7 thể)</summary><div class="section-body"><h3>5.1. Nguyên tắc tổng quát (theo KB)</h3>
+<blockquote>
+<p><strong>Theo KB (Tóm tắt):</strong> <em>&quot;Trong điều trị nên đặt <strong>thanh thử tiết nhiệt ở vị trí đầu tiên</strong> đồng thời kèm thêm <strong>tuyên hóa thấp tà</strong>.&quot;</em></p>
+</blockquote>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Bệnh cảnh</th>
+<th>Pháp trị (KB)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Tà át phế vệ + hàn thấp</td>
+<td>Thấu + thanh; nếu kèm hàn thì <strong>ôn tán</strong></td>
+</tr>
+<tr>
+<td>Tà trở thiếu dương</td>
+<td>Thanh tiết thiếu dương, <strong>phân tiêu thấp nhiệt</strong></td>
+</tr>
+<tr>
+<td>Thử thấp trung trở</td>
+<td><strong>Thanh thử hóa thấp</strong></td>
+</tr>
+<tr>
+<td>Lan tràn trung tiêu (tam tiêu thất tư)</td>
+<td><strong>Thông tam tiêu, trợ vận hòa trung</strong></td>
+</tr>
+<tr>
+<td>Thử thương nguyên khí</td>
+<td><strong>Thanh thử hóa thấp, ích khí hòa trung</strong></td>
+</tr>
+<tr>
+<td>Hóa táo, tổn phế lạc, xuất huyết</td>
+<td><strong>Thanh thử lương huyết an lạc</strong></td>
+</tr>
+<tr>
+<td>Giai đoạn sau</td>
+<td><strong>Thanh dư tà, điều khí cơ, hòa tỳ vị</strong></td>
+</tr>
+</tbody></table></div>
+<h3>5.2. Sơ đồ 7 thể biện chứng</h3>
+<figure class="diagram"><svg id="mmd_3" width="100%" xmlns="http://www.w3.org/2000/svg" class="flowchart" style="max-width: 741px;" viewBox="0 0 741 1518" role="graphics-document document" aria-roledescription="flowchart-v2"><style>#mmd_3{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:16px;fill:#333;}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#mmd_3 .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#mmd_3 .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#mmd_3 .error-icon{fill:hsl(220.5882352941, 100%, 98.3333333333%);}#mmd_3 .error-text{fill:rgb(8.5000000002, 5.7500000001, 0);stroke:rgb(8.5000000002, 5.7500000001, 0);}#mmd_3 .edge-thickness-normal{stroke-width:1px;}#mmd_3 .edge-thickness-thick{stroke-width:3.5px;}#mmd_3 .edge-pattern-solid{stroke-dasharray:0;}#mmd_3 .edge-thickness-invisible{stroke-width:0;fill:none;}#mmd_3 .edge-pattern-dashed{stroke-dasharray:3;}#mmd_3 .edge-pattern-dotted{stroke-dasharray:2;}#mmd_3 .marker{fill:#0b0b0b;stroke:#0b0b0b;}#mmd_3 .marker.cross{stroke:#0b0b0b;}#mmd_3 svg{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:16px;}#mmd_3 p{margin:0;}#mmd_3 .label{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#333;}#mmd_3 .cluster-label text{fill:rgb(8.5000000002, 5.7500000001, 0);}#mmd_3 .cluster-label span{color:rgb(8.5000000002, 5.7500000001, 0);}#mmd_3 .cluster-label span p{background-color:transparent;}#mmd_3 .label text,#mmd_3 span{fill:#333;color:#333;}#mmd_3 .node rect,#mmd_3 .node circle,#mmd_3 .node ellipse,#mmd_3 .node polygon,#mmd_3 .node path{fill:#fff4dd;stroke:hsl(40.5882352941, 60%, 83.3333333333%);stroke-width:1px;}#mmd_3 .rough-node .label text,#mmd_3 .node .label text,#mmd_3 .image-shape .label,#mmd_3 .icon-shape .label{text-anchor:middle;}#mmd_3 .node .katex path{fill:#000;stroke:#000;stroke-width:1px;}#mmd_3 .rough-node .label,#mmd_3 .node .label,#mmd_3 .image-shape .label,#mmd_3 .icon-shape .label{text-align:center;}#mmd_3 .node.clickable{cursor:pointer;}#mmd_3 .root .anchor path{fill:#0b0b0b!important;stroke-width:0;stroke:#0b0b0b;}#mmd_3 .arrowheadPath{fill:#0b0b0b;}#mmd_3 .edgePath .path{stroke:#0b0b0b;stroke-width:1px;}#mmd_3 .flowchart-link{stroke:#0b0b0b;fill:none;}#mmd_3 .edgeLabel{background-color:hsl(-79.4117647059, 100%, 93.3333333333%);text-align:center;}#mmd_3 .edgeLabel p{background-color:hsl(-79.4117647059, 100%, 93.3333333333%);}#mmd_3 .edgeLabel rect{opacity:0.5;background-color:hsl(-79.4117647059, 100%, 93.3333333333%);fill:hsl(-79.4117647059, 100%, 93.3333333333%);}#mmd_3 .labelBkg{background-color:rgba(243.9999999999, 220.9999999998, 255, 0.5);}#mmd_3 .cluster rect{fill:hsl(220.5882352941, 100%, 98.3333333333%);stroke:hsl(220.5882352941, 60%, 88.3333333333%);stroke-width:1px;}#mmd_3 .cluster text{fill:rgb(8.5000000002, 5.7500000001, 0);}#mmd_3 .cluster span{color:rgb(8.5000000002, 5.7500000001, 0);}#mmd_3 div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:12px;background:hsl(220.5882352941, 100%, 98.3333333333%);border:1px solid hsl(220.5882352941, 60%, 88.3333333333%);border-radius:2px;pointer-events:none;z-index:100;}#mmd_3 .flowchartTitleText{text-anchor:middle;font-size:18px;fill:#333;}#mmd_3 rect.text{fill:none;stroke-width:0;}#mmd_3 .icon-shape,#mmd_3 .image-shape{background-color:hsl(-79.4117647059, 100%, 93.3333333333%);text-align:center;}#mmd_3 .icon-shape p,#mmd_3 .image-shape p{background-color:hsl(-79.4117647059, 100%, 93.3333333333%);padding:2px;}#mmd_3 .icon-shape .label rect,#mmd_3 .image-shape .label rect{opacity:0.5;background-color:hsl(-79.4117647059, 100%, 93.3333333333%);fill:hsl(-79.4117647059, 100%, 93.3333333333%);}#mmd_3 .label-icon{display:inline-block;height:1em;overflow:visible;vertical-align:-0.125em;}#mmd_3 .node .label-icon path{fill:currentColor;stroke:revert;stroke-width:revert;}#mmd_3 .node .neo-node{stroke:hsl(40.5882352941, 60%, 83.3333333333%);}#mmd_3 [data-look="neo"].node rect,#mmd_3 [data-look="neo"].cluster rect,#mmd_3 [data-look="neo"].node polygon{stroke:url(#mmd_3-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mmd_3 [data-look="neo"].swimlane.cluster rect{filter:none;}#mmd_3 [data-look="neo"].node path{stroke:url(#mmd_3-gradient);stroke-width:1px;}#mmd_3 [data-look="neo"].node .outer-path{filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mmd_3 [data-look="neo"].node .neo-line path{stroke:hsl(40.5882352941, 60%, 83.3333333333%);filter:none;}#mmd_3 [data-look="neo"].node circle{stroke:url(#mmd_3-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mmd_3 [data-look="neo"].node circle .state-start{fill:#000000;}#mmd_3 [data-look="neo"].icon-shape .icon{fill:url(#mmd_3-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mmd_3 [data-look="neo"].icon-shape .icon-neo path{stroke:url(#mmd_3-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mmd_3 :root{--mermaid-font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;}#mmd_3 .ve>*{fill:rgb(232, 240, 224)!important;stroke:rgb(90, 125, 30)!important;color:rgb(47, 67, 16)!important;}#mmd_3 .ve span{fill:rgb(232, 240, 224)!important;stroke:rgb(90, 125, 30)!important;color:rgb(47, 67, 16)!important;}#mmd_3 .ve tspan{fill:rgb(47, 67, 16)!important;}#mmd_3 .khi>*{fill:rgb(253, 232, 215)!important;stroke:rgb(192, 103, 14)!important;color:rgb(90, 50, 16)!important;}#mmd_3 .khi span{fill:rgb(253, 232, 215)!important;stroke:rgb(192, 103, 14)!important;color:rgb(90, 50, 16)!important;}#mmd_3 .khi tspan{fill:rgb(90, 50, 16)!important;}#mmd_3 .huyet>*{fill:rgb(247, 214, 214)!important;stroke:rgb(163, 21, 21)!important;color:rgb(90, 10, 10)!important;}#mmd_3 .huyet span{fill:rgb(247, 214, 214)!important;stroke:rgb(163, 21, 21)!important;color:rgb(90, 10, 10)!important;}#mmd_3 .huyet tspan{fill:rgb(90, 10, 10)!important;}#mmd_3 .hp>*{fill:rgb(220, 232, 245)!important;stroke:rgb(29, 90, 150)!important;color:rgb(19, 49, 79)!important;}#mmd_3 .hp span{fill:rgb(220, 232, 245)!important;stroke:rgb(29, 90, 150)!important;color:rgb(19, 49, 79)!important;}#mmd_3 .hp tspan{fill:rgb(19, 49, 79)!important;}</style><g><marker id="mmd_3_flowchart-v2-pointEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker><marker id="mmd_3_flowchart-v2-pointStart" class="marker flowchart-v2" viewBox="0 0 10 10" refX="4.5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 5 L 10 10 L 10 0 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker><marker id="mmd_3_flowchart-v2-pointEnd-margin" class="marker flowchart-v2" viewBox="0 0 11.5 14" refX="11.5" refY="7" markerUnits="userSpaceOnUse" markerWidth="10.5" markerHeight="14" orient="auto"><path d="M 0 0 L 11.5 7 L 0 14 z" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></path></marker><marker id="mmd_3_flowchart-v2-pointStart-margin" class="marker flowchart-v2" viewBox="0 0 11.5 14" refX="1" refY="7" markerUnits="userSpaceOnUse" markerWidth="11.5" markerHeight="14" orient="auto"><polygon points="0,7 11.5,14 11.5,0" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></polygon></marker><marker id="mmd_3_flowchart-v2-circleEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="11" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></circle></marker><marker id="mmd_3_flowchart-v2-circleStart" class="marker flowchart-v2" viewBox="0 0 10 10" refX="-1" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></circle></marker><marker id="mmd_3_flowchart-v2-circleEnd-margin" class="marker flowchart-v2" viewBox="0 0 10 10" refY="5" refX="12.25" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></circle></marker><marker id="mmd_3_flowchart-v2-circleStart-margin" class="marker flowchart-v2" viewBox="0 0 10 10" refX="-2" refY="5" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></circle></marker><marker id="mmd_3_flowchart-v2-crossEnd" class="marker cross flowchart-v2" viewBox="0 0 11 11" refX="12" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"></path></marker><marker id="mmd_3_flowchart-v2-crossStart" class="marker cross flowchart-v2" viewBox="0 0 11 11" refX="-1" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"></path></marker><marker id="mmd_3_flowchart-v2-crossEnd-margin" class="marker cross flowchart-v2" viewBox="0 0 15 15" refX="17.7" refY="7.5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 1,1 L 14,14 M 1,14 L 14,1" class="arrowMarkerPath" style="stroke-width: 2.5;"></path></marker><marker id="mmd_3_flowchart-v2-crossStart-margin" class="marker cross flowchart-v2" viewBox="0 0 15 15" refX="-3.5" refY="7.5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 1,1 L 14,14 M 1,14 L 14,1" class="arrowMarkerPath" style="stroke-width: 2.5; stroke-dasharray: 1, 0;"></path></marker><g class="root"><g class="clusters"></g><g class="edgePaths"><path d="M173.844,254L167.87,260.167C161.896,266.333,149.948,278.667,143.974,290.333C138,302,138,313,138,318.5L138,324" id="mmd_3-L_T1_T2_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_T1_T2_0" data-points="W3sieCI6MTczLjg0Mzc1LCJ5IjoyNTR9LHsieCI6MTM4LCJ5IjoyOTF9LHsieCI6MTM4LCJ5IjozMjh9XQ==" data-look="classic" marker-end="url(#mmd_3_flowchart-v2-pointEnd)"></path><path d="M412.156,254L418.13,260.167C424.104,266.333,436.052,278.667,442.026,290.333C448,302,448,313,448,318.5L448,324" id="mmd_3-L_T1_T3_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_T1_T3_0" data-points="W3sieCI6NDEyLjE1NjI1LCJ5IjoyNTR9LHsieCI6NDQ4LCJ5IjoyOTF9LHsieCI6NDQ4LCJ5IjozMjh9XQ==" data-look="classic" marker-end="url(#mmd_3_flowchart-v2-pointEnd)"></path><path d="M331.75,550L325.292,556.167C318.833,562.333,305.917,574.667,299.458,586.333C293,598,293,609,293,614.5L293,620" id="mmd_3-L_T3_T4_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_T3_T4_0" data-points="W3sieCI6MzMxLjc1LCJ5Ijo1NTB9LHsieCI6MjkzLCJ5Ijo1ODd9LHsieCI6MjkzLCJ5Ijo2MjR9XQ==" data-look="classic" marker-end="url(#mmd_3_flowchart-v2-pointEnd)"></path><path d="M293,846L293,854.167C293,862.333,293,878.667,293,894.333C293,910,293,925,293,932.5L293,940" id="mmd_3-L_T4_T5_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_T4_T5_0" data-points="W3sieCI6MjkzLCJ5Ijo4NDZ9LHsieCI6MjkzLCJ5Ijo4OTV9LHsieCI6MjkzLCJ5Ijo5NDR9XQ==" data-look="classic" marker-end="url(#mmd_3_flowchart-v2-pointEnd)"></path><path d="M564.25,550L570.708,556.167C577.167,562.333,590.083,574.667,596.542,605.5C603,636.333,603,685.667,603,737C603,788.333,603,841.667,603,877.833C603,914,603,933,603,942.5L603,952" id="mmd_3-L_T3_T6_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_T3_T6_0" data-points="W3sieCI6NTY0LjI1LCJ5Ijo1NTB9LHsieCI6NjAzLCJ5Ijo1ODd9LHsieCI6NjAzLCJ5Ijo3MzV9LHsieCI6NjAzLCJ5Ijo4OTV9LHsieCI6NjAzLCJ5Ijo5NTZ9XQ==" data-look="classic" marker-end="url(#mmd_3_flowchart-v2-pointEnd)"></path><path d="M293,1190L293,1196.167C293,1202.333,293,1214.667,298.51,1226.521C304.02,1238.376,315.04,1249.751,320.55,1255.439L326.061,1261.127" id="mmd_3-L_T5_T7_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_T5_T7_0" data-points="W3sieCI6MjkzLCJ5IjoxMTkwfSx7IngiOjI5MywieSI6MTIyN30seyJ4IjozMjguODQzNzUsInkiOjEyNjR9XQ==" data-look="classic" marker-end="url(#mmd_3_flowchart-v2-pointEnd)"></path><path d="M603,1178L603,1186.167C603,1194.333,603,1210.667,597.49,1224.521C591.98,1238.376,580.96,1249.751,575.45,1255.439L569.939,1261.127" id="mmd_3-L_T6_T7_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_T6_T7_0" data-points="W3sieCI6NjAzLCJ5IjoxMTc4fSx7IngiOjYwMywieSI6MTIyN30seyJ4Ijo1NjcuMTU2MjUsInkiOjEyNjR9XQ==" data-look="classic" marker-end="url(#mmd_3_flowchart-v2-pointEnd)"></path></g><g class="edgeLabels"><g class="edgeLabel" transform="translate(138, 291)"><g class="label" data-id="L_T1_T2_0" transform="translate(-93.7265625, -12)"><foreignObject width="187.453125" height="24"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "><p>tà nhập lý, phạm vị trường</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(448, 291)"><g class="label" data-id="L_T1_T3_0" transform="translate(-76.1796875, -12)"><foreignObject width="152.359375" height="24"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "><p>tà khôn trở trung tiêu</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(293, 587)"><g class="label" data-id="L_T3_T4_0" transform="translate(-51.1875, -12)"><foreignObject width="102.375" height="24"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "><p>lan tỏa mờ mịt</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(293, 895)"><g class="label" data-id="L_T4_T5_0" transform="translate(-100, -24)"><foreignObject width="200" height="48"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;"><span class="edgeLabel "><p>hóa táo hóa hỏa, tổn phế lạc</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(603, 735)"><g class="label" data-id="L_T3_T6_0" transform="translate(-81.171875, -12)"><foreignObject width="162.34375" height="24"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "><p>thử thương nguyên khí</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(293, 1227)"><g class="label" data-id="L_T5_T7_0" transform="translate(-40.203125, -12)"><foreignObject width="80.40625" height="24"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "><p>tà lui, dư tà</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(603, 1227)"><g class="label" data-id="L_T6_T7_0" transform="translate(-31.1484375, -12)"><foreignObject width="62.296875" height="24"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "><p>phục hồi</p></span></div></foreignObject></g></g></g><g class="nodes"><g class="node default ve " id="mmd_3-flowchart-T1-0" data-look="classic" transform="translate(293, 131)"><rect class="basic label-container" style="fill:#e8f0e0 !important;stroke:#5a7d1e !important" x="-130" y="-123" width="260" height="246"></rect><g class="label" style="color:#2f4310 !important" transform="translate(-100, -108)"><rect></rect><foreignObject width="200" height="216"><div style="color: rgb(47, 67, 16) !important; display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#2f4310 !important" class="nodeLabel "><p>① THỬ THẤP TẠI VỆ<br/>sốt, ố phong hàn, đầu nặng,<br/>thân nặng, khớp mỏi, rêu nê<br/>Pháp: Thấu tà đạt biểu, địch thử hóa thấp<br/><b>Vệ phần tuyên thấp ẩm / Tân gia hương nhu ẩm</b></p></span></div></foreignObject></g></g><g class="node default khi " id="mmd_3-flowchart-T2-1" data-look="classic" transform="translate(138, 439)"><rect class="basic label-container" style="fill:#fde8d7 !important;stroke:#c0670e !important" x="-130" y="-111" width="260" height="222"></rect><g class="label" style="color:#5a3210 !important" transform="translate(-100, -96)"><rect></rect><foreignObject width="200" height="192"><div style="color: rgb(90, 50, 16) !important; display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#5a3210 !important" class="nodeLabel "><p>② TÀ CÁN NHIỄU VỊ TRƯỜNG<br/>sốt, đau bụng, nôn liên tục,<br/>tiêu chảy phân hôi, tiểu ngắn đỏ<br/>Pháp: Thanh giải thử nhiệt, hóa khí lợi thấp<br/><b>Linh quế cam lộ ẩm</b></p></span></div></foreignObject></g></g><g class="node default khi " id="mmd_3-flowchart-T3-2" data-look="classic" transform="translate(448, 439)"><rect class="basic label-container" style="fill:#fde8d7 !important;stroke:#c0670e !important" x="-130" y="-111" width="260" height="222"></rect><g class="label" style="color:#5a3210 !important" transform="translate(-100, -96)"><rect></rect><foreignObject width="200" height="192"><div style="color: rgb(90, 50, 16) !important; display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#5a3210 !important" class="nodeLabel "><p>③ KHÔN TRỞ TRUNG TIÊU<br/>tráng nhiệt, hãn xuất, mặt đỏ,<br/>quản bĩ, nôn, mạch hồng đại<br/>Pháp: Thanh thử hóa thấp<br/><b>Thương truật bạch hổ thang gia giảm</b></p></span></div></foreignObject></g></g><g class="node default khi " id="mmd_3-flowchart-T4-3" data-look="classic" transform="translate(293, 735)"><rect class="basic label-container" style="fill:#fde8d7 !important;stroke:#c0670e !important" x="-130" y="-111" width="260" height="222"></rect><g class="label" style="color:#5a3210 !important" transform="translate(-100, -96)"><rect></rect><foreignObject width="200" height="192"><div style="color: rgb(90, 50, 16) !important; display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#5a3210 !important" class="nodeLabel "><p>④ TRÀN LAN TAM TIÊU<br/>sốt, tai điếc, hoa mắt, ho đàm máu,<br/>ngực tức, tiêu lỏng hôi, tiểu đỏ<br/>Pháp: Thanh nhiệt lợi thấp, tuyên thông tam tiêu<br/><b>Tam thạch thang</b></p></span></div></foreignObject></g></g><g class="node default huyet " id="mmd_3-flowchart-T5-4" data-look="classic" transform="translate(293, 1067)"><rect class="basic label-container" style="fill:#f7d6d6 !important;stroke:#a31515 !important" x="-130" y="-123" width="260" height="246"></rect><g class="label" style="color:#5a0a0a !important" transform="translate(-100, -108)"><rect></rect><foreignObject width="200" height="216"><div style="color: rgb(90, 10, 10) !important; display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#5a0a0a !important" class="nodeLabel "><p>⑤ THỬ THƯƠNG PHẾ LẠC<br/>sốt, ho suyễn, khạc máu,<br/>phiền thao, lưỡi đỏ rêu vàng khô<br/>Pháp: Lương huyết an lạc, thanh thử bảo phế<br/><b>Tê giác địa hoàng thang + Hoàng liên giải độc thang</b></p></span></div></foreignObject></g></g><g class="node default khi " id="mmd_3-flowchart-T6-5" data-look="classic" transform="translate(603, 1067)"><rect class="basic label-container" style="fill:#fde8d7 !important;stroke:#c0670e !important" x="-130" y="-111" width="260" height="222"></rect><g class="label" style="color:#5a3210 !important" transform="translate(-100, -96)"><rect></rect><foreignObject width="200" height="192"><div style="color: rgb(90, 50, 16) !important; display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#5a3210 !important" class="nodeLabel "><p>⑥ THỬ THẤP THƯƠNG KHÍ<br/>sốt, tự hãn, tứ chi rã rời, khí đoản,<br/>uể oải, mạch đại vô lực<br/>Pháp: Thanh thử hóa thấp, bồi nguyên hòa trung<br/><b>Đông Hằng thanh thử ích khí thang</b></p></span></div></foreignObject></g></g><g class="node default hp " id="mmd_3-flowchart-T7-6" data-look="classic" transform="translate(448, 1387)"><rect class="basic label-container" style="fill:#dce8f5 !important;stroke:#1d5a96 !important" x="-130" y="-123" width="260" height="246"></rect><g class="label" style="color:#13314f !important" transform="translate(-100, -108)"><rect></rect><foreignObject width="200" height="216"><div style="color: rgb(19, 49, 79) !important; display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#13314f !important" class="nodeLabel "><p>⑦ DƯ TÀ CHƯA SẠCH (hậu kỳ)<br/>sốt thấp còn, khát ít, hoa mắt,<br/>lưỡi đỏ nhạt rêu mỏng trắng<br/>Pháp: Thanh hóa thử thấp dư tà<br/><b>Thanh lạc ẩm</b></p></span></div></foreignObject></g></g></g></g></g><defs><filter id="mmd_3-drop-shadow" height="130%" width="130%"><feDropShadow dx="4" dy="4" stdDeviation="0" flood-opacity="0.06" flood-color="#000000"></feDropShadow></filter></defs><defs><filter id="mmd_3-drop-shadow-small" height="150%" width="150%"><feDropShadow dx="2" dy="2" stdDeviation="0" flood-opacity="0.06" flood-color="#000000"></feDropShadow></filter></defs><linearGradient id="mmd_3-gradient" gradientUnits="objectBoundingBox" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="hsl(40.5882352941, 60%, 83.3333333333%)" stop-opacity="1"></stop><stop offset="100%" stop-color="hsl(-79.4117647059, 60%, 83.3333333333%)" stop-opacity="1"></stop></linearGradient></svg></figure>
+<h3>5.3. Chi tiết từng thể (theo KB)</h3>
+<h4>① Thử thấp tại vệ</h4>
+<ul>
+<li><strong>Triệu chứng:</strong> Sốt, hơi ố phong hàn, đầu đau căng nặng, thân nặng, khớp đau mỏi, ít/không mồ hôi, quản bĩ, <strong>miệng không khát</strong>, lưỡi đỏ rêu trắng nê / vàng nê, <strong>mạch phù hoạt sác / nhu sác</strong>. <em>Kèm hàn thấp:</em> ố hàn, hàn chiến, thân co ro, ngực bụng bĩ muộn, nôn, mạch phù huyền.</li>
+<li><strong>Pháp:</strong> Thấu tà đạt biểu, địch thử hóa thấp.</li>
+<li><strong>Phương:</strong><ul>
+<li><strong>Vệ phần tuyên thấp ẩm</strong> (Hương nhu, Thanh hao, Hoạt thạch, Phục linh, Thông thảo, Hạnh nhân, Hà diệp tươi, Đông qua bì, Trúc diệp) → thử nhiệt nhẹ, thiên cam đạm thẩm thấp.</li>
+<li><strong>Tân gia hương nhu ẩm</strong> (Hương nhu, Hậu phác, Ngân hoa, Liên kiều, Biển đậu hoa) — Ngô Cúc Thông gọi <strong>&quot;tân ôn phục tân lương pháp&quot;</strong> → hợp khi <strong>hàn tà ngoại thúc + thử thấp nội uất</strong>.</li>
+</ul>
+</li>
+<li><strong>Lưu ý KB:</strong> thấy <strong>hãn xuất nhiệt thoát thì ngưng ngay Hương nhu</strong> (thử dễ hao khí, hương nhu phát tán nhiều càng hao). Đau đầu nhiều + Mạn kinh tử;<br><span class="enum-indent"></span>sốt cao + Thanh hao, Đại thanh diệp;<br><span class="enum-indent"></span>đau họng + Thanh quả;<br><span class="enum-indent"></span>tiểu vàng đỏ + Trúc diệp, Lô căn, Hoạt thạch.</li>
+</ul>
+<h4>② Tà cán nhiễu vị trường</h4>
+<ul>
+<li><strong>Triệu chứng:</strong> Sốt, đau bụng, tâm phiền thao nhiễu, <strong>miệng khát thích uống</strong>, nôn liên tục, <strong>đại tiện lỏng phân hôi thối, thế cấp</strong>, tiểu ngắn đỏ, lưỡi đỏ rêu nê, mạch nhu sác.</li>
+<li><strong>Cơ chế:</strong> thử thấp trực tiếp xâm phạm trường vị → thăng giáng thất tư, thanh bất thăng trọc bất giáng. <em>(So với thấp nhiệt thổ tà: tính chất giống, nhưng thể này <strong>cấp bách hơn, sốt cao hơn, nặng hơn</strong>; do nôn tả nhiều rất dễ thương âm hóa táo nhập dinh huyết.)</em></li>
+<li><strong>Pháp:</strong> Thanh giải thử nhiệt, hóa khí lợi thấp.</li>
+<li><strong>Phương: Linh quế cam lộ ẩm</strong> (= Lục nhất tán + Ngũ linh tán + Thạch cao + Hàn thủy thạch). Nôn nhiều + Sinh khương, Trúc nhự;<br><span class="enum-indent"></span>tiểu ngắn đỏ + Xa tiền thảo;<br><span class="enum-indent"></span>cân mạch co thắt + Mộc qua, Bạch thược.</li>
+</ul>
+<h4>③ Thử thấp khôn trở trung tiêu</h4>
+<ul>
+<li><strong>Triệu chứng:</strong> <strong>Tráng nhiệt, hãn xuất, mặt đỏ, sợ nóng</strong>, hơi thở thô gấp, chi thể mỏi nhừ, tâm phiền, miệng khát, tiểu không thông, quản bĩ, nôn, <strong>lưỡi đỏ thẫm rêu vàng nê, mạch hồng đại</strong>.</li>
+<li><strong>Cơ chế:</strong> thử nhiệt nội tích Dương minh (lý nhiệt chưng bức) + thấp tà trung trở. <em>Đây là thể &quot;thử nhiệt thiên thịnh&quot; — gần thử ôn nhất, nhưng vẫn còn dấu thấp (rêu vàng nê, chi thể nhừ).</em></li>
+<li><strong>Pháp:</strong> Thanh thử hóa thấp.</li>
+<li><strong>Phương: Thương truật bạch hổ thang gia giảm</strong> (Thương truật, sinh Thạch cao, Tri mẫu, Bạch đậu khấu, Hoạt thạch, Thảo quả nhân, Hà diệp, Trúc diệp tâm). Nhiệt cực + Chi tử, Ngân hoa, Liên kiều;<br><span class="enum-indent"></span><strong>động phong gáy cứng + Bạch cương tằm, Thiền thoái, Cúc hoa, Địa long</strong> (lương can tức phong);<br><span class="enum-indent"></span>xuất huyết + Sinh địa, Đơn bì, Thiến thảo căn, Bạch mao căn.</li>
+</ul>
+<h4>④ Thử thấp tràn lan tam tiêu</h4>
+<ul>
+<li><strong>Triệu chứng:</strong> Sốt, mặt đỏ, <strong>tai điếc</strong>, hoa mắt chóng mặt, ho đàm lẫn máu, <strong>miệng không khát lắm</strong>, ngực tức, bụng chướng, lợm giọng nôn, đại tiện lỏng hôi, tiểu ngắn đỏ, lưỡi đỏ thẫm rêu vàng nê, <strong>mạch hoạt sác</strong>.</li>
+<li><strong>Cơ chế:</strong> tà nhập lý lan tỏa mờ mịt tam tiêu — <strong>thử nhiệt nặng, thấp tà nhẹ</strong>, tà tại khí phần khắp thượng-trung-hạ. <em>(KB phân biệt: tai điếc thử thấp do <strong>thấp nhiệt uất chưng thanh khiếu</strong> — KHÁC điếc thiếu dương do đờm nhiệt thượng xung, vốn kèm hàn nhiệt vãng lai + miệng đắng + mạch huyền.)</em></li>
+<li><strong>Pháp:</strong> Thanh nhiệt lợi thấp, tuyên thông tam tiêu.</li>
+<li><strong>Phương: Tam thạch thang</strong> (Hoạt thạch, sinh Thạch cao, Hàn thủy thạch, Hạnh nhân, Trúc nhự, Ngân hoa, Kim trấp, Bạch thông thảo).</li>
+</ul>
+<h4>⑤ Thử thương phế lạc</h4>
+<ul>
+<li><strong>Triệu chứng:</strong> Sốt, phiền khát, <strong>ho khí suyễn, khạc máu / đàm lẫn máu</strong>, phiền thao, suyễn thúc, lưỡi đỏ rêu vàng khô, mạch tế sác.</li>
+<li><strong>Cơ chế:</strong> thử nhiệt <strong>hóa táo hóa hỏa nội hãm huyết phần, tổn thương phế lạc</strong> → huyết tràn. <em>(Thể nguy hiểm — KB: bệnh tình thường rất nguy, cần nằm yên tĩnh tuyệt đối.)</em></li>
+<li><strong>Pháp:</strong> Lương huyết an lạc, thanh thử bảo phế.</li>
+<li><strong>Phương: Tê giác địa hoàng thang hợp Hoàng liên giải độc thang gia giảm</strong> — Thủy ngưu giác, Sinh địa, Đơn bì, Xích thược (lương huyết) + Hoàng liên, Hoàng bá, Hoàng cầm, Ngân hoa (thanh thử bảo phế) + Ngẫu tiết, Bạch cập, Mao căn, Chi tử sao (chỉ huyết).</li>
+<li>⚠ <strong>Thủy ngưu giác thay tê giác</strong> (CITES &amp; quy định dược liệu).</li>
+</ul>
+<h4>⑥ Thử thấp thương khí</h4>
+<ul>
+<li><strong>Triệu chứng:</strong> Sốt, <strong>tự hãn</strong>, tâm phiền, khát, ngực tức, khí đoản, <strong>tứ chi rã rời, tinh thần uể oải mệt mỏi</strong>, tiểu ngắn đỏ, đại tiện lỏng, rêu nê, <strong>mạch đại vô lực / nhu hoạt đới sắc</strong>.</li>
+<li><strong>Cơ chế:</strong> thử nhiệt trở trệ khí cơ, tổn thương trung khí, hao nguyên khí + thương tân.</li>
+<li><strong>Pháp:</strong> Thanh thử hóa thấp, bồi nguyên hòa trung.</li>
+<li><strong>Phương: Đông Hằng thanh thử ích khí thang</strong> (Hoàng kỳ, Đảng sâm, Thương/Bạch truật, Thăng ma, Cát căn, Trạch tả, Hoàng bá, Mạch đông, Ngũ vị tử, Đương quy, Thanh bì, Quất bì, Lục khúc, Chích cam thảo).</li>
+</ul>
+<div class="callout c-important"><div class="callout-title"><span class="ico">❗</span>Hai bài &quot;Thanh thử ích khí thang&quot; — đừng nhầm</div><div class="callout-body"><div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th><strong>Lý Đông Hằng</strong> (thể này ⑥)</th>
+<th><strong>Vương Mạnh Anh</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Dùng cho</td>
+<td><strong>Thử THẤP</strong> thương khí (có thấp, tỳ hư)</td>
+<td><strong>Thử ÔN</strong> thương tân khí (nhiệt nặng, âm thương)</td>
+</tr>
+<tr>
+<td>Thiên về</td>
+<td><strong>Kiện tỳ táo thấp + ích khí</strong></td>
+<td>Thanh nhiệt + dưỡng âm sinh tân</td>
+</tr>
+<tr>
+<td>Vị tiêu biểu</td>
+<td>Hoàng kỳ, Thương/Bạch truật, Thăng ma, Cát căn</td>
+<td>Tây dương sâm, Thạch hộc, Mạch môn</td>
+</tr>
+<tr>
+<td>KB Thử Thấp (5.6) dùng <strong>bài Lý Đông Hằng</strong>. Đối chiếu <span class="wikilink" title="Thử Ôn — Bài Giảng Chuyên Sâu">Thử Ôn — Bài Giảng Chuyên Sâu</span> dùng bài Vương Mạnh Anh.</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table></div>
+</div></div>
+
+
+<h4>⑦ Thử thấp dư tà chưa sạch (hậu kỳ)</h4>
+<ul>
+<li><strong>Triệu chứng:</strong> Thử thấp đã giảm nhưng <strong>sốt thấp còn</strong>, miệng khát không nhiều, hoa mắt chóng mặt, lưỡi đỏ nhạt rêu mỏng trắng.</li>
+<li><strong>Cơ chế:</strong> dư tà mỏng che thanh khiếu, tân dịch chưa hồi phục.</li>
+<li><strong>Pháp:</strong> Thanh hóa thử thấp dư tà.</li>
+<li><strong>Phương: Thanh lạc ẩm</strong> (Rìa lá sen tươi, Ty qua bì, Ngân hoa tươi, Trúc diệp tâm tươi, Tây qua y, Biển đậu hoa tươi). Tiểu ít vàng rêu nê + Hạnh nhân, Ý dĩ, Hoạt thạch.</li>
+</ul>
+<h3>5.4. Điều trị triệu chứng (theo KB mục 6)</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Biến chứng</th>
+<th>Xử trí YHCT (KB)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Xuất huyết</strong> (máu cam, tiểu/tiện máu, khạc máu)</td>
+<td>Thanh nhiệt tả hỏa + lương huyết chỉ huyết, gia <strong>Tam thất / Vân Nam bạch dược</strong>. <strong>Khí tùy huyết thoát → Sinh mạch ẩm, Độc sâm thang</strong>. Khạc máu (phế) rất nguy → <strong>nằm yên tuyệt đối, phối Đông-Tây cấp cứu</strong></td>
+</tr>
+<tr>
+<td><strong>Hoàng đản</strong></td>
+<td>Thử thấp uất kết thành độc, nhập can → thanh can, sơ can, chỉ huyết, bổ huyết</td>
+</tr>
+<tr>
+<td><strong>Đau cơ</strong> (đặc biệt chi dưới)</td>
+<td>Gia <strong>Phòng kỷ, Tần giao, Khương hoàng</strong> + <strong>châm Thừa sơn, Phong long</strong></td>
+</tr>
+</tbody></table></div>
+<h3>5.5. Châm cứu hỗ trợ</h3>
+<p><span class="kb-ext">🔸 Kiến thức nền — KB on_benh thuần lý luận, không có huyệt trừ Thừa sơn/Phong long ở mục đau cơ</span></p>
+<ul>
+<li><strong>Thanh thử hóa thấp / hòa trung:</strong> Hợp cốc, Khúc trì (tả nhiệt);<br><span class="enum-indent"></span>Trung quản, Túc tam lý, Âm lăng tuyền (kiện tỳ hóa thấp);<br><span class="enum-indent"></span>Nội quan (chỉ nôn).</li>
+<li><strong>Tiêu chảy:</strong> Thiên khu, Túc tam lý, Âm lăng tuyền.</li>
+<li><strong>Đau cơ bắp chân:</strong> <strong>Thừa sơn, Phong long</strong> (KB), thêm Dương lăng tuyền.</li>
+<li><strong>Cấp cứu hôn mê/co giật:</strong> Nhân trung, Thập tuyên chích máu, Thái xung, Phong trì.</li>
+</ul>
+<h3>5.6. Tây y — phác đồ song hành</h3>
+<p><span class="kb-ext">🔸 Kiến thức nền — KB nhắc &quot;phối hợp Đông-Tây tích cực cấp cứu&quot;</span></p>
+<ul>
+<li><strong>Leptospirosis:</strong> <strong>kháng sinh sớm</strong> (Penicillin G / Doxycycline; nặng → Ceftriaxone), bù dịch-điện giải, hỗ trợ gan-thận (lọc máu nếu suy thận), xử trí xuất huyết phổi. <strong>Kháng sinh là điều trị căn nguyên — không trì hoãn vì YHCT.</strong></li>
+<li><strong>Viêm dạ dày-ruột cấp:</strong> bù nước-điện giải (ORS/dịch truyền) là cốt lõi.</li>
+<li><strong>Viêm não Nhật Bản:</strong> nâng đỡ, chống phù não, chống co giật; dự phòng <strong>vaccin VNNB</strong>.</li>
+</ul>
+<h3>5.7. Tương tác Đông–Tây cần lưu ý</h3>
+<p>🔸 <strong>[Kiến thức nền — xem <span class="wikilink" title="duoc-hoc-tich-hop">duoc-hoc-tich-hop</span>]</strong></p>
+<ul>
+<li>Bài <strong>lương huyết chứa Đơn bì/Xích thược/Đương quy</strong> (hoạt huyết) → thận trọng khi có <strong>xuất huyết phổi/rối loạn đông máu</strong> (Lepto thể Weil) hoặc đang chống đông.</li>
+<li><strong>Thạch cao/Hàn thủy thạch liều cao</strong> + bù dịch → theo dõi <strong>Ca²⁺/điện giải</strong>.</li>
+<li><strong>Cam thảo</strong> kéo dài/liều cao → giữ Na, mất K, tăng HA — bất lợi khi đang rối loạn điện giải do nôn-tả.</li>
+<li><strong>Hoàng liên/Hoàng bá/Hoàng cầm</strong> (berberin) liều cao kéo dài → theo dõi tiêu hóa, tránh ở phụ nữ có thai.</li>
+</ul>
+<hr>
+</div></details>
+<details class="section" id="sec-7" open><summary><span class="step-num">BƯỚC 6</span> Bằng chứng Khoa học</summary><div class="section-body"><p><span class="kb-ext">🔸 Kiến thức nền — ngoài KB; mức bằng chứng ghi thận trọng</span></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Can thiệp</th>
+<th>Bối cảnh</th>
+<th>Mức BC (tự đánh giá)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Kháng sinh sớm trong Leptospirosis</td>
+<td>Chuẩn điều trị (WHO)</td>
+<td><strong>A</strong></td>
+</tr>
+<tr>
+<td>Bù dịch-điện giải trong viêm dạ dày-ruột cấp</td>
+<td>Chuẩn nhi/nội khoa</td>
+<td><strong>A</strong></td>
+</tr>
+<tr>
+<td>Vaccin viêm não Nhật Bản</td>
+<td>Dự phòng dịch</td>
+<td><strong>A</strong></td>
+</tr>
+<tr>
+<td>Sinh mạch tán/Sâm mạch trong sốc/khí thoát</td>
+<td>RCT/meta hỗ trợ huyết động, dị chất</td>
+<td><strong>C–B</strong></td>
+</tr>
+<tr>
+<td>Cổ phương thanh nhiệt lợi thấp (Tam thạch thang, Bạch hổ gia thương truật...)</td>
+<td>Chủ yếu tiền lâm sàng + RCT nhỏ</td>
+<td><strong>C</strong></td>
+</tr>
+</tbody></table></div>
+<div class="callout c-caution"><div class="callout-title"><span class="ico">🚫</span>Cảnh báo trung thực</div><div class="callout-body"><p>Bằng chứng cho cổ phương thử thấp phần lớn là <strong>tiền lâm sàng hoặc RCT chất lượng thấp/heterogeneous</strong>. <strong>Không dùng YHCT thay thế kháng sinh trong Leptospirosis, thay thế bù dịch trong tiêu chảy mất nước, hay thay cấp cứu trong viêm não</strong> — YHCT là <strong>bổ trợ</strong>. (Nguyên tắc <em>safety first</em>, xem <span class="wikilink" title="feedback-citation-rigor">feedback-citation-rigor</span>.)</p>
+</div></div>
+
+
+<hr>
+</div></details>
+<details class="section" id="sec-8" open><summary><span class="step-num">BƯỚC 7</span> Điểm Cần Nhớ &amp; Câu Hỏi Phản Biện</summary><div class="section-body"><h3>7.1. Key points (5)</h3>
+<ol>
+<li><strong>Thử thấp = thử nhiệt + thấp</strong> (thấp nhiệt chứng + thấp tà uất trở). Phân biệt với thử ôn (thử thuần), thấp ôn (khởi từ từ), phục thử (phục tàng sau Lập thu) — <strong>dấu thấp = thân nặng, rêu nê, mạch nhu, khát ít</strong> (KB mục 4).</li>
+<li><strong>Pháp trị bất di bất dịch: thanh thử tiết nhiệt (đầu tiên) + tuyên hóa thấp</strong> — <em>&quot;trị thử mà không kiêng trị thấp là quá dở&quot;</em> (Dụ Gia Ngôn).</li>
+<li><strong>Trọng tâm bệnh ở trung tiêu (tỳ vị)</strong>, lan tỏa tam tiêu; thử thấp <strong>dễ hóa táo hóa hỏa → xuất huyết, phát hoàng, nhập dinh huyết</strong> — đây là các thể nguy hiểm (⑤ thương phế lạc).</li>
+<li><strong>7 thể KB:</strong><br><span class="enum-indent"></span>①vệ →<br><span class="enum-indent"></span>②vị trường /<br><span class="enum-indent"></span>③trung tiêu →<br><span class="enum-indent"></span>④tam tiêu →<br><span class="enum-indent"></span>⑤phế lạc (huyết) /<br><span class="enum-indent"></span>⑥thương khí →<br><span class="enum-indent"></span>⑦dư tà. Nhớ cặp <strong>Đông Hằng thanh thử ích khí thang (thử thấp<br><span class="enum-indent"></span>⑥)</strong> ≠ <strong>Vương Mạnh Anh (thử ôn)</strong>.</li>
+<li><strong>Leptospirosis là khuôn mặt Tây y điển hình</strong> (tam chứng + đau bắp chân + vàng da + dịch tễ chuột/heo/nước) → cấp cứu phải <strong>kháng sinh sớm + phối Đông-Tây</strong>.</li>
+</ol>
+<h3>7.2. Câu hỏi phản biện (tự kiểm tra)</h3>
+<div class="callout c-question"><div class="callout-title"><span class="ico">❓</span>Q1</div><div class="callout-body"><p>Bệnh nhân mùa hè sốt cao, tráng nhiệt, hãn xuất, mặt đỏ, mạch hồng đại — <strong>rất giống thử ôn</strong>. Dấu hiệu nào trong tứ chẩn giúp bạn nhận ra đây thực chất là <strong>thử thấp khôn trở trung tiêu (thể ③)</strong> chứ không phải thử ôn thuần, và điều đó đổi bài thuốc thế nào (Thương truật bạch hổ thang vs Bạch hổ thang)?</p>
+</div></div>
+
+
+
+<div class="callout c-question"><div class="callout-title"><span class="ico">❓</span>Q2</div><div class="callout-body"><p>Vì sao cùng dùng tên &quot;Thanh thử ích khí thang&quot; mà bài <strong>Lý Đông Hằng</strong> (thử thấp) lại nặng Hoàng kỳ–Thương/Bạch truật–Thăng ma–Cát căn, còn bài <strong>Vương Mạnh Anh</strong> (thử ôn) lại nặng Tây dương sâm–Thạch hộc–Mạch môn? Liên hệ với sự có/không có <strong>thấp tà</strong> trong hai bệnh.</p>
+</div></div>
+
+
+<hr>
+</div></details>
+<details class="section" id="sec-9" open><summary>🔗 Liên kết</summary><div class="section-body"><ul>
+<li><span class="wikilink" title="Thử Ôn — Bài Giảng Chuyên Sâu">Thử Ôn — Bài Giảng Chuyên Sâu</span> — bệnh &quot;anh em&quot; cùng mùa, thử nhiệt <strong>thuần</strong> (không thấp)</li>
+<li><span class="wikilink" title="Phong Ôn — Bài Giảng Chuyên Sâu">Phong Ôn — Bài Giảng Chuyên Sâu</span> — đối chiếu khởi phát phế vệ</li>
+<li><span class="wikilink" title="Xuân Ôn — Bài Giảng Chuyên Sâu">Xuân Ôn — Bài Giảng Chuyên Sâu</span> — phục tà ôn nhiệt</li>
+<li><span class="wikilink" title="duoc-hoc-tich-hop">duoc-hoc-tich-hop</span> · <span class="wikilink" title="feedback-citation-rigor">feedback-citation-rigor</span></li>
+</ul>
+<div class="callout c-quote"><div class="callout-title"><span class="ico">❝</span>Trích dẫn kim chỉ nam</div><div class="callout-body"><p><em>&quot;Trị trúng thử mà không kiêng trị thấp là quá dở&quot;</em> — Dụ Gia Ngôn, <em>Y môn pháp luật</em>.
+<em>&quot;Thử thấp thương khí, phế tiên thụ bệnh, chư khí giai tỳ&quot;</em> — Diệp Thiên Sĩ, <em>Lâm chứng chỉ nam y án</em>.</p>
+</div></div>
+
+
+<hr>
+<p><em>Nguồn KB: <code>kb/on_benh_dai_cuong/02_benh-lam-sang/thu-thap_001.md</code> (toàn bài). Các phần 🔸 là kiến thức nền cổ điển/Tây y ngoài KB. Mục đích giáo dục — áp dụng lâm sàng cần cá thể hóa.</em></p>
+</div></details>
+  </article>
+  <footer class="foot">Tạo bằng med-md2html · cỡ chữ &amp; nền chỉnh ở thanh trên · chạm sơ đồ để phóng to</footer>
+</main>
+
+<div id="lightbox" class="lightbox" hidden>
+  <div class="lb-tools">
+    <button data-z="out" class="lb-btn">−</button>
+    <button data-z="reset" class="lb-btn">⟲</button>
+    <button data-z="in" class="lb-btn">+</button>
+    <button data-z="close" class="lb-btn lb-close">✕</button>
+  </div>
+  <div id="lbStage" class="lb-stage"></div>
+</div>
+
+<script>
+(function(){
+  var root=document.documentElement;
+  // theme
+  var savedT=localStorage.getItem('mmh-theme'); if(savedT)root.dataset.theme=savedT;
+  else if(matchMedia('(prefers-color-scheme:dark)').matches)root.dataset.theme='dark';
+  document.getElementById('themeBtn').onclick=function(){var t=root.dataset.theme==='dark'?'light':'dark';root.dataset.theme=t;localStorage.setItem('mmh-theme',t);};
+  // font size
+  var fs=parseInt(localStorage.getItem('mmh-fs')||'17',10); apply();
+  function apply(){fs=Math.max(14,Math.min(22,fs));root.style.setProperty('--fs',fs+'px');localStorage.setItem('mmh-fs',fs);}
+  document.getElementById('fontUp').onclick=function(){fs+=1;apply();};
+  document.getElementById('fontDown').onclick=function(){fs-=1;apply();};
+  // toc drawer
+  var toc=document.getElementById('toc'),scrim=document.getElementById('scrim');
+  function openToc(){toc.classList.add('open');scrim.classList.add('show');}
+  function closeToc(){toc.classList.remove('open');scrim.classList.remove('show');}
+  document.getElementById('tocBtn').onclick=openToc; scrim.onclick=closeToc;
+  // expand/collapse
+  var secs=[].slice.call(document.querySelectorAll('details.section'));
+  document.getElementById('expandAll').onclick=function(){secs.forEach(function(s){s.open=true;});};
+  document.getElementById('collapseAll').onclick=function(){secs.forEach(function(s){s.open=false;});};
+  // toc nav + active highlight
+  var links=[].slice.call(document.querySelectorAll('.toc-link'));
+  links.forEach(function(a){a.onclick=function(e){e.preventDefault();var el=document.getElementById(a.dataset.target);if(el){el.open=true;closeToc();setTimeout(function(){el.scrollIntoView({behavior:'smooth',block:'start'});},80);}};});
+  // progress + active section
+  var prog=document.getElementById('progress');
+  function onScroll(){
+    var h=document.documentElement,sc=h.scrollTop,max=h.scrollHeight-h.clientHeight;
+    prog.style.width=(max>0?(sc/max*100):0)+'%';
+    var cur=null;secs.forEach(function(s){if(s.getBoundingClientRect().top<140)cur=s.id;});
+    links.forEach(function(a){a.classList.toggle('active',a.dataset.target===cur);});
+  }
+  document.addEventListener('scroll',onScroll,{passive:true});onScroll();
+  // lightbox zoom/pan
+  var lb=document.getElementById('lightbox'),stage=document.getElementById('lbStage'),scale=1,tx=0,ty=0,cur=null;
+  function setT(){if(cur)cur.style.transform='translate('+tx+'px,'+ty+'px) scale('+scale+')';}
+  document.querySelectorAll('figure.diagram').forEach(function(f){
+    f.addEventListener('click',function(){var svg=f.querySelector('svg');if(!svg)return;stage.innerHTML='';var canvas=document.createElement('div');canvas.className='lb-canvas';canvas.appendChild(svg.cloneNode(true));cur=canvas;scale=1;tx=0;ty=0;stage.appendChild(cur);setT();lb.hidden=false;});
+  });
+  lb.querySelector('.lb-tools').addEventListener('click',function(e){var z=e.target.dataset.z;if(!z)return;
+    if(z==='in')scale*=1.3;else if(z==='out')scale/=1.3;else if(z==='reset'){scale=1;tx=0;ty=0;}else if(z==='close'){lb.hidden=true;return;}setT();});
+  // wheel zoom
+  stage.addEventListener('wheel',function(e){e.preventDefault();scale*=e.deltaY<0?1.12:.9;scale=Math.max(.3,Math.min(8,scale));setT();},{passive:false});
+  // drag / pinch
+  var pts={},pinchD=0,lx=0,ly=0,dragging=false;
+  stage.addEventListener('pointerdown',function(e){stage.setPointerCapture(e.pointerId);pts[e.pointerId]={x:e.clientX,y:e.clientY};lx=e.clientX;ly=e.clientY;dragging=true;});
+  stage.addEventListener('pointermove',function(e){if(!pts[e.pointerId])return;pts[e.pointerId]={x:e.clientX,y:e.clientY};var ids=Object.keys(pts);
+    if(ids.length===2){var a=pts[ids[0]],b=pts[ids[1]],d=Math.hypot(a.x-b.x,a.y-b.y);if(pinchD)scale*=d/pinchD;pinchD=d;scale=Math.max(.3,Math.min(8,scale));setT();}
+    else if(dragging){tx+=e.clientX-lx;ty+=e.clientY-ly;lx=e.clientX;ly=e.clientY;setT();}});
+  function up(e){delete pts[e.pointerId];pinchD=0;if(!Object.keys(pts).length)dragging=false;}
+  stage.addEventListener('pointerup',up);stage.addEventListener('pointercancel',up);
+  lb.addEventListener('keydown',function(e){if(e.key==='Escape')lb.hidden=true;});
+})();
+</script>
+</body>
+</html>

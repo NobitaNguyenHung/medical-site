@@ -1,0 +1,12 @@
+---
+interface Props {
+	title?: string;
+}
+
+const { title } = Astro.props;
+---
+
+<article class="medical-note treatment-update">
+	{title && <p class="medical-box__title">{title}</p>}
+	<slot />
+</article>
