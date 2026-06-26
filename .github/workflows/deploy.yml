@@ -21,6 +21,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: withastro/action@v3
+        # Astro 7 cần Node >=22.12; action mặc định 20 -> ép 22
+        with:
+          node-version: 22
         # tự cài deps + build + upload artifact (.npmrc legacy-peer-deps=true)
 
   deploy:
