@@ -12,19 +12,23 @@ MedicalSite/
 │   ├── content/
 │   │   └── docs/             # Starlight-rendered content
 │   │       ├── index.mdx
-│   │       ├── books/
-│   │       ├── cases/
-│   │       ├── updates/
-│   │       ├── topics/
-│   │       ├── templates/
-│   │       └── on-benh -> ../../../Raw/on-benh
+│   │       ├── books/        # sách: mỗi sách 1 thư mục, 3 mục
+│   │       │   └── on-benh/
+│   │       │       ├── tom-tat/      -> ../../../../../Raw/on-benh  (1 · tóm tắt)
+│   │       │       ├── nguyen-thuy/  (2 · nguyên thủy, .md/.mdx)
+│   │       │       └── luong-gia.mdx (3 · nhúng quiz HTML)
+│   │       ├── cases/        # template clinical-case
+│   │       ├── updates/      # template treatment-update
+│   │       ├── topics/       # template topic-index
+│   │       └── templates/    # khuôn ẩn (draft)
 │   ├── components/           # MDX medical UI components
 │   └── styles/
 │       └── medical.css
 └── public/
-    ├── images/
-    └── assets/
+    └── quiz/<sách>/<tên>.html   # quiz build sẵn, nhúng qua <QuizEmbed>
 ```
+
+> **Cách thêm sách / case / quiz: xem [WORKFLOW.md](./WORKFLOW.md).**
 
 `Raw/` is the local inbox/source area. Copy files here first. It can contain
 messy imports such as Markdown, HTML exports, images, and source artifacts.
@@ -39,6 +43,21 @@ Recommended split:
 - `Raw/`: inbox/source material; allowed to be messy.
 - `src/content/docs/books|cases|updates|topics`: curated MDX; consistent metadata; uses medical components.
 - `src/content/docs/templates`: hidden MDX templates for creating new content.
+
+### Book = 3 sections
+
+Each book lives in `src/content/docs/books/<book>/` and always has the same
+three sidebar sections:
+
+| # | Section | Folder / file | Format |
+| :-- | :-- | :-- | :-- |
+| 1 | Lý thuyết tóm tắt | `tom-tat/` | `.md` / `.mdx` |
+| 2 | Lý thuyết nguyên thủy | `nguyen-thuy/` | `.md` / `.mdx` (trích sách gốc) |
+| 3 | Câu hỏi lượng giá | `luong-gia.mdx` | nhúng quiz HTML từ `public/quiz/<book>/` |
+
+The sidebar block for a book is explicit in `astro.config.mjs` (group `Sách` →
+copy the "MẪU 1 SÁCH" block). Sections 1 & 2 use `autogenerate`; section 3 is a
+single `luong-gia.mdx` that embeds the built quiz via `<QuizEmbed>`.
 
 ## Metadata
 
@@ -80,9 +99,10 @@ sidebar:
 
 Templates live in `src/content/docs/templates/`:
 
-- `book-chapter.mdx`
-- `clinical-case.mdx`
-- `treatment-update.mdx`
+- `book-chapter.mdx` → `books/<book>/tom-tat/`
+- `clinical-case.mdx` → `cases/`
+- `treatment-update.mdx` → `updates/`
+- `topic-index.mdx` → `topics/`
 
 They are draft-only and hidden from search/sidebar. Copy one into `books/`,
 `cases/`, `updates/`, or `topics/`, then remove the `draft`/`pagefind`/`hidden`
@@ -113,6 +133,7 @@ Reusable MDX UI in `src/components/` (import via the `~/components/` alias, e.g.
 | `SelfCheck` | Self-assessment / quiz block |
 | `SourceNote` | Source / citation footer |
 | `TreatmentUpdate` | Guideline-update wrapper (optional `title`) |
+| `QuizEmbed` | Embed a built quiz HTML from `public/` (`src`, `title`, `height`); auto-prefixes the base path |
 
 ## Theme
 
@@ -164,11 +185,16 @@ State lives in `.codegraph/`.
 > invisible to it. It becomes useful only if real `.ts`/`.js` logic is added.
 > Content relationships (wikilinks, tags, disease graph) need a different tool.
 
-## Workflow
+## Workflow & Deploy
 
-1. Copy raw notes/assets into `Raw/<domain>/`.
-2. For quick publishing, expose the raw folder under `src/content/docs/` with a relative symlink.
-3. Only `.md`/`.mdx` files exposed under `src/content/docs/` become rendered pages; HTML exports and other files in `Raw/` are source artifacts.
-4. For long-term structure, convert notes into MDX under `books/`, `cases/`, `updates/`, or `topics/`.
-5. Use the medical components from `src/components/` instead of hand-writing UI.
-6. Run `npm run build` before deploy to generate the static site and Pagefind index.
+Full step-by-step for adding books, cases, updates, topics, and quizzes:
+**[WORKFLOW.md](./WORKFLOW.md)**.
+
+Quick version:
+
+1. Copy raw files into `Raw/<domain>/`.
+2. Expose / curate under `src/content/docs/` (symlink for quick, MDX for curated).
+   Only `.md`/`.mdx` there become pages; HTML/images in `Raw/` are source artifacts.
+3. `npm run build && npm run preview` to verify locally.
+4. `git add -A && git commit -m "…" && git push` — GitHub Actions auto-builds and
+   deploys to <https://nobitanguyenhung.github.io/medical-site/>.

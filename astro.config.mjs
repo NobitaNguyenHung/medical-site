@@ -32,9 +32,17 @@ export default defineConfig({
 				{
 					label: 'Sách',
 					items: [
-						// mỗi sách = 1 subgroup; thêm sách mới -> thêm dòng autogenerate
-						{ label: 'Ôn bệnh', collapsed: true, items: [{ autogenerate: { directory: 'on-benh' } }] },
-						{ autogenerate: { directory: 'books' } },
+						// ░░ MẪU 1 SÁCH — copy nguyên block, đổi 'on-benh' + nhãn ░░
+						{
+							label: 'Ôn bệnh',
+							collapsed: true,
+							items: [
+								{ label: '1 · Lý thuyết tóm tắt', items: [{ autogenerate: { directory: 'books/on-benh/tom-tat' } }] },
+								{ label: '2 · Lý thuyết nguyên thủy', items: [{ autogenerate: { directory: 'books/on-benh/nguyen-thuy' } }] },
+								{ label: '3 · Câu hỏi lượng giá', slug: 'books/on-benh/luong-gia' },
+							],
+						},
+						// ░░ thêm sách mới ở đây ░░
 					],
 				},
 				{ label: 'Cases', items: [{ autogenerate: { directory: 'cases' } }] },

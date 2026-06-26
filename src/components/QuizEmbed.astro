@@ -1,0 +1,23 @@
+---
+interface Props {
+	src: string; // đường dẫn trong public/, vd "quiz/on-benh/on-benh-quiz.html"
+	title?: string;
+	height?: string;
+}
+
+const { src, title = 'Quiz', height = '80vh' } = Astro.props;
+// tự thêm base path (vd /medical-site/) -> chạy đúng cả local lẫn GitHub Pages
+const url = import.meta.env.BASE_URL.replace(/\/$/, '') + '/' + src.replace(/^\//, '');
+---
+
+<div class="quiz-embed">
+	<iframe
+		src={url}
+		title={title}
+		loading="lazy"
+		style={`width:100%;height:${height};border:0;border-radius:8px;background:var(--sl-color-bg)`}
+	></iframe>
+	<p style="margin-top:0.5rem">
+		<a href={url} target="_blank" rel="noopener">Mở “{title}” toàn màn hình →</a>
+	</p>
+</div>
