@@ -198,3 +198,55 @@ Quick version:
 3. `npm run build && npm run preview` to verify locally.
 4. `git add -A && git commit -m "…" && git push` — GitHub Actions auto-builds and
    deploys to <https://nobitanguyenhung.github.io/medical-site/>.
+
+## Thêm 1 file — chạy thế nào
+
+### A. Thêm 1 file `.md` / `.mdx` (1 bài đọc)
+
+1. Đặt file vào **đúng thư mục** dưới `src/content/docs/`:
+   - bài cho sách Ôn bệnh (tóm tắt) → bỏ vào `Raw/on-benh/` (đã symlink sẵn vào `tom-tat/`).
+   - lý thuyết nguyên thủy → `src/content/docs/books/<sách>/nguyen-thuy/`.
+   - ca / cập nhật / chủ đề → `cases/` · `updates/` · `topics/` (copy từ `templates/`).
+2. Frontmatter tối thiểu: `title`. Tùy chọn: `sidebar: { order: N }` để xếp thứ tự.
+3. Chạy:
+   ```bash
+   npm run build && npm run preview      # xem http://localhost:4321
+   git add -A && git commit -m "add: <bài>" && git push
+   ```
+4. ~1 phút sau hiện trên web. Menu tự cập nhật (section dùng `autogenerate`).
+
+> File `.md` **không cần** sửa config nếu nằm trong thư mục đã `autogenerate`.
+> Thêm **sách mới** mới phải sửa `astro.config.mjs` (copy block "MẪU 1 SÁCH").
+
+### B. Thêm 1 file `.html` (quiz / trang tương tác build sẵn)
+
+`.html` **KHÔNG** bỏ vào `src/content/docs/` (Starlight bỏ qua, không render).
+
+1. Đặt vào **`public/`**, theo quy ước: `public/quiz/<sách>/<tên>.html`.
+2. Nhúng vào 1 trang bằng component `QuizEmbed` (tự thêm base path):
+   ```mdx
+   import QuizEmbed from '~/components/QuizEmbed.astro';
+   <QuizEmbed src="quiz/<sách>/<tên>.html" title="..." />
+   ```
+   (sách đã có sẵn `luong-gia.mdx` — chỉ cần ghi đè file `.html`, khỏi sửa mdx.)
+3. `npm run build && git add -A && git commit -m "…" && git push`.
+
+> Mọi thứ trong `public/` được bê nguyên vào `dist/` theo đúng đường dẫn.
+> Link tới nó **phải có base**: dùng `<QuizEmbed>` hoặc `/medical-site/...`.
+
+## Tránh lỗi (đã từng dính)
+
+| Lỗi | Vì sao | Cách tránh |
+| :-- | :-- | :-- |
+| Link nội bộ 404 | Tự gõ link thiếu base `/medical-site/` | Link tay phải bắt đầu `/medical-site/…` **hoặc** dùng đường dẫn tương đối. Để Starlight tự sinh link (sidebar) khi có thể. |
+| Đổi/di chuyển bài → link cũ 404 | Link tay trỏ path cũ (vd hero trong `index.mdx`) | Khi **rename/move** nội dung, sửa luôn mọi link tay. Quét: `grep -rE 'href=\"/medical-site' dist` sau build. |
+| Trang/nút cũ vẫn hiện sau deploy | Cache PWA | Giờ SW chạy **NetworkFirst** → online luôn mới. Nếu vẫn cũ: hard-refresh / tab ẩn danh 1 lần. |
+| `.html` không hiện thành trang | Starlight chỉ render `.md`/`.mdx` | `.html` để trong `public/`, nhúng bằng `<QuizEmbed>`. |
+| `npm install` báo ERESOLVE | Dep peer cũ hơn Astro 7 | Đã có `.npmrc` (`legacy-peer-deps=true`). Giữ nguyên. |
+| CI build fail (engine) | Astro 7 cần Node ≥22.12; action mặc định 20 | `.github/workflows/deploy.yml` đã ép `node-version: 22`. Đừng hạ. |
+| Sidebar config invalid | Starlight ≥0.39 bỏ nhóm `autogenerate` có `label` | Nhóm phải `{ label, items: [{ autogenerate: { directory } }] }`. |
+| URL bài xấu / khó gõ (tiếng Việt dấu) | Slug lấy từ tên file | Đặt tên file ASCII, hoặc thêm `slug:` trong frontmatter cho URL sạch. |
+
+> Kiểm tra nhanh trước khi push: `npm run build` (chặn lỗi tại chỗ) +
+> `grep -rE 'href="/(on-benh|books|cases|updates|topics)/' dist` không ra dòng nào
+> = không còn link thiếu base.
