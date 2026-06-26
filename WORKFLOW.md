@@ -9,6 +9,9 @@ Quy trình chuẩn để đổ nội dung mới và đưa lên web. Đọc cái 
 - **public/** = file tĩnh bê nguyên (quiz HTML, ảnh dùng đường dẫn tuyệt đối).
 - Build chạy tự động trên GitHub Actions **mỗi khi push lên `main`**. Không cần build tay để deploy.
 
+> ⚠️ **File `.html` (quiz) KHÔNG bỏ vào `src/content/docs/`** — Starlight bỏ qua, không render.
+> Quiz `.html` **luôn** đặt trong `public/quiz/<sách>/`, rồi nhúng bằng `<QuizEmbed>` (xem §5).
+
 ## 1. Vòng đời 1 thay đổi (TL;DR)
 
 ```bash
@@ -83,10 +86,35 @@ Quiz HTML (build từ skill `html-y-khoa`) đặt riêng trong:
 
 Section tự sinh menu (`autogenerate`) — bỏ file vào là tự hiện, khỏi sửa config.
 
-## 5. Cập nhật quiz đã có
+## 5. Thêm / cập nhật quiz HTML
 
-Build quiz mới bằng skill `html-y-khoa` → ghi đè đúng file trong `public/quiz/<sách>/`.
+Quiz là file `.html` tương tác (build từ skill `html-y-khoa`). **Đặt trong `public/`,
+KHÔNG đặt trong `src/content/docs/`.**
+
+### 5a. Thêm quiz MỚI
+
+```bash
+# 1) chép file html vào public/quiz/<sách>/
+cp OnBenh_ThuThap_LuyenTap.html public/quiz/on-benh/
+
+# 2) thêm 1 dòng vào luong-gia.mdx của sách đó:
+#    <QuizEmbed src="quiz/on-benh/OnBenh_ThuThap_LuyenTap.html" title="Thử Thấp — Luyện Tập" />
+
+# 3) build + push
+npm run build && git add -A && git commit -m "add quiz: ..." && git push
+```
+
+`src` trong `<QuizEmbed>` là đường dẫn **trong `public/`** (bỏ chữ `public/`), không
+có base — component tự thêm `/medical-site/`. Có thể nhúng nhiều `<QuizEmbed>` trong
+1 trang `luong-gia.mdx`.
+
+### 5b. Cập nhật quiz CŨ
+
+Build lại bằng `html-y-khoa` → **ghi đè đúng tên file** trong `public/quiz/<sách>/`.
 Không cần sửa `.mdx`. Build → push.
+
+> Nếu lỡ bỏ `.html` vào `src/content/docs/...`: chuyển nó ra `public/quiz/<sách>/`,
+> xóa thư mục lạc, rồi trỏ `<QuizEmbed>` tới vị trí mới.
 
 ## 6. Deploy
 

@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Xuân Ôn — 50 Flashcard</title>
+<style>
+  :root {
+    --bg: #0F172A; --surface: #1E293B; --surface2: #334155;
+    --accent: #F59E0B; --accent2: #EF4444; --accent3: #22C55E;
+    --text: #F1F5F9; --text2: #94A3B8; --text3: #CBD5E1;
+    --front-bg: #1E293B; --back-bg: #172554;
+    --border: #334155;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; min-height: 100vh; }
+
+  .header { background: linear-gradient(135deg, #1E293B, #0F172A); border-bottom: 1px solid var(--border); padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; }
+  .header h1 { font-size: 20px; font-weight: 700; color: var(--accent); }
+  .header .sub { font-size: 12px; color: var(--text2); }
+  .badge { background: var(--accent); color: #000; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
+
+  .main { max-width: 800px; margin: 0 auto; padding: 24px 16px; }
+
+  /* Progress */
+  .progress-bar { height: 4px; background: var(--surface2); border-radius: 2px; margin-bottom: 8px; }
+  .progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.3s; }
+  .progress-text { font-size: 12px; color: var(--text2); text-align: center; margin-bottom: 20px; }
+
+  /* Category filter */
+  .filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+  .filter-btn { padding: 5px 14px; border-radius: 20px; border: 1px solid var(--border); background: var(--surface); color: var(--text2); font-size: 12px; cursor: pointer; transition: all 0.2s; }
+  .filter-btn:hover, .filter-btn.active { background: var(--accent); border-color: var(--accent); color: #000; font-weight: 600; }
+
+  /* Card scene */
+  .scene { width: 100%; height: 320px; perspective: 1200px; cursor: pointer; margin-bottom: 20px; }
+  .card { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.55s cubic-bezier(0.4,0,0.2,1); }
+  .card.flipped { transform: rotateY(180deg); }
+  .face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 16px; padding: 28px 32px; display: flex; flex-direction: column; }
+
+  .front { background: linear-gradient(135deg, #1E293B, #1A2744); border: 1px solid #3B4F6B; }
+  .back { background: linear-gradient(135deg, #172554, #1A1A2E); border: 1px solid #4C1D95; transform: rotateY(180deg); }
+
+  .card-category { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 10px; }
+  .card-num { font-size: 11px; color: var(--text2); margin-bottom: 16px; }
+  .card-question { font-size: 17px; font-weight: 600; color: var(--text); line-height: 1.5; flex: 1; display: flex; align-items: center; }
+  .flip-hint { font-size: 11px; color: var(--text2); text-align: center; margin-top: 12px; }
+  .flip-icon { font-size: 20px; text-align: center; margin-bottom: 10px; }
+  .card-answer { font-size: 14px; color: #BAE6FD; line-height: 1.7; flex: 1; overflow-y: auto; }
+  .card-answer strong { color: #FCD34D; }
+  .card-answer .pill { display: inline-block; background: #1D4ED8; color: #BFDBFE; font-size: 11px; padding: 2px 8px; border-radius: 10px; margin: 2px 2px; }
+  .card-answer ul { padding-left: 18px; margin-top: 6px; }
+  .card-answer li { margin-bottom: 4px; }
+  .source-tag { font-size: 10px; color: #475569; margin-top: 12px; }
+
+  /* Nav */
+  .nav { display: flex; align-items: center; gap: 12px; justify-content: center; margin-bottom: 20px; }
+  .nav-btn { background: var(--surface); border: 1px solid var(--border); color: var(--text); width: 44px; height: 44px; border-radius: 50%; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+  .nav-btn:hover:not(:disabled) { background: var(--accent); border-color: var(--accent); color: #000; }
+  .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+  .flip-btn { background: linear-gradient(135deg, #4C1D95, #7C3AED); border: none; color: white; padding: 10px 28px; border-radius: 25px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+  .flip-btn:hover { transform: scale(1.04); }
+  .shuffle-btn { background: var(--surface2); border: 1px solid var(--border); color: var(--text2); padding: 8px 16px; border-radius: 20px; font-size: 12px; cursor: pointer; }
+  .shuffle-btn:hover { background: var(--accent); color: #000; border-color: var(--accent); }
+
+  /* Stats */
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px; }
+  .stat { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px; text-align: center; }
+  .stat-val { font-size: 24px; font-weight: 700; }
+  .stat-label { font-size: 11px; color: var(--text2); margin-top: 2px; }
+  .green { color: var(--accent3); }
+  .red { color: var(--accent2); }
+  .yellow { color: var(--accent); }
+
+  /* Rating buttons */
+  .rating { display: flex; gap: 10px; justify-content: center; margin-top: 10px; }
+  .rate-btn { flex: 1; max-width: 140px; padding: 9px; border-radius: 10px; border: none; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+  .rate-know { background: #14532D; color: #86EFAC; }
+  .rate-know:hover { background: #166534; }
+  .rate-dontknow { background: #7F1D1D; color: #FCA5A5; }
+  .rate-dontknow:hover { background: #991B1B; }
+  .rate-hint { background: #78350F; color: #FCD34D; }
+  .rate-hint:hover { background: #92400E; }
+
+  /* Keyboard hint */
+  .kb-hint { text-align: center; font-size: 11px; color: #475569; margin-top: 12px; }
+  kbd { background: var(--surface2); border: 1px solid var(--border); border-radius: 4px; padding: 2px 6px; font-size: 11px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <div class="header h1">🌿 Xuân Ôn — Flashcard</div>
+    <div class="sub">春温 · Phục Khí Ôn Bệnh · Giáo trình Ôn Bệnh</div>
+  </div>
+  <span class="badge">50 Thẻ</span>
+</div>
+
+<div class="main">
+  <div class="stats">
+    <div class="stat"><div class="stat-val green" id="known">0</div><div class="stat-label">✓ Đã biết</div></div>
+    <div class="stat"><div class="stat-val yellow" id="reviewing">50</div><div class="stat-label">⟳ Đang ôn</div></div>
+    <div class="stat"><div class="stat-val red" id="unknown">0</div><div class="stat-label">✗ Chưa biết</div></div>
+  </div>
+
+  <div class="progress-bar"><div class="progress-fill" id="prog" style="width:2%"></div></div>
+  <div class="progress-text" id="prog-text">Thẻ 1 / 50</div>
+
+  <div class="filters" id="filters">
+    <button class="filter-btn active" onclick="filterCat('all',this)">Tất cả</button>
+    <button class="filter-btn" onclick="filterCat('khai-niem',this)">Khái niệm</button>
+    <button class="filter-btn" onclick="filterCat('co-che',this)">Cơ chế</button>
+    <button class="filter-btn" onclick="filterCat('chan-doan',this)">Chẩn đoán</button>
+    <button class="filter-btn" onclick="filterCat('phan-biet',this)">Phân biệt</button>
+    <button class="filter-btn" onclick="filterCat('khi-phan',this)">Khí phần</button>
+    <button class="filter-btn" onclick="filterCat('duong-minh',this)">Dương Minh</button>
+    <button class="filter-btn" onclick="filterCat('dinh-huyet',this)">Dinh Huyết</button>
+    <button class="filter-btn" onclick="filterCat('tam-bao',this)">Tâm Bào</button>
+    <button class="filter-btn" onclick="filterCat('hau-ky',this)">Hậu kỳ</button>
+    <button class="filter-btn" onclick="filterCat('nguy-kich',this)">Nguy kịch</button>
+  </div>
+
+  <div class="scene" onclick="flipCard()">
+    <div class="card" id="card">
+      <div class="face front">
+        <div class="card-category" id="cat-label">Khái niệm</div>
+        <div class="card-num" id="card-num">Thẻ 1 / 50</div>
+        <div class="card-question" id="q-text">Câu hỏi đang tải...</div>
+        <div class="flip-hint">Nhấp để xem đáp án ↕</div>
+      </div>
+      <div class="face back">
+        <div class="flip-icon">💡</div>
+        <div class="card-answer" id="a-text">Đáp án đang tải...</div>
+        <div class="source-tag">Nguồn: Giáo trình Ôn Bệnh — TS.BS. Lê Minh Hoàng</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav">
+    <button class="nav-btn" id="prev-btn" onclick="prevCard()" disabled>←</button>
+    <button class="flip-btn" onclick="flipCard()">↕ Lật thẻ</button>
+    <button class="nav-btn" id="next-btn" onclick="nextCard()">→</button>
+  </div>
+
+  <div class="rating">
+    <button class="rate-btn rate-dontknow" onclick="rate('unknown')">✗ Chưa biết</button>
+    <button class="rate-btn rate-hint" onclick="rate('reviewing')">~ Cần ôn</button>
+    <button class="rate-btn rate-know" onclick="rate('known')">✓ Đã biết</button>
+  </div>
+
+  <div style="display:flex;gap:10px;justify-content:center;margin-top:14px;">
+    <button class="shuffle-btn" onclick="shuffleCards()">🔀 Xáo thẻ</button>
+    <button class="shuffle-btn" onclick="resetAll()">↺ Đặt lại</button>
+    <button class="shuffle-btn" onclick="filterUnknown()">📚 Ôn thẻ chưa biết</button>
+  </div>
+
+  <div class="kb-hint" style="margin-top:14px;">
+    <kbd>←</kbd> Thẻ trước &nbsp; <kbd>→</kbd> Thẻ sau &nbsp; <kbd>Space</kbd> Lật thẻ &nbsp;
+    <kbd>1</kbd> Chưa biết &nbsp; <kbd>2</kbd> Cần ôn &nbsp; <kbd>3</kbd> Đã biết
+  </div>
+</div>
+
+<script>
+const CARDS = [
+  // ===== NHÓM 1: KHÁI NIỆM =====
+  { cat: 'khai-niem', catLabel: 'Khái niệm & Lịch sử',
+    q: 'Xuân Ôn là gì? Điểm đặc trưng phân biệt với các ôn bệnh khác?',
+    a: '<strong>Xuân Ôn = Phục khí ôn bệnh</strong> do phong nhiệt tà nội phục mà phát.<br><br>Đặc trưng: sơ khởi <strong>ĐÃ có lý nhiệt tích thịnh</strong> — sốt cao · tâm phiền · miệng khát · lưỡi đỏ rêu vàng<br>→ <strong>Không qua giai đoạn vệ biểu</strong> (khác Phong Ôn)' },
+  { cat: 'khai-niem', catLabel: 'Khái niệm & Lịch sử',
+    q: 'Câu kinh điển Nội Kinh về Xuân Ôn là gì? Ý nghĩa?',
+    a: '<em>"Đông thương ư hàn, xuân tất ôn bệnh"</em><br><strong>(Tố Vấn — Âm Dương Ứng Tượng Đại Luận)</strong><br><br>Ý nghĩa: Mùa đông cảm hàn tà nhưng không phát ngay → tà phục bên trong → đến mùa xuân <strong>tất</strong> phát thành ôn bệnh.' },
+  { cat: 'khai-niem', catLabel: 'Khái niệm & Lịch sử',
+    q: 'Vương An Đường đóng góp gì vào học thuyết Xuân Ôn?',
+    a: 'Xác định 2 điểm then chốt:<br><ul><li>Bệnh do <strong>nhiệt tà từ trong xuất ra</strong> (phục tà nội phát)</li><li>Nguyên tắc điều trị: <strong>"Thanh lý nhiệt là chủ"</strong></li></ul>' },
+  { cat: 'khai-niem', catLabel: 'Khái niệm & Lịch sử',
+    q: 'Diệp Thiên Sĩ quan niệm Xuân Ôn thế nào? Ông chủ trương phương gì?',
+    a: 'Quan niệm: Xuân Ôn = phục tà gây bệnh<br><span class="pill">Đông tàng → Thiếu âm</span> <span class="pill">Xuân phát → Thiếu dương</span><br><br>Chủ trương: <strong>Hoàng cầm thang</strong> điều trị.' },
+  { cat: 'khai-niem', catLabel: 'Khái niệm & Lịch sử',
+    q: 'Xuân Ôn tương đương bệnh gì trong Tây y?',
+    a: '<ul><li><strong>Viêm màng não mủ</strong> (não mô cầu — G00.1) ← thường gặp nhất</li><li>Viêm não – màng não (A86)</li><li>Nhiễm trùng huyết / Sốc nhiễm khuẩn (A41)</li><li>Cúm nặng (J10)</li></ul>' },
+  { cat: 'khai-niem', catLabel: 'Khái niệm & Lịch sử',
+    q: 'Vương Thúc Hòa (nhà Tấn) phân biệt Thương Hàn và Xuân Ôn thế nào?',
+    a: '<strong>Đông cảm hàn tà → phát ngay</strong> = <span class="pill">Thương Hàn</span><br><br><strong>Đông cảm hàn tà → không phát</strong>, hàn độc tàng ở da thịt chờ xuân mới phát = <span class="pill">Ôn Bệnh (Xuân Ôn)</span>' },
+
+  // ===== NHÓM 2: CƠ CHẾ =====
+  { cat: 'co-che', catLabel: 'Cơ chế sinh bệnh',
+    q: 'Nguyên nhân ngoại nhân và nội nhân của Xuân Ôn?',
+    a: '<strong>Ngoại nhân:</strong> Phong nhiệt bệnh tà (phục lý từ trước)<br><br><strong>Nội nhân:</strong> Âm tinh hư tổn · Chính khí bất túc<br>→ Bản hư → tà dễ xâm, khó đào thải' },
+  { cat: 'co-che', catLabel: 'Cơ chế sinh bệnh',
+    q: 'Mấu chốt bệnh cơ của Xuân Ôn là gì?',
+    a: '<strong>Hàn tà → uất → hóa nhiệt</strong> (không phải nhiệt tà trực tiếp xâm nhập)<br><br>Phục nhiệt tích thịnh bên trong → chờ <strong>dương khí xuân phát tiết</strong> → bùng phát<br><br>→ Đây là lý do không có giai đoạn vệ biểu' },
+  { cat: 'co-che', catLabel: 'Cơ chế sinh bệnh',
+    q: 'Phục tà tự phát vs Tân cảm dẫn phát — khác nhau thế nào?',
+    a: '<strong>Phục tà tự phát:</strong><br>Nội nhiệt tự bùng · Sơ khởi thuần lý nhiệt · Không có biểu chứng<br><br><strong>Tân cảm dẫn phát:</strong><br>Ngoại tà kích phát phục nhiệt · Sơ khởi lý nhiệt + kèm ố hàn đau đầu (thoáng qua)' },
+  { cat: 'co-che', catLabel: 'Cơ chế sinh bệnh',
+    q: 'Xuân Ôn phát tại Khí phần vs Dinh phần — thể nào nặng hơn?',
+    a: '<strong>Phát tại Dinh phần → nặng hơn</strong><br>Vì: phục tà phục sâu, dinh âm khuy hao nhiều<br><br>Phát tại Khí phần: tà thịnh nhưng chính còn mạnh → nhẹ hơn<br><br>→ Phát tại tầng nào phụ thuộc cảm tà nặng nhẹ + mức độ âm tinh suy' },
+  { cat: 'co-che', catLabel: 'Cơ chế sinh bệnh',
+    q: 'Tại sao Xuân Ôn tổn thương âm dịch nặng hơn các ôn bệnh khác?',
+    a: '<ul><li>Người bệnh <strong>đã sẵn âm tinh hư tổn</strong> (nội nhân)</li><li>Lý nhiệt tích thịnh <strong>từ sơ khởi</strong> → thương âm sớm</li><li>Nhiệt cực động phong → tiêu hao thêm âm dịch</li></ul>→ Hậu kỳ Can Thận âm khuy là <strong>tất yếu</strong>' },
+  { cat: 'co-che', catLabel: 'Cơ chế sinh bệnh',
+    q: '4 đặc điểm diễn tiến của Xuân Ôn?',
+    a: '<span class="pill">1</span> Phát bệnh <strong>nhanh cấp</strong><br><span class="pill">2</span> Bệnh tình <strong>nặng</strong><br><span class="pill">3</span> Biến hóa <strong>nhanh</strong><br><span class="pill">4</span> Tổn thương <strong>âm dịch sâu</strong><br><br>Hậu kỳ: tà ít hư nhiều · Can Thận âm khuy' },
+  { cat: 'co-che', catLabel: 'Cơ chế sinh bệnh',
+    q: 'Cơ chế Xuân Ôn gây thần hôn kinh quyết?',
+    a: '<strong>Thần hôn:</strong> Lý nhiệt → tà nhiệt xâm phạm Tâm Bào → bế thanh khiếu<br><br><strong>Kinh quyết:</strong> Người bệnh sẵn âm tinh hư → âm dịch hao dần → <strong>Nhiệt cực động phong</strong> → co giật' },
+
+  // ===== NHÓM 3: CHẨN ĐOÁN =====
+  { cat: 'chan-doan', catLabel: 'Chẩn đoán',
+    q: 'Tiêu chuẩn chẩn đoán xác định Xuân Ôn?',
+    a: '<span class="pill">1</span> Ngoại cảm nhiệt bệnh cấp · phát mùa xuân / giao đông-xuân<br><span class="pill">2</span> Sơ khởi lý nhiệt tích thịnh: sốt cao đột ngột + đau đầu + nôn + cổ cứng + thần chí bất an<br><span class="pill">3</span> Có thể kèm: ban chẩn · dấu màng não (+) · phồng thóp (trẻ em)' },
+  { cat: 'chan-doan', catLabel: 'Chẩn đoán',
+    q: 'Tứ chẩn đặc trưng Xuân Ôn sơ khởi?',
+    a: '<strong>Vọng:</strong> Lưỡi đỏ rêu vàng · ban chẩn lờ mờ<br><strong>Văn:</strong> Thở mạnh · hơi thở gấp<br><strong>Vấn:</strong> Sốt cao đột ngột · tâm phiền · miệng khát · đau đầu · nôn<br><strong>Thiết:</strong> Mạch sắc (hoạt sắc / huyền sắc)' },
+  { cat: 'chan-doan', catLabel: 'Chẩn đoán',
+    q: 'Khi nghi Xuân Ôn thể viêm màng não, cần xét nghiệm Tây y nào?',
+    a: '<ul><li>Tổng BC tăng · BC trung tính tăng</li><li>Nuôi cấy <strong>dịch não tủy</strong></li><li>Xét nghiệm miễn dịch (não mô cầu)</li></ul>Chẩn đoán thể điển hình: <strong>viêm màng não não mô cầu</strong>' },
+  { cat: 'chan-doan', catLabel: 'Chẩn đoán',
+    q: 'Thể Xuân Ôn nào có thể bạo phát ngay từ sơ khởi?',
+    a: '<strong>Dịch viêm màng não tủy thể bạo phát</strong><br>Sơ khởi ĐÃ có: ban chẩn + thần hôn + kinh quyết + triệu chứng quyết thoát<br><br>→ Nguy hiểm nhất · có thể tử vong nhanh · cần cấp cứu ngay' },
+  { cat: 'chan-doan', catLabel: 'Chẩn đoán',
+    q: 'Mùa phát bệnh phân biệt Xuân Ôn / Phong Ôn / Thử Ôn?',
+    a: '<strong>Xuân Ôn:</strong> Mùa xuân · giao đông-xuân · giao xuân-hạ (<strong>TRƯỚC Hạ chí</strong>)<br><strong>Phong Ôn:</strong> Mùa xuân (cũng có thu, đông ấm)<br><strong>Thử Ôn:</strong> <strong>SAU Hạ chí</strong> — tháng 6–8' },
+
+  // ===== NHÓM 4: PHÂN BIỆT =====
+  { cat: 'phan-biet', catLabel: 'Chẩn đoán phân biệt',
+    q: 'Điểm phân biệt QUAN TRỌNG NHẤT Xuân Ôn vs Phong Ôn?',
+    a: '<strong>Sơ khởi:</strong><br><span class="pill">Phong Ôn</span> → Phế Vệ biểu nhiệt (ho · đau họng · sốt · ố phong nhẹ)<br><span class="pill">Xuân Ôn</span> → LÝ NHIỆT tích thịnh liền (sốt cao · thần kinh · không có biểu chứng Phế)<br><br>Loại bệnh: Phong Ôn = tân cảm · Xuân Ôn = phục khí' },
+  { cat: 'phan-biet', catLabel: 'Chẩn đoán phân biệt',
+    q: 'Xuân Ôn vs Thử Ôn — cả hai có lý nhiệt sơ khởi — phân biệt thế nào?',
+    a: '<span class="pill">Mùa</span> Xuân Ôn TRƯỚC Hạ chí · Thử Ôn SAU Hạ chí<br><br><span class="pill">Sơ khởi</span> Xuân Ôn: nhiệt độc hóa hỏa tại Khí/Dinh (thần kinh nổi bật)<br>Thử Ôn: Dương Minh lý nhiệt (mồ hôi nhiều · bức nhiệt rõ)<br><br><span class="pill">Thấp</span> Thử Ôn thường kèm thấp nhiệt · Xuân Ôn không' },
+  { cat: 'phan-biet', catLabel: 'Chẩn đoán phân biệt',
+    q: 'Tạng phủ trọng tâm của Xuân Ôn / Phong Ôn / Thử Ôn?',
+    a: '<strong>Xuân Ôn:</strong> Tâm–Thận (trung kỳ) + Can–Thận (hậu kỳ)<br><strong>Phong Ôn:</strong> <strong>Phế</strong> (trung tâm)<br><strong>Thử Ôn:</strong> Tỳ–Vị–Tâm' },
+  { cat: 'phan-biet', catLabel: 'Chẩn đoán phân biệt',
+    q: 'Nguyên tắc trị pháp chính của 3 bệnh ôn?',
+    a: '<strong>Xuân Ôn:</strong> Thanh tiết lý nhiệt + Cố hộ âm dịch + Thấu tà ngoại xuất<br><strong>Phong Ôn:</strong> Tuyên Phế thanh nhiệt + Tư dưỡng Phế Vị âm<br><strong>Thử Ôn:</strong> Thanh thử giải nhiệt + Hóa thấp + Ích khí' },
+
+  // ===== NHÓM 5: KHÍ PHẦN =====
+  { cat: 'khi-phan', catLabel: 'Khí phần — Điều trị',
+    q: 'Khí phần uất nhiệt tại Đởm phủ: triệu chứng và phương dược?',
+    a: '<strong>Triệu chứng:</strong> Sốt cao · miệng đắng · khát · nôn khan · tâm phiền · tiểu ngắn đỏ · khó chịu ngực sườn · lưỡi đỏ rêu vàng · mạch huyền sắc<br><br><strong>Phương:</strong> Hoàng cầm + Đậu xị + Huyền sâm<br>(Khổ hàn thanh nhiệt · tuyên uất thấu tà)' },
+  { cat: 'khi-phan', catLabel: 'Khí phần — Điều trị',
+    q: 'Lương cách tán: thành phần và chỉ định trong Xuân Ôn?',
+    a: '<strong>Thành phần:</strong> Sơn chi · Hoàng cầm · Liên kiều · Bạc hà · Đại hoàng · Trúc diệp · Cam thảo · Mang tiêu<br><br><strong>Chỉ định:</strong> Hung cách nhiệt nặng<br>→ Sốt liên tục · phiền thao · táo bón · lưỡi đỏ rêu vàng · mạch hoạt sắc' },
+  { cat: 'khi-phan', catLabel: 'Khí phần — Điều trị',
+    q: 'Chi tử xị thang: thành phần, cơ chế, chỉ định trong Xuân Ôn?',
+    a: '<strong>Thành phần:</strong> Chi tử + Đậu xị<br><br><strong>Cơ chế:</strong> Chi tử thanh giải cách nhiệt · Đậu xị tuyên uất đạt tà → thanh tuyên Hung cách uất nhiệt<br><br><strong>Chỉ định:</strong> Hung cách nhẹ — sốt không cao · bực bội ngồi không yên · buồn nôn không nôn được' },
+  { cat: 'khi-phan', catLabel: 'Khí phần — Điều trị',
+    q: 'Bệnh cơ và phương dược thể Biểu hàn lý nhiệt trong Xuân Ôn?',
+    a: '<strong>Bệnh cơ:</strong> Phục tà phát lý (lý nhiệt) + tân cảm phong hàn (biểu hàn) đồng thời<br><br><strong>Triệu chứng:</strong> Sốt + ố hàn + đầu gáy cứng + thân đau mỏi + bụng trướng + rêu vàng táo<br><br><strong>Phương:</strong> <strong>Tăng tổn song giải tán</strong> (sơ biểu hàn + thanh lý nhiệt + thông phủ)' },
+  { cat: 'khi-phan', catLabel: 'Khí phần — Điều trị',
+    q: 'Triệu chứng đặc trưng nhất của Vệ dinh đồng bệnh trong Xuân Ôn?',
+    a: '<strong>Da nổi ban chẩn lờ mờ</strong> (dinh nhiệt thương lạc) + sốt + ô phong hàn + đau họng + ho + khát<br>Lưỡi đỏ thẫm · rêu trắng vàng xen · mạch phù huyền sắc<br><br>= Vệ biểu vây khốn + Phục nhiệt tổn dinh âm <strong>đồng thời</strong>' },
+  { cat: 'khi-phan', catLabel: 'Khí phần — Điều trị',
+    q: 'Ngân kiều tán gia giảm cho Vệ dinh đồng bệnh: bỏ gì, thêm gì?',
+    a: '<strong>Bỏ:</strong> Đậu xị (tránh thấu biểu quá mạnh)<br><br><strong>Gia:</strong> Sinh địa + Đơn bì + Đại thanh diệp + Huyền sâm<br>→ Lương dinh tiết nhiệt giải độc<br><br><em>"Nguyên phương bỏ Đậu xị gia Huyền sâm có ý chú trọng đến thanh dinh"</em>' },
+
+  // ===== NHÓM 6: DƯƠNG MINH =====
+  { cat: 'duong-minh', catLabel: 'Dương Minh — Điều trị',
+    q: 'Lâm sàng thực tế: cần đủ 4 đại chứng Bạch hổ thang không? Ứng dụng thế nào?',
+    a: '<strong>Không cần đủ</strong> — bệnh nhân truyền dịch → mồ hôi/khát có thể giảm<br><br>Chỉ cần: <strong>Sốt rất cao + mạch hồng đại</strong> là đủ chỉ định Bạch hổ thang<br><br>→ Không đòi 4 đại chứng rồi mới dùng trong dương minh nhiệt tích' },
+  { cat: 'duong-minh', catLabel: 'Dương Minh — Điều trị',
+    q: 'Linh giác câu đẳng thang: thành phần theo nhóm và chỉ định?',
+    a: '<strong>Lương can tức phong:</strong> Linh giác · Câu đẳng<br><strong>Kinh thanh thấu nhiệt:</strong> Cúc hoa · Tang diệp<br><strong>Dưỡng âm nhu cân:</strong> Sinh địa · Bạch thực · Cam thảo<br><strong>An thần:</strong> Phục thần<br><strong>Hóa đàm:</strong> Xuyên bối · Trúc nhự<br><strong>Thêm vào:</strong> Thạch cao · Tri mẫu<br><br><strong>Chỉ định:</strong> Nhiệt thịnh động phong' },
+  { cat: 'duong-minh', catLabel: 'Dương Minh — Điều trị',
+    q: 'Tại sao dùng Tăng dịch thừa khí thang thay Thừa khí thang đơn thuần?',
+    a: 'Trong Xuân Ôn: nhiệt kết trường phủ <strong>luôn kèm</strong> âm dịch khuy tổn<br><br>→ Chỉ công hạ mà không tăng dịch: âm kiệt thêm → nguy<br><br>Tăng dịch thừa khí thang: Sinh địa + Huyền sâm + Mạch đông <strong>(tư âm)</strong> + Đại hoàng + Mang tiêu <strong>(công hạ)</strong>' },
+  { cat: 'duong-minh', catLabel: 'Dương Minh — Điều trị',
+    q: 'Tân gia hoàng long thang khác Tăng dịch thừa khí thang ở điểm nào?',
+    a: 'Tân gia HL thêm: <strong>Nhân sâm</strong> (ích khí) + Đương quy + Hải sâm + Khương trấp<br><br>Chỉ định khi không chỉ <em>dịch khuy</em> mà còn <em>khí hư</em> (<strong>khí dịch lưỡng hư</strong>):<br>Ngoài táo bón + rêu cháy còn có lưỡi biếng huyết hơi + mắt lờ đờ + mạch trầm nhược' },
+  { cat: 'duong-minh', catLabel: 'Dương Minh — Điều trị',
+    q: 'Đạo xích thừa khí thang: chỉ định đặc biệt trong Xuân Ôn?',
+    a: 'Chỉ định: Nhiệt kết trường phủ + <strong>Tiểu trường nhiệt thịnh</strong><br>→ Sốt + táo bón + <strong>tiểu ngắn đỏ đau rát</strong><br><br>Hoàng liên + Hoàng bá: thanh tiết tiểu trường hòa nhiệt<br>Sinh địa + Xích thực: lương huyết tư âm<br>Đại hoàng + Mang tiêu: thông phủ' },
+
+  // ===== NHÓM 7: DINH HUYẾT =====
+  { cat: 'dinh-huyet', catLabel: 'Dinh Huyết — Điều trị',
+    q: 'Thanh ôn bại độc ẩm được hợp từ những phương nào? Chỉ định?',
+    a: 'Hợp từ <strong>4 phương:</strong><br><span class="pill">Bạch hổ thang</span> <span class="pill">Lương cách tán</span> <span class="pill">Hoàng liên giải độc thang</span> <span class="pill">Tê giác địa hoàng thang</span><br><br>Chỉ định: <strong>Khí dinh huyết đều bị</strong> — thể nặng nhất của khí dinh lưỡng phiên' },
+  { cat: 'dinh-huyet', catLabel: 'Dinh Huyết — Điều trị',
+    q: 'Hóa ban thang: tại sao dùng Bạch hổ thang làm cơ sở?',
+    a: 'Ban (chẩn) thuộc <strong>Vị</strong>, Vị chủ cơ nhục<br>→ Dương Minh nhiệt độc uất cơ biểu → Bạch hổ thang <strong>thanh khí giải cơ</strong><br><br>Thêm Thủy ngưu giác + Huyền sâm: lương huyết giải độc hóa ban<br><br>Công thức: Bạch hổ thang + Thủy ngưu giác + Huyền sâm' },
+  { cat: 'dinh-huyet', catLabel: 'Dinh Huyết — Điều trị',
+    q: 'Tê giác địa hoàng thang: thành phần, thay thế Tê giác, và khi nào dùng Xích vs Bạch thực?',
+    a: '<strong>Thành phần:</strong> Thủy ngưu giác + Sinh địa + Bạch/Xích thực + Đơn bì<br><br><strong>Thay Tê giác:</strong> Thủy ngưu giác (cần lượng lớn, sắc lâu)<br><br><strong>Xích thực:</strong> nhiệt động huyết nặng → thanh nhiệt tán huyết<br><strong>Bạch thực:</strong> âm thương nặng → dưỡng âm' },
+  { cat: 'dinh-huyet', catLabel: 'Dinh Huyết — Điều trị',
+    q: 'Đào nhân thừa khí thang trong Xuân Ôn: bỏ gì so với gốc Thương Hàn Luận? Tại sao?',
+    a: '<strong>Bỏ:</strong> Quế chi + Cam thảo (tân cam ôn nhiệt)<br><strong>Tại sao:</strong> Xuân Ôn có nhiệt thịnh → hai vị ôn làm nhiệt thêm<br><br><strong>Gia:</strong> Đơn bì + Xích thực + Đương quy (lương huyết tán huyết)<br><br>Chỉ định: Nhiệt + huyết kết hạ tiêu → tiết nhiệt + trục ứ' },
+  { cat: 'dinh-huyet', catLabel: 'Dinh Huyết — Điều trị',
+    q: 'Phân biệt ban chẩn: Khí dinh lưỡng phiên vs Nhiệt thịnh động huyết?',
+    a: '<strong>Khí dinh lưỡng phiên:</strong> Ban lờ mờ · chưa dày · chưa xuất huyết rõ<br>→ Hóa ban thang / Thanh ôn bại độc ẩm<br><br><strong>Nhiệt thịnh động huyết:</strong> Ban dày đặc · đỏ sẫm/tím đen + thổ/nục/tiện huyết<br>→ Tê giác địa hoàng thang (nặng hơn nhiều)' },
+
+  // ===== NHÓM 8: TÂM BÀO =====
+  { cat: 'tam-bao', catLabel: 'Nhiệt nhập Tâm Bào',
+    q: '"Tam bảo" trong Xuân Ôn là gì? Phân biệt chỉ định?',
+    a: '<span class="pill">An cung ngưu hoàng hoàn</span> Hôn mê sâu · sốt cao nhất<br><span class="pill">Tử tuyết đan</span> Co giật + sốt cao<br><span class="pill">Chí bảo đan</span> Đàm trọc nặng + thần hôn<br><br>Tất cả: khai khiếu tỉnh thần — nhưng chỉ định khác nhau!' },
+  { cat: 'tam-bao', catLabel: 'Nhiệt nhập Tâm Bào',
+    q: 'Nội bế ngoại thoát: tại sao nguy cấp? Nhận diện thế nào?',
+    a: '<strong>Nguy cấp vì:</strong> Nhiệt độc vẫn bế trong (nội bế) + chính khí đã thoát (ngoại thoát) — <strong>đồng thời</strong><br><br><strong>Nhận diện:</strong> Sốt hạ đột ngột (<em>không phải hồi phục!</em>) + thần hôn + tứ chi lạnh ngắt + mồ hôi lạnh + lưỡi thâm mọc gai + mạch tế tạt' },
+  { cat: 'tam-bao', catLabel: 'Nhiệt nhập Tâm Bào',
+    q: 'Điều trị Nội bế ngoại thoát: nguyên tắc và phương dược?',
+    a: '<strong>Nguyên tắc:</strong> Khai bế + Cố thoát <strong>ĐỒNG THỜI</strong><br><br><strong>Phương:</strong> Sinh mạch tán / Sâm phụ thang (cố thoát)<br>+ An cung ngưu hoàng hoàn / Chí bảo đan (khai bế)<br><br>Nếu kèm ứ huyết (môi thâm, lưỡi tím) → gia Đan sâm + Đào nhân + Hồng hoa' },
+
+  // ===== NHÓM 9: HẬU KỲ =====
+  { cat: 'hau-ky', catLabel: 'Hậu kỳ — Âm hư',
+    q: 'Gia giảm Phục mạch thang bỏ gì so với Phục mạch thang gốc? Lý do?',
+    a: '<strong>Bỏ:</strong> Nhân sâm · Quế · Khương · Táo · Tửu (tân cam ôn nhiệt)<br><strong>Lý do:</strong> Ôn nhiệt bệnh → chân âm khuy → nội nhiệt · không cần ôn thông dương khí<br><br><strong>Thêm:</strong> Bạch thược (toan cam liễm âm)<br><strong>Còn lại:</strong> Chích cam thảo · Sinh địa · Mạch đông · A giao · Ma nhân' },
+  { cat: 'hau-ky', catLabel: 'Hậu kỳ — Âm hư',
+    q: 'Các biến phương từ Gia giảm Phục mạch thang — bảng tóm tắt?',
+    a: '<strong>Cứu nghịch thang</strong> (- Ma nhân + Long cốt + Mẫu lệ): tự hãn · tâm quý từng đợt<br><strong>Nhất giáp PM</strong> (- Ma nhân + Mẫu lệ): tiêu chảy do tả hạ<br><strong>Nhị giáp PM</strong> (+ Mẫu lệ + Miết giáp): tay chân run nhẹ<br><strong>Tam giáp PM</strong> (+ Mẫu lệ + Miết giáp + Quy bản): âm hư phong động' },
+  { cat: 'hau-ky', catLabel: 'Hậu kỳ — Âm hư',
+    q: 'Đại định phong châu: chỉ định VÀ chống chỉ định trong Xuân Ôn?',
+    a: '<strong>Chỉ định:</strong> Âm hư phong động nặng · THUẦN HƯ không có tà<br><br><strong>Chống chỉ định (Ngô Cúc Thông):</strong><br><em>"Tráng hỏa thượng thịnh giả, bất đắc dụng định phong châu"</em><br>→ Khi còn nhiệt tà mạnh: KHÔNG dùng vì thuốc bổ nhiều → lưu tà<br><br><strong>Đặc trưng:</strong> Kê tử hoàng + Ngũ vị tử' },
+  { cat: 'hau-ky', catLabel: 'Hậu kỳ — Âm hư',
+    q: 'Hoàng liên a giao thang: Kê tử hoàng quan trọng thế nào?',
+    a: '<strong>Thành phần:</strong> Hoàng liên + Hoàng cầm + A giao + Bạch thực + Kê tử hoàng<br><br><strong>Kê tử hoàng:</strong> <em>"Thượng thông tâm khí, hạ đạt thận khí"</em><br>→ <strong>Giao thông Tâm Thận</strong> — giải quyết căn cơ thủy hỏa không tương tế<br><br>Chỉ định: Âm hư hỏa tích · phiền bức không nằm được' },
+  { cat: 'hau-ky', catLabel: 'Hậu kỳ — Âm hư',
+    q: 'Cơ chế tương hỗ Thanh hao – Miết giáp trong Thanh hao miết giáp thang?',
+    a: '<strong>Ngô Cúc Thông:</strong><br>"Thanh hao không thể tự <strong>nhập</strong> âm phần → nhờ Miết giáp dẫn vào<br>Miết giáp không thể tự <strong>xuất</strong> âm phần → nhờ Thanh hao dẫn ra"<br><br>→ Hai vị bổ khuyết nhau: <strong>Tư âm mà thấu tà</strong>' },
+  { cat: 'hau-ky', catLabel: 'Hậu kỳ — Âm hư',
+    q: 'Ngô Cúc Thông lý giải "đêm sốt sáng mát" của Tà lưu âm phần thế nào?',
+    a: '<em>"Dạ hành âm phần nhi nhiệt, nhật hành dương phần nhi lương"</em><br><br>Ban đêm vệ khí vào âm phần → gặp phục tà lưu ở âm → đấu → <strong>sốt</strong><br>Ban ngày vệ khí ra dương phần → không gặp tà → <strong>mát</strong><br><br>Sốt hạ không mồ hôi = tà chưa xuất biểu · vẫn lưu âm phần' },
+
+  // ===== NHÓM 10: NGUY KỊCH =====
+  { cat: 'nguy-kich', catLabel: 'Tà hãm chính suy — Nguy kịch',
+    q: 'Nhận diện Dương hư tà hãm trong Xuân Ôn? Tây y tương ứng?',
+    a: '<strong>Nhận diện:</strong> Nhiệt độ hạ đột ngột + mồ hôi như tắm + sắc mặt nhợt + tứ chi lạnh + môi móng tím + hô hấp không đều + lưỡi nhạt tối rêu xám đen hoạt + mạch vi tế muốn tuyệt<br><br><strong>Tây y:</strong> Viêm màng não tủy thể hôn mê · Sốc nhiễm khuẩn' },
+  { cat: 'nguy-kich', catLabel: 'Tà hãm chính suy — Nguy kịch',
+    q: 'Sâm phụ long mẫu thang gia vị: tại sao thêm thuốc hoạt huyết?',
+    a: '<strong>Nhân sâm + Phụ tử + Nhục quế + Can khương:</strong> hồi dương cứu nghịch<br><strong>Long cốt + Mẫu lệ:</strong> thu liễm cố thoát<br><strong>Đan sâm + Đào nhân + Hồng hoa + Xích thược:</strong> tán huyết hóa ứ<br><br>Thêm hoạt huyết vì: Dương thoát → khí không soái huyết → huyết ứ (môi tím, móng xanh)' },
+  { cat: 'nguy-kich', catLabel: 'Tà hãm chính suy — Nguy kịch',
+    q: 'Nguyên tắc điều trị 3 thể Tà hãm chính suy trong Xuân Ôn?',
+    a: '<span class="pill">Dương hư tà hãm</span> Hồi dương cố thoát → Sâm phụ long mẫu thang<br><span class="pill">Nhiệt bế huyết thoát</span> Thanh dinh lương huyết + Ích khí cố thoát đồng thời → Thanh ôn bại độc ẩm + Sinh mạch tán<br><span class="pill">Dương khí bạo thoát</span> Hồi dương cứu nghịch → Hồi dương cứu nghịch thang<br><br><strong>Tất cả:</strong> Kết hợp Tây y chống sốc' },
+  { cat: 'nguy-kich', catLabel: 'Tà hãm chính suy — Nguy kịch',
+    q: 'Tóm tắt nguyên tắc điều trị Xuân Ôn qua 4 giai đoạn chính?',
+    a: '<span class="pill">Sơ kỳ — Khí phần</span> Khổ hàn thanh nhiệt · Tuyên uất thấu tà · Cố hộ âm<br><span class="pill">Trung kỳ — Dương Minh</span> Thanh nhiệt sinh tân / Thông phủ / Tức phong<br><span class="pill">Nặng — Dinh Huyết/Tâm Bào</span> Lương huyết giải độc / Khai khiếu<br><span class="pill">Hậu kỳ</span> Tư bổ Can Thận âm / Tiềm dương tức phong<br><br><em>Xuyên suốt: Cố hộ âm dịch · KHÔNG tân ôn phát hãn</em>' },
+];
+
+let idx = 0, filtered = [...Array(CARDS.length).keys()];
+const ratings = new Array(CARDS.length).fill('reviewing');
+
+function renderCard() {
+  const c = CARDS[filtered[idx]];
+  document.getElementById('cat-label').textContent = c.catLabel;
+  document.getElementById('card-num').textContent = `Thẻ ${idx+1} / ${filtered.length}`;
+  document.getElementById('q-text').textContent = c.q;
+  document.getElementById('a-text').innerHTML = c.a;
+  document.getElementById('prog').style.width = `${((idx+1)/filtered.length)*100}%`;
+  document.getElementById('prog-text').textContent = `Thẻ ${idx+1} / ${filtered.length}`;
+  document.getElementById('prev-btn').disabled = idx === 0;
+  document.getElementById('next-btn').disabled = idx === filtered.length-1;
+  document.getElementById('card').classList.remove('flipped');
+}
+
+function flipCard() { document.getElementById('card').classList.toggle('flipped'); }
+function nextCard() { if(idx < filtered.length-1) { idx++; renderCard(); } }
+function prevCard() { if(idx > 0) { idx--; renderCard(); } }
+
+function rate(type) {
+  const realIdx = filtered[idx];
+  ratings[realIdx] = type;
+  updateStats();
+  if(idx < filtered.length-1) nextCard();
+}
+
+function updateStats() {
+  const k = ratings.filter(r=>r==='known').length;
+  const u = ratings.filter(r=>r==='unknown').length;
+  const rev = ratings.filter(r=>r==='reviewing').length;
+  document.getElementById('known').textContent = k;
+  document.getElementById('unknown').textContent = u;
+  document.getElementById('reviewing').textContent = rev;
+}
+
+function shuffleCards() {
+  filtered.sort(()=>Math.random()-0.5);
+  idx = 0;
+  renderCard();
+}
+
+function resetAll() {
+  filtered = [...Array(CARDS.length).keys()];
+  ratings.fill('reviewing');
+  idx = 0;
+  updateStats();
+  renderCard();
+}
+
+function filterUnknown() {
+  filtered = ratings.map((r,i)=>[r,i]).filter(([r])=>r==='unknown'||r==='reviewing').map(([,i])=>i);
+  if(!filtered.length) { alert('Tất cả thẻ đã được đánh dấu biết!'); resetAll(); return; }
+  idx = 0;
+  renderCard();
+}
+
+function filterCat(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  filtered = cat==='all' ? [...Array(CARDS.length).keys()] : CARDS.map((c,i)=>[c.cat,i]).filter(([c])=>c===cat).map(([,i])=>i);
+  idx = 0;
+  renderCard();
+}
+
+document.addEventListener('keydown', e => {
+  if(e.code==='ArrowRight') nextCard();
+  else if(e.code==='ArrowLeft') prevCard();
+  else if(e.code==='Space') { e.preventDefault(); flipCard(); }
+  else if(e.key==='1') rate('unknown');
+  else if(e.key==='2') rate('reviewing');
+  else if(e.key==='3') rate('known');
+});
+
+renderCard();
+</script>
+</body>
+</html>
