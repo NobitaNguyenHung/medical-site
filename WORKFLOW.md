@@ -116,37 +116,55 @@ Trong sidebar Diátaxis:
 
 ## 3. Trang chủ Dashboard
 
-Trang chủ (`/medical-site/`) dùng component `src/components/HomeDashboard.astro`.
-Nội dung của nó được tách ra file config riêng:
+> **Quy tắc vàng: không viết lại component — chỉ thêm data.**
+> Mọi thay đổi hiển thị (sách mới, tool mới, stats mới) chỉ cần sửa file `src/data/`.
 
-**`src/data/books.ts`** — nguồn duy nhất cho các card sách trên trang chủ.
+### Kiến trúc
 
-### Khi thêm sách mới — LUÔN cập nhật `books.ts`
+```
+src/pages/index.astro          ← page root, bypass Starlight hoàn toàn
+src/data/
+  books.ts                     ← config card sách (MÔN HỌC)
+  home-config.ts               ← config nav, tool cards, stats bar, user profile
+src/components/home/
+  BookCard.astro               ← component card sách (SVG bg + progress + stats)
+  ToolCard.astro               ← tool card, prop variant="wide"|"small"
+  StatsBar.astro               ← thanh stats dưới cùng với pagoda SVG
+```
 
-Thêm 1 object vào mảng `books` trong `src/data/books.ts`:
+`src/pages/index.astro` tự override `src/content/docs/index.mdx` — Astro ưu tiên `pages/` trên collection. Không cần xóa file MDX.
+
+---
+
+### Thêm sách mới → chỉ sửa `src/data/books.ts`
+
+Thêm 1 object vào mảng `books`:
 
 ```ts
 {
-  num: '03',                          // số thứ tự hiển thị
-  system: 'YHHĐ',                     // nhãn hệ thống y học
-  icon: 'ti-heart-rate-monitor',      // Tabler icon name
+  num: '03',
+  system: 'YHHĐ',
+  icon: 'ti-heart-rate-monitor',    // Tabler icon name
   color: {
-    bg: '#E6F1FB',                    // màu nền icon (pastel)
-    accent: '#378ADD',                // màu border-left card
-    text: '#185FA5',                  // màu icon
+    bg: '#E6F1FB',                  // nền icon (pastel)
+    accent: '#378ADD',              // màu progress bar + arrow hover
+    text: '#185FA5',                // màu icon
   },
   name: 'Tim mạch học',
   desc: 'Điện tim · suy tim · van tim · rối loạn nhịp',
-  pills: ['đang xây'],                // thẻ meta nhỏ dưới card
+  progress: 0,                      // 0–100, hiển thị progress bar
+  stats: [                          // tối đa 3, hiển thị dưới card
+    { value: 0, label: 'Bài giảng' },
+  ],
+  illustration: 'anatomy',          // 'bamboo' | 'brain' | 'anatomy' | 'herb' | 'none'
   href: `/medical-site/books/tim-mach/`,
-  status: 'building',                 // 'ready' | 'building' | 'planned'
+  status: 'planned',                // 'ready' | 'building' | 'planned'
 },
 ```
 
-Grid trang chủ dùng `auto-fit minmax(220px, 1fr)` — thêm bao nhiêu sách cũng tự scale,
-không cần sửa CSS hay layout.
+Grid dùng `auto-fit` — thêm bao nhiêu sách cũng tự scale, 0 CSS cần sửa.
 
-### Màu sắc gợi ý theo môn
+#### Màu sắc gợi ý theo môn
 
 | Môn | bg | accent | text |
 |---|---|---|---|
@@ -156,6 +174,52 @@ không cần sửa CSS hay layout.
 | Nhi khoa | `#FAEEDA` | `#BA7517` | `#854F0B` |
 | Ngoại khoa | `#FAECE7` | `#D85A30` | `#712B13` |
 | Vi sinh | `#EAF3DE` | `#639922` | `#3B6D11` |
+
+---
+
+### Thêm tool card mới → chỉ sửa `src/data/home-config.ts`
+
+Thêm vào mảng `utilitiesSmall`:
+
+```ts
+{
+  icon: 'ti-brain',
+  iconBg: '#EEEDFE',
+  iconColor: '#534AB7',
+  name: 'Tên công cụ',
+  desc: 'Mô tả ngắn',
+  stat: 'X đang học',
+  progress: 0,              // 0–100
+  progressColor: '#7F77DD',
+  href: `/medical-site/...`,
+},
+```
+
+Wide card (lộ trình) sửa object `utilityWide` trong cùng file.
+
+---
+
+### Đổi stats bar → sửa `siteStats` trong `home-config.ts`
+
+```ts
+export const siteStats: SiteStat[] = [
+  { icon: 'ti-books', value: '3', label: 'Môn học' },
+  // ...
+];
+```
+
+---
+
+### Đổi tên / lời chào → sửa `userProfile` trong `home-config.ts`
+
+```ts
+export const userProfile = {
+  name: 'Hưng',
+  greeting: 'Chào mừng trở lại',
+  subtext: 'Hành trình học tập hôm nay của bạn như thế nào?',
+  avatarInitial: 'H',
+};
+```
 
 ---
 
