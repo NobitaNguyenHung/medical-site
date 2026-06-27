@@ -1,0 +1,200 @@
+---
+import type { BookEntry } from '~/data/books';
+
+interface Props { book: BookEntry }
+const { book } = Astro.props;
+
+/* ── SVG illustration per book type ── */
+const svgs: Record<string, string> = {
+  bamboo: `<svg viewBox="0 0 160 260" xmlns="http://www.w3.org/2000/svg">
+    <rect x="72" y="0"  width="9" height="260" rx="4.5"/>
+    <rect x="112" y="18" width="7" height="242" rx="3.5"/>
+    <rect x="46"  y="30" width="6" height="230" rx="3"/>
+    <rect x="70" y="62"  width="13" height="4" rx="2" opacity=".65"/>
+    <rect x="70" y="130" width="13" height="4" rx="2" opacity=".65"/>
+    <rect x="70" y="198" width="13" height="4" rx="2" opacity=".65"/>
+    <ellipse cx="92"  cy="56"  rx="26" ry="7" transform="rotate(-35 92 56)"/>
+    <ellipse cx="54"  cy="60"  rx="22" ry="6" transform="rotate(30 54 60)"/>
+    <ellipse cx="98"  cy="124" rx="24" ry="7" transform="rotate(-40 98 124)"/>
+    <ellipse cx="48"  cy="130" rx="20" ry="6" transform="rotate(25 48 130)"/>
+    <ellipse cx="95"  cy="192" rx="22" ry="6" transform="rotate(-32 95 192)"/>
+    <ellipse cx="52"  cy="198" rx="18" ry="5" transform="rotate(22 52 198)"/>
+  </svg>`,
+
+  brain: `<svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="80" cy="80" r="62" fill="none" stroke-width="1.8"/>
+    <circle cx="80" cy="80" r="42" fill="none" stroke-width="1.4"/>
+    <circle cx="80" cy="80" r="20" opacity=".25"/>
+    <circle cx="80" cy="80" r="8"/>
+    <line x1="80" y1="18" x2="80" y2="38" stroke-width="1.8"/>
+    <line x1="80" y1="122" x2="80" y2="142" stroke-width="1.8"/>
+    <line x1="18" y1="80" x2="38" y2="80" stroke-width="1.8"/>
+    <line x1="122" y1="80" x2="142" y2="80" stroke-width="1.8"/>
+    <line x1="35" y1="35" x2="50" y2="50" stroke-width="1.8"/>
+    <line x1="110" y1="110" x2="125" y2="125" stroke-width="1.8"/>
+    <line x1="125" y1="35" x2="110" y2="50" stroke-width="1.8"/>
+    <line x1="35" y1="125" x2="50" y2="110" stroke-width="1.8"/>
+    <circle cx="80"  cy="18"  r="5"/>
+    <circle cx="80"  cy="142" r="5"/>
+    <circle cx="18"  cy="80"  r="5"/>
+    <circle cx="142" cy="80"  r="5"/>
+    <circle cx="35"  cy="35"  r="4"/>
+    <circle cx="125" cy="35"  r="4"/>
+    <circle cx="35"  cy="125" r="4"/>
+    <circle cx="125" cy="125" r="4"/>
+  </svg>`,
+
+  anatomy: `<svg viewBox="0 0 160 200" xmlns="http://www.w3.org/2000/svg">
+    <rect x="60" y="20" width="40" height="50" rx="20"/>
+    <rect x="55" y="68" width="50" height="70" rx="8"/>
+    <rect x="30" y="72" width="22" height="55" rx="11"/>
+    <rect x="108" y="72" width="22" height="55" rx="11"/>
+    <rect x="65" y="136" width="18" height="55" rx="9"/>
+    <rect x="86" y="136" width="18" height="55" rx="9"/>
+  </svg>`,
+
+  herb: `<svg viewBox="0 0 160 200" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="80"  cy="60"  rx="35" ry="50" transform="rotate(-15 80 60)"/>
+    <ellipse cx="80"  cy="60"  rx="35" ry="50" transform="rotate(15 80 60)"/>
+    <ellipse cx="50"  cy="80"  rx="28" ry="42" transform="rotate(-40 50 80)"/>
+    <ellipse cx="110" cy="80"  rx="28" ry="42" transform="rotate(40 110 80)"/>
+    <line x1="80" y1="100" x2="80" y2="190" stroke-width="3" fill="none"/>
+    <ellipse cx="60"  cy="150" rx="22" ry="32" transform="rotate(-25 60 150)" fill="none" stroke-width="1.5"/>
+    <ellipse cx="100" cy="155" rx="22" ry="32" transform="rotate(25 100 155)" fill="none" stroke-width="1.5"/>
+  </svg>`,
+};
+
+const illusHtml = svgs[book.illustration] ?? '';
+---
+
+<a
+  href={book.href}
+  class="bk"
+  style={`--ac:${book.color.accent};--ic:${book.color.text};--ib:${book.color.bg};`}
+>
+  <!-- Watercolor illustration background -->
+  {illusHtml && (
+    <div class="bk-illus" set:html={illusHtml} />
+  )}
+
+  <!-- Header row: num badge + status -->
+  <div class="bk-top">
+    <span class="bk-num">{book.num} · {book.system}</span>
+    {book.status === 'building' && <span class="bk-badge">đang xây</span>}
+    {book.status === 'planned'  && <span class="bk-badge">sắp ra</span>}
+  </div>
+
+  <!-- Icon -->
+  <div class="bk-icon">
+    <i class={`ti ${book.icon}`} aria-hidden="true"></i>
+  </div>
+
+  <!-- Title & desc -->
+  <div class="bk-name">{book.name}</div>
+  <div class="bk-desc">{book.desc}</div>
+
+  <!-- Progress -->
+  <div class="bk-progress">
+    <div class="bk-bar"><div class="bk-fill" style={`width:${book.progress}%`}></div></div>
+    <span class="bk-pct">{book.progress}% hoàn thành</span>
+  </div>
+
+  <!-- Footer: stats + arrow -->
+  <div class="bk-footer">
+    <div class="bk-stats">
+      {book.stats.map(s => (
+        <div class="bk-stat">
+          <span class="bk-stat-v">{s.value}</span>
+          <span class="bk-stat-l">{s.label}</span>
+        </div>
+      ))}
+    </div>
+    <div class="bk-arrow">
+      <i class="ti ti-arrow-right" aria-hidden="true"></i>
+    </div>
+  </div>
+</a>
+
+<style>
+  .bk {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border-radius: 18px;
+    padding: 1.4rem 1.4rem 1.1rem;
+    text-decoration: none;
+    overflow: hidden;
+    min-height: 290px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06), 0 4px 16px rgba(0,0,0,.04);
+    transition: transform .18s, box-shadow .18s;
+  }
+  .bk:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0,0,0,.1), 0 8px 28px rgba(0,0,0,.06);
+  }
+
+  /* illustration overlay */
+  .bk-illus {
+    position: absolute;
+    right: -8px; top: 0; bottom: 0;
+    width: 46%;
+    opacity: .09;
+    color: var(--ac);
+    pointer-events: none;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .bk-illus :global(svg) {
+    width: 100%; height: 100%;
+    fill: currentColor; stroke: currentColor;
+  }
+
+  .bk-top {
+    display: flex; align-items: center; gap: 8px;
+    margin-bottom: .9rem; position: relative;
+  }
+  .bk-num { font-size: .72rem; color: #999; font-weight: 500; letter-spacing: .06em; }
+  .bk-badge {
+    font-size: .62rem; padding: 2px 8px; border-radius: 99px;
+    background: #F1EFE8; color: #999; font-weight: 500;
+  }
+
+  .bk-icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    background: var(--ib); color: var(--ic);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.35rem; margin-bottom: .8rem; position: relative;
+  }
+
+  .bk-name {
+    font-size: 1.15rem; font-weight: 700; color: #1a1a1a;
+    line-height: 1.3; margin-bottom: .35rem; position: relative;
+  }
+  .bk-desc {
+    font-size: .78rem; color: #777; line-height: 1.55;
+    margin-bottom: auto; padding-bottom: 1rem; position: relative;
+  }
+
+  .bk-progress { margin-bottom: .85rem; position: relative; }
+  .bk-bar { height: 4px; background: #F0EDE8; border-radius: 99px; margin-bottom: 4px; }
+  .bk-fill { height: 100%; border-radius: 99px; background: var(--ac); }
+  .bk-pct { font-size: .68rem; color: #bbb; display: block; text-align: right; }
+
+  .bk-footer {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    position: relative;
+  }
+  .bk-stats { display: flex; gap: 1.2rem; }
+  .bk-stat  { display: flex; flex-direction: column; }
+  .bk-stat-v { font-size: 1.05rem; font-weight: 700; color: #1a1a1a; line-height: 1.1; }
+  .bk-stat-l { font-size: .62rem; color: #aaa; margin-top: 1px; }
+
+  .bk-arrow {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: #F5F2EC; color: #888;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .95rem; flex-shrink: 0;
+    transition: background .15s, color .15s;
+  }
+  .bk:hover .bk-arrow { background: var(--ac); color: #fff; }
+</style>

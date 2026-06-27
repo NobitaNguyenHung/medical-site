@@ -57,7 +57,7 @@ const utilities = [
           <div class="hd-bcard-name">{b.name}</div>
           <div class="hd-bcard-desc">{b.desc}</div>
           <div class="hd-pills">
-            {b.pills.map((p) => <span class="hd-pill">{p}</span>)}
+            {b.stats.map(s => <span class="hd-pill">{s.value} {s.label}</span>)}
           </div>
         </a>
       ))}

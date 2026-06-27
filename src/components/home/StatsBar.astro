@@ -1,0 +1,86 @@
+---
+import type { SiteStat } from '~/data/home-config';
+interface Props { stats: SiteStat[] }
+const { stats } = Astro.props;
+---
+
+<div class="sb">
+  <!-- Pagoda + tea illustration -->
+  <div class="sb-illus" aria-hidden="true">
+    <svg viewBox="0 0 500 130" xmlns="http://www.w3.org/2000/svg" fill="#1D9E75">
+      <!-- Pagoda tiers -->
+      <polygon points="250,8 290,35 210,35" opacity=".3"/>
+      <rect x="218" y="35" width="64" height="7"  rx="2" opacity=".25"/>
+      <polygon points="250,28 298,52 202,52" opacity=".22"/>
+      <rect x="206" y="52" width="88" height="7"  rx="2" opacity=".2"/>
+      <polygon points="250,44 308,72 192,72" opacity=".18"/>
+      <rect x="194" y="72" width="112" height="7" rx="2" opacity=".18"/>
+      <rect x="238" y="79" width="24" height="38" rx="4" opacity=".15"/>
+      <!-- Trees left -->
+      <ellipse cx="148" cy="82" rx="26" ry="34" opacity=".14"/>
+      <rect x="146" y="100" width="5" height="24" rx="2" opacity=".18"/>
+      <!-- Trees right -->
+      <ellipse cx="355" cy="82" rx="26" ry="34" opacity=".14"/>
+      <rect x="353" y="100" width="5" height="24" rx="2" opacity=".18"/>
+      <!-- Small tree left -->
+      <ellipse cx="92" cy="95" rx="18" ry="24" opacity=".12"/>
+      <rect x="91"  y="108" width="4" height="18" rx="2" opacity=".15"/>
+      <!-- Tea cup right -->
+      <ellipse cx="440" cy="100" rx="30" ry="9"  opacity=".2"/>
+      <path d="M410 100 Q410 122 440 122 Q470 122 470 100" opacity=".15"/>
+      <path d="M428 90 Q430 82 426 74" stroke="#1D9E75" stroke-width="2" fill="none" opacity=".25"/>
+      <path d="M440 88 Q442 80 438 72" stroke="#1D9E75" stroke-width="2" fill="none" opacity=".25"/>
+      <path d="M452 90 Q454 82 450 74" stroke="#1D9E75" stroke-width="2" fill="none" opacity=".25"/>
+      <!-- Moon -->
+      <circle cx="400" cy="30" r="14" opacity=".1"/>
+      <circle cx="406" cy="26" r="10" fill="#F5F2EC" opacity=".5"/>
+    </svg>
+  </div>
+
+  <div class="sb-stats">
+    {stats.map(s => (
+      <div class="sb-stat">
+        <i class={`ti ${s.icon}`} aria-hidden="true"></i>
+        <span class="sb-val">{s.value}</span>
+        <span class="sb-label">{s.label}</span>
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  .sb {
+    background: #EDE9E0;
+    border-radius: 16px;
+    padding: 1.4rem 2rem;
+    position: relative;
+    overflow: hidden;
+    margin-top: 2rem;
+  }
+  .sb-illus {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .sb-illus svg { width: 100%; height: 100%; }
+
+  .sb-stats {
+    position: relative;
+    display: flex;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+  }
+  .sb-stat {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .sb-stat i    { font-size: 1.2rem; color: #1D9E75; }
+  .sb-val       { font-size: 1.2rem; font-weight: 700; color: #1a1a1a; }
+  .sb-label     { font-size: .75rem; color: #888; }
+
+  @media (max-width: 600px) {
+    .sb { padding: 1.2rem 1.25rem; }
+    .sb-stats { gap: 1.25rem; }
+  }
+</style>
