@@ -167,11 +167,43 @@ Các file đã biên tập tay sẽ không bị ghi đè nếu không còn `gene
    import QuizEmbed from '~/components/QuizEmbed.astro';
    <QuizEmbed src="quiz/vi-sinh/vi-sinh-quiz.html" title="Lượng giá Vi sinh" />
    ```
-4. Khai báo menu — `astro.config.mjs`, thêm 3 thư mục sách vào đúng nhóm:
-   - `books/vi-sinh/luong-gia` → **Học theo lộ trình**
-   - `books/vi-sinh/tom-tat` → **Tra cứu nhanh**
-   - `books/vi-sinh/nguyen-thuy` → **Hiểu sâu**
-5. `npm run build` → push.
+4. Tạo thư mục `bai-giang/` (tầng bài giảng chuyên sâu):
+   ```bash
+   mkdir -p src/content/docs/books/vi-sinh/bai-giang
+   touch src/content/docs/books/vi-sinh/bai-giang/_README.md
+   ```
+   Sau đó tạo từng file bài giảng từ template `templates/shared/deep-lecture.mdx`.
+
+5. Khai báo menu — `astro.config.mjs`:
+
+   **Học theo lộ trình** — thêm 2 item dưới group sách:
+   ```js
+   { label: 'Lộ trình Vi sinh', link: 'learning-paths/vi-sinh/' },
+   { label: 'Vi sinh · Lượng giá', items: [{ autogenerate: { directory: 'books/vi-sinh/luong-gia' } }] },
+   ```
+
+   **Tra cứu nhanh** — thêm:
+   ```js
+   { label: 'Vi sinh · Tóm tắt', items: [{ autogenerate: { directory: 'books/vi-sinh/tom-tat' } }] },
+   ```
+
+   **Hiểu sâu** — thêm group cha bao gồm 3 mục con (bắt buộc dùng cấu trúc nested này):
+   ```js
+   {
+     label: 'Vi sinh',          // ← group cha = tên sách
+     items: [
+       { label: 'Bài giảng chuyên sâu', items: [{ autogenerate: { directory: 'books/vi-sinh/bai-giang' } }] },
+       { label: 'Nguyên thủy',          items: [{ autogenerate: { directory: 'books/vi-sinh/nguyen-thuy' } }] },
+       { label: 'Giải thích cơ chế',    items: [{ autogenerate: { directory: 'topics/explanation' } }] },
+     ],
+   },
+   ```
+
+   > **Quy tắc sidebar Hiểu sâu:** Luôn nhóm theo sách (group cha = tên sách).
+   > Không đặt `bai-giang/` và `nguyen-thuy/` ngang hàng với các sách khác.
+   > Mẫu hiện tại: xem block `Ôn bệnh đại cương` trong `astro.config.mjs`.
+
+6. `npm run build` → push.
 
 > `QuizEmbed` tự thêm base path → quiz chạy đúng cả local lẫn GitHub Pages.
 
