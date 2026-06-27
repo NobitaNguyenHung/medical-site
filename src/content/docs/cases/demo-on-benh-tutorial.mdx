@@ -1,0 +1,91 @@
+---
+title: "Demo · Học Ôn bệnh qua một ca sốt"
+description: "Bài demo theo Diátaxis: dẫn người học đi từng bước từ dữ kiện đến tự kiểm."
+type: "tutorial"
+category: "cases"
+diataxis: "tutorial"
+specialty: "YHCT"
+status: "draft"
+difficulty: "beginner"
+tags: ["demo", "on-benh", "tutorial", "case"]
+sidebar:
+  order: 1
+---
+
+import ClinicalCase from '~/components/ClinicalCase.astro';
+import LearningPath from '~/components/LearningPath.astro';
+import KeyPoints from '~/components/KeyPoints.astro';
+import ClinicalPearl from '~/components/ClinicalPearl.astro';
+import CompareTable from '~/components/CompareTable.astro';
+import SelfCheck from '~/components/SelfCheck.astro';
+import SourceNote from '~/components/SourceNote.astro';
+
+<ClinicalCase title="Học theo lộ trình">
+
+<LearningPath
+  duration="25-35 phút"
+  level="Nhập môn Ôn bệnh"
+  before="Biết khái niệm sốt, hàn nhiệt, biểu lý ở mức cơ bản"
+  goal="Xếp được một ca sốt đơn giản vào vệ hoặc khí phận"
+  practice="Đọc ca → gom dữ kiện → đối chiếu bảng → tự kiểm"
+  check="Trả lời 3 câu hỏi cuối bài trước khi làm quiz"
+/>
+
+## Mục tiêu học tập
+
+<KeyPoints>
+
+- Nhận ra một ca sốt có thể đang đi theo hướng Ôn bệnh.
+- Tách được dữ kiện vệ, khí, dinh, huyết ở mức nhập môn.
+- Biết khi nào cần chuyển sang bài tra cứu hoặc bài hiểu sâu.
+
+</KeyPoints>
+
+## Tình huống
+
+Người bệnh sốt 2 ngày, hơi sợ gió, khát nhẹ, họng khô, rêu lưỡi mỏng vàng. Mạch phù sác.
+
+## Bước 1 · Nhận diện vấn đề
+
+Các dữ kiện nổi bật là sốt, sợ gió nhẹ, họng khô, rêu vàng mỏng. Đây là cụm gợi ý tà nhiệt còn ở phần ngoài, nhưng đã có xu hướng hóa nhiệt.
+
+## Bước 2 · Gom dữ kiện theo tầng
+
+<CompareTable title="Gom dữ kiện ban đầu">
+
+| Tầng | Dữ kiện ủng hộ | Cần hỏi thêm |
+| --- | --- | --- |
+| Vệ | Sốt, sợ gió, mạch phù | Có đau đầu, ho, nghẹt mũi không? |
+| Khí | Khát, rêu vàng | Sốt cao, mồ hôi, táo bón? |
+| Dinh / huyết | Chưa rõ | Có bứt rứt, mê sảng, ban chẩn? |
+
+</CompareTable>
+
+## Bước 3 · Kết luận học tập
+
+Tạm xếp ca này vào nhóm **vệ phận thiên nhiệt**. Nếu sốt cao, khát nhiều, mồ hôi nhiều hoặc rêu vàng dày xuất hiện, cần nghĩ tà đã vào khí phận.
+
+<ClinicalPearl>
+
+- Trong bài học, mục tiêu không phải chẩn đoán hoàn hảo ngay, mà là biết dữ kiện nào kéo ca bệnh sang tầng tiếp theo.
+
+</ClinicalPearl>
+
+## Tự kiểm
+
+<SelfCheck>
+
+1. Dữ kiện nào làm bạn nghĩ còn ở vệ phận?
+2. Nếu người bệnh sốt cao, khát nhiều, mạch hồng đại thì tầng nào được ưu tiên?
+3. Dấu hiệu nào khiến bạn phải đọc tiếp phần dinh huyết?
+
+</SelfCheck>
+
+<SourceNote>
+
+- Demo cấu trúc Diátaxis cho site học liệu.
+- Không dùng như khuyến cáo điều trị.
+
+</SourceNote>
+
+</ClinicalCase>

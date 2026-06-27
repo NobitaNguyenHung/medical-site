@@ -1,0 +1,42 @@
+---
+title: "Template: Flowchart Algorithm"
+description: "Thuật toán Mermaid cho chẩn đoán, xử trí, biện chứng hoặc học tập."
+type: "flowchart-algorithm"
+category: "templates"
+diataxis: "how-to"
+medicineSystem: "shared"
+templateId: "flowchart-algorithm"
+templateFamily: "shared"
+status: "draft"
+draft: true
+pagefind: false
+sidebar:
+  hidden: true
+---
+
+import AlgorithmBox from '~/components/AlgorithmBox.astro';
+import SourceNote from '~/components/SourceNote.astro';
+
+## Khi nào dùng thuật toán này?
+
+```mermaid
+flowchart TD
+  A[Khởi điểm] --> B{Có cờ đỏ?}
+  B -- Có --> C[Xử trí khẩn / chuyển tuyến]
+  B -- Không --> D[Phân tầng]
+  D --> E[Chọn bước tiếp theo]
+```
+
+<AlgorithmBox title="Diễn giải thuật toán">
+
+1. Bước 1:
+2. Bước 2:
+3. Bước 3:
+
+</AlgorithmBox>
+
+<SourceNote>
+
+- Nguồn:
+
+</SourceNote>

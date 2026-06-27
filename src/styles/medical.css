@@ -93,3 +93,52 @@
 .self-check :where(ol, ul) {
 	padding-inline-start: 1.25rem;
 }
+
+.learning-path {
+	margin: 1.25rem 0;
+	padding: 1rem;
+	border: 1px solid var(--sl-color-gray-5);
+	border-radius: 8px;
+	background: color-mix(in srgb, #2563eb 7%, var(--sl-color-bg));
+}
+
+.learning-path__eyebrow {
+	margin: 0 0 0.75rem;
+	color: #1d4ed8;
+	font-size: 0.95rem;
+	font-weight: 700;
+	letter-spacing: 0;
+}
+
+.learning-path__grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+	gap: 0.75rem;
+}
+
+.learning-path__grid > div {
+	min-width: 0;
+	padding: 0.75rem;
+	border: 1px solid color-mix(in srgb, #2563eb 18%, var(--sl-color-gray-5));
+	border-radius: 8px;
+	background: var(--sl-color-bg);
+}
+
+.learning-path__grid span,
+.learning-path__grid strong {
+	display: block;
+}
+
+.learning-path__grid span {
+	margin-bottom: 0.25rem;
+	color: var(--sl-color-gray-3);
+	font-size: 0.8rem;
+	font-weight: 700;
+}
+
+.learning-path__grid strong {
+	color: var(--sl-color-gray-1);
+	font-size: 0.95rem;
+	font-weight: 600;
+	line-height: 1.35;
+}

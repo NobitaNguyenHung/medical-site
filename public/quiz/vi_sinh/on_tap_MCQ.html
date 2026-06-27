@@ -1,0 +1,1643 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Question Bank Vi Sinh Học</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f4f8;color:#2d3748;line-height:1.6}
+.header{background:linear-gradient(135deg,#2b6cb0,#1a365d);color:white;padding:30px 20px;text-align:center}
+.header h1{font-size:1.7em;margin-bottom:6px}
+.header p{opacity:.85;font-size:.9em}
+.sticky-bar{background:white;padding:12px 20px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.pb-bg{background:#e2e8f0;border-radius:10px;height:12px;overflow:hidden}
+.pb{background:linear-gradient(90deg,#48bb78,#38a169);height:100%;border-radius:10px;transition:width .4s;width:0%}
+.pb-text{font-size:.82em;color:#718096;margin-top:5px;text-align:right}
+.container{max-width:860px;margin:0 auto;padding:20px 16px}
+.sec{background:#2b6cb0;color:white;padding:9px 16px;border-radius:8px;margin:24px 0 14px;font-size:.95em;font-weight:700}
+.qcard{background:white;border-radius:12px;padding:22px;margin-bottom:18px;box-shadow:0 2px 8px rgba(0,0,0,.07);border-left:5px solid #4299e1}
+.essay-card{background:white;border-radius:12px;padding:22px;margin-bottom:18px;box-shadow:0 2px 8px rgba(0,0,0,.07);border-left:5px solid #805ad5}
+.blank-card{background:white;border-radius:12px;padding:22px;margin-bottom:18px;box-shadow:0 2px 8px rgba(0,0,0,.07);border-left:5px solid #ed8936}
+.meta{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px}
+.badge{padding:2px 9px;border-radius:20px;font-size:.7em;font-weight:700;text-transform:uppercase}
+.b1{background:#bee3f8;color:#2b6cb0}.b2{background:#c6f6d5;color:#276749}
+.b3{background:#fefcbf;color:#744210}.b4{background:#fed7d7;color:#9b2c2c}
+.b5{background:#e9d8fd;color:#553c9a}.b6{background:#feebc8;color:#7b341e}
+.de{background:#c6f6d5;color:#276749}.tb{background:#fefcbf;color:#744210}.kho{background:#fed7d7;color:#9b2c2c}
+.gq{background:#e2e8f0;color:#4a5568}
+.qtext{font-size:1em;font-weight:700;color:#1a365d;margin-bottom:8px}
+.clinical{background:#ebf8ff;border:1px solid #bee3f8;border-radius:8px;padding:10px 12px;margin:8px 0;font-size:.88em}
+.clinical strong{color:#2b6cb0}
+ul.opts{list-style:none;margin-top:10px}
+ul.opts li{padding:9px 13px;border:2px solid #e2e8f0;border-radius:8px;margin-bottom:7px;cursor:pointer;transition:all .2s;font-size:.92em}
+ul.opts li:hover:not(.disabled){border-color:#4299e1;background:#ebf8ff}
+ul.opts li.selected{border-color:#4299e1;background:#ebf8ff}
+ul.opts li.correct{border-color:#48bb78!important;background:#f0fff4!important;color:#276749;font-weight:700}
+ul.opts li.wrong{border-color:#fc8181!important;background:#fff5f5!important;color:#9b2c2c}
+ul.opts li.disabled{pointer-events:none;opacity:.85}
+.btn-row{display:flex;gap:9px;margin-top:12px;flex-wrap:wrap;align-items:center}
+.btn{padding:7px 16px;border:none;border-radius:8px;cursor:pointer;font-size:.85em;font-weight:700;transition:all .2s}
+.bchk{background:#4299e1;color:white}.bchk:hover{background:#3182ce}.bchk:disabled{background:#a0aec0;cursor:not-allowed}
+.brev{background:#805ad5;color:white}.brev:hover{background:#6b46c1}
+.chip{display:inline-block;padding:4px 13px;border-radius:20px;font-size:.8em;font-weight:700}
+.chip-ok{background:#c6f6d5;color:#276749}.chip-no{background:#fed7d7;color:#9b2c2c}
+.expl{background:#f7fafc;border:1px solid #e2e8f0;border-radius:8px;padding:13px;margin-top:11px;font-size:.88em;display:none}
+.expl.show{display:block}
+.al{font-weight:700;color:#276749;margin-bottom:5px}
+.wi{margin-top:6px;color:#4a5568}
+.kp{margin-top:9px;background:#fffbeb;border-left:3px solid #f6ad55;padding:7px 11px;border-radius:4px;font-size:.85em}
+.etoggle{background:#805ad5;color:white;border:none;padding:7px 15px;border-radius:8px;cursor:pointer;font-size:.85em;font-weight:700;margin-top:11px}
+.eans{background:#f7fafc;border:1px solid #e2e8f0;border-radius:8px;padding:13px;margin-top:10px;display:none;font-size:.88em}
+.eans.show{display:block}
+.eans ol{padding-left:18px}.eans li{margin-bottom:7px}
+.blank-txt{font-size:.95em;margin:10px 0;line-height:2.4}
+.blank-txt .bl{border-bottom:2px solid #cbd5e0;display:inline-block;min-width:130px;background:#e2e8f0;border-radius:3px;height:1.3em;vertical-align:middle}
+.blank-txt.rev .bl{background:#c6f6d5;color:#276749;font-weight:700;padding:0 6px;border-radius:4px}
+.score-box{background:white;border-radius:12px;padding:20px;margin:20px 0;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);display:none}
+.score-num{font-size:2.2em;font-weight:800;color:#2b6cb0}
+footer{text-align:center;padding:20px}
+.breset{background:#e53e3e;color:white;padding:11px 30px;border-radius:10px;border:none;font-size:.95em;font-weight:700;cursor:pointer}
+.breset:hover{background:#c53030}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>📚 QUESTION BANK VI SINH HỌC</h1>
+  <p>Tổng hợp từ tài liệu ôn tập Vi sinh | 100 câu | Bloom Taxonomy 1–6 | MCQ + Tự luận + Điền chỗ trống</p>
+</div>
+
+<div class="sticky-bar">
+  <div class="pb-bg"><div class="pb" id="pb"></div></div>
+  <div class="pb-text" id="pbt">0 / 20 câu MCQ đúng</div>
+</div>
+
+<div class="container">
+
+<!-- ============ P1 ============ -->
+<div class="sec">🦠 PHẦN 1: TẾ BÀO VI KHUẨN — CẤU TRÚC & CƠ CHẾ KHÁNG SINH</div>
+
+<!-- Q1 -->
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b1">Bloom 1 — Nhớ</span><span class="badge de">Dễ</span></div>
+  <div class="qtext">Câu 1. Nhận định nào SAI khi so sánh thành tế bào Gram dương và Gram âm?</div>
+  <ul class="opts" data-ans="C">
+    <li data-o="A">A. Gram dương có lớp peptidoglycan dày là thành phần chủ yếu</li>
+    <li data-o="B">B. Gram âm có màng ngoài (outer membrane) chứa lipopolysaccharide (LPS)</li>
+    <li data-o="C">C. Gram âm KHÔNG có lớp peptidoglycan trong thành tế bào</li>
+    <li data-o="D">D. Màng ngoài Gram âm có kênh porin kiểm soát sự thấm của phân tử</li>
+  </ul>
+  <div class="btn-row">
+    <button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button>
+    <button class="btn brev" onclick="rev(this)">Xem đáp án</button>
+  </div>
+  <div class="expl">
+    <div class="al">✅ Đáp án: C</div>
+    <div class="wi"><b>C — SAI:</b> Gram âm VẪN có lớp peptidoglycan, chỉ rất mỏng, kẹp giữa màng trong và màng ngoài (khoảng periplasm).</div>
+    <div class="wi"><b>A, B, D — Đúng:</b> Đây là đặc điểm chính xác của thành tế bào vi khuẩn.</div>
+    <div class="kp">💡 Gram+ = peptidoglycan DÀY, không màng ngoài. Gram− = peptidoglycan mỏng + màng ngoài (LPS + porin).</div>
+  </div>
+</div>
+
+<!-- Q2 -->
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b2">Bloom 2 — Hiểu</span><span class="badge tb">Trung bình</span></div>
+  <div class="qtext">Câu 2. Kháng sinh ức chế transpeptidase (PBP) tổng hợp peptidoglycan gây tác dụng gì và vì sao?</div>
+  <ul class="opts" data-ans="B">
+    <li data-o="A">A. Kìm khuẩn — vì làm ức chế dịch mã tại ribosome 50S</li>
+    <li data-o="B">B. Diệt khuẩn — vì vách yếu, tế bào vỡ do áp suất thẩm thấu nội bào cao</li>
+    <li data-o="C">C. Kìm khuẩn — vì làm yếu vách nhưng không gây vỡ ngay</li>
+    <li data-o="D">D. Diệt khuẩn — vì phá hủy trực tiếp màng tế bào chất</li>
+  </ul>
+  <div class="btn-row">
+    <button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button>
+    <button class="btn brev" onclick="rev(this)">Xem đáp án</button>
+  </div>
+  <div class="expl">
+    <div class="al">✅ Đáp án: B</div>
+    <div class="wi"><b>B đúng:</b> PBP bị ức chế → vách peptidoglycan không hình thành đủ → tế bào vỡ do áp suất nội bào có thể gấp 20 lần bên ngoài → diệt khuẩn.</div>
+    <div class="wi"><b>A sai:</b> Ức chế ribosome mới gây kìm khuẩn (chloramphenicol, tetracycline).</div>
+    <div class="wi"><b>C sai:</b> Cơ chế đúng nhưng hậu quả sai — vỡ tế bào = diệt khuẩn.</div>
+    <div class="kp">💡 Vách (peptidoglycan) → DIỆT khuẩn. Ribosome (30S/50S) → KÌM khuẩn.</div>
+  </div>
+</div>
+
+<!-- Q3 -->
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b1">Bloom 1 — Nhớ</span><span class="badge de">Dễ</span></div>
+  <div class="qtext">Câu 3. Thành phần nào trong bào tử vi khuẩn chịu trách nhiệm CHÍNH trong khả năng kháng nhiệt?</div>
+  <ul class="opts" data-ans="C">
+    <li data-o="A">A. Lớp vỏ protein giống keratin tạo bất thẩm thấu</li>
+    <li data-o="B">B. Cấu trúc ADN bền vững bên trong lõi</li>
+    <li data-o="C">C. Acid dipicolinic kết hợp calci ổn định ADN chống nhiệt</li>
+    <li data-o="D">D. Áp suất thẩm thấu thấp trong lõi bào tử</li>
+  </ul>
+  <div class="btn-row">
+    <button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button>
+    <button class="btn brev" onclick="rev(this)">Xem đáp án</button>
+  </div>
+  <div class="expl">
+    <div class="al">✅ Đáp án: C</div>
+    <div class="wi"><b>C đúng:</b> Acid dipicolinic (5–15% trọng lượng khô) + Ca²⁺ → ổn định ADN → kháng nhiệt. Đây là đặc trưng duy nhất của bào tử.</div>
+    <div class="wi"><b>A đúng một phần:</b> Vỏ protein keratin tạo bất thẩm thấu nhưng không phải yếu tố kháng nhiệt chính.</div>
+    <div class="kp">💡 Bào tử kháng nhiệt → phải autoclave (121°C/15 phút). Sát khuẩn thông thường và đun sôi KHÔNG diệt được bào tử.</div>
+  </div>
+</div>
+
+<!-- Q4 -->
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b2">Bloom 2 — Hiểu</span><span class="badge tb">Trung bình</span></div>
+  <div class="qtext">Câu 4. Tại sao đề kháng kháng sinh do plasmid nguy hiểm hơn đề kháng do đột biến nhiễm sắc thể?</div>
+  <ul class="opts" data-ans="A">
+    <li data-o="A">A. Plasmid lan truyền gen kháng thuốc sang vi khuẩn khác loài qua pili phái (tiếp hợp)</li>
+    <li data-o="B">B. Plasmid tạo nhiều loại kháng thuốc hơn đột biến nhiễm sắc thể</li>
+    <li data-o="C">C. Đột biến nhiễm sắc thể không thể di truyền sang thế hệ sau</li>
+    <li data-o="D">D. Plasmid làm tăng tốc độ nhân đôi vi khuẩn</li>
+  </ul>
+  <div class="btn-row">
+    <button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button>
+    <button class="btn brev" onclick="rev(this)">Xem đáp án</button>
+  </div>
+  <div class="expl">
+    <div class="al">✅ Đáp án: A</div>
+    <div class="wi"><b>A đúng:</b> Qua pili phái (yếu tố F), plasmid mang yếu tố đề kháng R di chuyển ngang (horizontal gene transfer) từ VK kháng thuốc sang VK chưa kháng — kể cả khác loài.</div>
+    <div class="wi"><b>C sai:</b> Đột biến NST DI TRUYỀN được dọc qua phân bào, chỉ không lây ngang.</div>
+    <div class="kp">💡 Plasmid = lây ngang qua tiếp hợp → kháng thuốc lan rộng nhanh trong cộng đồng vi khuẩn.</div>
+  </div>
+</div>
+
+<!-- ============ P2 ============ -->
+<div class="sec">🧬 PHẦN 2: QUAN HỆ VẬT CHỦ — VI KHUẨN</div>
+
+<!-- Q5 -->
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b3">Bloom 3 — Áp dụng</span><span class="badge tb">Trung bình</span></div>
+  <div class="qtext">Câu 5. Bệnh nhân 68 tuổi điều trị viêm phổi bằng Amoxicillin-Clavulanate liều cao 3 tuần. Ngày 15 xuất hiện tiêu chảy lỏng nhiều lần. Nguyên nhân phù hợp nhất?</div>
+  <div class="clinical"><strong>[Lâm sàng]</strong> Nam 68 tuổi | Amoxicillin-Clavulanate 3 tuần | Ngày 15: tiêu chảy nhiều lần/ngày</div>
+  <ul class="opts" data-ans="B">
+    <li data-o="A">A. Tái phát viêm phổi lan xuống đường tiêu hóa</li>
+    <li data-o="B">B. Loạn khuẩn ruột do kháng sinh phổ rộng tiêu diệt vi khuẩn có lợi</li>
+    <li data-o="C">C. Dị ứng Amoxicillin biểu hiện muộn ở đường tiêu hóa</li>
+    <li data-o="D">D. Ngộ độc thức ăn do vi khuẩn ngoại sinh từ bệnh viện</li>
+  </ul>
+  <div class="btn-row">
+    <button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button>
+    <button class="btn brev" onclick="rev(this)">Xem đáp án</button>
+  </div>
+  <div class="expl">
+    <div class="al">✅ Đáp án: B</div>
+    <div class="wi"><b>B đúng:</b> KS phổ rộng kéo dài → tiêu diệt vi khuẩn cộng sinh có lợi → phá cân bằng → VK kháng thuốc (Proteus, C. difficile) hoặc nấm phát triển → loạn khuẩn/tiêu chảy.</div>
+    <div class="wi"><b>A sai:</b> Viêm phổi không lan xuống ruột theo cơ chế này. <b>C sai:</b> Dị ứng thường xảy ra sớm. <b>D sai:</b> Không có bằng chứng nhiễm ngoại sinh.</div>
+    <div class="kp">💡 KS phổ rộng + liều cao + kéo dài = loạn khuẩn ruột. Thường gặp ở người cao tuổi, dùng nhiều loại KS.</div>
+  </div>
+</div>
+
+<!-- Q6 -->
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b2">Bloom 2 — Hiểu</span><span class="badge tb">Trung bình</span></div>
+  <div class="qtext">Câu 6. Đặc điểm nào CHỈ đúng với ngoại độc tố (exotoxin) mà KHÔNG đúng với nội độc tố (endotoxin)?</div>
+  <ul class="opts" data-ans="D">
+    <li data-o="A">A. Có tính kháng nguyên mạnh</li>
+    <li data-o="B">B. Gây sốt ở vật chủ</li>
+    <li data-o="C">C. Chỉ có ở vi khuẩn Gram âm</li>
+    <li data-o="D">D. Có thể chuyển thành anatoxin (vô độc tố) bằng formol để làm vắc-xin</li>
+  </ul>
+  <div class="btn-row">
+    <button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button>
+    <button class="btn brev" onclick="rev(this)">Xem đáp án</button>
+  </div>
+  <div class="expl">
+    <div class="al">✅ Đáp án: D</div>
+    <div class="wi"><b>D đúng:</b> Ngoại độc tố là protein → xử lý formol/nhiệt → anatoxin dùng làm vắc-xin (uốn ván, bạch hầu). Nội độc tố (LPS) không thể làm được điều này.</div>
+    <div class="wi"><b>A sai:</b> Cả hai đều có tính kháng nguyên. <b>B sai:</b> Cả hai đều gây sốt. <b>C sai:</b> Ngoại độc tố có ở cả Gram+ (bạch hầu, uốn ván, tụ cầu).</div>
+    <div class="kp">💡 Ngoại độc tố = protein → biến tính = anatoxin = vắc-xin. Nội độc tố (LPS) = không tạo anatoxin.</div>
+  </div>
+</div>
+
+<!-- ============ P3 ============ -->
+<div class="sec">🔵 PHẦN 3: CẦU KHUẨN & TRỰC KHUẨN GRAM DƯƠNG</div>
+
+<!-- Q7 -->
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b3">Bloom 3 — Áp dụng</span><span class="badge kho">Khó</span></div>
+  <div class="qtext">Câu 7. Bệnh nhân hậu phẫu, vết thương mủ vàng. Cấy khuẩn: <i>S. aureus</i> kháng Methicillin (MRSA). Kháng sinh phù hợp nhất?</div>
+  <div class="clinical"><strong>[Lâm sàng]</strong> Nữ 52 tuổi | Hậu phẫu | Vết thương mủ vàng | Cấy khuẩn: MRSA</div>
+  <ul class="opts" data-ans="C">
+    <li data-o="A">A. Amoxicillin-Clavulanate uống</li>
+    <li data-o="B">B. Cefazolin tiêm tĩnh mạch</li>
+    <li data-o="C">C. Vancomycin tiêm tĩnh mạch</li>
+    <li data-o="D">D. Ampicillin tiêm bắp</li>
+  </ul>
+  <div class="btn-row">
+    <button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button>
+    <button class="btn brev" onclick="rev(this)">Xem đáp án</button>
+  </div>
+  <div class="expl">
+    <div class="al">✅ Đáp án: C</div>
+    <div class="wi"><b>C đúng:</b> MRSA kháng TOÀN BỘ nhóm beta-lactam (Penicillin, Cephalosporin). Vancomycin (glycopeptide) là lựa chọn hàng đầu. Thay thế: Daptomycin, Linezolid.</div>
+    <div class="wi"><b>A, B, D sai:</b> Đều là beta-lactam → MRSA đề kháng hoàn toàn.</div>
+    <div class="kp">💡 MRSA → Vancomycin. Bệnh nhân MRSA phải cách ly tiếp xúc nghiêm ngặt.</div>
+  </div>
+</div>
+
+<!-- Q8 -->
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b4">Bloom 4 — Phân tích</span><span class="badge kho">Khó</span></div>
+  <div class="qtext">Câu 8. 4/6 học sinh ăn bánh kem sinh nhật → ói mửa, tiêu chảy sau 3 giờ, không sốt, tự khỏi sau 24h. Phân tích đúng nhất?</div>
+  <div class="clinical"><strong>[Dịch tễ]</strong> Ăn bánh kem | Khởi phát 3h | Không sốt | Tự khỏi 24h</div>
+  <ul class="opts" data-ans="A">
+    <li data-o="A">A. Ngộ độc enterotoxin S. aureus có sẵn trong bánh — không cần kháng sinh, bù nước là đủ</li>
+    <li data-o="B">B. Nhiễm Salmonella từ trứng trong bánh — cần kháng sinh ngay</li>
+    <li data-o="C">C. Viêm ruột E. coli — cần xét nghiệm phân và dùng kháng sinh</li>
+    <li data-o="D">D. Ngộ độc ngoại độc tố bạch hầu — nguy hiểm, nhập viện ngay</li>
+  </ul>
+  <div class="btn-row">
+    <button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button>
+    <button class="btn brev" onclick="rev(this)">Xem đáp án</button>
+  </div>
+  <div class="expl">
+    <div class="al">✅ Đáp án: A</div>
+    <div class="wi"><b>A đúng:</b> Tam chứng điển hình ngộ độc S. aureus: thức ăn giàu kem/protein + khởi phát nhanh 2–3h + tự khỏi 24–48h + không sốt. Enterotoxin bền nhiệt (không bị đun sôi phá hủy). Không cần KS.</div>
+    <div class="wi"><b>B sai:</b> Salmonella ủ bệnh 12–48h, thường sốt. <b>D sai:</b> Bạch hầu không gây ngộ độc thức ăn.</div>
+    <div class="kp">💡 S. aureus ngộ độc TP: 2–3h, không sốt, 24h tự khỏi, không cần KS. Phòng: người viêm da không chế biến thức ăn.</div>
+  </div>
+</div>
+
+<!-- Q9 -->
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b3">Bloom 3 — Áp dụng</span><span class="badge kho">Khó</span></div>
+  <div class="qtext">Câu 9. Trẻ 6 tuổi sốt, đau họng, có màng giả trắng xám dai ở yết hầu. Nghi bạch hầu. Ưu tiên điều trị HÀNG ĐẦU?</div>
+  <div class="clinical"><strong>[Lâm sàng]</strong> Trẻ 6 tuổi | Sốt, đau họng | Màng giả trắng xám dai khó bóc | Nghi bạch hầu</div>
+  <ul class="opts" data-ans="A">
+    <li data-o="A">A. Tiêm ngay huyết thanh kháng độc tố bạch hầu (SAD) trước khi dùng kháng sinh</li>
+    <li data-o="B">B. Dùng Penicillin liều cao để diệt vi khuẩn</li>
+    <li data-o="C">C. Phẫu thuật bóc màng giả để thông đường thở</li>
+    <li data-o="D">D. Tiêm vắc-xin bạch hầu ngay lập tức</li>
+  </ul>
+  <div class="btn-row">
+    <button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button>
+    <button class="btn brev" onclick="rev(this)">Xem đáp án</button>
+  </div>
+  <div class="expl">
+    <div class="al">✅ Đáp án: A</div>
+    <div class="wi"><b>A đúng:</b> Nguy hiểm của bạch hầu là ngoại độc tố đang lưu hành trong máu gây tổn thương tim, thần kinh. Phải trung hòa độc tố bằng SAD NGAY, sau đó mới dùng KS (Penicillin/Erythromycin) diệt vi khuẩn.</div>
+    <div class="wi"><b>B sai:</b> Penicillin cần thiết nhưng không phải ưu tiên đầu. <b>D sai:</b> Vắc-xin dùng phòng ngừa, không điều trị bệnh đang tiến triển.</div>
+    <div class="kp">💡 Bạch hầu: SAD trước → KS sau. Penicillin ưu tiên; Erythromycin nếu dị ứng.</div>
+  </div>
+</div>
+
+<!-- Q10 -->
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b3">Bloom 3 — Áp dụng</span><span class="badge tb">Trung bình</span></div>
+  <div class="qtext">Câu 10. Thai phụ 38 tuần, nhiễm <i>Neisseria gonorrhoeae</i> đã xác nhận, đang sinh thường. Biện pháp BẮT BUỘC ngay sau sinh để bảo vệ mắt trẻ sơ sinh?</div>
+  <div class="clinical"><strong>[Lâm sàng]</strong> Thai phụ 38 tuần | Nhiễm lậu cầu | Sinh thường | Trẻ vừa chào đời</div>
+  <ul class="opts" data-ans="B">
+    <li data-o="A">A. Tiêm Ceftriaxone cho trẻ sơ sinh ngay sau sinh</li>
+    <li data-o="B">B. Nhỏ dung dịch Argerol vào mắt trẻ ngay sau sinh</li>
+    <li data-o="C">C. Tắm trẻ bằng xà phòng kháng khuẩn ngay lập tức</li>
+    <li data-o="D">D. Tiêm vắc-xin phòng lậu cho trẻ trong 24h đầu</li>
+  </ul>
+  <div class="btn-row">
+    <button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button>
+    <button class="btn brev" onclick="rev(this)">Xem đáp án</button>
+  </div>
+  <div class="expl">
+    <div class="al">✅ Đáp án: B</div>
+    <div class="wi"><b>B đúng:</b> Lậu cầu lây từ mẹ → con qua ngả âm đạo gây viêm kết mạc mủ → có thể mù. Nhỏ Argerol (dẫn chất bạc) sát khuẩn mắt ngay sau sinh là biện pháp quy chuẩn.</div>
+    <div class="wi"><b>D sai:</b> Không có vắc-xin phòng lậu. <b>C sai:</b> Tắm xà phòng không đủ bảo vệ mắt.</div>
+    <div class="kp">💡 Lậu sơ sinh → viêm kết mạc mủ → mù. Phòng: sinh mổ HOẶC nhỏ Argerol ngay sau sinh thường.</div>
+  </div>
+</div>
+
+<!-- ============ P4 ============ -->
+<div class="sec">🫁 PHẦN 4: VI KHUẨN LAO & PHONG</div>
+
+<!-- Q11 -->
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b2">Bloom 2 — Hiểu</span><span class="badge tb">Trung bình</span></div>
+  <div class="qtext">Câu 11. Kháng thể dịch thể (IgG, IgM) KHÔNG bảo vệ được trong bệnh lao. Lý do chính xác nhất?</div>
+  <ul class="opts" data-ans="C">
+    <li data-o="A">A. Vi khuẩn lao tiết enzym phá hủy kháng thể</li>
+    <li data-o="B">B. Vi khuẩn lao không có kháng nguyên bề mặt</li>
+    <li data-o="C">C. Vi khuẩn lao sống nội tế bào — kháng thể không tiếp cận được bên trong đại bạch cầu</li>
+    <li data-o="D">D. Lipid vách tế bào lao hấp thụ và trung hòa kháng thể</li>
+  </ul>
+  <div class="btn-row">
+    <button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button>
+    <button class="btn brev" onclick="rev(this)">Xem đáp án</button>
+  </div>
+  <div class="expl">
+    <div class="al">✅ Đáp án: C</div>
+    <div class="wi"><b>C đúng:</b> M. tuberculosis là vi khuẩn nội tế bào — ẩn nấp trong đại bạch cầu. Kháng thể (ngoại bào) không thể tiếp cận mầm bệnh. Chỉ miễn dịch tế bào (TH1 → IFN-γ → đại bạch cầu hoạt hóa) mới hiệu quả.</div>
+    <div class="kp">💡 Lao = nội bào → miễn dịch TẾ BÀO. Test Mantoux (phản ứng da) phản ánh miễn dịch tế bào, không phải kháng thể.</div>
+  </div>
+</div>
+
+<!-- Q12 -->
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b4">Bloom 4 — Phân tích</span><span class="badge kho">Khó</span></div>
+  <div class="qtext">Câu 12. Nam 45 tuổi, HIV không điều trị, ho 3 tháng, sụt 8kg, sốt chiều. X-quang: thâm nhiễm thùy trên phổi. Điều gì TRỰC TIẾP gây ra lao hoạt động?</div>
+  <div class="clinical"><strong>[Lâm sàng]</strong> Nam 45 tuổi | HIV không điều trị | Ho 3 tháng + sụt cân + sốt chiều | X-quang: thâm nhiễm thùy trên</div>
+  <ul class="opts" data-ans="D">
+    <li data-o="A">A. Nhiễm lao lần đầu từ môi trường</li>
+    <li data-o="B">B. Vi khuẩn lao đột biến độc hơn do truyền qua nhiều người</li>
+    <li data-o="C">C. Thiếu hụt kháng thể chống lao</li>
+    <li data-o="D">D. Suy giảm miễn dịch tế bào (CD4 giảm) làm lao tiềm ẩn tái hoạt động</li>
+  </ul>
+  <div class="btn-row">
+    <button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button>
+    <button class="btn brev" onclick="rev(this)">Xem đáp án</button>
+  </div>
+  <div class="expl">
+    <div class="al">✅ Đáp án: D</div>
+    <div class="wi"><b>D đúng:</b> HIV phá hủy CD4+ → mất miễn dịch tế bào → lao tiềm ẩn (đã nhiễm trước đó) tái hoạt động. Hình ảnh thâm nhiễm thùy trên gợi ý tái hoạt, không phải nhiễm tiên phát.</div>
+    <div class="wi"><b>C sai:</b> Kháng thể không bảo vệ trong lao (Q11). <b>B sai:</b> Không có bằng chứng đột biến virus trong ca này.</div>
+    <div class="kp">💡 HIV + lao tiềm ẩn + CD4 giảm → lao tái hoạt. Lao là NTCH phổ biến nhất và nguy hiểm nhất ở AIDS tại Việt Nam.</div>
+  </div>
+</div>
+
+<!-- ============ P5 ============ -->
+<div class="sec">🦠 PHẦN 5: VI KHUẨN ĐƯỜNG RUỘT</div>
+
+<!-- Q13 -->
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b3">Bloom 3 — Áp dụng</span><span class="badge tb">Trung bình</span></div>
+  <div class="qtext">Câu 13. Bệnh nhân vừa về từ vùng dịch tả, ói nhiều, tiêu chảy phân lỏng như nước vo gạo, mạch 120/phút, HA 80/50 mmHg. Ưu tiên điều trị SỐ 1?</div>
+  <div class="clinical"><strong>[Lâm sàng]</strong> Vùng dịch | Ói + tiêu chảy "nước vo gạo" | Mạch 120 | HA 80/50 → Sốc</div>
+  <ul class="opts" data-ans="A">
+    <li data-o="A">A. Bù dịch và điện giải ngay lập tức qua truyền tĩnh mạch</li>
+    <li data-o="B">B. Dùng kháng sinh diệt V. cholerae ngay lập tức</li>
+    <li data-o="C">C. Cho uống Oresol và theo dõi</li>
+    <li data-o="D">D. Cấy máu và chờ kháng sinh đồ trước khi điều trị</li>
+  </ul>
+  <div class="btn-row">
+    <button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button>
+    <button class="btn brev" onclick="rev(this)">Xem đáp án</button>
+  </div>
+  <div class="expl">
+    <div class="al">✅ Đáp án: A</div>
+    <div class="wi"><b>A đúng:</b> Bệnh nhân đang SỐC (HA 80/50). Tử vong do dịch tả = mất nước + điện giải cấp tính. Truyền dịch TM khẩn cấp là số 1. KS (Doxycycline) dùng song song sau khi ổn định huyết động.</div>
+    <div class="wi"><b>C sai:</b> Đang sốc → không thể uống. <b>D sai:</b> Không được chờ; sốc có thể tử vong trong vài giờ.</div>
+    <div class="kp">💡 Dịch tả = mất nước tối cấp → bù dịch là SỐ 1, KS là SỐ 2. Phân "nước vo gạo" = đặc trưng dịch tả.</div>
+  </div>
+</div>
+
+<!-- Q14 -->
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b4">Bloom 4 — Phân tích</span><span class="badge kho">Khó</span></div>
+  <div class="qtext">Câu 14. BN1: tiêu chảy phân nhầy máu, đau quặn, mót rặn. BN2: sốt 39°C tuần 2, tiêu chảy không máu, đau bụng lan tỏa. Vi khuẩn gây bệnh tương ứng?</div>
+  <div class="clinical"><strong>BN1:</strong> Phân nhầy máu | Đau quặn | Mót rặn &nbsp;|&nbsp; <strong>BN2:</strong> Sốt cao tuần 2 | Không có máu | Đau lan tỏa</div>
+  <ul class="opts" data-ans="B">
+    <li data-o="A">A. BN1: Salmonella typhi / BN2: Shigella dysenteriae</li>
+    <li data-o="B">B. BN1: Shigella dysenteriae / BN2: Salmonella typhi</li>
+    <li data-o="C">C. BN1: V. cholerae / BN2: Shigella dysenteriae</li>
+    <li data-o="D">D. BN1: E. coli ETEC / BN2: Salmonella typhi</li>
+  </ul>
+  <div class="btn-row">
+    <button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button>
+    <button class="btn brev" onclick="rev(this)">Xem đáp án</button>
+  </div>
+  <div class="expl">
+    <div class="al">✅ Đáp án: B</div>
+    <div class="wi"><b>B đúng:</b> BN1 = hội chứng lỵ điển hình (nhầy máu, mót rặn) → Shiga toxin của Shigella hoại tử niêm mạc đại tràng. BN2 = thương hàn (sốt giai đoạn 2, không máu, đau lan tỏa) → S. typhi ái lực mảng Peyer.</div>
+    <div class="wi"><b>A sai:</b> Đảo ngược hoàn toàn. <b>C sai:</b> Dịch tả không có máu trong phân.</div>
+    <div class="kp">💡 Lỵ (Shigella) = nhầy máu + mót rặn. Thương hàn (Salmonella) = sốt tuần 2 đặc trưng, không máu.</div>
+  </div>
+</div>
+
+<!-- ============ P6 ============ -->
+<div class="sec">🌀 PHẦN 6 & 7: GIANG MAI & UỐN VÁN</div>
+
+<!-- Q15 -->
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b4">Bloom 4 — Phân tích</span><span class="badge kho">Khó</span></div>
+  <div class="qtext">Câu 15. Thai phụ 25 tuổi, tuần 16, tầm soát Reagin dương tính. Nguy cơ cho thai nhi là gì?</div>
+  <div class="clinical"><strong>[Lâm sàng]</strong> Thai phụ 25 tuổi | Tuần 16 | Reagin (+) — tầm soát giang mai</div>
+  <ul class="opts" data-ans="C">
+    <li data-o="A">A. Chưa có nguy cơ vì giang mai chỉ lây từ tháng 4 và bệnh nhân mới tuần 16</li>
+    <li data-o="B">B. Thai nhi an toàn vì nhau thai bảo vệ hoàn toàn</li>
+    <li data-o="C">C. Thai nhi CÓ nguy cơ — tuần 16 = tháng 4, xoắn khuẩn có thể vượt nhau thai gây giang mai bẩm sinh</li>
+    <li data-o="D">D. Chỉ nguy hiểm nếu mẹ đang ở giai đoạn I (có săng giang mai tiến triển)</li>
+  </ul>
+  <div class="btn-row">
+    <button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button>
+    <button class="btn brev" onclick="rev(this)">Xem đáp án</button>
+  </div>
+  <div class="expl">
+    <div class="al">✅ Đáp án: C</div>
+    <div class="wi"><b>C đúng:</b> Tuần 16 ≈ tháng 4 = đúng ngưỡng xoắn khuẩn T. pallidum vượt nhau thai. Giang mai bẩm sinh: thai chết lưu, viêm giác mạc kẽ, điếc, thủng vòm miệng. Cần điều trị Penicillin G NGAY.</div>
+    <div class="wi"><b>A sai:</b> Tuần 16 = tháng 4 → đã đến ngưỡng nguy hiểm. <b>B sai:</b> Nhau thai KHÔNG bảo vệ được khỏi T. pallidum từ tháng 4.</div>
+    <div class="kp">💡 Giang mai: lây thai từ tháng 4. Tầm soát Reagin ở tháng 4, 6, 9. Điều trị ngay = cứu thai nhi.</div>
+  </div>
+</div>
+
+<!-- Q16 -->
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b3">Bloom 3 — Áp dụng</span><span class="badge kho">Khó</span></div>
+  <div class="qtext">Câu 16. Nông dân 55 tuổi giẫm đinh rỉ sét, vết thương sâu, không nhớ lịch tiêm phòng uốn ván. Xử lý đúng nhất (theo thứ tự ưu tiên)?</div>
+  <div class="clinical"><strong>[Lâm sàng]</strong> Nam 55 tuổi | Giẫm đinh rỉ sét | Vết thương sâu | Không rõ lịch tiêm uốn ván</div>
+  <ul class="opts" data-ans="B">
+    <li data-o="A">A. Tiêm ngay vắc-xin uốn ván, sau đó xử lý vết thương bằng oxy già</li>
+    <li data-o="B">B. Tiêm kháng độc tố uốn ván (SAT/HTIG) + vắc-xin + xử lý triệt để vết thương</li>
+    <li data-o="C">C. Rửa vết thương bằng xà phòng và chờ theo dõi triệu chứng 24 giờ</li>
+    <li data-o="D">D. Dùng Metronidazole ngay để diệt C. tetani trong vết thương</li>
+  </ul>
+  <div class="btn-row">
+    <button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button>
+    <button class="btn brev" onclick="rev(this)">Xem đáp án</button>
+  </div>
+  <div class="expl">
+    <div class="al">✅ Đáp án: B</div>
+    <div class="wi"><b>B đúng:</b> Vết thương sâu + không rõ lịch tiêm = nguy cơ cao. Cần: (1) SAT/HTIG để trung hòa tetanospasmin đã có thể có, (2) Vắc-xin gây miễn dịch chủ động, (3) Xử lý vết thương (cắt lọc, rửa sạch). Ba bước phải làm đồng thời.</div>
+    <div class="wi"><b>A sai:</b> Vắc-xin cần 2 tuần mới có kháng thể — chưa đủ bảo vệ ngay, thiếu kháng độc tố là nguy hiểm. <b>C sai:</b> Chờ theo dõi trong uốn ván = nguy hiểm tính mạng.</div>
+    <div class="kp">💡 Uốn ván nguy cơ cao: SAT/HTIG + Vắc-xin + Xử lý vết thương = bộ ba bắt buộc.</div>
+  </div>
+</div>
+
+<!-- ============ P7 ============ -->
+<div class="sec">🦠 PHẦN 8: VIRUS GÂY BỆNH</div>
+
+<!-- Q17 -->
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b4">Bloom 4 — Phân tích</span><span class="badge kho">Khó</span></div>
+  <div class="qtext">Câu 17. Trẻ 8 tuổi sốt xuất huyết lần 2 (lần đầu 2 năm trước). Tiểu cầu 55,000, Hematocrit +22%, tay chân lạnh. Tại sao lần này nặng hơn?</div>
+  <div class="clinical"><strong>[Lâm sàng]</strong> Trẻ 8 tuổi | SXH lần 2 | TC 55,000/mm³ | Hct tăng 22% | Tay chân lạnh → cô đặc máu</div>
+  <ul class="opts" data-ans="C">
+    <li data-o="A">A. Virus Dengue lần này có độc lực cao hơn do đột biến</li>
+    <li data-o="B">B. Trẻ mất miễn dịch từ lần trước</li>
+    <li data-o="C">C. Kháng thể từ lần trước nhận biết nhưng không trung hòa type mới — tạo phức hợp xâm nhập đại bạch cầu gây phản ứng miễn dịch quá mức (ADE)</li>
+    <li data-o="D">D. Trẻ nhiễm 2 type Dengue cùng lúc</li>
+  </ul>
+  <div class="btn-row">
+    <button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button>
+    <button class="btn brev" onclick="rev(this)">Xem đáp án</button>
+  </div>
+  <div class="expl">
+    <div class="al">✅ Đáp án: C</div>
+    <div class="wi"><b>C đúng:</b> Cơ chế ADE (Antibody-Dependent Enhancement): kháng thể type cũ gắn vào type mới nhưng không trung hòa → phức hợp Ag-Ab xâm nhập đại bạch cầu qua Fc receptor → nhân lên nhiều hơn → viêm quá mức → sốc Dengue.</div>
+    <div class="wi"><b>B sai:</b> Trẻ vẫn có miễn dịch với type cũ; chính kháng thể đó phản tác dụng với type mới.</div>
+    <div class="kp">💡 Dengue lần 2 nặng hơn vì ADE. 4 type DV1–4; miễn dịch lần 1 không bảo vệ chéo đầy đủ.</div>
+  </div>
+</div>
+
+<!-- Q18 -->
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b5">Bloom 5 — Đánh giá</span><span class="badge kho">Khó</span></div>
+  <div class="qtext">Câu 18. So sánh HBV và HCV, nhận định nào SAI?</div>
+  <ul class="opts" data-ans="D">
+    <li data-o="A">A. HBV có vắc-xin hiệu quả; HCV hiện chưa có vắc-xin</li>
+    <li data-o="B">B. HCV có tỷ lệ chuyển mãn tính cao hơn HBV ở người lớn (80% vs 5–10%)</li>
+    <li data-o="C">C. Cả HBV và HCV đều là nguyên nhân gây ung thư tế bào gan (HCC)</li>
+    <li data-o="D">D. Trẻ sơ sinh nhiễm HBV từ mẹ có 90% chuyển mãn — tỷ lệ này tương đương với HCV lây mẹ-con</li>
+  </ul>
+  <div class="btn-row">
+    <button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button>
+    <button class="btn brev" onclick="rev(this)">Xem đáp án</button>
+  </div>
+  <div class="expl">
+    <div class="al">✅ Đáp án: D</div>
+    <div class="wi"><b>D sai:</b> 90% mãn tính là đặc trưng riêng của HBV lây từ mẹ sang con sơ sinh. HCV lây mẹ-con không có tỷ lệ tương tự cao như vậy (~5%). Đây là lý do HBIG + vắc-xin HBV trong 24h đầu là bắt buộc với sơ sinh từ mẹ HBsAg(+).</div>
+    <div class="wi"><b>A, B, C đúng</b> — Đây là các đặc điểm chính xác của HBV và HCV.</div>
+    <div class="kp">💡 HBV sơ sinh từ mẹ = 90% mãn tính → HBIG + vắc-xin ngay 24h. HCV điều trị khỏi ~95% bằng DAAs.</div>
+  </div>
+</div>
+
+<!-- Q19 -->
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b4">Bloom 4 — Phân tích</span><span class="badge kho">Khó</span></div>
+  <div class="qtext">Câu 19. Bệnh nhân HIV với CD4 = 150/μL, sốt 39°C, ho đàm, X-quang phổi mờ đục. Nhiễm trùng cơ hội hàng đầu cần nghĩ đến?</div>
+  <div class="clinical"><strong>[Lâm sàng]</strong> HIV | CD4 = 150/μL | Sốt + ho đàm | X-quang: mờ đục phổi</div>
+  <ul class="opts" data-ans="A">
+    <li data-o="A">A. Lao phổi (Mycobacterium tuberculosis)</li>
+    <li data-o="B">B. Viêm phổi do Herpes simplex</li>
+    <li data-o="C">C. Viêm phổi do S. aureus bệnh viện</li>
+    <li data-o="D">D. Viêm gan B tái hoạt động</li>
+  </ul>
+  <div class="btn-row">
+    <button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button>
+    <button class="btn brev" onclick="rev(this)">Xem đáp án</button>
+  </div>
+  <div class="expl">
+    <div class="al">✅ Đáp án: A</div>
+    <div class="wi"><b>A đúng:</b> Lao là NTCH phổ biến nhất ở HIV/AIDS tại Việt Nam. CD4 &lt; 200/μL = nguy cơ cao lao tái hoạt. X-quang phổi mờ + sốt + ho → loại trừ lao đầu tiên.</div>
+    <div class="wi"><b>B sai:</b> Herpes ít gây viêm phổi. <b>D sai:</b> HBV không biểu hiện bằng X-quang phổi.</div>
+    <div class="kp">💡 HIV + sốt + ho + X-quang phổi bất thường → nghĩ lao TRƯỚC TIÊN. Tầm soát lao khi chẩn đoán HIV.</div>
+  </div>
+</div>
+
+<!-- Q20 -->
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b5">Bloom 5 — Đánh giá</span><span class="badge kho">Khó</span></div>
+  <div class="qtext">Câu 20. Trẻ 10 tuổi bị chó nhà (tiêm phòng đầy đủ, không dấu hiệu dại) cắn nhẹ vào tay. Trẻ đã tiêm vắc-xin dại 1 năm trước. Xử lý đúng nhất?</div>
+  <div class="clinical"><strong>[Lâm sàng]</strong> Trẻ 10 tuổi | Chó nhà + tiêm phòng + không dấu hiệu dại | Vết cắn nhỏ | Trẻ đã tiêm vắc-xin dại 1 năm trước</div>
+  <ul class="opts" data-ans="B">
+    <li data-o="A">A. Tiêm ngay vắc-xin + huyết thanh kháng dại vì nguy cơ cao</li>
+    <li data-o="B">B. Rửa vết thương kỹ bằng xà phòng + theo dõi chó 10 ngày + tiêm nhắc nếu chó có bất thường</li>
+    <li data-o="C">C. Không cần xử lý gì vì chó đã tiêm phòng</li>
+    <li data-o="D">D. Tiêm huyết thanh kháng dại (RIG) ngay lập tức</li>
+  </ul>
+  <div class="btn-row">
+    <button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button>
+    <button class="btn brev" onclick="rev(this)">Xem đáp án</button>
+  </div>
+  <div class="expl">
+    <div class="al">✅ Đáp án: B</div>
+    <div class="wi"><b>B đúng:</b> Nguy cơ thấp (chó nhà, tiêm phòng, không dấu hiệu dại). Rửa xà phòng ngay (virus dại nhạy với xà phòng). Theo dõi chó 10 ngày — chó vẫn khỏe = xác nhận không dại. Trẻ đã có miễn dịch → chỉ cần tiêm nhắc nếu cần.</div>
+    <div class="wi"><b>A sai:</b> Không cần RIG trong ca nguy cơ thấp + đã tiêm phòng. <b>C sai:</b> Vẫn phải rửa vết thương.</div>
+    <div class="kp">💡 Dại: rửa xà phòng 20% ngay = bước 1 bắt buộc. Theo dõi chó 10 ngày = quy tắc vàng.</div>
+  </div>
+</div>
+
+<!-- ============ MCQ BỔ SUNG 21-35 ============ -->
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b1">Bloom 1 — Nhớ</span><span class="badge de">Dễ</span></div>
+  <div class="qtext">Câu 21. Pili giới tính (sex pili) ở vi khuẩn có chức năng chính là?</div>
+  <ul class="opts" data-ans="B">
+    <li data-o="A">A. Giúp vi khuẩn di chuyển</li>
+    <li data-o="B">B. Truyền plasmid mang gen kháng thuốc qua tiếp hợp (conjugation)</li>
+    <li data-o="C">C. Bám dính vào tế bào chủ</li>
+    <li data-o="D">D. Bảo vệ vi khuẩn khỏi thực bào</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: B</div><div class="wi">Pili giới tính (F pili) là cầu nối giữa tế bào cho (F+) và tế bào nhận (F−), cho phép chuyển plasmid qua tiếp hợp — cơ chế lan truyền kháng kháng sinh quan trọng nhất. Pili thông thường (fimbriae) mới có chức năng bám dính (C).</div><div class="kp">💡 Sex pili = conjugation = lan truyền kháng thuốc theo chiều ngang (horizontal gene transfer)</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b1">Bloom 1 — Nhớ</span><span class="badge de">Dễ</span></div>
+  <div class="qtext">Câu 22. Autoclave tiệt khuẩn ở điều kiện nào?</div>
+  <ul class="opts" data-ans="C">
+    <li data-o="A">A. 100°C, áp suất thường, 30 phút</li>
+    <li data-o="B">B. 120°C, áp suất thường, 15 phút</li>
+    <li data-o="C">C. 121°C, 1 atm thêm (15 psi), 15–20 phút</li>
+    <li data-o="D">D. 160°C, áp suất thường, 60 phút</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: C</div><div class="wi">Autoclave dùng hơi nước có áp suất: 121°C, 15 psi, 15–20 phút — đủ diệt bào tử vi khuẩn. 100°C không diệt bào tử. 160°C là nhiệt khô (lò sấy). Autoclave là tiêu chuẩn vàng tiệt khuẩn dụng cụ y tế.</div><div class="kp">💡 Autoclave: 121°C / 15 psi / 15-20 min — nhớ cả 3 thông số</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b2">Bloom 2 — Hiểu</span><span class="badge de">Dễ</span></div>
+  <div class="qtext">Câu 23. Nang (capsule) của vi khuẩn giúp vi khuẩn tránh cơ chế bảo vệ nào của vật chủ chủ yếu?</div>
+  <ul class="opts" data-ans="A">
+    <li data-o="A">A. Thực bào (phagocytosis) bởi đại thực bào và bạch cầu đa nhân</li>
+    <li data-o="B">B. Hệ thống bổ thể (complement)</li>
+    <li data-o="C">C. Kháng thể trung hòa (neutralizing antibody)</li>
+    <li data-o="D">D. Tế bào NK (Natural Killer)</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: A</div><div class="wi">Nang polysaccharide bao quanh vi khuẩn che dấu thụ thể bề mặt, ngăn opsonin hóa và thực bào. Đây là yếu tố độc lực chính của S. pneumoniae, Klebsiella, H. influenzae type b. Vi khuẩn có nang rất khó bị tiêu diệt bởi đại thực bào khi chưa có kháng thể đặc hiệu.</div><div class="kp">💡 Capsule = chống thực bào → vắc-xin polysaccharide kích thích kháng thể opsonin hóa</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b2">Bloom 2 — Hiểu</span><span class="badge tb">Trung bình</span></div>
+  <div class="qtext">Câu 24. Mycobacterium tuberculosis có thành phần đặc biệt nào trong thành tế bào giúp nó tồn tại trong đại thực bào?</div>
+  <ul class="opts" data-ans="D">
+    <li data-o="A">A. Peptidoglycan dày như vi khuẩn Gram dương</li>
+    <li data-o="B">B. Lipopolysaccharide (LPS) như vi khuẩn Gram âm</li>
+    <li data-o="C">C. Nang polysaccharide</li>
+    <li data-o="D">D. Mycolic acid và cord factor (trehalose dimycolate)</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: D</div><div class="wi">M.tb có lớp mycolic acid rất dày → không bắt màu Gram (kháng cồn-acid), cần nhuộm Ziehl-Neelsen. Cord factor (trehalose dimycolate) ức chế phagosome-lysosome fusion, giúp vi khuẩn sống sót trong đại thực bào — cơ chế chính của lao tiềm ẩn.</div><div class="kp">💡 Mycolic acid → kháng acid (AFB) + cord factor → ức chế fusion phagolysosome</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b1">Bloom 1 — Nhớ</span><span class="badge tb">Trung bình</span></div>
+  <div class="qtext">Câu 25. Khoang periplasm ở vi khuẩn Gram âm có chứa enzyme nào quan trọng về kháng kháng sinh?</div>
+  <ul class="opts" data-ans="B">
+    <li data-o="A">A. Hyaluronidase</li>
+    <li data-o="B">B. Beta-lactamase</li>
+    <li data-o="C">C. Coagulase</li>
+    <li data-o="D">D. Neuraminidase</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: B</div><div class="wi">Khoang periplasm (giữa màng trong và màng ngoài của Gram âm) là nơi tiết beta-lactamase phá hủy vòng beta-lactam. Ở Gram dương, beta-lactamase tiết ra ngoài. Vị trí trong periplasm hiệu quả hơn vì phá thuốc trước khi vào tế bào.</div><div class="kp">💡 Periplasm Gram âm = "bẫy" beta-lactamase tiêu diệt kháng sinh trước khi đến đích</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b3">Bloom 3 — Áp dụng</span><span class="badge kho">Khó</span></div>
+  <div class="qtext">Câu 26. Bệnh nhân đặt catheter tĩnh mạch trung tâm 10 ngày xuất hiện sốt, cấy máu mọc Staphylococcus epidermidis. Tại sao vi khuẩn này khó điều trị?</div>
+  <ul class="opts" data-ans="C">
+    <li data-o="A">A. S. epidermidis tự nhiên kháng mọi kháng sinh</li>
+    <li data-o="B">B. Không thể sử dụng vancomycin cho S. epidermidis</li>
+    <li data-o="C">C. Biofilm trên catheter bảo vệ vi khuẩn khỏi kháng sinh và hệ miễn dịch</li>
+    <li data-o="D">D. S. epidermidis tiết ngoại độc tố phá hủy kháng sinh</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: C</div><div class="wi">S. epidermidis (CoNS) là nguyên nhân hàng đầu nhiễm khuẩn liên quan catheter vì khả năng tạo biofilm. Biofilm là lớp màng polysaccharide bảo vệ vi khuẩn: giảm thấm kháng sinh, kháng thực bào. Điều trị cần rút bỏ catheter + vancomycin.</div><div class="kp">💡 Biofilm = vi khuẩn trong "pháo đài" → cần lấy bỏ vật liệu nhân tạo để điều trị triệt để</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b2">Bloom 2 — Hiểu</span><span class="badge de">Dễ</span></div>
+  <div class="qtext">Câu 27. Kháng sinh aminoglycoside (gentamicin) tác động vào tiểu đơn vị nào của ribosome vi khuẩn?</div>
+  <ul class="opts" data-ans="A">
+    <li data-o="A">A. Tiểu đơn vị 30S của ribosome 70S vi khuẩn</li>
+    <li data-o="B">B. Tiểu đơn vị 60S của ribosome 80S người</li>
+    <li data-o="C">C. Tiểu đơn vị 50S vi khuẩn</li>
+    <li data-o="D">D. Cả 30S và 50S như nhau</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: A</div><div class="wi">Vi khuẩn có ribosome 70S (30S+50S), người có 80S (40S+60S). Aminoglycoside và tetracycline gắn 30S vi khuẩn; macrolide, chloramphenicol, clindamycin gắn 50S — đây là cơ sở tính chọn lọc của kháng sinh. 30S inhibitor: aminoglycoside, tetracycline; 50S inhibitor: macrolide, chloramphenicol, clindamycin.</div><div class="kp">💡 30S: aminoglycoside + tetracycline | 50S: macrolide + chloramphenicol + clindamycin</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b2">Bloom 2 — Hiểu</span><span class="badge tb">Trung bình</span></div>
+  <div class="qtext">Câu 28. Bào tử (endospore) vi khuẩn KHÔNG bị tiêu diệt bởi phương pháp nào trong các phương pháp sau?</div>
+  <ul class="opts" data-ans="B">
+    <li data-o="A">A. Autoclave 121°C/15 phút</li>
+    <li data-o="B">B. Đun sôi 100°C trong 30 phút</li>
+    <li data-o="C">C. Hydrogen peroxide nồng độ cao</li>
+    <li data-o="D">D. Tia gamma liều cao</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: B</div><div class="wi">Bào tử rất bền nhiệt do lớp vỏ calcium dipicolinate — đun sôi 100°C không đủ diệt dù kéo dài. C. botulinum: độc tố bị phá 80°C/10 phút nhưng bào tử chịu được sôi hàng giờ. Chỉ autoclave (hơi nước có áp suất, 121°C) mới tin cậy diệt bào tử.</div><div class="kp">💡 Bào tử sống qua 100°C sôi → thực phẩm đóng hộp cần autoclave, không chỉ nấu chín</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b3">Bloom 3 — Áp dụng</span><span class="badge kho">Khó</span></div>
+  <div class="qtext">Câu 29. E. coli từ bệnh nhân UTI kháng đồng thời ampicillin và trimethoprim-sulfamethoxazole. Cơ chế phân tử khả năng nhất là?</div>
+  <ul class="opts" data-ans="D">
+    <li data-o="A">A. Đột biến gen beta-lactamase trên nhiễm sắc thể</li>
+    <li data-o="B">B. Vi khuẩn đã tiếp xúc cả hai loại kháng sinh trước đó</li>
+    <li data-o="C">C. Mất porin màng ngoài tế bào</li>
+    <li data-o="D">D. Plasmid R (resistance plasmid) mang nhiều gen kháng thuốc cùng lúc</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: D</div><div class="wi">Plasmid R (resistance) mang nhiều gen kháng thuốc khác nhau, có thể đồng thời kháng ampicillin (beta-lactamase) và TMP-SMX (dihydropteroate synthase thay đổi). Plasmid R lan qua conjugation — cơ chế lan kháng thuốc nguy hiểm nhất trong cộng đồng bệnh viện.</div><div class="kp">💡 Kháng đa thuốc thường = plasmid R, không phải đột biến nhiều lần độc lập trên nhiễm sắc thể</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b4">Bloom 4 — Phân tích</span><span class="badge kho">Khó</span></div>
+  <div class="qtext">Câu 30. Kính hiển vi thấy tế bào tím đậm, hình cầu, xếp chùm nho. Thành phần nào của vi khuẩn này quyết định màu tím khi nhuộm Gram?</div>
+  <ul class="opts" data-ans="A">
+    <li data-o="A">A. Peptidoglycan dày (20–80 nm) giữ phức hợp crystal violet-iodine khi khử màu bằng cồn</li>
+    <li data-o="B">B. Màng ngoài (outer membrane) ngăn cồn thấm qua</li>
+    <li data-o="C">C. Nang polysaccharide bao quanh tế bào</li>
+    <li data-o="D">D. Lipopolysaccharide trong thành tế bào</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: A</div><div class="wi">Gram dương có peptidoglycan dày → khi khử màu bằng cồn, peptidoglycan co lại, giữ crystal violet-iodine bên trong → tím. Gram âm có peptidoglycan mỏng + màng ngoài LPS → cồn hòa tan màng ngoài → mất màu → bắt đỏ safranin. Hình cầu/chùm nho gợi ý Staphylococcus.</div><div class="kp">💡 Gram+: peptidoglycan dày giữ màu tím | Gram−: peptidoglycan mỏng + LPS bị phá → đỏ</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b2">Bloom 2 — Hiểu</span><span class="badge de">Dễ</span></div>
+  <div class="qtext">Câu 31. Điểm khác biệt chính giữa vi khuẩn ngoại sinh (exogenous) và nội sinh (endogenous) trong gây bệnh?</div>
+  <ul class="opts" data-ans="B">
+    <li data-o="A">A. Vi khuẩn nội sinh luôn gây bệnh nặng hơn ngoại sinh</li>
+    <li data-o="B">B. Vi khuẩn nội sinh là vi sinh bình thường của cơ thể trở nên gây bệnh khi sức đề kháng giảm; ngoại sinh xâm nhập từ môi trường</li>
+    <li data-o="C">C. Vi khuẩn nội sinh không thể kháng kháng sinh</li>
+    <li data-o="D">D. Vi khuẩn ngoại sinh chỉ lây qua đường hô hấp</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: B</div><div class="wi">Nhiễm khuẩn nội sinh: E.coli đường ruột, S.epidermidis da, Candida niêm mạc gây bệnh khi hàng rào bị phá (phẫu thuật, giảm miễn dịch). Ngoại sinh: M.tuberculosis, Salmonella, virus từ môi trường. Nhiễm khuẩn hậu phẫu thường nội sinh; lao, thương hàn thường ngoại sinh.</div><div class="kp">💡 Hậu phẫu = thường nội sinh | Lao, thương hàn = ngoại sinh</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b3">Bloom 3 — Áp dụng</span><span class="badge tb">Trung bình</span></div>
+  <div class="qtext">Câu 32. Bệnh nhân dùng kháng sinh phổ rộng dài ngày bị tiêu chảy do Clostridioides difficile. Cơ chế chính giải thích nguy cơ này?</div>
+  <ul class="opts" data-ans="C">
+    <li data-o="A">A. Kháng sinh kích hoạt trực tiếp C. difficile tiết độc tố</li>
+    <li data-o="B">B. Kháng sinh gây suy giảm miễn dịch niêm mạc ruột</li>
+    <li data-o="C">C. Kháng sinh tiêu diệt hệ vi sinh bình thường, mất tác dụng cạnh tranh, C. difficile bào tử nhân lên</li>
+    <li data-o="D">D. Kháng sinh làm tăng tính thấm niêm mạc ruột</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: C</div><div class="wi">Hệ vi sinh ruột bình thường ức chế C. difficile qua cạnh tranh dinh dưỡng (colonization resistance). Kháng sinh phổ rộng (clindamycin, fluoroquinolone, cephalosporin) tiêu diệt vi khuẩn bình thường → C. difficile bào tử nhân lên, tiết toxin A/B → viêm đại tràng giả mạc.</div><div class="kp">💡 C. difficile = mất microbiome → điều trị: metronidazole/vancomycin PO + cân nhắc ghép phân (FMT)</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b4">Bloom 4 — Phân tích</span><span class="badge kho">Khó</span></div>
+  <div class="qtext">Câu 33. Bệnh nhân HIV có CD4 < 50/mm³ nhập viện vì giảm thị lực. Soi đáy mắt thấy tổn thương trắng dọc mạch máu võng mạc, xuất huyết. Tác nhân cơ hội khả năng nhất?</div>
+  <ul class="opts" data-ans="D">
+    <li data-o="A">A. Toxoplasma gondii</li>
+    <li data-o="B">B. Pneumocystis jirovecii</li>
+    <li data-o="C">C. Cryptococcus neoformans</li>
+    <li data-o="D">D. Cytomegalovirus (CMV)</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: D</div><div class="wi">CMV retinitis thường gặp khi CD4 < 50/mm³, biểu hiện tổn thương trắng + xuất huyết dọc mạch máu (pizza pie). Toxoplasma: viêm não, ring-enhancing lesion não (A). PCP: viêm phổi (B). Cryptococcus: viêm màng não CD4 < 100 (C). Điều trị: ganciclovir IV.</div><div class="kp">💡 CD4 < 50 + giảm thị lực + tổn thương pizza pie võng mạc = CMV retinitis → ganciclovir</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b2">Bloom 2 — Hiểu</span><span class="badge tb">Trung bình</span></div>
+  <div class="qtext">Câu 34. Hyaluronidase được gọi là "spreading factor" (yếu tố lan rộng) vì?</div>
+  <ul class="opts" data-ans="B">
+    <li data-o="A">A. Nó phá hủy màng tế bào</li>
+    <li data-o="B">B. Nó phân giải hyaluronic acid trong mô liên kết, giúp vi khuẩn lan rộng trong mô</li>
+    <li data-o="C">C. Nó ức chế hệ thống miễn dịch lan rộng khắp cơ thể</li>
+    <li data-o="D">D. Nó làm lan rộng viêm toàn thân</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: B</div><div class="wi">Hyaluronic acid là "xi măng" giữ tế bào mô liên kết. Hyaluronidase (do S. aureus, Streptococcus, Clostridium tiết) phân giải → phá vỡ hàng rào mô → vi khuẩn lan vào mô sâu. Giải thích tại sao nhiễm Streptococcus nhóm A lan nhanh (viêm cân mạc hoại tử).</div><div class="kp">💡 Hyaluronidase = "dao mở đường" cho vi khuẩn xâm nhập mô sâu</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b3">Bloom 3 — Áp dụng</span><span class="badge tb">Trung bình</span></div>
+  <div class="qtext">Câu 35. Người lành mang trùng (healthy carrier) nguy hiểm về dịch tễ vì lý do chính nào?</div>
+  <ul class="opts" data-ans="A">
+    <li data-o="A">A. Họ bài thải mầm bệnh nhưng không có triệu chứng nên không tự cách ly, tiếp tục lây cho người khác</li>
+    <li data-o="B">B. Họ bài thải mầm bệnh với nồng độ cao hơn người bệnh</li>
+    <li data-o="C">C. Hệ miễn dịch của họ không hoạt động hiệu quả</li>
+    <li data-o="D">D. Mầm bệnh ở người lành mang trùng có độc lực cao hơn</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: A</div><div class="wi">Người lành mang trùng (mang S. typhi sau thương hàn, HBV mãn tính, não mô cầu hầu họng) tiếp tục sinh hoạt bình thường, tiếp xúc nhiều người, bài thải mầm bệnh mà không biết. Ví dụ kinh điển: "Typhoid Mary" (Mary Mallon) — đầu bếp lành mang trùng S. typhi, lây cho ~50 người.</div><div class="kp">💡 Typhoid Mary = người lành mang S. typhi trong túi mật, bài thải qua phân suốt đời</div></div>
+</div>
+<!-- ============ MCQ BỔ SUNG 36-50 ============ -->
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b2">Bloom 2 — Hiểu</span><span class="badge tb">Trung bình</span></div>
+  <div class="qtext">Câu 36. Streptococcus pyogenes (nhóm A) lây chủ yếu qua đường nào?</div>
+  <ul class="opts" data-ans="B">
+    <li data-o="A">A. Đường tiêu hóa (phân-miệng)</li>
+    <li data-o="B">B. Đường hô hấp (giọt bắn) và tiếp xúc trực tiếp da</li>
+    <li data-o="C">C. Đường tình dục</li>
+    <li data-o="D">D. Véc-tơ muỗi</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: B</div><div class="wi">Strep A lây qua: (1) Hô hấp — giọt bắn gây viêm họng, viêm amidan; (2) Tiếp xúc da — gây chốc lở (impetigo). Viêm họng Strep A → biến chứng sốt thấp khớp (nếu không điều trị penicillin). Chốc lở → biến chứng viêm cầu thận sau liên cầu. Không lây qua phân-miệng hay muỗi.</div><div class="kp">💡 Strep A họng → sốt thấp khớp | Strep A da → viêm cầu thận hậu liên cầu</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b4">Bloom 4 — Phân tích</span><span class="badge kho">Khó</span></div>
+  <div class="qtext">Câu 37. Trẻ 8 tuổi bị viêm họng Streptococcus pyogenes không được điều trị. 3 tuần sau xuất hiện đau khớp di chuyển, sốt, tiếng thổi tim mới. Cơ chế bệnh sinh của biến chứng tim?</div>
+  <ul class="opts" data-ans="C">
+    <li data-o="A">A. Vi khuẩn xâm nhập trực tiếp vào cơ tim</li>
+    <li data-o="B">B. Độc tố Streptococcus phá hủy van tim</li>
+    <li data-o="C">C. Phân tử M protein của Strep A kháng nguyên tương đồng (molecular mimicry) với protein tim, kháng thể tấn công tim</li>
+    <li data-o="D">D. Bổ thể hoạt hóa phá hủy nội mô tim</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: C</div><div class="wi">Sốt thấp khớp: M protein của Strep A giống protein sarcolemma tim (molecular mimicry) → kháng thể chống Strep tấn công nhầm mô tim → viêm tim thấp (rheumatic carditis). Đây là cơ chế tự miễn, không phải vi khuẩn xâm nhập tim. Điều trị viêm họng bằng penicillin trong 10 ngày phòng ngừa biến chứng này.</div><div class="kp">💡 Sốt thấp khớp = molecular mimicry (M protein ~ tim) → penicillin 10 ngày = phòng ngừa</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b2">Bloom 2 — Hiểu</span><span class="badge tb">Trung bình</span></div>
+  <div class="qtext">Câu 38. TSST-1 (Toxic Shock Syndrome Toxin-1) của Staphylococcus aureus gây hội chứng sốc nhiễm độc bằng cơ chế nào?</div>
+  <ul class="opts" data-ans="D">
+    <li data-o="A">A. Nội độc tố gắn thụ thể TLR4 gây sốc nhiễm khuẩn kinh điển</li>
+    <li data-o="B">B. Phá hủy màng tế bào nội mô mạch máu</li>
+    <li data-o="C">C. Ức chế tổng hợp protein của tế bào</li>
+    <li data-o="D">D. Superantigen: kích hoạt hàng loạt tế bào T (đến 20% Tcell) → bão cytokine</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: D</div><div class="wi">TSST-1 là superantigen: gắn đồng thời MHC class II và TCR không theo đặc hiệu kháng nguyên → kích hoạt tới 20% tế bào T (so với 0.01% trong phản ứng miễn dịch bình thường) → giải phóng ồ ạt TNF, IL-1, IL-6 → bão cytokine → sốc, suy đa cơ quan. Exotoxin pyrogenic của Strep A cũng là superantigen.</div><div class="kp">💡 Superantigen = không cần xử lý kháng nguyên, kích hoạt T cell ồ ạt → bão cytokine</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b1">Bloom 1 — Nhớ</span><span class="badge de">Dễ</span></div>
+  <div class="qtext">Câu 39. Vắc-xin phế cầu 23 (Pneumovax 23) được khuyến cáo cho đối tượng nào?</div>
+  <ul class="opts" data-ans="A">
+    <li data-o="A">A. Người ≥65 tuổi, người cắt lách, bệnh nhân hồng cầu hình liềm, suy giảm miễn dịch</li>
+    <li data-o="B">B. Trẻ em dưới 2 tuổi (lịch tiêm chủng mở rộng)</li>
+    <li data-o="C">C. Phụ nữ mang thai 3 tháng đầu</li>
+    <li data-o="D">D. Tất cả người trưởng thành mỗi năm</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: A</div><div class="wi">Pneumovax 23 (polysaccharide, T-independent) bảo vệ chống 23 typ phế cầu. Chỉ định: người ≥65 tuổi, cắt lách (mất lọc vi khuẩn có nang), hồng cầu liềm (chức năng lách kém), HIV, ghép tạng. Trẻ < 2 tuổi dùng PCV13 (conjugate vaccine) vì đáp ứng miễn dịch T-independent chưa hoàn thiện trước 2 tuổi.</div><div class="kp">💡 Pneumovax 23 (polysaccharide) cho người lớn nguy cơ cao | PCV13 (conjugate) cho trẻ nhỏ</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b3">Bloom 3 — Áp dụng</span><span class="badge tb">Trung bình</span></div>
+  <div class="qtext">Câu 40. Phụ nữ 25 tuổi tiết dịch âm đạo vàng xanh, không đau. Nhuộm Gram dịch cổ tử cung thấy song cầu khuẩn Gram âm trong bạch cầu đa nhân. Chẩn đoán và điều trị?</div>
+  <ul class="opts" data-ans="C">
+    <li data-o="A">A. Viêm âm đạo do Trichomonas → metronidazole</li>
+    <li data-o="B">B. Viêm âm đạo do vi khuẩn (BV) → clindamycin</li>
+    <li data-o="C">C. Lậu (Neisseria gonorrhoeae) → ceftriaxone IM + azithromycin (đồng điều trị Chlamydia)</li>
+    <li data-o="D">D. Viêm cổ tử cung do Chlamydia → doxycycline đơn trị</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: C</div><div class="wi">Song cầu khuẩn Gram âm trong bạch cầu đa nhân = N. gonorrhoeae (đặc trưng nhất). Lậu ở nữ thường không triệu chứng hoặc tiết dịch → dễ bỏ sót → biến chứng viêm vùng chậu (PID), vô sinh. Luôn đồng điều trị Chlamydia (hay đồng nhiễm). Hiện ceftriaxone 500mg IM + azithromycin 1g PO đơn liều.</div><div class="kp">💡 Lậu ở nữ: song cầu trong BCĐN → ceftriaxone + azithromycin (đồng trị Chlamydia)</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b2">Bloom 2 — Hiểu</span><span class="badge tb">Trung bình</span></div>
+  <div class="qtext">Câu 41. Màng giả (pseudomembrane) trong bạch hầu được hình thành như thế nào?</div>
+  <ul class="opts" data-ans="B">
+    <li data-o="A">A. Vi khuẩn nhân lên tạo lớp dày phủ lên niêm mạc</li>
+    <li data-o="B">B. Độc tố bạch hầu gây hoại tử biểu mô + fibrin + bạch cầu tạo màng xám dai, khó bóc</li>
+    <li data-o="C">C. Phản ứng viêm tạo mủ đặc trên niêm mạc</li>
+    <li data-o="D">D. Bạch cầu tụ tập tạo lớp bảo vệ</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: B</div><div class="wi">Màng giả bạch hầu: độc tố DT ức chế EF-2 → ngừng tổng hợp protein → hoại tử tế bào biểu mô → fibrin + tế bào hoại tử + bạch cầu tạo màng xám-trắng dai, bám chặt. Khi bóc màng gây chảy máu — dấu hiệu đặc trưng. Màng có thể lan vào thanh quản gây bít tắc đường thở → ngạt thở.</div><div class="kp">💡 Màng giả bạch hầu = xám, dai, khó bóc, bóc gây chảy máu → nguy cơ tắc đường thở</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b1">Bloom 1 — Nhớ</span><span class="badge de">Dễ</span></div>
+  <div class="qtext">Câu 42. Theo lịch tiêm chủng mở rộng Việt Nam, vắc-xin bạch hầu-ho gà-uốn ván (DPT) được tiêm cho trẻ vào các thời điểm nào?</div>
+  <ul class="opts" data-ans="A">
+    <li data-o="A">A. 2 tháng, 3 tháng, 4 tháng (Quinvaxem/ComBE Five) + nhắc lại 18 tháng</li>
+    <li data-o="B">B. 6 tháng, 12 tháng, 18 tháng</li>
+    <li data-o="C">C. Sơ sinh, 1 tháng, 6 tháng</li>
+    <li data-o="D">D. 1 tuổi, 2 tuổi, 5 tuổi</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: A</div><div class="wi">Lịch TCMR Việt Nam: DPT (trong Quinvaxem/ComBE Five) tiêm lúc 2 tháng, 3 tháng, 4 tháng + nhắc lại 18 tháng. Phụ nữ mang thai cũng tiêm Td (uốn ván-bạch hầu) để bảo vệ thai nhi qua kháng thể mẹ. Nhân viên y tế cần nhắc lại Td mỗi 10 năm.</div><div class="kp">💡 DPT: 2-3-4 tháng + nhắc 18 tháng | Phụ nữ mang thai: Td để bảo vệ trẻ sơ sinh</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b3">Bloom 3 — Áp dụng</span><span class="badge tb">Trung bình</span></div>
+  <div class="qtext">Câu 43. Trẻ 7 tuổi sốt 38.5°C, đau họng 2 ngày, không ho, hạch cổ trước sưng. Tiêu chí Centor nào giúp quyết định cần test nhanh Strep A?</div>
+  <ul class="opts" data-ans="D">
+    <li data-o="A">A. Tuổi, sốt, thời gian bệnh, địa dư</li>
+    <li data-o="B">B. Mức độ đau họng, số bạch cầu máu</li>
+    <li data-o="C">C. Giới tính, tiền sử dị ứng, lịch tiêm chủng</li>
+    <li data-o="D">D. Sốt >38°C, không ho, hạch cổ sưng, xuất tiết amidan</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: D</div><div class="wi">Centor criteria (4 tiêu chí): (1) Sốt >38°C, (2) Không ho, (3) Hạch cổ trước sưng đau, (4) Xuất tiết/phù nề amidan. Mỗi tiêu chí 1 điểm. ≥3 điểm: test nhanh kháng nguyên Strep A (RADT) hoặc cấy họng. Trẻ em 3-14 tuổi thêm 1 điểm. Điểm cao → nguy cơ Strep A cao → điều trị penicillin 10 ngày.</div><div class="kp">💡 Centor: sốt + không ho + hạch cổ + xuất tiết amidan → ≥3: làm test Strep</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b4">Bloom 4 — Phân tích</span><span class="badge kho">Khó</span></div>
+  <div class="qtext">Câu 44. Bệnh nhân 70 tuổi viêm phổi do phế cầu, điều trị amoxicillin 5 ngày không đáp ứng. Kháng sinh đồ MIC penicillin = 4 µg/mL. Kháng thuốc do cơ chế nào?</div>
+  <ul class="opts" data-ans="A">
+    <li data-o="A">A. PBP (Penicillin Binding Protein) thay đổi cấu trúc, giảm ái lực với penicillin</li>
+    <li data-o="B">B. Sản xuất beta-lactamase phá hủy penicillin</li>
+    <li data-o="C">C. Bơm efflux đẩy penicillin ra ngoài tế bào</li>
+    <li data-o="D">D. Mất porin màng ngoài</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: A</div><div class="wi">Phế cầu kháng penicillin (PRSP) chủ yếu qua biến đổi PBP2a, PBP1a, PBP2x — giảm ái lực với beta-lactam. Không phải beta-lactamase (B) — phế cầu không sản xuất beta-lactamase đáng kể. Điều trị PRSP: ceftriaxone liều cao, hoặc levofloxacin, vancomycin (nặng).</div><div class="kp">💡 Phế cầu kháng PNC = PBP thay đổi (không phải beta-lactamase như Staph) → ceftriaxone/levofloxacin</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b4">Bloom 4 — Phân tích</span><span class="badge kho">Khó</span></div>
+  <div class="qtext">Câu 45. Bệnh nhân nhập viện sau phẫu thuật, vết mổ viêm đỏ, cấy mủ mọc S. aureus kháng methicillin (MRSA). Gene kháng thuốc nào chịu trách nhiệm?</div>
+  <ul class="opts" data-ans="B">
+    <li data-o="A">A. Gene blaZ mã hóa beta-lactamase</li>
+    <li data-o="B">B. Gene mecA mã hóa PBP2a có ái lực thấp với tất cả beta-lactam</li>
+    <li data-o="C">C. Gene vanA mã hóa thay đổi thụ thể vancomycin</li>
+    <li data-o="D">D. Gene erm mã hóa methylase rRNA 23S</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: B</div><div class="wi">MRSA: gene mecA (trên SCCmec) mã hóa PBP2a (còn gọi PBP2') — ái lực thấp với tất cả beta-lactam → kháng toàn bộ penicillin, cephalosporin, carbapenem. blaZ (A): beta-lactamase MSSA. vanA (C): Enterococcus kháng vancomycin (VRE). Điều trị MRSA: vancomycin IV, linezolid, daptomycin.</div><div class="kp">💡 MRSA = mecA → PBP2a → kháng MỌI beta-lactam → dùng vancomycin</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b1">Bloom 1 — Nhớ</span><span class="badge de">Dễ</span></div>
+  <div class="qtext">Câu 46. Để chẩn đoán lao phổi bằng kỹ thuật vi sinh, mẫu bệnh phẩm đờm được nhuộm phương pháp nào để tìm trực khuẩn kháng acid-cồn (AFB)?</div>
+  <ul class="opts" data-ans="C">
+    <li data-o="A">A. Nhuộm Gram</li>
+    <li data-o="B">B. Nhuộm xanh methylene</li>
+    <li data-o="C">C. Nhuộm Ziehl-Neelsen (nhuộm kháng acid)</li>
+    <li data-o="D">D. Nhuộm bạc (Silver stain)</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: C</div><div class="wi">Ziehl-Neelsen: nhuộm carbol-fuchsin (đỏ) → hơ nóng → khử màu cồn-HCl → nhuộm nền xanh methylene. M.tb do có mycolic acid kháng khử màu → giữ đỏ (AFB+). Cần 3 mẫu đờm sáng sớm liên tiếp. Nhuộm Gram: M.tb không bắt màu đáng kể (Gram variable). Auramine-rhodamine là nhuộm huỳnh quang nhanh hơn.</div><div class="kp">💡 Ziehl-Neelsen: M.tb đỏ trên nền xanh → "AFB+" | Cần 3 mẫu sáng sớm liên tiếp</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b3">Bloom 3 — Áp dụng</span><span class="badge tb">Trung bình</span></div>
+  <div class="qtext">Câu 47. Mantoux test (tuberculin skin test) dương tính với vết mẩn đỏ cứng (induration) ≥10 mm sau 48–72 giờ. Điều này có nghĩa là?</div>
+  <ul class="opts" data-ans="B">
+    <li data-o="A">A. Bệnh nhân đang bị lao phổi tiến triển</li>
+    <li data-o="B">B. Bệnh nhân đã từng tiếp xúc M.tb (lao tiềm ẩn, lao đã điều trị, hoặc tiêm BCG)</li>
+    <li data-o="C">C. Bệnh nhân miễn dịch với lao, không cần điều trị</li>
+    <li data-o="D">D. Bệnh nhân đang mang vi khuẩn lao trong đờm</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: B</div><div class="wi">Mantoux dương tính = phản ứng mẫn cảm muộn type IV (tế bào T nhớ gặp PPD) → induration. Không phân biệt lao tiềm ẩn, lao đã điều trị, hay tiêm BCG trước đây. Cần chụp X-quang ngực để loại trừ lao tiến triển. IGRA (QuantiFERON) đặc hiệu hơn, không bị ảnh hưởng BCG.</div><div class="kp">💡 Mantoux+ = đã tiếp xúc M.tb (không = đang bệnh). Cần XQ ngực để loại lao tiến triển</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b1">Bloom 1 — Nhớ</span><span class="badge de">Dễ</span></div>
+  <div class="qtext">Câu 48. Phác đồ RIPE điều trị lao phổi mới gồm các thuốc nào trong giai đoạn tấn công (2 tháng đầu)?</div>
+  <ul class="opts" data-ans="A">
+    <li data-o="A">A. Rifampicin (R), Isoniazid (I), Pyrazinamide (P), Ethambutol (E)</li>
+    <li data-o="B">B. Rifampicin, Isoniazid, Penicillin, Erythromycin</li>
+    <li data-o="C">C. Rifampicin, Isoniazid, Ethambutol (không có Pyrazinamide)</li>
+    <li data-o="D">D. Streptomycin, Isoniazid, Pyrazinamide, Ethambutol</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: A</div><div class="wi">Phác đồ lao mới: 2 tháng RIPE (Rifampicin + Isoniazid + Pyrazinamide + Ethambutol) → 4 tháng RI. Tổng 6 tháng. Giai đoạn tấn công 4 thuốc: diệt nhanh vi khuẩn đang nhân chia, đề phòng kháng thuốc nhanh hơn nếu dùng 2 thuốc. INH: viêm thần kinh ngoại vi (bổ sung B6). RIF: nước tiểu đỏ cam, giảm hiệu quả thuốc tránh thai.</div><div class="kp">💡 RIPE 2 tháng → RI 4 tháng = 6 tháng tổng | INH + B6 | RIF → nước tiểu đỏ cam</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b2">Bloom 2 — Hiểu</span><span class="badge tb">Trung bình</span></div>
+  <div class="qtext">Câu 49. MDR-TB (Multi-Drug Resistant TB) được định nghĩa là lao kháng ít nhất?</div>
+  <ul class="opts" data-ans="C">
+    <li data-o="A">A. Kháng Ethambutol và Streptomycin</li>
+    <li data-o="B">B. Kháng tất cả 4 thuốc RIPE</li>
+    <li data-o="C">C. Kháng đồng thời Rifampicin và Isoniazid (2 thuốc hàng 1 quan trọng nhất)</li>
+    <li data-o="D">D. Kháng bất kỳ 1 thuốc hàng 1 nào</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: C</div><div class="wi">WHO định nghĩa MDR-TB: kháng đồng thời Rifampicin + Isoniazid (hai thuốc mạnh nhất hàng 1). XDR-TB (Extensively Drug Resistant): MDR + kháng thêm fluoroquinolone + ít nhất 1 thuốc tiêm hàng 2. Điều trị MDR-TB: 18–24 tháng, dùng thuốc hàng 2 (levofloxacin, bedaquiline, linezolid).</div><div class="kp">💡 MDR-TB = kháng R + I | XDR-TB = MDR + fluoroquinolone + thuốc tiêm hàng 2</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b4">Bloom 4 — Phân tích</span><span class="badge kho">Khó</span></div>
+  <div class="qtext">Câu 50. Bệnh nhân lao phổi mới chẩn đoán. Bác sĩ giải thích lao tiên phát (primary TB) khác lao tái hoạt (reactivation TB) như thế nào về mặt bệnh học?</div>
+  <ul class="opts" data-ans="B">
+    <li data-o="A">A. Lao tiên phát ở người lớn, lao tái hoạt ở trẻ em</li>
+    <li data-o="B">B. Lao tiên phát: nhiễm lần đầu, tổn thương phức hợp Ghon ở thùy giữa/dưới phổi. Lao tái hoạt: vi khuẩn tiềm ẩn trong u hạt tái hoạt, thường ở đỉnh phổi</li>
+    <li data-o="C">C. Lao tiên phát lây nhiễm, lao tái hoạt không lây</li>
+    <li data-o="D">D. Lao tiên phát nặng hơn lao tái hoạt về mặt triệu chứng</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: B</div><div class="wi">Lao tiên phát: nhiễm lần đầu M.tb → phức hợp Ghon (tổn thương nhu mô + hạch rốn phổi) ở thùy giữa/dưới (nơi thông khí tốt nhất). Thường tự giới hạn, vi khuẩn ngủ trong u hạt. Lao tái hoạt (90% lao tiến triển): giảm miễn dịch → M.tb tái hoạt, thường ở đỉnh phổi (phân áp O2 cao, lưu thông bạch huyết kém).</div><div class="kp">💡 Tiên phát = đỉnh phổi (giữa/dưới + Ghon) | Tái hoạt = đỉnh phổi | Cả hai lây nếu AFB+</div></div>
+</div>
+<!-- ============ MCQ BỔ SUNG 51-65 ============ -->
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b2">Bloom 2 — Hiểu</span><span class="badge tb">Trung bình</span></div>
+  <div class="qtext">Câu 51. Bệnh nhân lao tiềm ẩn (LTBI) xét nghiệm IGRA dương tính, X-quang ngực bình thường. Điều trị dự phòng nào được khuyến cáo?</div>
+  <ul class="opts" data-ans="D">
+    <li data-o="A">A. Phác đồ RIPE 6 tháng đầy đủ</li>
+    <li data-o="B">B. Không cần điều trị, chỉ theo dõi</li>
+    <li data-o="C">C. Rifampicin đơn trị 4 tháng hoặc INH+Rifapentine 12 tuần (3HP)</li>
+    <li data-o="D">D. Isoniazid (INH) đơn trị 6–9 tháng HOẶC Rifampicin 4 tháng HOẶC 3HP</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: D</div><div class="wi">WHO khuyến cáo LTBI: INH 6–9 tháng (isoniazid preventive therapy, IPT) là phác đồ cổ điển; Rifampicin 4 tháng hoặc 3HP (INH + rifapentine mỗi tuần x12 tuần) là lựa chọn ngắn hơn, tuân thủ tốt hơn. Mục tiêu: ngăn 5–10% LTBI tiến triển thành lao tiến triển trong đời. Không dùng RIPE đầy đủ (chỉ dùng cho lao tiến triển).</div><div class="kp">💡 LTBI: INH 6-9 tháng, RIF 4 tháng, hoặc 3HP (12 tuần) — không dùng phác đồ 4 thuốc</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b2">Bloom 2 — Hiểu</span><span class="badge tb">Trung bình</span></div>
+  <div class="qtext">Câu 52. Phong lao (tuberculoid leprosy) và phong u (lepromatous leprosy) khác nhau về đáp ứng miễn dịch như thế nào?</div>
+  <ul class="opts" data-ans="A">
+    <li data-o="A">A. Phong lao: miễn dịch tế bào mạnh, ít vi khuẩn, tổn thương khu trú. Phong u: miễn dịch tế bào yếu, nhiều vi khuẩn, tổn thương lan tràn</li>
+    <li data-o="B">B. Phong lao: nhiều vi khuẩn, phong u: ít vi khuẩn</li>
+    <li data-o="C">C. Phong lao: miễn dịch thể dịch mạnh, kháng thể cao</li>
+    <li data-o="D">D. Phong u: miễn dịch tế bào mạnh, kiểm soát vi khuẩn tốt hơn</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: A</div><div class="wi">Phong lao (tuberculoid): Th1 mạnh → đại thực bào hoạt hóa → kiểm soát vi khuẩn → ít tổn thương khu trú (1–5 dát), AFB âm tính hoặc thưa thớt. Phong u (lepromatous): Th2 ưu thế, miễn dịch tế bào yếu → không kiểm soát được vi khuẩn → nhân lên lan tràn → nhiều tổn thương, AFB dương tính mật độ cao, biến dạng.</div><div class="kp">💡 Phong: miễn dịch tế bào tốt = ít bệnh (lao type) | Miễn dịch kém = nhiều bệnh (u type)</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b2">Bloom 2 — Hiểu</span><span class="badge de">Dễ</span></div>
+  <div class="qtext">Câu 53. Vibrio cholerae gây tiêu chảy bằng cơ chế nào?</div>
+  <ul class="opts" data-ans="C">
+    <li data-o="A">A. Xâm nhập vào tế bào biểu mô ruột gây viêm loét</li>
+    <li data-o="B">B. Tiết nội độc tố (LPS) kích thích viêm toàn thân</li>
+    <li data-o="C">C. Cholera toxin kích hoạt adenylyl cyclase → tăng cAMP → tế bào ruột bài tiết Cl⁻ và nước ồ ạt</li>
+    <li data-o="D">D. Phá hủy tế bào biểu mô ruột qua enzyme cytotoxin</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: C</div><div class="wi">Cholera toxin (CT): tiểu đơn vị B gắn GM1 ganglioside, tiểu đơn vị A ADP-ribosyl hóa Gsα → adenylyl cyclase liên tục hoạt động → cAMP tăng → kênh CFTR mở, bơm NHE3 ức chế → bài tiết Cl⁻, Na⁺, H₂O ồ ạt vào lòng ruột → tiêu chảy "nước gạo" lên đến 20L/ngày. Vi khuẩn không xâm nhập niêm mạc (khác Salmonella, Shigella).</div><div class="kp">💡 CT → cAMP tăng → CFTR mở → tiêu chảy nước gạo không xâm nhập. Bù nước là điều trị chủ yếu</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b3">Bloom 3 — Áp dụng</span><span class="badge tb">Trung bình</span></div>
+  <div class="qtext">Câu 54. Bệnh nhân 30 tuổi đi du lịch Ấn Độ về, sốt 39°C kéo dài 2 tuần, mạch chậm tương đối, lách to, bạch cầu bình thường. Vắc-xin nào nên tiêm trước chuyến đi để phòng bệnh này?</div>
+  <ul class="opts" data-ans="B">
+    <li data-o="A">A. Vắc-xin tả (cholera vaccine)</li>
+    <li data-o="B">B. Vắc-xin thương hàn (typhoid vaccine — Ty21a uống hoặc Vi polysaccharide tiêm)</li>
+    <li data-o="C">C. Vắc-xin viêm gan A</li>
+    <li data-o="D">D. Vắc-xin não mô cầu</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: B</div><div class="wi">Lâm sàng gợi thương hàn (Salmonella typhi): sốt kéo dài, mạch chậm tương đối (relative bradycardia), lách to, bạch cầu không tăng. Vắc-xin thương hàn: Ty21a (uống, sống giảm độc, 3 liều cách nhật) hoặc ViCPS (tiêm, polysaccharide, 1 liều). Hiệu quả 50–80%, tiêm trước 2 tuần. Không thay thế vệ sinh thực phẩm và nước.</div><div class="kp">💡 Thương hàn: sốt + mạch chậm tương đối + lách to → vắc-xin typhoid trước du lịch vùng dịch</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b4">Bloom 4 — Phân tích</span><span class="badge kho">Khó</span></div>
+  <div class="qtext">Câu 55. Bệnh nhân thương hàn tuần 3 đột ngột đau bụng dữ dội, bụng cứng như gỗ. X-quang bụng đứng thấy liềm hơi dưới cơ hoành. Biến chứng nào xảy ra?</div>
+  <ul class="opts" data-ans="D">
+    <li data-o="A">A. Xuất huyết tiêu hóa</li>
+    <li data-o="B">B. Viêm túi mật</li>
+    <li data-o="C">C. Viêm màng não</li>
+    <li data-o="D">D. Thủng ruột (ileum terminal)</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: D</div><div class="wi">Tuần 3 thương hàn: S. typhi xâm nhập mảng Peyer (ileum cuối) → viêm hoại tử → thủng ruột → viêm phúc mạc. Dấu hiệu: đau bụng đột ngột, bụng cứng, liềm hơi dưới cơ hoành (hơi tự do trong ổ bụng) → phẫu thuật cấp cứu. Là biến chứng nguy hiểm nhất (tỷ lệ tử vong cao). Xuất huyết tiêu hóa cũng tuần 3 nhưng không có liềm hơi.</div><div class="kp">💡 Thương hàn tuần 3 + liềm hơi + bụng cứng = thủng ruột → mổ cấp cứu</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b2">Bloom 2 — Hiểu</span><span class="badge de">Dễ</span></div>
+  <div class="qtext">Câu 56. Shigella gây hội chứng lỵ nặng với liều nhiễm rất thấp (~10–200 vi khuẩn). Điều này phản ánh đặc điểm nào của Shigella?</div>
+  <ul class="opts" data-ans="A">
+    <li data-o="A">A. Shigella rất bền trong pH dạ dày và xâm nhập biểu mô đại tràng trực tiếp gây viêm loét</li>
+    <li data-o="B">B. Shigella tiết độc tố chịu nhiệt gây tiêu chảy nước</li>
+    <li data-o="C">C. Shigella sống lâu trong môi trường hơn các vi khuẩn đường ruột khác</li>
+    <li data-o="D">D. Shigella lây qua đường hô hấp nên hiệu quả hơn</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: A</div><div class="wi">Shigella: liều nhiễm rất thấp (~10–200 vi khuẩn, so sánh V.cholerae cần 10⁸) vì bền axit dạ dày tốt. Xâm nhập tế bào biểu mô đại tràng qua M cells → lan trong tế bào → viêm loét → tiêu chảy đẫm máu, nhầy. Shiga toxin (Stx) của S. dysenteriae: ức chế tổng hợp protein tế bào. Lây phân-miệng, người-người (không qua thực phẩm/nước nhiều như Salmonella).</div><div class="kp">💡 Shigella: liều thấp (10-200 VK), xâm nhập đại tràng → lỵ máu | Lây người-người</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b3">Bloom 3 — Áp dụng</span><span class="badge tb">Trung bình</span></div>
+  <div class="qtext">Câu 57. Phụ nữ 22 tuổi đau bụng dưới, tiểu buốt, cấy nước tiểu mọc E. coli 10⁵ CFU/mL. Cơ chế bám dính của E. coli vào biểu mô đường tiết niệu?</div>
+  <ul class="opts" data-ans="B">
+    <li data-o="A">A. Flagella (roi) giúp bơi ngược dòng nước tiểu</li>
+    <li data-o="B">B. Type 1 fimbriae và P fimbriae gắn thụ thể mannose/Gal-Gal trên tế bào đường tiết niệu</li>
+    <li data-o="C">C. Nang polysaccharide bao bọc, bảo vệ khỏi nước tiểu</li>
+    <li data-o="D">D. Lipopolysaccharide (LPS) gắn trực tiếp vào niêm mạc</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: B</div><div class="wi">UPEC (Uropathogenic E. coli) bám đường tiết niệu qua: Type 1 fimbriae (gắn mannose trên tế bào biểu mô bàng quang) và P fimbriae (gắn Gal-Gal trên tế bào thận — quan trọng trong viêm thận-bể thận). P fimbriae là yếu tố độc lực chính của UTI leo thang. D-mannose (uống) có thể ức chế type 1 fimbriae bám.</div><div class="kp">💡 UPEC: P fimbriae → viêm thận | Type 1 fimbriae → viêm bàng quang | D-mannose ức chế bám</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b4">Bloom 4 — Phân tích</span><span class="badge kho">Khó</span></div>
+  <div class="qtext">Câu 58. Trẻ 4 tuổi ăn thịt bò xay chưa chín tại tiệc nướng, 3 ngày sau tiêu chảy máu, tiểu ít, phù. Xét nghiệm: Hb giảm, tiểu cầu giảm, creatinine tăng. Chẩn đoán và tác nhân?</div>
+  <ul class="opts" data-ans="C">
+    <li data-o="A">A. Viêm ruột Salmonella gây mất nước nặng</li>
+    <li data-o="B">B. Viêm ruột Campylobacter biến chứng hội chứng Guillain-Barré</li>
+    <li data-o="C">C. Hội chứng tán huyết ure huyết (HUS) do E. coli O157:H7 tiết Shiga toxin</li>
+    <li data-o="D">D. Viêm cầu thận hậu nhiễm Shigella</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: C</div><div class="wi">HUS: bộ ba thiếu máu tán huyết vi thể mạch máu + giảm tiểu cầu + suy thận cấp. Sau tiêu chảy máu do STEC O157:H7. Stx2 phá hủy nội mô vi mạch thận → huyết khối → suy thận. Nguồn: thịt bò xay chưa chín. KHÔNG dùng kháng sinh (tăng tiết Stx → nặng hơn).</div><div class="kp">💡 E. coli O157:H7 + HUS = thịt bò xay + KHÔNG kháng sinh</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b2">Bloom 2 — Hiểu</span><span class="badge tb">Trung bình</span></div>
+  <div class="qtext">Câu 59. Pseudomonas aeruginosa nổi tiếng kháng nhiều kháng sinh. Cơ chế nào KHÔNG phải của Pseudomonas?</div>
+  <ul class="opts" data-ans="D">
+    <li data-o="A">A. Bơm efflux MexAB-OprM đẩy kháng sinh ra ngoài</li>
+    <li data-o="B">B. Mất porin OprD giảm thấm carbapenem</li>
+    <li data-o="C">C. Beta-lactamase (AmpC, metallo-beta-lactamase) phá hủy kháng sinh</li>
+    <li data-o="D">D. Đột biến PBP2a như MRSA</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: D</div><div class="wi">Pseudomonas không dùng cơ chế mecA/PBP2a (đó là MRSA). Pseudomonas dùng: bơm efflux (A), mất porin OprD → kháng imipenem (B), AmpC constitutive và metallo-beta-lactamase (C), và biofilm. Điều trị: piperacillin-tazobactam, ceftazidime, meropenem + aminoglycoside, colistin (XDR).</div><div class="kp">💡 Pseudomonas kháng thuốc = efflux + mất porin + beta-lactamase + biofilm (không phải mecA)</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b4">Bloom 4 — Phân tích</span><span class="badge kho">Khó</span></div>
+  <div class="qtext">Câu 60. Phân biệt ngộ độc thực phẩm do độc tố có sẵn (intoxication) và nhiễm khuẩn thực phẩm (infection): điểm khác biệt chính về thời gian ủ bệnh?</div>
+  <ul class="opts" data-ans="A">
+    <li data-o="A">A. Intoxication: ủ bệnh ngắn 1–6 giờ (độc tố hấp thu nhanh). Infection: ủ bệnh dài 12–72 giờ (vi khuẩn cần nhân lên)</li>
+    <li data-o="B">B. Intoxication: ủ bệnh dài hơn vì cần thời gian tiêu hóa độc tố</li>
+    <li data-o="C">C. Cả hai đều có ủ bệnh 24–48 giờ</li>
+    <li data-o="D">D. Intoxication không có ủ bệnh vì độc tố tác dụng tức thì</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: A</div><div class="wi">Intoxication (ngộ độc độc tố): S. aureus (1–6h), B. cereus nôn (1–6h), C. botulinum (12–36h) — độc tố có sẵn trong thức ăn, hấp thu nhanh. Infection: Salmonella (12–72h), Shigella (12–48h), Campylobacter (2–5 ngày) — vi khuẩn cần nhân lên trong đường tiêu hóa trước khi gây triệu chứng.</div><div class="kp">💡 Nôn sau ăn < 6h → intoxication (tụ cầu). Tiêu chảy sau 12–48h → infection (Salmonella, Shigella)</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b3">Bloom 3 — Áp dụng</span><span class="badge kho">Khó</span></div>
+  <div class="qtext">Câu 61. Bệnh nhân thở máy ICU ngày 5, sốt mới, X-quang thấy thâm nhiễm phổi mới, đờm mọc Pseudomonas. Đây là loại viêm phổi nào và cơ chế?</div>
+  <ul class="opts" data-ans="C">
+    <li data-o="A">A. Viêm phổi cộng đồng (CAP) do Pseudomonas</li>
+    <li data-o="B">B. Viêm phổi bệnh viện (HAP) do hít sặc dịch dạ dày</li>
+    <li data-o="C">C. Viêm phổi liên quan thở máy (VAP) — Pseudomonas tạo biofilm trên ống nội khí quản, hít vi khuẩn vào phổi</li>
+    <li data-o="D">D. Viêm phổi tăng bạch cầu ái toan do phản ứng thuốc</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: C</div><div class="wi">VAP (Ventilator-Associated Pneumonia): xuất hiện >48h sau đặt nội khí quản. Cơ chế chính: Pseudomonas (và MRSA, Acinetobacter) tạo biofilm trên ống NKQ → hít vi khuẩn vi thể vào phổi → vượt qua phản xạ ho (bị ức chế bởi NKQ). VAP là nhiễm khuẩn bệnh viện thường gặp nhất ở ICU, tỷ lệ tử vong 20–50%.</div><div class="kp">💡 VAP = Pseudomonas/MRSA + thở máy >48h + biofilm trên NKQ | Phòng: nâng đầu 30–45°</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b2">Bloom 2 — Hiểu</span><span class="badge tb">Trung bình</span></div>
+  <div class="qtext">Câu 62. Tại sao Treponema pallidum (giang mai) không thể nuôi cấy trong môi trường nhân tạo thông thường?</div>
+  <ul class="opts" data-ans="B">
+    <li data-o="A">A. Vi khuẩn quá nhỏ, không đủ dinh dưỡng</li>
+    <li data-o="B">B. T. pallidum thiếu nhiều enzyme chuyển hóa, phụ thuộc hoàn toàn vào tế bào vật chủ sống</li>
+    <li data-o="C">C. Vi khuẩn kị khí tuyệt đối, chết ngay khi tiếp xúc oxy</li>
+    <li data-o="D">D. T. pallidum tiết chất ức chế vi khuẩn khác trong môi trường nuôi cấy</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: B</div><div class="wi">T. pallidum có bộ gen tối giản, thiếu nhiều enzyme chuyển hóa (fatty acid synthesis, electron transport chain không đầy đủ) → không tự tổng hợp được nhiều chất cần thiết → phụ thuộc tế bào vật chủ. Chỉ nhân lên trong động vật thực nghiệm (thỏ). Do không nuôi cấy được → chẩn đoán dựa vào huyết thanh học (VDRL, RPR, TPHA, FTA-ABS).</div><div class="kp">💡 T. pallidum không nuôi cấy được → chẩn đoán = huyết thanh học (VDRL/RPR sàng lọc + TPHA xác nhận)</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b2">Bloom 2 — Hiểu</span><span class="badge tb">Trung bình</span></div>
+  <div class="qtext">Câu 63. Giang mai giai đoạn II (secondary syphilis) nguy hiểm về dịch tễ hơn giai đoạn I vì?</div>
+  <ul class="opts" data-ans="D">
+    <li data-o="A">A. Giai đoạn II gây tổn thương nội tạng nặng hơn</li>
+    <li data-o="B">B. Kháng thể VDRL âm tính giả trong giai đoạn II</li>
+    <li data-o="C">C. Điều trị khó hơn ở giai đoạn II</li>
+    <li data-o="D">D. Tổn thương da niêm mạc lan rộng (bao gồm lòng bàn tay/bàn chân) và condyloma lata có nhiều xoắn khuẩn, lây rất mạnh</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: D</div><div class="wi">Giang mai II: phát ban toàn thân (kể cả lòng bàn tay/bàn chân — đặc trưng), condyloma lata (mảng ẩm ướt quanh hậu môn/sinh dục) chứa hàng tỷ xoắn khuẩn → lây qua tiếp xúc. Giai đoạn I: chỉ có chancre (săng) tại chỗ, ít lây hơn. VDRL titer rất cao trong giai đoạn II. Tất cả giai đoạn đều điều trị bằng penicillin G.</div><div class="kp">💡 Giang mai II: phát ban lòng bàn tay/chân + condyloma lata = lây mạnh nhất</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b1">Bloom 1 — Nhớ</span><span class="badge de">Dễ</span></div>
+  <div class="qtext">Câu 64. Điều trị giang mai giai đoạn I (săng giang mai <1 năm) bằng?</div>
+  <ul class="opts" data-ans="A">
+    <li data-o="A">A. Benzathine penicillin G 2.4 triệu đơn vị IM liều đơn</li>
+    <li data-o="B">B. Doxycycline 100mg x 2 lần/ngày x 14 ngày (dị ứng penicillin)</li>
+    <li data-o="C">C. Azithromycin 1g PO liều đơn</li>
+    <li data-o="D">D. Ceftriaxone 250mg IM liều đơn</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: A</div><div class="wi">Giang mai sớm (I, II, tiềm ẩn <1 năm): Benzathine penicillin G 2.4 MU IM liều đơn — chuẩn vàng. T. pallidum vẫn nhạy cảm 100% với penicillin sau >70 năm (chưa có đề kháng). Dị ứng penicillin (B): doxycycline 14 ngày. Giang mai muộn (>1 năm, giang mai III, thần kinh): 3 liều Benzathine penicillin G mỗi tuần x 3 tuần.</div><div class="kp">💡 Giang mai sớm = Benzathine PenG 2.4MU IM 1 liều | Giang mai muộn = 3 liều x 3 tuần</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b3">Bloom 3 — Áp dụng</span><span class="badge tb">Trung bình</span></div>
+  <div class="qtext">Câu 65. Bệnh nhân điều trị giang mai xong. Theo dõi đáp ứng điều trị bằng xét nghiệm nào và khi nào?</div>
+  <ul class="opts" data-ans="B">
+    <li data-o="A">A. TPHA mỗi 3 tháng — mong đợi âm tính sau 6 tháng</li>
+    <li data-o="B">B. VDRL (hoặc RPR) định lượng — mong đợi giảm titer ≥4 lần (2 pha pha loãng) sau 6–12 tháng</li>
+    <li data-o="C">C. FTA-ABS âm tính sau điều trị là mốc đánh giá khỏi bệnh</li>
+    <li data-o="D">D. Soi kính nền đen tìm xoắn khuẩn mỗi 3 tháng</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: B</div><div class="wi">VDRL/RPR là xét nghiệm phi đặc hiệu định lượng — titer phản ánh hoạt động bệnh. Sau điều trị thành công: titer giảm ≥4 lần (ví dụ 1:32 → 1:8) trong 6–12 tháng. TPHA/FTA-ABS (xét nghiệm đặc hiệu) dương tính suốt đời dù điều trị khỏi (sẹo miễn dịch) → không dùng theo dõi điều trị. Kiểm tra VDRL lúc 3, 6, 12, 24 tháng.</div><div class="kp">💡 Theo dõi điều trị giang mai = VDRL/RPR định lượng (giảm 4 lần) | TPHA dương tính suốt đời</div></div>
+</div>
+<!-- ============ MCQ BỔ SUNG 66-80 ============ -->
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b2">Bloom 2 — Hiểu</span><span class="badge de">Dễ</span></div>
+  <div class="qtext">Câu 66. Treponema pallidum mỏng manh ra ngoài cơ thể vì lý do gì, điều này có ý nghĩa dịch tễ như thế nào?</div>
+  <ul class="opts" data-ans="C">
+    <li data-o="A">A. Bị tiêu diệt bởi kháng thể ngay khi ra ngoài cơ thể</li>
+    <li data-o="B">B. Không có vỏ bọc nên mất nước nhanh</li>
+    <li data-o="C">C. Rất nhạy cảm với khô, nhiệt, xà phòng → chỉ lây qua tiếp xúc trực tiếp niêm mạc, không lây qua dụng cụ hay không khí</li>
+    <li data-o="D">D. Bị diệt bởi pH trung tính của da</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: C</div><div class="wi">T. pallidum chết nhanh khi khô, nhiệt độ phòng, hoặc xà phòng → không lây qua vật dụng, bồn tắm chung, không khí. Chỉ lây qua: tiếp xúc trực tiếp tổn thương với niêm mạc/da trầy xước. Điều này giải thích tại sao giang mai là bệnh tình dục đặc trưng (không lây gián tiếp). Truyền máu và mẹ-con cũng xảy ra.</div><div class="kp">💡 Giang mai không lây qua dụng cụ hay toilet vì T. pallidum mỏng manh với môi trường khô</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b2">Bloom 2 — Hiểu</span><span class="badge tb">Trung bình</span></div>
+  <div class="qtext">Câu 67. Bào tử Clostridium tetani tồn tại trong đất hàng chục năm vì?</div>
+  <ul class="opts" data-ans="D">
+    <li data-o="A">A. Đất bảo vệ vi khuẩn khỏi tia UV</li>
+    <li data-o="B">B. Vi khuẩn hợp tác với vi sinh vật đất để tồn tại</li>
+    <li data-o="C">C. Bào tử kị khí, đất thiếu oxy bảo vệ bào tử</li>
+    <li data-o="D">D. Bào tử có lớp vỏ calcium dipicolinate cực bền, kháng nhiệt, khô, hóa chất thông thường</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: D</div><div class="wi">Bào tử C. tetani: lớp vỏ calcium dipicolinate + lớp cortex peptidoglycan đặc → kháng nhiệt (>100°C), tia UV, hóa chất thông thường (cồn, chlorhexidine không diệt được). Tồn tại trong đất/bụi/phân ngựa/bò hàng chục năm. Nhiễm vào vết thương (đinh rỉ, gai đâm) → điều kiện kị khí → nảy mầm → tetanospasmin.</div><div class="kp">💡 Bào tử tetani bền vì calcium dipicolinate → tồn tại đất hàng chục năm → chỉ autoclave diệt được</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b3">Bloom 3 — Áp dụng</span><span class="badge tb">Trung bình</span></div>
+  <div class="qtext">Câu 68. Uốn ván sơ sinh (neonatal tetanus) xảy ra do cơ chế nào và phòng ngừa bằng cách gì?</div>
+  <ul class="opts" data-ans="A">
+    <li data-o="A">A. Cắt rốn bằng dụng cụ không tiệt khuẩn nhiễm bào tử C. tetani → phòng bằng tiêm Td cho mẹ trước sinh</li>
+    <li data-o="B">B. Lây qua sữa mẹ nhiễm C. tetani → phòng bằng không cho bú</li>
+    <li data-o="C">C. Lây qua đường hô hấp từ người thăm bệnh → phòng bằng cách ly</li>
+    <li data-o="D">D. Trẻ sinh ra đã nhiễm từ tử cung mẹ → không phòng được</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: A</div><div class="wi">Uốn ván sơ sinh: dụng cụ cắt rốn nhiễm bào tử C. tetani (kéo, dao không tiệt khuẩn, tro bếp đắp rốn) → nhiễm trùng rốn → tetanospasmin. Tử vong >80% nếu không điều trị. Phòng ngừa hiệu quả: Tiêm Td (uốn ván-bạch hầu) cho phụ nữ mang thai (2 mũi cách 4 tuần, mũi 2 trước sinh ≥4 tuần) → kháng thể IgG qua nhau thai bảo vệ trẻ.</div><div class="kp">💡 Uốn ván sơ sinh = rốn + không tiệt khuẩn | Phòng = tiêm Td cho mẹ → IgG qua nhau thai</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b2">Bloom 2 — Hiểu</span><span class="badge kho">Khó</span></div>
+  <div class="qtext">Câu 69. Bệnh nhân khỏi uốn ván vẫn cần tiêm vắc-xin sau đó. Tại sao miễn dịch tự nhiên sau mắc uốn ván không đủ bảo vệ?</div>
+  <ul class="opts" data-ans="B">
+    <li data-o="A">A. Uốn ván không kích thích hệ miễn dịch vì vi khuẩn không xâm nhập máu</li>
+    <li data-o="B">B. Liều tetanospasmin đủ gây bệnh thấp hơn liều kích thích đáp ứng miễn dịch bảo vệ → không tạo được kháng thể đủ titer bảo vệ</li>
+    <li data-o="C">C. Kháng thể sau mắc bệnh bị trung hòa bởi tetanospasmin còn dư</li>
+    <li data-o="D">D. Hệ miễn dịch của người khỏi uốn ván bị suy giảm vĩnh viễn</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: B</div><div class="wi">Nghịch lý miễn dịch uốn ván: liều tetanospasmin gây bệnh (và tử vong) thấp hơn ngưỡng kích thích đáp ứng miễn dịch bảo vệ. Người khỏi bệnh không có kháng thể đủ titer bảo vệ. Tương tự botulinum toxin. Do đó: sau khỏi uốn ván vẫn cần tiêm đủ 3 mũi DPT hoặc Td. Đây là nguyên tắc quan trọng khác với hầu hết các bệnh truyền nhiễm khác.</div><div class="kp">💡 Uốn ván ≠ tạo miễn dịch sau mắc → bắt buộc tiêm vắc-xin dù đã khỏi bệnh</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b2">Bloom 2 — Hiểu</span><span class="badge de">Dễ</span></div>
+  <div class="qtext">Câu 70. Triệu chứng xuất hiện đầu tiên và đặc trưng nhất của uốn ván toàn thân?</div>
+  <ul class="opts" data-ans="A">
+    <li data-o="A">A. Cứng hàm (trismus) — co cứng cơ nhai, không mở miệng được</li>
+    <li data-o="B">B. Co giật toàn thân</li>
+    <li data-o="C">C. Sốt cao 40°C</li>
+    <li data-o="D">D. Liệt hạ chi</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: A</div><div class="wi">Uốn ván toàn thân: tetanospasmin di chuyển theo trục thần kinh hướng tâm → ức chế glycine/GABA ở tủy sống. Cơ nhai (dây V) gần tủy sống nhất → triệu chứng đầu tiên: cứng hàm (trismus). Tiến triển: co cứng cơ gáy, lưng (opisthotonos), bụng, tay chân, co thắt thanh quản. Co giật kịch phát do kích thích ánh sáng, âm thanh. Sốt nhẹ hoặc không sốt.</div><div class="kp">💡 Uốn ván: cứng hàm → opisthotonos → co giật. Sốt ít. Ý thức KHÔNG bị ảnh hưởng</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b1">Bloom 1 — Nhớ</span><span class="badge de">Dễ</span></div>
+  <div class="qtext">Câu 71. Điểm khác biệt cơ bản nhất giữa virus và vi khuẩn về mặt cấu trúc?</div>
+  <ul class="opts" data-ans="D">
+    <li data-o="A">A. Virus nhỏ hơn vi khuẩn</li>
+    <li data-o="B">B. Virus không có DNA, chỉ có RNA</li>
+    <li data-o="C">C. Virus có ribosome khác loại</li>
+    <li data-o="D">D. Virus không có ribosome và bào quan — chỉ có vật liệu di truyền (DNA hoặc RNA) + protein bao bọc, ký sinh bắt buộc trong tế bào</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: D</div><div class="wi">Virus: không có ribosome, không có ti thể, không tự tổng hợp protein → ký sinh bắt buộc trong tế bào sống. Cấu trúc tối thiểu: nucleic acid (DNA hoặc RNA, không cả hai) + capsid protein + (có thể có) envelope. Vi khuẩn: tế bào prokaryote có ribosome 70S, tự nhân đôi. Đây là lý do kháng sinh (tác động ribosome vi khuẩn) không có tác dụng trên virus.</div><div class="kp">💡 Virus không ribosome → kháng sinh vô dụng | Kháng virus: nhắm vào enzyme đặc hiệu virus</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b2">Bloom 2 — Hiểu</span><span class="badge tb">Trung bình</span></div>
+  <div class="qtext">Câu 72. Virus có vỏ bọc (enveloped) như HIV, HBV, HCV, cúm dễ bị tiêu diệt hơn virus không vỏ (non-enveloped) như HAV, poliovirus vì?</div>
+  <ul class="opts" data-ans="A">
+    <li data-o="A">A. Vỏ lipid nhạy cảm với xà phòng, cồn, nhiệt → khử khuẩn đơn giản hơn; virus không vỏ bền hơn trong môi trường, lây qua phân-miệng</li>
+    <li data-o="B">B. Virus có vỏ lớn hơn, dễ bị hệ miễn dịch phát hiện</li>
+    <li data-o="C">C. Virus không vỏ cần tế bào đích cụ thể hơn</li>
+    <li data-o="D">D. Vỏ lipid giúp virus nhân lên nhanh hơn nên dễ bị thuốc kháng virus tiêu diệt</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: A</div><div class="wi">Enveloped virus (HIV, HBV, HCV, cúm, herpes): vỏ lipid bị phá bởi xà phòng, cồn 70%, nhiệt → rửa tay, cồn sát khuẩn hiệu quả. Non-enveloped (HAV, poliovirus, norovirus, rotavirus): không có vỏ lipid → bền với cồn và môi trường → tồn tại lâu trên bề mặt → lây phân-miệng. Cần chlorine hoặc nhiệt để diệt. Ý nghĩa: rửa tay với xà phòng hiệu quả hơn cồn với non-enveloped.</div><div class="kp">💡 Enveloped = vỏ lipid → xà phòng/cồn diệt | Non-enveloped = bền, lây phân-miệng, cần chlorine</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b3">Bloom 3 — Áp dụng</span><span class="badge kho">Khó</span></div>
+  <div class="qtext">Câu 73. Phụ nữ 25 tuổi chuẩn bị mang thai. Xét nghiệm kháng thể rubella âm tính. Bác sĩ khuyên tiêm vắc-xin MMR. Thời gian tối thiểu phải chờ sau tiêm trước khi mang thai là?</div>
+  <ul class="opts" data-ans="B">
+    <li data-o="A">A. 2 tuần</li>
+    <li data-o="B">B. 4 tuần (1 tháng)</li>
+    <li data-o="C">C. 3 tháng</li>
+    <li data-o="D">D. 6 tháng</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: B</div><div class="wi">MMR là vắc-xin sống giảm độc lực → chống chỉ định trong thai kỳ (nguy cơ lý thuyết gây dị tật). Cần chờ ít nhất 4 tuần (28 ngày) sau tiêm MMR trước khi mang thai — đủ thời gian virus vaccine đào thải. Trên thực tế, nghiên cứu cho thấy tiêm MMR ngay trước thai hoặc trong thai kỳ không gây hội chứng rubella bẩm sinh (nguy cơ lý thuyết). Tuy nhiên khuyến cáo vẫn giữ 4 tuần.</div><div class="kp">💡 MMR sống giảm độc → chờ 4 tuần sau tiêm mới mang thai. Nếu đã mang thai không tiêm MMR</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b4">Bloom 4 — Phân tích</span><span class="badge kho">Khó</span></div>
+  <div class="qtext">Câu 74. Thai phụ mắc rubella tuần 8 thai kỳ. Con sinh ra bị đục thủy tinh thể, điếc, tim bẩm sinh. Tại sao nhiễm rubella trong 3 tháng đầu nguy hiểm nhất?</div>
+  <ul class="opts" data-ans="C">
+    <li data-o="A">A. Hệ miễn dịch thai nhi chưa phát triển, không chống lại được virus</li>
+    <li data-o="B">B. Virus rubella xâm nhập nhau thai dễ hơn trong 3 tháng đầu</li>
+    <li data-o="C">C. 3 tháng đầu là thời kỳ organogenesis — hình thành cơ quan quan trọng; rubella phá vỡ phân bào dẫn đến dị tật</li>
+    <li data-o="D">D. Nồng độ virus trong máu mẹ cao nhất trong 3 tháng đầu</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: C</div><div class="wi">Organogenesis (tuần 3–8): các cơ quan quan trọng đang hình thành. Virus rubella ức chế phân bào tế bào → dị tật cơ quan đang hình thành. Tuần 5–8: tim (VSD, PDA). Tuần 6–9: mắt (đục thủy tinh thể, glaucoma). Tuần 7–9: tai (điếc thần kinh cảm âm). Nhiễm sau 20 tuần: ít gây dị tật hơn nhưng vẫn ảnh hưởng não. Hội chứng rubella bẩm sinh: bộ 3 điếc + đục thủy tinh thể + tim.</div><div class="kp">💡 Rubella + 3 tháng đầu = organogenesis bị phá → bộ 3: điếc + đục thủy tinh thể + tim bẩm sinh</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b2">Bloom 2 — Hiểu</span><span class="badge tb">Trung bình</span></div>
+  <div class="qtext">Câu 75. VZV (varicella-zoster virus) tiềm ẩn ở đâu sau khi gây thủy đậu, và tái hoạt gây bệnh gì?</div>
+  <ul class="opts" data-ans="D">
+    <li data-o="A">A. Tiềm ẩn trong tế bào gan, tái hoạt gây viêm gan</li>
+    <li data-o="B">B. Tiềm ẩn trong tế bào lympho B, tái hoạt gây u lympho</li>
+    <li data-o="C">C. Tiềm ẩn trong tế bào biểu mô hô hấp, tái hoạt gây viêm phổi</li>
+    <li data-o="D">D. Tiềm ẩn trong hạch rễ thần kinh lưng (dorsal root ganglia), tái hoạt gây zona (herpes zoster)</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: D</div><div class="wi">Sau thủy đậu, VZV di chuyển ngược trục thần kinh cảm giác → tiềm ẩn trong tế bào thần kinh hạch rễ lưng (DRG). Khi miễn dịch giảm (người già, ức chế miễn dịch, stress) → VZV tái hoạt → lan theo phân bố thần kinh → zona (shingles): phát ban bọng nước đau rát theo khoanh da (dermatomal). Đau thần kinh sau zona (PHN) là biến chứng mãn tính quan trọng.</div><div class="kp">💡 VZV tiềm ẩn DRG → tái hoạt zona theo dermatomal | Vắc-xin Shingrix ngừa zona người >50 tuổi</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b1">Bloom 1 — Nhớ</span><span class="badge de">Dễ</span></div>
+  <div class="qtext">Câu 76. Điều trị zona (herpes zoster) ở người lớn khỏe mạnh bằng thuốc nào và phải bắt đầu khi nào?</div>
+  <ul class="opts" data-ans="A">
+    <li data-o="A">A. Acyclovir 800mg x 5 lần/ngày x 7 ngày, hoặc valacyclovir 1g x 3 lần/ngày x 7 ngày — bắt đầu trong 72 giờ từ khi nổi ban</li>
+    <li data-o="B">B. Ganciclovir IV — chỉ định cho mọi ca zona</li>
+    <li data-o="C">C. Acyclovir chỉ có tác dụng khi bắt đầu trước khi nổi ban</li>
+    <li data-o="D">D. Corticosteroid đơn độc để giảm viêm</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: A</div><div class="wi">Acyclovir (hoặc valacyclovir/famciclovir) ức chế DNA polymerase VZV. Hiệu quả nhất trong 72 giờ đầu từ khi nổi ban → rút ngắn bệnh, giảm nguy cơ đau thần kinh sau zona (PHN). Ganciclovir IV (B) dùng cho zona nặng ở bệnh nhân ức chế miễn dịch. Corticosteroid (D) có thể kết hợp để giảm viêm nhưng không đơn độc. Chỉ định ưu tiên: người >50 tuổi, zona mắt, đau nặng.</div><div class="kp">💡 Zona: acyclovir/valacyclovir trong 72h | >50 tuổi, zona mắt → điều trị bắt buộc</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b3">Bloom 3 — Áp dụng</span><span class="badge kho">Khó</span></div>
+  <div class="qtext">Câu 77. Trẻ 3 tuổi mắc tay chân miệng (TCM) đang điều trị tại nhà. Dấu hiệu nào báo động cần nhập viện NGAY?</div>
+  <ul class="opts" data-ans="C">
+    <li data-o="A">A. Sốt 38.5°C, loét miệng đau</li>
+    <li data-o="B">B. Nổi ban phỏng nước lòng bàn tay</li>
+    <li data-o="C">C. Giật mình chới với khi ngủ, tim đập nhanh >150 lần/phút, thở nhanh, nôn nhiều</li>
+    <li data-o="D">D. Trẻ quấy khóc, bỏ bú</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: C</div><div class="wi">TCM độ 2b/3/4 — dấu hiệu thần kinh-tim mạch: (1) Giật mình chới với (myoclonic jerks) khi ngủ ≥2 lần/30 phút — dấu hiệu não bộ bị ảnh hưởng (Enterovirus 71 gây viêm não thân não); (2) Nhịp tim nhanh không tương xứng sốt; (3) Thở nhanh, SpO2 giảm — phù phổi cấp; (4) Nôn nhiều, li bì. Đây là biến chứng nặng cần PICU. Tác nhân nguy hiểm nhất: EV71 (Enterovirus 71).</div><div class="kp">💡 TCM: giật mình chới với + nhịp tim nhanh + thở nhanh = biến chứng não-tim → NHẬP VIỆN NGAY</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b2">Bloom 2 — Hiểu</span><span class="badge de">Dễ</span></div>
+  <div class="qtext">Câu 78. Tay chân miệng (TCM) lây theo đường nào chủ yếu?</div>
+  <ul class="opts" data-ans="B">
+    <li data-o="A">A. Đường hô hấp (giọt bắn từ ho, hắt hơi)</li>
+    <li data-o="B">B. Đường phân-miệng và tiếp xúc dịch tiết từ bọng nước, nước bọt</li>
+    <li data-o="C">C. Đường máu (kim tiêm dùng chung)</li>
+    <li data-o="D">D. Véc-tơ muỗi</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: B</div><div class="wi">TCM (Coxsackievirus A16, Enterovirus 71 — non-enveloped): lây phân-miệng (bàn tay bẩn → miệng) và tiếp xúc trực tiếp dịch bọng nước/nước bọt/phân. Trẻ đi nhà trẻ dễ lây qua đồ chơi, bàn tay. Cồn kém hiệu quả với Enterovirus (non-enveloped) — cần rửa tay xà phòng. Không có vắc-xin tại Việt Nam (vắc-xin EV71 có tại Trung Quốc, Đài Loan).</div><div class="kp">💡 TCM: phân-miệng + tiếp xúc dịch | Cồn kém hiệu quả → rửa tay xà phòng là chính</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b3">Bloom 3 — Áp dụng</span><span class="badge tb">Trung bình</span></div>
+  <div class="qtext">Câu 79. Chó nghi dại cắn bệnh nhân vào tay, có xé da, chảy máu. Hành động ưu tiên NGAY tại chỗ là?</div>
+  <ul class="opts" data-ans="A">
+    <li data-o="A">A. Rửa vết thương bằng xà phòng và nước chảy 15 phút → sát khuẩn cồn hoặc povidone-iodine → đến cơ sở y tế tiêm vắc-xin dại + kháng huyết thanh dại (RIG)</li>
+    <li data-o="B">B. Ga-rô trên vết thương để ngăn virus lan qua máu</li>
+    <li data-o="C">C. Uống penicillin ngay để phòng nhiễm khuẩn thứ phát</li>
+    <li data-o="D">D. Đợi 10 ngày theo dõi chó, nếu chó chết mới tiêm</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: A</div><div class="wi">Xử trí dại: (1) Rửa xà phòng + nước chảy 15 phút — loại bỏ virus cơ học, quan trọng nhất; (2) Sát khuẩn cồn/iodine; (3) Tiêm vắc-xin dại (PEP — post-exposure prophylaxis) + kháng huyết thanh (HRIG/ERIG) tiêm xung quanh vết thương nếu vết cắn nặng/đầu cổ. Ga-rô (B) vô ích — virus di chuyển theo thần kinh không qua máu. Theo dõi chó 10 ngày (D): nếu chó bình thường sau 10 ngày → ngừng tiêm; nhưng PHẢI BẮT ĐẦU TIÊM NGAY không chờ.</div><div class="kp">💡 Dại: rửa xà phòng 15 phút = ưu tiên số 1 → tiêm vắc-xin + HRIG ngay, không chờ theo dõi chó</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b1">Bloom 1 — Nhớ</span><span class="badge de">Dễ</span></div>
+  <div class="qtext">Câu 80. Muỗi Aedes aegypti truyền sốt xuất huyết Dengue có đặc điểm hoạt động đặc biệt gì so với muỗi Anopheles truyền sốt rét?</div>
+  <ul class="opts" data-ans="B">
+    <li data-o="A">A. Aedes đốt về đêm, Anopheles đốt ban ngày</li>
+    <li data-o="B">B. Aedes đốt ban ngày (sáng sớm và chiều tối), đẻ trứng nước sạch đọng; Anopheles đốt về đêm, đẻ trứng nước chảy/ao tù</li>
+    <li data-o="C">C. Aedes chỉ đốt người ở vùng nông thôn</li>
+    <li data-o="D">D. Aedes và Anopheles đều hoạt động về đêm</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: B</div><div class="wi">Aedes aegypti: đốt ban ngày (sáng sớm và chiều tối), đẻ trứng nước sạch đọng (lọ hoa, chậu cây, vỏ xe cũ, xô chứa nước). Thích ở trong nhà, đô thị. Truyền: Dengue, Zika, Chikungunya, Yellow fever. Anopheles: đốt đêm, đẻ trứng ao tù/nước chảy. Ý nghĩa phòng chống: màn ngủ không đủ ngừa Aedes → cần diệt bọ gậy và chống muỗi ban ngày.</div><div class="kp">💡 Aedes = ban ngày + nước đọng sạch + đô thị | Anopheles = ban đêm + ao tù + nông thôn/rừng</div></div>
+</div>
+<!-- ============ MCQ BỔ SUNG 81-95 ============ -->
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b3">Bloom 3 — Áp dụng</span><span class="badge kho">Khó</span></div>
+  <div class="qtext">Câu 81. Bệnh nhân sốt xuất huyết Dengue ngày 5, tiểu cầu 35.000/µL, hematocrit tăng 20% so với ban đầu. Xử trí truyền dịch đúng nhất?</div>
+  <ul class="opts" data-ans="C">
+    <li data-o="A">A. Truyền máu toàn phần để bù hematocrit</li>
+    <li data-o="B">B. Không truyền dịch — chờ tiểu cầu tự tăng</li>
+    <li data-o="C">C. Truyền dịch tinh thể (Ringer lactate hoặc NaCl 0.9%) với tốc độ tính theo cân nặng, theo dõi sát hematocrit và lâm sàng</li>
+    <li data-o="D">D. Truyền tiểu cầu ngay khi tiểu cầu &lt; 50.000/µL</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: C</div><div class="wi">SXH Dengue: hematocrit tăng ≥20% = dấu hiệu cô đặc máu (thoát huyết tương) → truyền dịch tinh thể. Truyền tiểu cầu (D) chỉ khi tiểu cầu &lt;10.000/µL hoặc có xuất huyết nặng — không truyền phòng ngừa. Truyền máu (A) không chỉ định trừ xuất huyết mất máu nặng. Theo dõi: hematocrit mỗi 2–4h, lâm sàng liên tục. Ngày 4–6 = giai đoạn nguy hiểm nhất.</div><div class="kp">💡 SXH: Hct tăng ≥20% → truyền dịch tinh thể | Tiểu cầu giảm nhưng không truyền phòng ngừa</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b2">Bloom 2 — Hiểu</span><span class="badge tb">Trung bình</span></div>
+  <div class="qtext">Câu 82. Tại sao Aspirin và NSAID chống chỉ định trong sốt xuất huyết Dengue?</div>
+  <ul class="opts" data-ans="B">
+    <li data-o="A">A. Aspirin tăng nhân lên của virus Dengue trong tế bào</li>
+    <li data-o="B">B. Aspirin ức chế tiểu cầu và có thể gây hội chứng Reye — nguy cơ xuất huyết và suy gan nặng thêm</li>
+    <li data-o="C">C. Aspirin gây phản ứng dị ứng chéo với kháng nguyên Dengue</li>
+    <li data-o="D">D. Aspirin làm tăng tính thấm mạch máu thêm</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: B</div><div class="wi">Aspirin ức chế COX-1 → ức chế thromboxane A2 → giảm chức năng tiểu cầu (khi tiểu cầu đã giảm trong SXH → xuất huyết nặng hơn). Ở trẻ em, Aspirin + virus → hội chứng Reye (suy gan cấp, não). NSAID (ibuprofen) cũng ức chế tiểu cầu + gây loét dạ dày. Thuốc hạ sốt an toàn duy nhất: Paracetamol (không ức chế tiểu cầu).</div><div class="kp">💡 SXH: chỉ dùng Paracetamol hạ sốt | Aspirin/NSAID → chảy máu thêm + Reye syndrome</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b4">Bloom 4 — Phân tích</span><span class="badge kho">Khó</span></div>
+  <div class="qtext">Câu 83. Phân biệt đường lây chính của viêm gan A (HAV) và viêm gan B (HBV):</div>
+  <ul class="opts" data-ans="A">
+    <li data-o="A">A. HAV: phân-miệng (nước/thực phẩm ô nhiễm), không mãn tính. HBV: máu/dịch sinh dục/mẹ-con, có thể mãn tính</li>
+    <li data-o="B">B. HAV và HBV đều lây qua đường máu</li>
+    <li data-o="C">C. HBV lây qua phân-miệng, HAV lây qua đường tình dục</li>
+    <li data-o="D">D. Cả hai đều không gây viêm gan mãn tính</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: A</div><div class="wi">HAV (non-enveloped, ssRNA): phân-miệng → vệ sinh thực phẩm, nước. Luôn tự khỏi (acute only), không mãn tính. Vắc-xin HAV hiệu quả. HBV (enveloped, dsDNA): máu, kim tiêm, quan hệ tình dục, mẹ-con → có thể mãn tính (5–10% người lớn, 90% trẻ sơ sinh). HCV: máu (như HBV nhưng tình dục hiếm hơn). HBsAg dương tính &gt;6 tháng = mãn tính.</div><div class="kp">💡 HAV = phân-miệng, không mãn | HBV = máu/tình dục/mẹ-con, có thể mãn | HCV = máu</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b2">Bloom 2 — Hiểu</span><span class="badge tb">Trung bình</span></div>
+  <div class="qtext">Câu 84. HBsAg (hepatitis B surface antigen) dương tính kéo dài hơn bao lâu được định nghĩa là viêm gan B mãn tính?</div>
+  <ul class="opts" data-ans="C">
+    <li data-o="A">A. > 1 tháng</li>
+    <li data-o="B">B. > 3 tháng</li>
+    <li data-o="C">C. > 6 tháng</li>
+    <li data-o="D">D. > 12 tháng</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: C</div><div class="wi">HBsAg dương tính &gt;6 tháng = viêm gan B mãn tính. Nguy cơ mãn hóa: người lớn 5–10%, trẻ sơ sinh lây từ mẹ HBeAg(+) 90%. Viêm gan B mãn → nguy cơ xơ gan (20%), ung thư gan (5%). Theo dõi: ALT, HBeAg/Anti-HBe, HBV DNA định lượng, siêu âm bụng mỗi 6 tháng. Điều trị: tenofovir, entecavir hoặc peginterferon alfa.</div><div class="kp">💡 HBsAg (+) &gt;6 tháng = HBV mãn tính → nguy cơ xơ gan, ung thư gan → điều trị tenofovir/entecavir</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b2">Bloom 2 — Hiểu</span><span class="badge de">Dễ</span></div>
+  <div class="qtext">Câu 85. Kháng thể Anti-HBs dương tính sau tiêm vắc-xin viêm gan B có ý nghĩa gì?</div>
+  <ul class="opts" data-ans="B">
+    <li data-o="A">A. Bệnh nhân đang nhiễm HBV cấp tính</li>
+    <li data-o="B">B. Bệnh nhân có miễn dịch bảo vệ chống HBV (titer &gt;10 mIU/mL = đủ bảo vệ)</li>
+    <li data-o="C">C. Bệnh nhân đã tiếp xúc HBV nhưng chưa tạo được miễn dịch</li>
+    <li data-o="D">D. Bệnh nhân cần tiêm nhắc vắc-xin ngay lập tức</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: B</div><div class="wi">Anti-HBs &gt;10 mIU/mL = miễn dịch bảo vệ (sau tiêm vắc-xin hoặc sau khỏi viêm gan B). Bảng diễn giải huyết thanh học HBV: HBsAg(+) = đang nhiễm; Anti-HBs(+) alone = đã tiêm hoặc khỏi bệnh; Anti-HBc IgM(+) = nhiễm cấp; Anti-HBc IgG(+) + Anti-HBs(+) = đã khỏi tự nhiên; HBsAg(+) &gt;6 tháng = mãn tính. Nhân viên y tế cần kiểm tra titer sau tiêm 1–2 tháng.</div><div class="kp">💡 Anti-HBs (+) &gt;10 mIU/mL = có miễn dịch | HBsAg (+) = đang nhiễm | Anti-HBc IgM = cấp</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b2">Bloom 2 — Hiểu</span><span class="badge tb">Trung bình</span></div>
+  <div class="qtext">Câu 86. DAAs (Direct-Acting Antivirals) như sofosbuvir, ledipasvir đã cách mạng hóa điều trị viêm gan C bằng cách nào?</div>
+  <ul class="opts" data-ans="D">
+    <li data-o="A">A. Kích thích hệ miễn dịch diệt HCV như interferon</li>
+    <li data-o="B">B. Ngăn virus xâm nhập tế bào gan</li>
+    <li data-o="C">C. Tăng cường ghép tạng gan</li>
+    <li data-o="D">D. Ức chế trực tiếp enzyme NS5B polymerase và NS5A của HCV → tỷ lệ khỏi &gt;95% trong 8–12 tuần, ít tác dụng phụ</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: D</div><div class="wi">DAAs nhắm enzyme đặc hiệu HCV: NS5B RNA polymerase (sofosbuvir), NS5A (ledipasvir, velpatasvir), NS3/4A protease (grazoprevir). Khỏi bệnh SVR (sustained virologic response) &gt;95% sau 8–12 tuần, uống miệng, ít tác dụng phụ. Trước DAAs: interferon + ribavirin, 48 tuần, SVR 50%, tác dụng phụ nhiều. Đây là bước tiến lớn nhất của viêm gan C. Việt Nam có chương trình điều trị DAAs cho bệnh nhân HCV.</div><div class="kp">💡 DAAs = khỏi HCV &gt;95% trong 8-12 tuần uống miệng | Cách mạng so với interferon cũ</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b3">Bloom 3 — Áp dụng</span><span class="badge tb">Trung bình</span></div>
+  <div class="qtext">Câu 87. Phụ nữ mang thai nhiễm HIV được tư vấn về nguy cơ lây mẹ-con. Không can thiệp, nguy cơ truyền HIV từ mẹ sang con là bao nhiêu và can thiệp nào hiệu quả nhất?</div>
+  <ul class="opts" data-ans="A">
+    <li data-o="A">A. Nguy cơ 15–45% không can thiệp. ARV cho mẹ trong thai kỳ + sinh mổ chương trình + ARV dự phòng cho trẻ + không cho bú = giảm còn &lt;1%</li>
+    <li data-o="B">B. Nguy cơ 1–2% không can thiệp, không cần điều trị đặc biệt</li>
+    <li data-o="C">C. HIV không lây qua nhau thai, chỉ lây lúc sinh và qua sữa mẹ</li>
+    <li data-o="D">D. Sinh mổ đơn thuần đủ ngăn lây mẹ-con</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: A</div><div class="wi">Không can thiệp: 15–45% (qua nhau thai 5–10%, lúc sinh 10–20%, sữa mẹ 5–20%). Can thiệp đủ 4 mũi: (1) ARV cho mẹ giảm viral load → &lt;100 copies/mL → nguy cơ rất thấp; (2) Sinh mổ chương trình (trước vỡ ối) nếu viral load cao; (3) ARV dự phòng cho trẻ 4–6 tuần sau sinh; (4) Thay thế sữa mẹ (nước pha). Với tải lượng virus không phát hiện được: sinh thường được phép.</div><div class="kp">💡 HIV mẹ-con: 4 biện pháp = ARV mẹ + sinh mổ (nếu cần) + ARV trẻ + không bú → &lt;1%</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b2">Bloom 2 — Hiểu</span><span class="badge tb">Trung bình</span></div>
+  <div class="qtext">Câu 88. Khái niệm U=U (Undetectable = Untransmittable) trong HIV có nghĩa là?</div>
+  <ul class="opts" data-ans="C">
+    <li data-o="A">A. Người HIV không phát hiện được virus trong máu = đã khỏi HIV</li>
+    <li data-o="B">B. Người HIV dùng ARV = không cần dùng biện pháp phòng ngừa bổ sung</li>
+    <li data-o="C">C. Người HIV điều trị ARV đạt tải lượng virus không phát hiện được (&lt;200 copies/mL) liên tục 6 tháng = không lây HIV qua quan hệ tình dục cho bạn tình</li>
+    <li data-o="D">D. Test HIV âm tính = không nhiễm HIV và không lây</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: C</div><div class="wi">U=U: dữ liệu từ nghiên cứu PARTNER, HPTN 052 — 0 ca lây qua quan hệ tình dục khi tải lượng &lt;200 copies/mL duy trì. Điều kiện: (1) ARV đều đặn ít nhất 6 tháng; (2) Tải lượng &lt;200 copies/mL liên tục; (3) Không mắc STI đồng thời. U=U không áp dụng cho lây qua máu, kim tiêm, hoặc mẹ-con. Đây là bước ngoặt trong dự phòng và giảm kỳ thị HIV.</div><div class="kp">💡 U=U: ARV đủ 6 tháng + viral load &lt;200 = không lây qua tình dục | Không áp dụng qua máu/mẹ-con</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b3">Bloom 3 — Áp dụng</span><span class="badge tb">Trung bình</span></div>
+  <div class="qtext">Câu 89. Người nhiễm HIV vừa được chẩn đoán, CD4 = 200/mm³. Test HIV ELISA dương tính được gửi 3 tuần sau phơi nhiễm. Kết quả này có đáng tin không? Tại sao cần xét nghiệm lại?</div>
+  <ul class="opts" data-ans="B">
+    <li data-o="A">A. Kết quả đáng tin, ELISA thế hệ 4 phát hiện ngay sau phơi nhiễm 1 ngày</li>
+    <li data-o="B">B. Cần thận trọng — ELISA thế hệ 3 có window period 4–12 tuần; thế hệ 4 (p24+anti-HIV) window period ngắn hơn (~18 ngày) nhưng vẫn cần xác nhận bằng Western blot hoặc PCR</li>
+    <li data-o="C">C. ELISA âm tính sau 3 tuần = chắc chắn không nhiễm</li>
+    <li data-o="D">D. ELISA không cần xác nhận vì đặc hiệu 100%</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: B</div><div class="wi">Window period (cửa sổ âm tính giả): ELISA thế hệ 3 (phát hiện anti-HIV): 4–12 tuần. ELISA/CMIA thế hệ 4 (p24 antigen + anti-HIV): ~18–45 ngày. NAT/PCR HIV RNA: 10–33 ngày. Sau 3 tuần: thế hệ 4 có thể dương tính nhưng thế hệ 3 có thể âm tính giả. Mọi ELISA dương tính cần xác nhận bằng Western blot hoặc HIV RNA PCR để loại dương tính giả (độ đặc hiệu ELISA 99.5%, không phải 100%).</div><div class="kp">💡 Window period: ELISA gen 4 ~18-45 ngày | Luôn xác nhận ELISA (+) bằng Western blot/PCR</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b4">Bloom 4 — Phân tích</span><span class="badge kho">Khó</span></div>
+  <div class="qtext">Câu 90. HIV gây suy giảm miễn dịch tiến triển bằng cơ chế phân tử nào?</div>
+  <ul class="opts" data-ans="D">
+    <li data-o="A">A. Tiết độc tố ức chế tủy xương tạo tế bào lympho</li>
+    <li data-o="B">B. Kích hoạt bổ thể phá hủy tế bào T</li>
+    <li data-o="C">C. Gắn thụ thể CD8 → phá hủy tế bào T gây độc</li>
+    <li data-o="D">D. HIV gắn CD4 + CCR5/CXCR4 → xâm nhập, tích hợp provirus → tế bào T CD4 chết theo chương trình (apoptosis) và trực tiếp → CD4 giảm dần</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: D</div><div class="wi">HIV gp120 gắn CD4 + co-receptor CCR5 (macrophage-tropic, R5) hoặc CXCR4 (T-cell-tropic, X4) → gp41 dung hợp màng → HIV vào tế bào. Reverse transcriptase tạo proviral DNA → tích hợp vào genome (integrase). Tế bào CD4 chết: trực tiếp (lysis khi thoát virus), apoptosis, ADCC. CD4 giảm dần qua nhiều năm → &lt;200/mm³ = AIDS. ARV nhắm: RT (NRTI, NNRTI), protease, integrase, entry.</div><div class="kp">💡 HIV: gp120→CD4+CCR5/CXCR4 → nhập → provirus → CD4 chết → AIDS khi CD4 &lt;200</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b4">Bloom 4 — Phân tích</span><span class="badge kho">Khó</span></div>
+  <div class="qtext">Câu 91. Bệnh nhân sốt xuất huyết Dengue ngày 3, sốt 39°C đột ngột giảm xuống 37°C, huyết áp 90/60 mmHg, tiểu cầu 45.000/µL. Giai đoạn bệnh nào và nguy hiểm chính?</div>
+  <ul class="opts" data-ans="C">
+    <li data-o="A">A. Giai đoạn sốt (febrile phase) — nguy hiểm chính là mất nước</li>
+    <li data-o="B">B. Giai đoạn hồi phục — huyết áp thấp do dịch tái hấp thu quá nhanh</li>
+    <li data-o="C">C. Giai đoạn nguy hiểm (critical phase) — sốt giảm đột ngột + hạ huyết áp = thoát huyết tương gây sốc Dengue</li>
+    <li data-o="D">D. Bệnh nhân đang hồi phục, sốt giảm là dấu hiệu tốt</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: C</div><div class="wi">SXH Dengue 3 giai đoạn: (1) Sốt (ngày 1–3): sốt cao, đau đầu, đau hốc mắt; (2) Nguy hiểm (ngày 4–6): SỐT GIẢM đột ngột = nguy hiểm — thoát huyết tương mao mạch vào dịch kẽ → giảm thể tích tuần hoàn → sốc → tụ dịch màng phổi, bụng; (3) Hồi phục: dịch tái hấp thu → thể tích tăng → cẩn thận phù phổi nếu truyền nhiều. Huyết áp thấp + sốt giảm = BÁO ĐỘNG.</div><div class="kp">💡 SXH: sốt giảm ngày 4-6 = giai đoạn nguy hiểm nhất | Huyết áp thấp + sốt giảm = sốc Dengue</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b2">Bloom 2 — Hiểu</span><span class="badge tb">Trung bình</span></div>
+  <div class="qtext">Câu 92. HBeAg dương tính trong viêm gan B mãn tính có ý nghĩa lâm sàng gì?</div>
+  <ul class="opts" data-ans="A">
+    <li data-o="A">A. Virus đang nhân lên mạnh, tải lượng HBV DNA cao, khả năng lây rất cao</li>
+    <li data-o="B">B. Virus đã ngừng nhân lên, bệnh nhân trong giai đoạn thuyên giảm</li>
+    <li data-o="C">C. Bệnh nhân đã có kháng thể chống HBV, đang trên đà hồi phục</li>
+    <li data-o="D">D. HBeAg không liên quan đến khả năng lây nhiễm</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: A</div><div class="wi">HBeAg (hepatitis B e antigen) là dấu ấn nhân lên virus: HBeAg(+) = HBV DNA cao (&gt;10⁶–10⁸ copies/mL) = lây mạnh. Anti-HBe(+) = seroconversion = virus nhân lên ít hơn, lây ít hơn (nhưng HBV DNA vẫn có thể dương tính). Mẹ HBeAg(+): nguy cơ lây con 90% → cần tiêm HBIg + vắc-xin cho trẻ trong 12 giờ đầu. Đột biến precore: không sản xuất HBeAg nhưng virus vẫn nhân lên mạnh (HBeAg-negative chronic HBV).</div><div class="kp">💡 HBeAg (+) = virus nhân lên mạnh, lây cao | Anti-HBe (+) = seroconversion, tiên lượng tốt hơn</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b5">Bloom 5 — Đánh giá</span><span class="badge kho">Khó</span></div>
+  <div class="qtext">Câu 93. Bệnh nhân viêm họng, cấy dịch họng âm tính với vi khuẩn, test nhanh Strep A âm tính. Bác sĩ kê amoxicillin. Quyết định này có phù hợp không?</div>
+  <ul class="opts" data-ans="D">
+    <li data-o="A">A. Phù hợp — amoxicillin điều trị kinh nghiệm mọi viêm họng</li>
+    <li data-o="B">B. Phù hợp — cần kháng sinh để phòng biến chứng</li>
+    <li data-o="C">C. Không phù hợp — nên dùng azithromycin thay thế</li>
+    <li data-o="D">D. Không phù hợp — viêm họng âm tính Strep A thường do virus, kháng sinh không có tác dụng và gây kháng kháng sinh</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: D</div><div class="wi">80–90% viêm họng là do virus (rhinovirus, adenovirus, coronavirus, EBV) → kháng sinh vô tác dụng. Chỉ điều trị kháng sinh khi: test Strep A dương tính HOẶC cấy họng mọc Strep A. Lạm dụng kháng sinh viêm họng virus là nguyên nhân hàng đầu kháng kháng sinh cộng đồng. Bệnh nhân cần giải thích: bệnh tự khỏi 7–10 ngày, điều trị triệu chứng (paracetamol, ngậm họng, nghỉ ngơi).</div><div class="kp">💡 80% viêm họng = virus → KHÔNG kháng sinh | Chỉ kháng sinh khi Strep A (+)</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b4">Bloom 4 — Phân tích</span><span class="badge kho">Khó</span></div>
+  <div class="qtext">Câu 94. Phương pháp PCR (Polymerase Chain Reaction) khác với nuôi cấy vi khuẩn như thế nào về ưu điểm trong chẩn đoán nhiễm khuẩn?</div>
+  <ul class="opts" data-ans="B">
+    <li data-o="A">A. PCR nhanh hơn nhưng không phân biệt vi khuẩn sống hay chết</li>
+    <li data-o="B">B. PCR phát hiện vật liệu di truyền (DNA/RNA) của vi sinh vật không nuôi cấy được, kết quả trong vài giờ, nhạy hơn nuôi cấy; nhược điểm: không cho kháng sinh đồ</li>
+    <li data-o="C">C. PCR chính xác hơn nuôi cấy trong mọi trường hợp</li>
+    <li data-o="D">D. PCR không cần bệnh phẩm tươi, có thể dùng mẫu bảo quản cũ</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: B</div><div class="wi">PCR ưu điểm: (1) Phát hiện vi sinh vật không nuôi cấy được (T. pallidum, M. leprae, virus); (2) Kết quả 2–6 giờ (nuôi cấy 24h–6 tuần); (3) Nhạy hơn (phát hiện 1–10 bản sao). Nhược điểm PCR: không cho kháng sinh đồ, dương tính giả (nhiễm bẩn), không phân biệt vi khuẩn sống/chết (điều trị xong vẫn dương). Nuôi cấy: "tiêu chuẩn vàng" vi khuẩn, cho kháng sinh đồ, chậm hơn.</div><div class="kp">💡 PCR: nhanh + nhạy + vi sinh không nuôi cấy được | Nuôi cấy: chậm nhưng cho kháng sinh đồ</div></div>
+</div>
+<div class="qcard">
+  <div class="meta"><span class="badge gq">MCQ</span><span class="badge b5">Bloom 5 — Đánh giá</span><span class="badge kho">Khó</span></div>
+  <div class="qtext">Câu 95. Bác sĩ cần so sánh Dengue, Zika và Chikungunya để tư vấn cho du khách đến vùng dịch. Điểm nào ĐÚNG khi so sánh ba bệnh do arbovirus này?</div>
+  <ul class="opts" data-ans="C">
+    <li data-o="A">A. Cả ba bệnh đều có vắc-xin hiệu quả hiện nay</li>
+    <li data-o="B">B. Zika gây xuất huyết nặng hơn Dengue</li>
+    <li data-o="C">C. Cả ba đều lây qua muỗi Aedes ban ngày; Zika nguy hiểm đặc biệt cho phụ nữ mang thai (gây tật đầu nhỏ thai nhi); Dengue có thể gây sốc; Chikungunya gây đau khớp nặng kéo dài</li>
+    <li data-o="D">D. Dengue và Chikungunya lây qua muỗi, Zika chỉ lây qua đường tình dục</li>
+  </ul>
+  <div class="btn-row"><button class="btn bchk" onclick="chk(this)" disabled>Kiểm tra</button><button class="btn brev" onclick="rev(this)">Xem đáp án</button></div>
+  <div class="expl"><div class="al">✅ Đáp án: C</div><div class="wi">Ba arbovirus lây qua Aedes aegypti/albopictus. Điểm khác: Dengue 4 serotype → sốt xuất huyết, sốc (seroconversion lần 2 nguy hiểm nhất — ADE). Zika: nhẹ hơn nhưng nguy hiểm cho thai (Guillain-Barré, microcephaly), lây qua tình dục (đặc biệt). Chikungunya: đau khớp cực nặng, kéo dài tháng-năm. Vắc-xin: Dengue có Dengvaxia (hạn chế), Zika và Chikungunya chưa có vắc-xin dùng rộng rãi.</div><div class="kp">💡 Dengue=sốc, Zika=thai nhi, Chikungunya=đau khớp | Tất cả: Aedes ban ngày, chưa có vắc-xin đủ rộng</div></div>
+</div>
+<!-- ============ END MCQ BỔ SUNG ============ -->
+<div class="sec">📝 CÂU HỎI TỰ LUẬN NGẮN</div>
+<div class="essay-card">
+  <div class="meta"><span class="badge gq">Tự luận</span><span class="badge b5">Bloom 5 — Đánh giá</span><span class="badge kho">Khó</span></div>
+  <div class="qtext">Câu 96. So sánh Ngoại độc tố và Nội độc tố về: nguồn gốc, bản chất hóa học, độc tính, tính kháng nguyên, khả năng tạo vắc-xin. Cho ví dụ vi khuẩn điển hình.</div>
+  <button class="etoggle" onclick="toggle(this)">▼ Xem đáp án gợi ý</button>
+  <div class="eans">
+    <ol>
+      <li><b>Nguồn gốc:</b> Ngoại độc tố: tiết từ tế bào sống (cả Gram+/Gram−). Nội độc tố: LPS màng ngoài Gram âm, giải phóng khi VK chết/ly giải.</li>
+      <li><b>Bản chất:</b> Ngoại = protein. Nội = lipopolysaccharide (LPS), phần Lipid A quyết định độc tính.</li>
+      <li><b>Độc tính:</b> Ngoại: cực độc, chuyên biệt (hướng thần kinh/ruột/hoại tử). Nội: độc thấp hơn, gây sốt + sốc nội độc tố không đặc hiệu.</li>
+      <li><b>Kháng nguyên:</b> Ngoại: mạnh → kháng thể trung hòa cao. Nội: yếu hơn.</li>
+      <li><b>Vắc-xin:</b> Ngoại: formol/nhiệt → anatoxin → vắc-xin (uốn ván, bạch hầu). Nội (LPS): KHÔNG tạo anatoxin được.</li>
+      <li><b>Ví dụ:</b> Ngoại: C. tetani (tetanospasmin), C. diphtheriae (DT), S. aureus (enterotoxin). Nội: Salmonella, Shigella, E. coli (LPS).</li>
+    </ol>
+  </div>
+</div>
+
+<!-- Essay Q22 -->
+<div class="essay-card">
+  <div class="meta"><span class="badge gq">Tự luận</span><span class="badge b6">Bloom 6 — Sáng tạo</span><span class="badge kho">Khó</span></div>
+  <div class="qtext">Câu 97. Thai phụ 28 tuổi, tuần 36: HBsAg(+), Reagin giang mai(+), không rõ lịch tiêm uốn ván. Thiết kế kế hoạch quản lý chu sinh toàn diện bảo vệ mẹ và trẻ sơ sinh.</div>
+  <button class="etoggle" onclick="toggle(this)">▼ Xem đáp án gợi ý</button>
+  <div class="eans">
+    <ol>
+      <li><b>Giang mai:</b> Xác nhận bằng phản ứng đặc hiệu (TPPA/FTA-ABS). Điều trị ngay Penicillin G Benzathin 2.4MU IM. Điều trị cả bạn tình. Mục tiêu: loại trừ xoắn khuẩn trước sinh.</li>
+      <li><b>HBV (HBsAg+):</b> Đo tải lượng HBV DNA. Nếu cao: dùng Tenofovir từ tuần 28–32 giảm lây mẹ-con. Sau sinh: Trẻ tiêm HBIG 0.5ml + vắc-xin HBV mũi 1 trong 12h đầu.</li>
+      <li><b>Uốn ván (không rõ lịch):</b> Tiêm Td/Tdap 2 mũi cách 4 tuần. An toàn trong thai kỳ.</li>
+      <li><b>Kế hoạch sau sinh cho trẻ:</b> HBIG + HBV vắc-xin mũi 1 trong 12h; xét nghiệm huyết thanh trẻ tầm soát giang mai bẩm sinh; HBV mũi 2 tháng 1, mũi 3 tháng 6.</li>
+      <li><b>Theo dõi mẹ:</b> VDRL kiểm tra đáp ứng điều trị giang mai sau 3–6–12 tháng. Theo dõi chức năng gan + HBV DNA định kỳ.</li>
+    </ol>
+  </div>
+</div>
+
+<!-- Essay Q23 -->
+<div class="essay-card">
+  <div class="meta"><span class="badge gq">Tự luận</span><span class="badge b4">Bloom 4 — Phân tích</span><span class="badge tb">Trung bình</span></div>
+  <div class="qtext">Câu 98. Giải thích tại sao M. leprae gây tổn thương chủ yếu ở da và thần kinh ngoại biên chứ không gây viêm phổi hay viêm gan.</div>
+  <button class="etoggle" onclick="toggle(this)">▼ Xem đáp án gợi ý</button>
+  <div class="eans">
+    <ol>
+      <li><b>Nhiệt độ ưa thích:</b> M. leprae tăng trưởng tối ưu ở ~30°C (thấp hơn thân nhiệt 37°C). Da và thần kinh ngoại biên có nhiệt độ thấp hơn nội tạng → ưu tiên khu trú.</li>
+      <li><b>Vị trí điển hình:</b> Vùng da lạnh: tai, mũi, khuỷu tay, gò má. Dây thần kinh ngoại biên gần da: thần kinh trụ, thần kinh quay, thần kinh mác.</li>
+      <li><b>Hậu quả:</b> Mất cảm giác theo phân bố thần kinh, teo cơ, biến dạng bàn tay/chân. Loét da do mất cảm giác đau (tự tổn thương không biết).</li>
+      <li><b>Nội tạng 37°C</b> (phổi, gan) → không thuận lợi → M. leprae không phát triển → không gây viêm cơ quan nội tạng.</li>
+      <li><b>Liên hệ xét nghiệm:</b> M. leprae KHÔNG nuôi cấy được trên môi trường nhân tạo; chỉ mọc ở lòng bàn chân chuột hoặc armadillo (30°C). Chẩn đoán: sinh thiết da + nhuộm AFB.</li>
+    </ol>
+  </div>
+</div>
+
+<!-- ============ ĐIỀN CHỖ TRỐNG ============ -->
+<div class="sec">✏️ ĐIỀN VÀO CHỖ TRỐNG</div>
+
+<!-- Fill Q24 -->
+<div class="blank-card">
+  <div class="meta"><span class="badge gq">Điền chỗ trống</span><span class="badge b1">Bloom 1 — Nhớ</span><span class="badge de">Dễ</span></div>
+  <div class="qtext">Câu 99. Cơ chế uốn ván:</div>
+  <div class="blank-txt" id="b24">
+    Vi khuẩn uốn ván (<i>C. tetani</i>) sản xuất ngoại độc tố protein có tên là
+    <span class="bl" data-a="tetanospasmin">tetanospasmin</span>.
+    Độc tố này di chuyển ngược chiều theo dây thần kinh lên
+    <span class="bl" data-a="tủy sống / não">tủy sống / não</span>,
+    ức chế phóng thích chất dẫn truyền thần kinh ức chế là
+    <span class="bl" data-a="GABA và glycine">GABA và glycine</span>,
+    dẫn đến <span class="bl" data-a="co giật cứng">co giật cứng</span> toàn thân liên tục.
+  </div>
+  <div class="btn-row">
+    <button class="btn brev" onclick="document.getElementById('b24').classList.add('rev')">Hiện đáp án</button>
+  </div>
+</div>
+
+<!-- Fill Q25 -->
+<div class="blank-card">
+  <div class="meta"><span class="badge gq">Điền chỗ trống</span><span class="badge b1">Bloom 1 — Nhớ</span><span class="badge tb">Trung bình</span></div>
+  <div class="qtext">Câu 100. Cơ chế HIV gây suy giảm miễn dịch:</div>
+  <div class="blank-txt" id="b25">
+    HIV tấn công tế bào <span class="bl" data-a="lympho T CD4+">lympho T CD4+</span>
+    mang thụ thể <span class="bl" data-a="CD4 và CCR5">CD4 và CCR5</span>.
+    Sau khi tích hợp vào gen vật chủ thành
+    <span class="bl" data-a="provirus">provirus</span>,
+    HIV điều khiển tế bào nhân lên và ly giải. Khi CD4+ giảm dưới
+    <span class="bl" data-a="200 tế bào/μL">200 tế bào/μL</span>,
+    bệnh nhân bước vào giai đoạn <span class="bl" data-a="AIDS">AIDS</span>
+    với nguy cơ nhiễm trùng cơ hội cao.
+  </div>
+  <div class="btn-row">
+    <button class="btn brev" onclick="document.getElementById('b25').classList.add('rev')">Hiện đáp án</button>
+  </div>
+</div>
+
+<!-- Score -->
+<div class="score-box" id="sbox">
+  <div class="score-num" id="snum">0/20</div>
+  <div style="color:#718096;margin-top:4px">câu MCQ trả lời đúng</div>
+</div>
+
+<footer>
+  <button class="breset" onclick="resetAll()">↺ Làm lại từ đầu</button>
+</footer>
+
+</div><!-- /container -->
+
+<script>
+var score=0, done=0, total=95;
+
+function chk(btn){
+  var card=btn.closest('.qcard');
+  var sel=card.querySelector('.opts li.selected');
+  if(!sel)return;
+  var ans=card.querySelector('.opts').dataset.ans;
+  var opts=card.querySelectorAll('.opts li');
+  opts.forEach(function(o){o.classList.add('disabled')});
+  var row=btn.parentElement;
+  var chip=document.createElement('span');
+  chip.className='chip';
+  if(sel.dataset.o===ans){
+    sel.classList.add('correct');
+    chip.className+=' chip-ok';chip.textContent='✓ Đúng rồi!';score++;
+  } else {
+    sel.classList.add('wrong');
+    chip.className+=' chip-no';chip.textContent='✗ Chưa đúng';
+    opts.forEach(function(o){if(o.dataset.o===ans)o.classList.add('correct')});
+  }
+  row.prepend(chip);
+  card.querySelector('.expl').classList.add('show');
+  btn.disabled=true; done++; upd();
+}
+
+function rev(btn){
+  var card=btn.closest('.qcard');
+  if(card.dataset.done)return;
+  var ans=card.querySelector('.opts').dataset.ans;
+  var opts=card.querySelectorAll('.opts li');
+  opts.forEach(function(o){
+    o.classList.add('disabled');
+    if(o.dataset.o===ans)o.classList.add('correct');
+  });
+  card.querySelector('.expl').classList.add('show');
+  card.querySelector('.bchk').disabled=true;
+  card.dataset.done='1'; done++; upd();
+}
+
+function upd(){
+  var pct=(score/total*100);
+  document.getElementById('pb').style.width=pct+'%';
+  document.getElementById('pbt').textContent=score+' / '+total+' câu MCQ đúng ('+done+' đã trả lời)';
+  if(done>=total){
+    document.getElementById('sbox').style.display='block';
+    document.getElementById('snum').textContent=score+'/'+total;
+  }
+}
+
+document.querySelectorAll('.opts li').forEach(function(li){
+  li.addEventListener('click',function(){
+    if(this.classList.contains('disabled'))return;
+    var ul=this.closest('ul');
+    ul.querySelectorAll('li').forEach(function(l){l.classList.remove('selected')});
+    this.classList.add('selected');
+    this.closest('.qcard').querySelector('.bchk').disabled=false;
+  });
+});
+
+function toggle(btn){
+  var ans=btn.nextElementSibling;
+  ans.classList.toggle('show');
+  btn.textContent=ans.classList.contains('show')?'▲ Ẩn đáp án':'▼ Xem đáp án gợi ý';
+}
+
+function resetAll(){
+  score=0;done=0;
+  document.querySelectorAll('.opts li').forEach(function(li){
+    li.className='';
+  });
+  document.querySelectorAll('.expl').forEach(function(e){e.classList.remove('show')});
+  document.querySelectorAll('.chip').forEach(function(c){c.remove()});
+  document.querySelectorAll('.bchk').forEach(function(b){b.disabled=true});
+  document.querySelectorAll('.qcard').forEach(function(c){delete c.dataset.done});
+  document.getElementById('b24').classList.remove('rev');
+  document.getElementById('b25').classList.remove('rev');
+  document.querySelectorAll('.eans').forEach(function(e){e.classList.remove('show')});
+  document.querySelectorAll('.etoggle').forEach(function(b){b.textContent='▼ Xem đáp án gợi ý'});
+  document.getElementById('sbox').style.display='none';
+  upd(); window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+---
+title: "Template: Learning Path"
+description: "Lộ trình học cho một môn, chương hoặc cụm chủ đề."
+type: "learning-path"
+category: "templates"
+diataxis: "tutorial"
+medicineSystem: "shared"
+templateId: "learning-path"
+templateFamily: "shared"
+status: "draft"
+draft: true
+pagefind: false
+sidebar:
+  hidden: true
+---
+
+import LearningPath from '~/components/LearningPath.astro';
+import KeyPoints from '~/components/KeyPoints.astro';
+import CompareTable from '~/components/CompareTable.astro';
+import SourceNote from '~/components/SourceNote.astro';
+
+<LearningPath
+  title="Lộ trình học"
+  duration="Ước lượng thời lượng"
+  level="Nhập môn / trung cấp / nâng cao"
+  before="Điều kiện trước khi học"
+  goal="Năng lực đạt được sau lộ trình"
+  practice="Cách đi qua bài đọc, case, bảng, quiz"
+  check="Tiêu chí qua chặng"
+/>
+
+## Dành cho ai?
+
+## Học xong làm được gì?
+
+<KeyPoints>
+
+- Năng lực 1
+- Năng lực 2
+- Năng lực 3
+
+</KeyPoints>
+
+## Các chặng học
+
+<CompareTable title="Kế hoạch học">
+
+| Chặng | Nội dung | Thời lượng | Bài/case/quiz | Tiêu chí qua chặng |
+| --- | --- | --- | --- | --- |
+| 1 |  |  |  |  |
+| 2 |  |  |  |  |
+| 3 |  |  |  |  |
+
+</CompareTable>
+
+## Cách ôn lại
+
+```text
+Ngày 0:
+Ngày 1:
+Ngày 3-7:
+Trước chương mới:
+```
+
+## Liên kết nội dung
+
+- [Bài học]()
+- [Tra cứu nhanh]()
+- [Hiểu sâu]()
+- [Quiz]()
+
+<SourceNote>
+
+- Nguồn / mục lục gốc:
+
+</SourceNote>

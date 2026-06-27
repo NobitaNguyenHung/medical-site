@@ -30,24 +30,38 @@ export default defineConfig({
 			// Pagefind search = mặc định Starlight, bật sẵn
 			sidebar: [
 				{
-					label: 'Sách',
+					label: 'Học theo lộ trình',
 					items: [
-						// ░░ MẪU 1 SÁCH — copy nguyên block, đổi 'on-benh' + nhãn ░░
-						{
-							label: 'Ôn bệnh',
-							collapsed: true,
-							items: [
-								{ label: '1 · Lý thuyết tóm tắt', items: [{ autogenerate: { directory: 'books/on-benh/tom-tat' } }] },
-								{ label: '2 · Lý thuyết nguyên thủy', items: [{ autogenerate: { directory: 'books/on-benh/nguyen-thuy' } }] },
-								{ label: '3 · Câu hỏi lượng giá', items: [{ autogenerate: { directory: 'books/on-benh/luong-gia' } }] },
-							],
-						},
-						// ░░ thêm sách mới ở đây ░░
+						{ label: 'Cách học theo lộ trình', link: 'learning-paths/' },
+						{ label: 'Lộ trình Ôn bệnh', link: 'learning-paths/on-benh/' },
+						{ label: 'Lộ trình Ôn bệnh đại cương', link: 'learning-paths/on-benh-dai-cuong/' },
+						{ label: 'Ôn bệnh · Lượng giá', items: [{ autogenerate: { directory: 'books/on-benh/luong-gia' } }] },
+						{ label: 'Ôn bệnh đại cương · Lượng giá', items: [{ autogenerate: { directory: 'books/on-benh-dai-cuong/luong-gia' } }] },
+						{ label: 'Ca học từng bước', items: [{ autogenerate: { directory: 'cases' } }] },
 					],
 				},
-				{ label: 'Cases', items: [{ autogenerate: { directory: 'cases' } }] },
-				{ label: 'Updates', items: [{ autogenerate: { directory: 'updates' } }] },
-				{ label: 'Topics', items: [{ autogenerate: { directory: 'topics' } }] },
+				{
+					label: 'Xử trí lâm sàng',
+					items: [
+						{ label: 'Cập nhật điều trị', items: [{ autogenerate: { directory: 'updates' } }] },
+					],
+				},
+				{
+					label: 'Tra cứu nhanh',
+					items: [
+						{ label: 'Ôn bệnh · Tóm tắt', items: [{ autogenerate: { directory: 'books/on-benh/tom-tat' } }] },
+						{ label: 'Ôn bệnh đại cương · Tóm tắt', items: [{ autogenerate: { directory: 'books/on-benh-dai-cuong/tom-tat' } }] },
+						{ label: 'Bảng tra cứu', items: [{ autogenerate: { directory: 'topics/reference' } }] },
+					],
+				},
+				{
+					label: 'Hiểu sâu',
+					items: [
+						{ label: 'Ôn bệnh · Nguyên thủy', items: [{ autogenerate: { directory: 'books/on-benh/nguyen-thuy' } }] },
+						{ label: 'Ôn bệnh đại cương · Nguyên thủy', items: [{ autogenerate: { directory: 'books/on-benh-dai-cuong/nguyen-thuy' } }] },
+						{ label: 'Giải thích cơ chế', items: [{ autogenerate: { directory: 'topics/explanation' } }] },
+					],
+				},
 			],
 		}),
 		AstroPWA({

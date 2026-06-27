@@ -1,0 +1,1109 @@
+{
+  "book": {
+    "title": "Ôn bệnh đại cương",
+    "slug": "on-benh-dai-cuong",
+    "source": "Raw/on_benh_dai_cuong",
+    "generatedAt": "2026-06-27T07:45:00.364Z"
+  },
+  "counts": {
+    "total": 20,
+    "markdown": 20,
+    "html": 0,
+    "quizHtml": 0
+  },
+  "quizAssets": [],
+  "actions": {
+    "writeSkeleton": true,
+    "nextStep": "Ask Codex to process one chapter at a time using TEMPLATE_CATALOG.md and this plan. Quiz HTML under Raw/<book>/Quiz or Quzi will be copied and embedded during materialize."
+  },
+  "items": [
+    {
+      "order": 1,
+      "kind": "markdown",
+      "path": "Raw/on_benh_dai_cuong/01_ly-thuyet/bai-01-dai-cuong-on-benh_001.md",
+      "sizeKb": 51,
+      "title": "BÀI 1. ĐẠI CƯƠNG VỀ ÔN BỆNH",
+      "slug": "bai-1-dai-cuong-ve-on-benh",
+      "headings": [
+        {
+          "level": 1,
+          "text": "BÀI 1. ĐẠI CƯƠNG VỀ ÔN BỆNH"
+        },
+        {
+          "level": 3,
+          "text": "1. KHÁI NIỆM VÀ SỰ PHÁT TRIỂN"
+        },
+        {
+          "level": 3,
+          "text": "1.1. Khái niệm"
+        },
+        {
+          "level": 3,
+          "text": "2.2. Sự phát triển"
+        },
+        {
+          "level": 4,
+          "text": "- Thời kỳ chiến quốc - Tần Đường"
+        },
+        {
+          "level": 4,
+          "text": "- Thời Tống Kim Nguyên"
+        },
+        {
+          "level": 4,
+          "text": "- Thời Minh Thanh"
+        },
+        {
+          "level": 2,
+          "text": "2. ĐẶC ĐIỂM"
+        },
+        {
+          "level": 3,
+          "text": "2.1. Đặc điểm chung"
+        },
+        {
+          "level": 3,
+          "text": "2.2. Nhân tố gây bệnh"
+        },
+        {
+          "level": 3,
+          "text": "2.3. Tính chất gây bệnh"
+        },
+        {
+          "level": 4,
+          "text": "2.4. Biểu hiện lâm sàng"
+        },
+        {
+          "level": 4,
+          "text": "2.4.1. Khởi bệnh, truyền biến"
+        },
+        {
+          "level": 3,
+          "text": "3. PHẠM VI VÀ PHÂN LOẠI ÔN BỆNH"
+        },
+        {
+          "level": 4,
+          "text": "3.1. Phạm vi"
+        },
+        {
+          "level": 4,
+          "text": "3.2. Phân loại"
+        }
+      ],
+      "medicineSystem": "tcm",
+      "diataxis": "explanation",
+      "template": "deep-explanation",
+      "destinations": {
+        "summary": "src/content/docs/books/on-benh-dai-cuong/tom-tat/01-bai-1-dai-cuong-ve-on-benh.mdx",
+        "original": "src/content/docs/books/on-benh-dai-cuong/nguyen-thuy/01-bai-1-dai-cuong-ve-on-benh.mdx",
+        "reference": "src/content/docs/topics/reference/on-benh-dai-cuong-bai-1-dai-cuong-ve-on-benh.mdx",
+        "explanation": "src/content/docs/topics/explanation/on-benh-dai-cuong-bai-1-dai-cuong-ve-on-benh.mdx",
+        "assessment": "src/content/docs/books/on-benh-dai-cuong/luong-gia/01-bai-1-dai-cuong-ve-on-benh-luong-gia.mdx",
+        "primary": "src/content/docs/topics/explanation/on-benh-dai-cuong-bai-1-dai-cuong-ve-on-benh.mdx"
+      }
+    },
+    {
+      "order": 2,
+      "kind": "markdown",
+      "path": "Raw/on_benh_dai_cuong/01_ly-thuyet/bai-01-dai-cuong-on-benh_002.md",
+      "sizeKb": 34,
+      "title": "4.1. Phân biệt ôn tà và ngoại cảm hàn tà",
+      "slug": "4-1-phan-biet-on-ta-va-ngoai-cam-han-ta",
+      "headings": [
+        {
+          "level": 4,
+          "text": "4.1. Phân biệt ôn tà và ngoại cảm hàn tà"
+        },
+        {
+          "level": 3,
+          "text": "4.2. Phân biệt Ôn bệnh và Thương hàn"
+        },
+        {
+          "level": 4,
+          "text": "Lời chú thích"
+        },
+        {
+          "level": 4,
+          "text": "Lời chú thích"
+        },
+        {
+          "level": 4,
+          "text": "Lời chú thích"
+        }
+      ],
+      "medicineSystem": "tcm",
+      "diataxis": "explanation",
+      "template": "deep-explanation",
+      "destinations": {
+        "summary": "src/content/docs/books/on-benh-dai-cuong/tom-tat/02-4-1-phan-biet-on-ta-va-ngoai-cam-han-ta.mdx",
+        "original": "src/content/docs/books/on-benh-dai-cuong/nguyen-thuy/02-4-1-phan-biet-on-ta-va-ngoai-cam-han-ta.mdx",
+        "reference": "src/content/docs/topics/reference/on-benh-dai-cuong-4-1-phan-biet-on-ta-va-ngoai-cam-han-ta.mdx",
+        "explanation": "src/content/docs/topics/explanation/on-benh-dai-cuong-4-1-phan-biet-on-ta-va-ngoai-cam-han-ta.mdx",
+        "assessment": "src/content/docs/books/on-benh-dai-cuong/luong-gia/02-4-1-phan-biet-on-ta-va-ngoai-cam-han-ta-luong-gia.mdx",
+        "primary": "src/content/docs/topics/explanation/on-benh-dai-cuong-4-1-phan-biet-on-ta-va-ngoai-cam-han-ta.mdx"
+      }
+    },
+    {
+      "order": 3,
+      "kind": "markdown",
+      "path": "Raw/on_benh_dai_cuong/01_ly-thuyet/bai-02-nguyen-nhan-phat-benh_001.md",
+      "sizeKb": 39,
+      "title": "BÀI 2. NGUYÊN NHÂN BỆNH VÀ PHÁT BỆNH",
+      "slug": "bai-2-nguyen-nhan-benh-va-phat-benh",
+      "headings": [
+        {
+          "level": 1,
+          "text": "BÀI 2. NGUYÊN NHÂN BỆNH VÀ PHÁT BỆNH"
+        },
+        {
+          "level": 2,
+          "text": "1. KHÁI NIỆM"
+        },
+        {
+          "level": 2,
+          "text": "2. NGUYÊN NHÂN VÀ CƠ CHẾ SINH BỆNH"
+        },
+        {
+          "level": 4,
+          "text": "2.1. Nguyên nhân"
+        }
+      ],
+      "medicineSystem": "shared",
+      "diataxis": "explanation",
+      "template": "deep-explanation",
+      "destinations": {
+        "summary": "src/content/docs/books/on-benh-dai-cuong/tom-tat/03-bai-2-nguyen-nhan-benh-va-phat-benh.mdx",
+        "original": "src/content/docs/books/on-benh-dai-cuong/nguyen-thuy/03-bai-2-nguyen-nhan-benh-va-phat-benh.mdx",
+        "reference": "src/content/docs/topics/reference/on-benh-dai-cuong-bai-2-nguyen-nhan-benh-va-phat-benh.mdx",
+        "explanation": "src/content/docs/topics/explanation/on-benh-dai-cuong-bai-2-nguyen-nhan-benh-va-phat-benh.mdx",
+        "assessment": "src/content/docs/books/on-benh-dai-cuong/luong-gia/03-bai-2-nguyen-nhan-benh-va-phat-benh-luong-gia.mdx",
+        "primary": "src/content/docs/topics/explanation/on-benh-dai-cuong-bai-2-nguyen-nhan-benh-va-phat-benh.mdx"
+      }
+    },
+    {
+      "order": 4,
+      "kind": "markdown",
+      "path": "Raw/on_benh_dai_cuong/01_ly-thuyet/bai-02-nguyen-nhan-phat-benh_002.md",
+      "sizeKb": 32,
+      "title": "2.1.5. Ôn nhiệt bệnh tà",
+      "slug": "2-1-5-on-nhiet-benh-ta",
+      "headings": [
+        {
+          "level": 4,
+          "text": "2.1.5. Ôn nhiệt bệnh tà"
+        },
+        {
+          "level": 4,
+          "text": "2.1.6. Ôn độc bệnh tà"
+        },
+        {
+          "level": 4,
+          "text": "2.2. Cơ chế"
+        },
+        {
+          "level": 4,
+          "text": "2.3. Đường xâm nhập của tà khí"
+        },
+        {
+          "level": 4,
+          "text": "2.4. Phát bệnh"
+        },
+        {
+          "level": 4,
+          "text": "2.4.1. Tân cảm Ôn bệnh"
+        }
+      ],
+      "medicineSystem": "tcm",
+      "diataxis": "explanation",
+      "template": "deep-explanation",
+      "destinations": {
+        "summary": "src/content/docs/books/on-benh-dai-cuong/tom-tat/04-2-1-5-on-nhiet-benh-ta.mdx",
+        "original": "src/content/docs/books/on-benh-dai-cuong/nguyen-thuy/04-2-1-5-on-nhiet-benh-ta.mdx",
+        "reference": "src/content/docs/topics/reference/on-benh-dai-cuong-2-1-5-on-nhiet-benh-ta.mdx",
+        "explanation": "src/content/docs/topics/explanation/on-benh-dai-cuong-2-1-5-on-nhiet-benh-ta.mdx",
+        "assessment": "src/content/docs/books/on-benh-dai-cuong/luong-gia/04-2-1-5-on-nhiet-benh-ta-luong-gia.mdx",
+        "primary": "src/content/docs/topics/explanation/on-benh-dai-cuong-2-1-5-on-nhiet-benh-ta.mdx"
+      }
+    },
+    {
+      "order": 5,
+      "kind": "markdown",
+      "path": "Raw/on_benh_dai_cuong/01_ly-thuyet/bai-02-nguyen-nhan-phat-benh_003.md",
+      "sizeKb": 19,
+      "title": "2.4.2. Phục tà ôn bệnh",
+      "slug": "2-4-2-phuc-ta-on-benh",
+      "headings": [
+        {
+          "level": 4,
+          "text": "2.4.2. Phục tà ôn bệnh"
+        },
+        {
+          "level": 3,
+          "text": "3. NHẬN THỨC CỦA CÁC Y GIA NGÀY TRƯỚC VỀ NGUYÊN NHÂN CỦA ÔN BỆNH VÀ PHÁT BỆNH"
+        },
+        {
+          "level": 4,
+          "text": "3.1. Nguyên nhân bệnh"
+        },
+        {
+          "level": 4,
+          "text": "3.1.1. Lục dâm hóa hòa"
+        },
+        {
+          "level": 4,
+          "text": "3.1.2. Học thuyết tạp khí"
+        },
+        {
+          "level": 4,
+          "text": "3.2. Phát bệnh"
+        }
+      ],
+      "medicineSystem": "tcm",
+      "diataxis": "explanation",
+      "template": "deep-explanation",
+      "destinations": {
+        "summary": "src/content/docs/books/on-benh-dai-cuong/tom-tat/05-2-4-2-phuc-ta-on-benh.mdx",
+        "original": "src/content/docs/books/on-benh-dai-cuong/nguyen-thuy/05-2-4-2-phuc-ta-on-benh.mdx",
+        "reference": "src/content/docs/topics/reference/on-benh-dai-cuong-2-4-2-phuc-ta-on-benh.mdx",
+        "explanation": "src/content/docs/topics/explanation/on-benh-dai-cuong-2-4-2-phuc-ta-on-benh.mdx",
+        "assessment": "src/content/docs/books/on-benh-dai-cuong/luong-gia/05-2-4-2-phuc-ta-on-benh-luong-gia.mdx",
+        "primary": "src/content/docs/topics/explanation/on-benh-dai-cuong-2-4-2-phuc-ta-on-benh.mdx"
+      }
+    },
+    {
+      "order": 6,
+      "kind": "markdown",
+      "path": "Raw/on_benh_dai_cuong/01_ly-thuyet/bai-03-bien-chung_001.md",
+      "sizeKb": 29,
+      "title": "BÀI 3. BIỆN CHỨNG VỀ ÔN BỆNH",
+      "slug": "bai-3-bien-chung-ve-on-benh",
+      "headings": [
+        {
+          "level": 1,
+          "text": "BÀI 3. BIỆN CHỨNG VỀ ÔN BỆNH"
+        },
+        {
+          "level": 2,
+          "text": "1. KHÁI NIỆM"
+        },
+        {
+          "level": 2,
+          "text": "2. BIỆN CHỨNG"
+        },
+        {
+          "level": 3,
+          "text": "2.1. Vệ, khí, dinh, huyết biện chứng"
+        },
+        {
+          "level": 4,
+          "text": "2.2. Tam tiêu biện chứng"
+        }
+      ],
+      "medicineSystem": "tcm",
+      "diataxis": "reference",
+      "template": "tcm-pattern",
+      "destinations": {
+        "summary": "src/content/docs/books/on-benh-dai-cuong/tom-tat/06-bai-3-bien-chung-ve-on-benh.mdx",
+        "original": "src/content/docs/books/on-benh-dai-cuong/nguyen-thuy/06-bai-3-bien-chung-ve-on-benh.mdx",
+        "reference": "src/content/docs/topics/reference/on-benh-dai-cuong-bai-3-bien-chung-ve-on-benh.mdx",
+        "explanation": "src/content/docs/topics/explanation/on-benh-dai-cuong-bai-3-bien-chung-ve-on-benh.mdx",
+        "assessment": "src/content/docs/books/on-benh-dai-cuong/luong-gia/06-bai-3-bien-chung-ve-on-benh-luong-gia.mdx",
+        "primary": "src/content/docs/topics/reference/on-benh-dai-cuong-bai-3-bien-chung-ve-on-benh.mdx"
+      }
+    },
+    {
+      "order": 7,
+      "kind": "markdown",
+      "path": "Raw/on_benh_dai_cuong/01_ly-thuyet/bai-03-bien-chung_002.md",
+      "sizeKb": 33,
+      "title": "2.3. Mối quan hệ giữa vệ, khí, dinh, huyết bệnh chứng và tam tiêu bệnh chứng",
+      "slug": "2-3-moi-quan-he-giua-ve-khi-dinh-huyet-benh-chung-va-tam-tieu-benh-chung",
+      "headings": [
+        {
+          "level": 4,
+          "text": "2.3. Mối quan hệ giữa vệ, khí, dinh, huyết bệnh chứng và tam tiêu bệnh chứng"
+        }
+      ],
+      "medicineSystem": "shared",
+      "diataxis": "explanation",
+      "template": "deep-explanation",
+      "destinations": {
+        "summary": "src/content/docs/books/on-benh-dai-cuong/tom-tat/07-2-3-moi-quan-he-giua-ve-khi-dinh-huyet-benh-chung-va-tam-tieu-benh-chung.mdx",
+        "original": "src/content/docs/books/on-benh-dai-cuong/nguyen-thuy/07-2-3-moi-quan-he-giua-ve-khi-dinh-huyet-benh-chung-va-tam-tieu-benh-chung.mdx",
+        "reference": "src/content/docs/topics/reference/on-benh-dai-cuong-2-3-moi-quan-he-giua-ve-khi-dinh-huyet-benh-chung-va-tam-tieu-benh-chung.mdx",
+        "explanation": "src/content/docs/topics/explanation/on-benh-dai-cuong-2-3-moi-quan-he-giua-ve-khi-dinh-huyet-benh-chung-va-tam-tieu-benh-chung.mdx",
+        "assessment": "src/content/docs/books/on-benh-dai-cuong/luong-gia/07-2-3-moi-quan-he-giua-ve-khi-dinh-huyet-benh-chung-va-tam-tieu-benh-chung-luong-gia.mdx",
+        "primary": "src/content/docs/topics/explanation/on-benh-dai-cuong-2-3-moi-quan-he-giua-ve-khi-dinh-huyet-benh-chung-va-tam-tieu-benh-chung.mdx"
+      }
+    },
+    {
+      "order": 8,
+      "kind": "markdown",
+      "path": "Raw/on_benh_dai_cuong/01_ly-thuyet/bai-04-chan-doan_001.md",
+      "sizeKb": 30,
+      "title": "BÀI 4. CHẨN ĐOÁN ÔN BỆNH",
+      "slug": "bai-4-chan-doan-on-benh",
+      "headings": [
+        {
+          "level": 1,
+          "text": "BÀI 4. CHẨN ĐOÁN ÔN BỆNH"
+        },
+        {
+          "level": 2,
+          "text": "1. KHÁI NIỆM"
+        },
+        {
+          "level": 2,
+          "text": "2. CÁC BỘ PHẬN CẦN BIỆN LUẬN TRONG CHẨN ĐOÁN ÔN BỆNH"
+        },
+        {
+          "level": 3,
+          "text": "2.1. Biện thiết"
+        },
+        {
+          "level": 4,
+          "text": "2.2. Nghiệm xỉ"
+        },
+        {
+          "level": 4,
+          "text": "2.3. Ban chẩn, bạch bối"
+        }
+      ],
+      "medicineSystem": "tcm",
+      "diataxis": "explanation",
+      "template": "deep-explanation",
+      "destinations": {
+        "summary": "src/content/docs/books/on-benh-dai-cuong/tom-tat/08-bai-4-chan-doan-on-benh.mdx",
+        "original": "src/content/docs/books/on-benh-dai-cuong/nguyen-thuy/08-bai-4-chan-doan-on-benh.mdx",
+        "reference": "src/content/docs/topics/reference/on-benh-dai-cuong-bai-4-chan-doan-on-benh.mdx",
+        "explanation": "src/content/docs/topics/explanation/on-benh-dai-cuong-bai-4-chan-doan-on-benh.mdx",
+        "assessment": "src/content/docs/books/on-benh-dai-cuong/luong-gia/08-bai-4-chan-doan-on-benh-luong-gia.mdx",
+        "primary": "src/content/docs/topics/explanation/on-benh-dai-cuong-bai-4-chan-doan-on-benh.mdx"
+      }
+    },
+    {
+      "order": 9,
+      "kind": "markdown",
+      "path": "Raw/on_benh_dai_cuong/01_ly-thuyet/bai-04-chan-doan_002.md",
+      "sizeKb": 39,
+      "title": "2.4. Biện những chứng thường gặp",
+      "slug": "2-4-bien-nhung-chung-thuong-gap",
+      "headings": [
+        {
+          "level": 4,
+          "text": "2.4. Biện những chứng thường gặp"
+        },
+        {
+          "level": 4,
+          "text": "2.4.5. Kinh"
+        }
+      ],
+      "medicineSystem": "shared",
+      "diataxis": "explanation",
+      "template": "deep-explanation",
+      "destinations": {
+        "summary": "src/content/docs/books/on-benh-dai-cuong/tom-tat/09-2-4-bien-nhung-chung-thuong-gap.mdx",
+        "original": "src/content/docs/books/on-benh-dai-cuong/nguyen-thuy/09-2-4-bien-nhung-chung-thuong-gap.mdx",
+        "reference": "src/content/docs/topics/reference/on-benh-dai-cuong-2-4-bien-nhung-chung-thuong-gap.mdx",
+        "explanation": "src/content/docs/topics/explanation/on-benh-dai-cuong-2-4-bien-nhung-chung-thuong-gap.mdx",
+        "assessment": "src/content/docs/books/on-benh-dai-cuong/luong-gia/09-2-4-bien-nhung-chung-thuong-gap-luong-gia.mdx",
+        "primary": "src/content/docs/topics/explanation/on-benh-dai-cuong-2-4-bien-nhung-chung-thuong-gap.mdx"
+      }
+    },
+    {
+      "order": 10,
+      "kind": "markdown",
+      "path": "Raw/on_benh_dai_cuong/01_ly-thuyet/bai-04-chan-doan_003.md",
+      "sizeKb": 4,
+      "title": "2.4.6. Quyết thoát",
+      "slug": "2-4-6-quyet-thoat",
+      "headings": [
+        {
+          "level": 4,
+          "text": "2.4.6. Quyết thoát"
+        }
+      ],
+      "medicineSystem": "modern",
+      "diataxis": "how-to",
+      "template": "symptom-approach",
+      "destinations": {
+        "summary": "src/content/docs/books/on-benh-dai-cuong/tom-tat/10-2-4-6-quyet-thoat.mdx",
+        "original": "src/content/docs/books/on-benh-dai-cuong/nguyen-thuy/10-2-4-6-quyet-thoat.mdx",
+        "reference": "src/content/docs/topics/reference/on-benh-dai-cuong-2-4-6-quyet-thoat.mdx",
+        "explanation": "src/content/docs/topics/explanation/on-benh-dai-cuong-2-4-6-quyet-thoat.mdx",
+        "assessment": "src/content/docs/books/on-benh-dai-cuong/luong-gia/10-2-4-6-quyet-thoat-luong-gia.mdx",
+        "primary": "src/content/docs/updates/on-benh-dai-cuong-2-4-6-quyet-thoat.mdx"
+      }
+    },
+    {
+      "order": 11,
+      "kind": "markdown",
+      "path": "Raw/on_benh_dai_cuong/01_ly-thuyet/bai-05-du-phong_001.md",
+      "sizeKb": 23,
+      "title": "BÀI 5. DỰ PHÒNG ÔN BỆNH",
+      "slug": "bai-5-du-phong-on-benh",
+      "headings": [
+        {
+          "level": 1,
+          "text": "BÀI 5. DỰ PHÒNG ÔN BỆNH"
+        },
+        {
+          "level": 2,
+          "text": "1. KHÁI NIỆM"
+        },
+        {
+          "level": 3,
+          "text": "2. PHƯƠNG PHÁP DỰ PHÒNG"
+        },
+        {
+          "level": 3,
+          "text": "2.1. Bồi cố chính khí, cường tráng thể chất"
+        },
+        {
+          "level": 4,
+          "text": "2.2. Kịp thời chặn trị không chế lây lan"
+        },
+        {
+          "level": 2,
+          "text": "3. ỨNG DỤNG CÁC PHƯƠNG PHÁP TRONG PHÒNG BỆNH"
+        },
+        {
+          "level": 4,
+          "text": "3.1. Theo Nội kinh"
+        },
+        {
+          "level": 3,
+          "text": "3.2. Pháp vệ sinh của chân nhân Tôn Tử Mạo"
+        }
+      ],
+      "medicineSystem": "tcm",
+      "diataxis": "explanation",
+      "template": "deep-explanation",
+      "destinations": {
+        "summary": "src/content/docs/books/on-benh-dai-cuong/tom-tat/11-bai-5-du-phong-on-benh.mdx",
+        "original": "src/content/docs/books/on-benh-dai-cuong/nguyen-thuy/11-bai-5-du-phong-on-benh.mdx",
+        "reference": "src/content/docs/topics/reference/on-benh-dai-cuong-bai-5-du-phong-on-benh.mdx",
+        "explanation": "src/content/docs/topics/explanation/on-benh-dai-cuong-bai-5-du-phong-on-benh.mdx",
+        "assessment": "src/content/docs/books/on-benh-dai-cuong/luong-gia/11-bai-5-du-phong-on-benh-luong-gia.mdx",
+        "primary": "src/content/docs/topics/explanation/on-benh-dai-cuong-bai-5-du-phong-on-benh.mdx"
+      }
+    },
+    {
+      "order": 12,
+      "kind": "markdown",
+      "path": "Raw/on_benh_dai_cuong/02_benh-lam-sang/nguoc-tat_001.md",
+      "sizeKb": 27,
+      "title": "NGƯỢC TẬT",
+      "slug": "nguoc-tat",
+      "headings": [
+        {
+          "level": 1,
+          "text": "NGƯỢC TẬT"
+        },
+        {
+          "level": 2,
+          "text": "1. KHÁI NIỆM"
+        },
+        {
+          "level": 2,
+          "text": "2. NGUYÊN NHÂN VÀ CƠ CHẾ"
+        },
+        {
+          "level": 2,
+          "text": "3. CHẨN ĐOÁN XÁC ĐỊNH"
+        },
+        {
+          "level": 2,
+          "text": "4. CHẨN ĐOÁN PHÂN BIỆT"
+        },
+        {
+          "level": 3,
+          "text": "4.1. Thời hành cảm mạo"
+        },
+        {
+          "level": 3,
+          "text": "4.2. Thấp ôn"
+        },
+        {
+          "level": 3,
+          "text": "4.3. Thử ôn"
+        },
+        {
+          "level": 3,
+          "text": "4.4. Phế lao"
+        },
+        {
+          "level": 2,
+          "text": "5. BIỆN CHỨNG LUẬN TRỊ"
+        },
+        {
+          "level": 3,
+          "text": "5.1. Chính ngược"
+        },
+        {
+          "level": 4,
+          "text": "5.1.1. Triệu chứng"
+        },
+        {
+          "level": 4,
+          "text": "5.1.2. Phân tích"
+        },
+        {
+          "level": 4,
+          "text": "5.1.3. Điều trị: Khử tà tiết ngược, hòa giải đạt tà"
+        },
+        {
+          "level": 3,
+          "text": "5.2. Ôn ngược"
+        },
+        {
+          "level": 4,
+          "text": "5.2.1. Triệu chứng"
+        }
+      ],
+      "medicineSystem": "modern",
+      "diataxis": "reference",
+      "template": "differential-diagnosis",
+      "destinations": {
+        "summary": "src/content/docs/books/on-benh-dai-cuong/tom-tat/12-nguoc-tat.mdx",
+        "original": "src/content/docs/books/on-benh-dai-cuong/nguyen-thuy/12-nguoc-tat.mdx",
+        "reference": "src/content/docs/topics/reference/on-benh-dai-cuong-nguoc-tat.mdx",
+        "explanation": "src/content/docs/topics/explanation/on-benh-dai-cuong-nguoc-tat.mdx",
+        "assessment": "src/content/docs/books/on-benh-dai-cuong/luong-gia/12-nguoc-tat-luong-gia.mdx",
+        "primary": "src/content/docs/topics/reference/on-benh-dai-cuong-nguoc-tat.mdx"
+      }
+    },
+    {
+      "order": 13,
+      "kind": "markdown",
+      "path": "Raw/on_benh_dai_cuong/02_benh-lam-sang/nguoc-tat_002.md",
+      "sizeKb": 5,
+      "title": "6. ĐIỀU TRỊ TRIỆU CHỨNG",
+      "slug": "6-dieu-tri-trieu-chung",
+      "headings": [
+        {
+          "level": 3,
+          "text": "6. ĐIỀU TRỊ TRIỆU CHỨNG"
+        },
+        {
+          "level": 3,
+          "text": "6.1. Hàn chiến cao nhiệt"
+        },
+        {
+          "level": 3,
+          "text": "6.2. Hôn mê"
+        },
+        {
+          "level": 2,
+          "text": "7. DỰ PHÒNG VÀ ĐIỀU NHIỆP"
+        },
+        {
+          "level": 3,
+          "text": "Tóm tắt"
+        }
+      ],
+      "medicineSystem": "modern",
+      "diataxis": "how-to",
+      "template": "symptom-approach",
+      "destinations": {
+        "summary": "src/content/docs/books/on-benh-dai-cuong/tom-tat/13-6-dieu-tri-trieu-chung.mdx",
+        "original": "src/content/docs/books/on-benh-dai-cuong/nguyen-thuy/13-6-dieu-tri-trieu-chung.mdx",
+        "reference": "src/content/docs/topics/reference/on-benh-dai-cuong-6-dieu-tri-trieu-chung.mdx",
+        "explanation": "src/content/docs/topics/explanation/on-benh-dai-cuong-6-dieu-tri-trieu-chung.mdx",
+        "assessment": "src/content/docs/books/on-benh-dai-cuong/luong-gia/13-6-dieu-tri-trieu-chung-luong-gia.mdx",
+        "primary": "src/content/docs/updates/on-benh-dai-cuong-6-dieu-tri-trieu-chung.mdx"
+      }
+    },
+    {
+      "order": 14,
+      "kind": "markdown",
+      "path": "Raw/on_benh_dai_cuong/02_benh-lam-sang/phong-on_001.md",
+      "sizeKb": 32,
+      "title": "PHONG ÔN",
+      "slug": "phong-on",
+      "headings": [
+        {
+          "level": 1,
+          "text": "PHONG ÔN"
+        },
+        {
+          "level": 3,
+          "text": "1. KHÁI NIỆM"
+        },
+        {
+          "level": 2,
+          "text": "2. NGUYÊN NHÂN VÀ CƠ CHẾ SINH BỆNH"
+        },
+        {
+          "level": 2,
+          "text": "3. CHẨN ĐOÁN XÁC ĐỊNH"
+        },
+        {
+          "level": 2,
+          "text": "4. CHẨN ĐOÁN PHÂN BIỆT"
+        },
+        {
+          "level": 3,
+          "text": "4.1. Xuân ôn"
+        },
+        {
+          "level": 3,
+          "text": "4.2. Cảm mạo"
+        },
+        {
+          "level": 3,
+          "text": "4.3. Ma chẩn"
+        },
+        {
+          "level": 3,
+          "text": "4.4. Phế ung"
+        },
+        {
+          "level": 2,
+          "text": "5. BIỆN CHỨNG LUẬN TRỊ"
+        },
+        {
+          "level": 4,
+          "text": "5.1. Tà tập phế vệ"
+        },
+        {
+          "level": 4,
+          "text": "5.1.1. Chứng hầu"
+        },
+        {
+          "level": 4,
+          "text": "5.1.2. Phân tích"
+        },
+        {
+          "level": 4,
+          "text": "5.1.3. Điều trị"
+        },
+        {
+          "level": 4,
+          "text": "5.2. Tà nhập khí phần"
+        },
+        {
+          "level": 4,
+          "text": "5.3. Tà nhập dương minh"
+        }
+      ],
+      "medicineSystem": "tcm",
+      "diataxis": "explanation",
+      "template": "deep-explanation",
+      "destinations": {
+        "summary": "src/content/docs/books/on-benh-dai-cuong/tom-tat/14-phong-on.mdx",
+        "original": "src/content/docs/books/on-benh-dai-cuong/nguyen-thuy/14-phong-on.mdx",
+        "reference": "src/content/docs/topics/reference/on-benh-dai-cuong-phong-on.mdx",
+        "explanation": "src/content/docs/topics/explanation/on-benh-dai-cuong-phong-on.mdx",
+        "assessment": "src/content/docs/books/on-benh-dai-cuong/luong-gia/14-phong-on-luong-gia.mdx",
+        "primary": "src/content/docs/topics/explanation/on-benh-dai-cuong-phong-on.mdx"
+      }
+    },
+    {
+      "order": 15,
+      "kind": "markdown",
+      "path": "Raw/on_benh_dai_cuong/02_benh-lam-sang/phong-on_002.md",
+      "sizeKb": 18,
+      "title": "5.4. Nhiệt nhập tâm bào",
+      "slug": "5-4-nhiet-nhap-tam-bao",
+      "headings": [
+        {
+          "level": 4,
+          "text": "5.4. Nhiệt nhập tâm bào"
+        },
+        {
+          "level": 4,
+          "text": "5.5. Điều trị triệu chứng"
+        },
+        {
+          "level": 4,
+          "text": "5.5.1. Ho"
+        },
+        {
+          "level": 3,
+          "text": "6. DỰ PHÒNG VÀ ĐIỀU HỘ"
+        },
+        {
+          "level": 3,
+          "text": "6.1. Tăng cường chính khí"
+        },
+        {
+          "level": 3,
+          "text": "6.2. Thuốc dự phòng"
+        },
+        {
+          "level": 3,
+          "text": "6.3. Hạn chế tụ tập đông trong lúc dịch"
+        },
+        {
+          "level": 3,
+          "text": "6.4. Môi trường"
+        },
+        {
+          "level": 3,
+          "text": "6.5. Phát hiện sớm biến chứng"
+        }
+      ],
+      "medicineSystem": "modern",
+      "diataxis": "how-to",
+      "template": "symptom-approach",
+      "destinations": {
+        "summary": "src/content/docs/books/on-benh-dai-cuong/tom-tat/15-5-4-nhiet-nhap-tam-bao.mdx",
+        "original": "src/content/docs/books/on-benh-dai-cuong/nguyen-thuy/15-5-4-nhiet-nhap-tam-bao.mdx",
+        "reference": "src/content/docs/topics/reference/on-benh-dai-cuong-5-4-nhiet-nhap-tam-bao.mdx",
+        "explanation": "src/content/docs/topics/explanation/on-benh-dai-cuong-5-4-nhiet-nhap-tam-bao.mdx",
+        "assessment": "src/content/docs/books/on-benh-dai-cuong/luong-gia/15-5-4-nhiet-nhap-tam-bao-luong-gia.mdx",
+        "primary": "src/content/docs/updates/on-benh-dai-cuong-5-4-nhiet-nhap-tam-bao.mdx"
+      }
+    },
+    {
+      "order": 16,
+      "kind": "markdown",
+      "path": "Raw/on_benh_dai_cuong/02_benh-lam-sang/phong-on_003.md",
+      "sizeKb": 4,
+      "title": "6. DỰ PHÒNG VÀ ĐIỀU HỘ",
+      "slug": "6-du-phong-va-dieu-ho",
+      "headings": [
+        {
+          "level": 3,
+          "text": "6. DỰ PHÒNG VÀ ĐIỀU HỘ"
+        },
+        {
+          "level": 3,
+          "text": "6.1. Tăng cường chính khí"
+        },
+        {
+          "level": 3,
+          "text": "6.2. Thuốc dự phòng"
+        },
+        {
+          "level": 3,
+          "text": "6.3. Hạn chế tụ tập đông trong lúc dịch"
+        },
+        {
+          "level": 3,
+          "text": "6.4. Môi trường"
+        },
+        {
+          "level": 3,
+          "text": "6.5. Phát hiện sớm biến chứng"
+        }
+      ],
+      "medicineSystem": "tcm",
+      "diataxis": "reference",
+      "template": "tcm-pattern",
+      "destinations": {
+        "summary": "src/content/docs/books/on-benh-dai-cuong/tom-tat/16-6-du-phong-va-dieu-ho.mdx",
+        "original": "src/content/docs/books/on-benh-dai-cuong/nguyen-thuy/16-6-du-phong-va-dieu-ho.mdx",
+        "reference": "src/content/docs/topics/reference/on-benh-dai-cuong-6-du-phong-va-dieu-ho.mdx",
+        "explanation": "src/content/docs/topics/explanation/on-benh-dai-cuong-6-du-phong-va-dieu-ho.mdx",
+        "assessment": "src/content/docs/books/on-benh-dai-cuong/luong-gia/16-6-du-phong-va-dieu-ho-luong-gia.mdx",
+        "primary": "src/content/docs/topics/reference/on-benh-dai-cuong-6-du-phong-va-dieu-ho.mdx"
+      }
+    },
+    {
+      "order": 17,
+      "kind": "markdown",
+      "path": "Raw/on_benh_dai_cuong/02_benh-lam-sang/thu-thap_001.md",
+      "sizeKb": 37,
+      "title": "THỦ THẤP",
+      "slug": "thu-thap",
+      "headings": [
+        {
+          "level": 1,
+          "text": "THỦ THẤP"
+        },
+        {
+          "level": 2,
+          "text": "1. KHÁI NIỆM"
+        },
+        {
+          "level": 2,
+          "text": "2. NGUYÊN NHÂN VÀ CƠ CHẾ BỆNH"
+        },
+        {
+          "level": 2,
+          "text": "3. CHẨN ĐOÁN XÁC ĐỊNH"
+        },
+        {
+          "level": 2,
+          "text": "4. CHẨN ĐOÁN PHÂN BIỆT"
+        },
+        {
+          "level": 3,
+          "text": "4.1. Thử ôn"
+        },
+        {
+          "level": 3,
+          "text": "4.2. Thấp ôn"
+        },
+        {
+          "level": 3,
+          "text": "4.3. Phục thử"
+        },
+        {
+          "level": 3,
+          "text": "5. BIỆN CHỨNG LUẬN TRỊ"
+        },
+        {
+          "level": 3,
+          "text": "5.1. Thử thấp tại vệ"
+        },
+        {
+          "level": 4,
+          "text": "5.2. Tà cán nhiều vị trường"
+        },
+        {
+          "level": 4,
+          "text": "5.3. Thử thấp khôn trở trung tiêu"
+        },
+        {
+          "level": 4,
+          "text": "5.4. Thử thấp tràn lan tam tiêu"
+        },
+        {
+          "level": 4,
+          "text": "5.5. Thử thương phế lạc"
+        },
+        {
+          "level": 4,
+          "text": "5.6. Thử thấp thương khí"
+        },
+        {
+          "level": 4,
+          "text": "5.7. Thử thấp dư tà chưa sạch"
+        }
+      ],
+      "medicineSystem": "tcm",
+      "diataxis": "explanation",
+      "template": "deep-explanation",
+      "destinations": {
+        "summary": "src/content/docs/books/on-benh-dai-cuong/tom-tat/17-thu-thap.mdx",
+        "original": "src/content/docs/books/on-benh-dai-cuong/nguyen-thuy/17-thu-thap.mdx",
+        "reference": "src/content/docs/topics/reference/on-benh-dai-cuong-thu-thap.mdx",
+        "explanation": "src/content/docs/topics/explanation/on-benh-dai-cuong-thu-thap.mdx",
+        "assessment": "src/content/docs/books/on-benh-dai-cuong/luong-gia/17-thu-thap-luong-gia.mdx",
+        "primary": "src/content/docs/topics/explanation/on-benh-dai-cuong-thu-thap.mdx"
+      }
+    },
+    {
+      "order": 18,
+      "kind": "markdown",
+      "path": "Raw/on_benh_dai_cuong/02_benh-lam-sang/xuan-on_001.md",
+      "sizeKb": 26,
+      "title": "XUÂN ÔN",
+      "slug": "xuan-on",
+      "headings": [
+        {
+          "level": 1,
+          "text": "XUÂN ÔN"
+        },
+        {
+          "level": 2,
+          "text": "1. KHÁI NIỆM"
+        },
+        {
+          "level": 2,
+          "text": "2. NGUYÊN NHÂN VÀ CƠ CHẾ SINH BỆNH"
+        },
+        {
+          "level": 2,
+          "text": "3. CHẨN ĐOÁN XÁC ĐỊNH"
+        },
+        {
+          "level": 3,
+          "text": "3.1. Tính chất"
+        },
+        {
+          "level": 3,
+          "text": "3.2. Bệnh sơ khởi đã xuất hiện chứng lý nhiệt tích thịnh như:"
+        },
+        {
+          "level": 3,
+          "text": "3.3. Căn cứ vào đặc điểm phát bệnh, biểu hiện lâm sàng, cảm tà nặng nhẹ và mức độ âm tĩnh khuỷu tổn của người bệnh có thể phân thành"
+        },
+        {
+          "level": 3,
+          "text": "3.4. Lâm sàng"
+        },
+        {
+          "level": 2,
+          "text": "4. CHẨN ĐOÁN PHÂN BIỆT"
+        },
+        {
+          "level": 3,
+          "text": "4.1. Phong ôn"
+        },
+        {
+          "level": 3,
+          "text": "4.2. Thử ôn"
+        },
+        {
+          "level": 2,
+          "text": "5. BIỆN CHỨNG LUẬN TRỊ"
+        },
+        {
+          "level": 3,
+          "text": "5.1. Phát tại khí phần, dinh phần"
+        },
+        {
+          "level": 4,
+          "text": "5.1.1. Khí phần uất nhiệt"
+        },
+        {
+          "level": 4,
+          "text": "5.1.2. Biểu hàn lý nhiệt"
+        },
+        {
+          "level": 4,
+          "text": "5.1.3. Vệ dinh đồng bệnh"
+        }
+      ],
+      "medicineSystem": "tcm",
+      "diataxis": "explanation",
+      "template": "deep-explanation",
+      "destinations": {
+        "summary": "src/content/docs/books/on-benh-dai-cuong/tom-tat/18-xuan-on.mdx",
+        "original": "src/content/docs/books/on-benh-dai-cuong/nguyen-thuy/18-xuan-on.mdx",
+        "reference": "src/content/docs/topics/reference/on-benh-dai-cuong-xuan-on.mdx",
+        "explanation": "src/content/docs/topics/explanation/on-benh-dai-cuong-xuan-on.mdx",
+        "assessment": "src/content/docs/books/on-benh-dai-cuong/luong-gia/18-xuan-on-luong-gia.mdx",
+        "primary": "src/content/docs/topics/explanation/on-benh-dai-cuong-xuan-on.mdx"
+      }
+    },
+    {
+      "order": 19,
+      "kind": "markdown",
+      "path": "Raw/on_benh_dai_cuong/02_benh-lam-sang/xuan-on_002.md",
+      "sizeKb": 29,
+      "title": "5.3.1. Khí dinh huyết lưỡng phiên",
+      "slug": "5-3-1-khi-dinh-huyet-luong-phien",
+      "headings": [
+        {
+          "level": 4,
+          "text": "5.3.1. Khí dinh huyết lưỡng phiên"
+        },
+        {
+          "level": 4,
+          "text": "5.3.2. Nhiệt thịnh động huyết"
+        },
+        {
+          "level": 4,
+          "text": "5.3.3. Nhiệt nặng và huyết kết"
+        },
+        {
+          "level": 3,
+          "text": "5.4. Nhiệt nhập tâm bào"
+        },
+        {
+          "level": 4,
+          "text": "5.4.1. Phục nhiệt nội bế"
+        },
+        {
+          "level": 4,
+          "text": "5.4.2. Nội bế ngoại thoát"
+        },
+        {
+          "level": 3,
+          "text": "5.5. Nhiệt chứng chân âm"
+        },
+        {
+          "level": 4,
+          "text": "5.5.1. Chân âm khuy tổn"
+        },
+        {
+          "level": 4,
+          "text": "5.5.2. Âm hư phong động"
+        },
+        {
+          "level": 3,
+          "text": "5.6. Tà lưu âm phần"
+        },
+        {
+          "level": 4,
+          "text": "5.6.1. Triệu chứng"
+        },
+        {
+          "level": 4,
+          "text": "5.6.2. Phân tích"
+        },
+        {
+          "level": 4,
+          "text": "5.6.4. Phương dược: Thanh hao miết giáp thang"
+        },
+        {
+          "level": 3,
+          "text": "5.7. Tà hãm chính suy"
+        },
+        {
+          "level": 4,
+          "text": "5.7.1. Dương hư tà hãm"
+        }
+      ],
+      "medicineSystem": "modern",
+      "diataxis": "how-to",
+      "template": "symptom-approach",
+      "destinations": {
+        "summary": "src/content/docs/books/on-benh-dai-cuong/tom-tat/19-5-3-1-khi-dinh-huyet-luong-phien.mdx",
+        "original": "src/content/docs/books/on-benh-dai-cuong/nguyen-thuy/19-5-3-1-khi-dinh-huyet-luong-phien.mdx",
+        "reference": "src/content/docs/topics/reference/on-benh-dai-cuong-5-3-1-khi-dinh-huyet-luong-phien.mdx",
+        "explanation": "src/content/docs/topics/explanation/on-benh-dai-cuong-5-3-1-khi-dinh-huyet-luong-phien.mdx",
+        "assessment": "src/content/docs/books/on-benh-dai-cuong/luong-gia/19-5-3-1-khi-dinh-huyet-luong-phien-luong-gia.mdx",
+        "primary": "src/content/docs/updates/on-benh-dai-cuong-5-3-1-khi-dinh-huyet-luong-phien.mdx"
+      }
+    },
+    {
+      "order": 20,
+      "kind": "markdown",
+      "path": "Raw/on_benh_dai_cuong/02_benh-lam-sang/xuan-on_003.md",
+      "sizeKb": 10,
+      "title": "5.7.2. Nhiệt bế huyết thoát",
+      "slug": "5-7-2-nhiet-be-huyet-thoat",
+      "headings": [
+        {
+          "level": 4,
+          "text": "5.7.2. Nhiệt bế huyết thoát"
+        },
+        {
+          "level": 2,
+          "text": "6. ĐIỀU TRỊ TRIỆU CHỨNG"
+        },
+        {
+          "level": 3,
+          "text": "6.1. Đau đầu, nôn, cổ cứng"
+        },
+        {
+          "level": 3,
+          "text": "6.2. Hôn mê"
+        },
+        {
+          "level": 2,
+          "text": "7. DỰ PHÒNG VÀ ĐIỀU DƯỠNG"
+        },
+        {
+          "level": 3,
+          "text": "7.1. Phát bệnh"
+        },
+        {
+          "level": 3,
+          "text": "7.2. Dự phòng"
+        },
+        {
+          "level": 4,
+          "text": "Tóm tắt"
+        }
+      ],
+      "medicineSystem": "modern",
+      "diataxis": "how-to",
+      "template": "symptom-approach",
+      "destinations": {
+        "summary": "src/content/docs/books/on-benh-dai-cuong/tom-tat/20-5-7-2-nhiet-be-huyet-thoat.mdx",
+        "original": "src/content/docs/books/on-benh-dai-cuong/nguyen-thuy/20-5-7-2-nhiet-be-huyet-thoat.mdx",
+        "reference": "src/content/docs/topics/reference/on-benh-dai-cuong-5-7-2-nhiet-be-huyet-thoat.mdx",
+        "explanation": "src/content/docs/topics/explanation/on-benh-dai-cuong-5-7-2-nhiet-be-huyet-thoat.mdx",
+        "assessment": "src/content/docs/books/on-benh-dai-cuong/luong-gia/20-5-7-2-nhiet-be-huyet-thoat-luong-gia.mdx",
+        "primary": "src/content/docs/updates/on-benh-dai-cuong-5-7-2-nhiet-be-huyet-thoat.mdx"
+      }
+    }
+  ]
+}

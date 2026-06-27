@@ -1,0 +1,29 @@
+---
+title: "Template: Quiz Wrapper"
+description: "Trang MDX nhúng quiz HTML từ public/quiz."
+type: "quiz-wrapper"
+category: "templates"
+diataxis: "tutorial"
+medicineSystem: "shared"
+templateId: "quiz-wrapper"
+templateFamily: "shared"
+status: "draft"
+draft: true
+pagefind: false
+sidebar:
+  hidden: true
+---
+
+import QuizEmbed from '~/components/QuizEmbed.astro';
+import SourceNote from '~/components/SourceNote.astro';
+
+## Lượng giá
+
+<QuizEmbed src="quiz/<sach>/<ten-file>.html" title="Tên quiz" height="85vh" />
+
+<SourceNote>
+
+- File HTML thật đặt tại `public/quiz/<sach>/<ten-file>.html`.
+- Trong `src`, bỏ chữ `public/`.
+
+</SourceNote>

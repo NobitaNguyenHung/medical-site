@@ -1,0 +1,63 @@
+---
+title: "Template: Clinical Case CARE"
+description: "Ca lâm sàng theo tinh thần CARE: timeline, chẩn đoán, can thiệp, theo dõi."
+type: "clinical-case-care"
+category: "templates"
+diataxis: "tutorial"
+medicineSystem: "modern"
+templateId: "clinical-case-care"
+templateFamily: "modern"
+status: "draft"
+draft: true
+pagefind: false
+sidebar:
+  hidden: true
+---
+
+import ClinicalCase from '~/components/ClinicalCase.astro';
+import CompareTable from '~/components/CompareTable.astro';
+import SelfCheck from '~/components/SelfCheck.astro';
+import SourceNote from '~/components/SourceNote.astro';
+
+<ClinicalCase title="Ca lâm sàng">
+
+## Thông tin bệnh nhân
+
+## Lý do vào viện
+
+## Timeline
+
+| Thời điểm | Diễn biến | Can thiệp |
+| --- | --- | --- |
+|  |  |  |
+
+## Khám và cận lâm sàng
+
+## Chẩn đoán phân biệt
+
+<CompareTable>
+
+| Chẩn đoán | Ủng hộ | Chống lại | Cần làm thêm |
+| --- | --- | --- | --- |
+|  |  |  |  |
+
+</CompareTable>
+
+## Can thiệp và theo dõi
+
+## Bàn luận
+
+<SelfCheck>
+
+1. Dữ kiện quyết định chẩn đoán là gì?
+2. Nếu diễn biến thay đổi, xử trí đổi thế nào?
+
+</SelfCheck>
+
+<SourceNote>
+
+- Theo tinh thần CARE case report.
+
+</SourceNote>
+
+</ClinicalCase>

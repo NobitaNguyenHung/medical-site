@@ -3,13 +3,13 @@ title: Học liệu Y khoa
 description: Thư viện học liệu y khoa cá nhân — đọc offline mọi thiết bị.
 template: splash
 hero:
-  tagline: Sách · Case · Update · Search — đọc offline sau lần đầu.
+  tagline: Học theo lộ trình · Xử trí lâm sàng · Tra cứu nhanh · Hiểu sâu.
   actions:
-    - text: Vào Ôn bệnh
-      link: /medical-site/books/on-benh/tom-tat/phong-ôn--bài-giảng-chuyên-sâu/
+    - text: Bắt đầu Ôn bệnh
+      link: /medical-site/books/on-benh/luong-gia/1-dai-cuong/
       icon: right-arrow
-    - text: Tìm kiếm
-      link: '#'
+    - text: Tra cứu Ôn bệnh
+      link: /medical-site/books/on-benh/tom-tat/phong-ôn--bài-giảng-chuyên-sâu/
       icon: magnifier
       variant: minimal
 ---
@@ -17,16 +17,16 @@ hero:
 import { Card, CardGrid } from '@astrojs/starlight/components';
 
 <CardGrid>
-	<Card title="Đổ Markdown" icon="pencil">
-		Bỏ file `.md` vào `notes_on_benh/` (KB) → `npm run build`. Trang tự hiện.
+	<Card title="Học theo lộ trình" icon="open-book">
+		Bài học, ca lâm sàng và lượng giá giúp đi từ nền tảng đến tự kiểm.
 	</Card>
-	<Card title="Tìm kiếm" icon="magnifier">
-		Pagefind full-text, gõ phím tắt hoặc nút search trên thanh trên.
+	<Card title="Xử trí lâm sàng" icon="right-arrow">
+		Hướng dẫn how-to cho chẩn đoán, điều trị, thuật toán và cập nhật thực hành.
 	</Card>
-	<Card title="Offline" icon="laptop">
-		Mở 1 lần khi có mạng → PWA cache → đọc offline laptop/iPad/phone.
+	<Card title="Tra cứu nhanh" icon="magnifier">
+		Bảng, tiêu chuẩn, định nghĩa, thuốc và mục cần tìm nhanh khi học hoặc ôn tập.
 	</Card>
-	<Card title="Callout · Mermaid · Wikilink" icon="open-book">
-		Note Obsidian cũ paste vào chạy nguyên — không phải viết lại.
+	<Card title="Hiểu sâu" icon="pencil">
+		Nguyên thủy, cơ chế bệnh sinh, lý luận và chủ đề chuyên sâu để nối ý.
 	</Card>
 </CardGrid>

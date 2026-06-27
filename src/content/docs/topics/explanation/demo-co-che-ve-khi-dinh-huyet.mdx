@@ -1,0 +1,72 @@
+---
+title: "Demo · Vì sao Ôn bệnh đi từ vệ sang khí, dinh, huyết?"
+description: "Bài demo explanation: giải thích cơ chế và mô hình diễn tiến."
+type: "explanation"
+category: "topics"
+diataxis: "explanation"
+specialty: "YHCT"
+status: "draft"
+difficulty: "intermediate"
+tags: ["demo", "on-benh", "explanation", "co-che"]
+sidebar:
+  order: 1
+---
+
+import MedicalNote from '~/components/MedicalNote.astro';
+import KeyPoints from '~/components/KeyPoints.astro';
+import CompareTable from '~/components/CompareTable.astro';
+import ClinicalPearl from '~/components/ClinicalPearl.astro';
+import SourceNote from '~/components/SourceNote.astro';
+
+<MedicalNote title="Hiểu sâu">
+
+## Câu hỏi trung tâm
+
+Vì sao cùng là sốt, có lúc ta nói bệnh còn ở **vệ**, có lúc lại nói tà đã vào **khí**, **dinh** hoặc **huyết**?
+
+## Ý chính
+
+<KeyPoints>
+
+- Vệ, khí, dinh, huyết là một mô hình đọc độ sâu và tính chất của tà nhiệt.
+- Càng đi sâu, biểu hiện càng chuyển từ phần biểu sang phần lý, từ khí cơ sang thần chí và huyết phận.
+- Mô hình này giúp người học đặt câu hỏi đúng khi đọc case, không chỉ ghi nhớ triệu chứng rời rạc.
+
+</KeyPoints>
+
+## Mô hình diễn tiến
+
+```mermaid
+flowchart LR
+  A[Vệ phận: biểu, sợ gió, mạch phù] --> B[Khí phận: nhiệt thịnh, khát, rêu vàng]
+  B --> C[Dinh phận: nhiệt nhiễu tâm, bứt rứt, lưỡi đỏ]
+  C --> D[Huyết phận: động huyết, ban chẩn, xuất huyết]
+```
+
+## Đọc dấu hiệu theo cơ chế
+
+<CompareTable title="Từ triệu chứng đến ý nghĩa">
+
+| Dấu hiệu | Không chỉ là | Mà còn gợi ý |
+| --- | --- | --- |
+| Sợ gió | Cảm giác lạnh | Tà còn ở biểu / vệ |
+| Khát nhiều | Uống nước | Nhiệt vào khí, tân dịch bị hao |
+| Bứt rứt | Khó chịu | Nhiệt ảnh hưởng dinh, thần chưa yên |
+| Ban chẩn | Tổn thương da | Nhiệt vào huyết, huyết lạc bị động |
+
+</CompareTable>
+
+<ClinicalPearl>
+
+- Khi học Ôn bệnh, đừng hỏi “triệu chứng này thuộc tầng nào?” quá sớm. Hãy hỏi “triệu chứng này nói gì về độ sâu, nhiệt thế và tổn thương tân dịch/huyết?”.
+
+</ClinicalPearl>
+
+<SourceNote>
+
+- Demo cấu trúc: explanation.
+- Nội dung dùng để kiểm thử giao diện và mô hình tổ chức tài liệu.
+
+</SourceNote>
+
+</MedicalNote>

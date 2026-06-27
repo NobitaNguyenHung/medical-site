@@ -1,0 +1,58 @@
+---
+title: "Demo · Bảng tra cứu nhanh Ôn bệnh"
+description: "Bài demo reference: bảng tra cứu dấu hiệu vệ, khí, dinh, huyết."
+type: "reference-note"
+category: "topics"
+diataxis: "reference"
+specialty: "YHCT"
+status: "draft"
+difficulty: "beginner"
+tags: ["demo", "on-benh", "reference", "bang-tra-cuu"]
+sidebar:
+  order: 1
+---
+
+import MedicalNote from '~/components/MedicalNote.astro';
+import KeyPoints from '~/components/KeyPoints.astro';
+import CompareTable from '~/components/CompareTable.astro';
+import SourceNote from '~/components/SourceNote.astro';
+
+<MedicalNote title="Tra cứu nhanh">
+
+## Dùng khi nào?
+
+<KeyPoints>
+
+- Cần nhìn nhanh các tầng vệ, khí, dinh, huyết.
+- Cần một bảng để đối chiếu khi đọc case.
+- Cần tìm từ khóa trước khi đọc bài giải thích sâu.
+
+</KeyPoints>
+
+## Bảng phân tầng
+
+<CompareTable title="Vệ · Khí · Dinh · Huyết">
+
+| Tầng | Gợi ý chính | Câu hỏi cần hỏi thêm | Khi cần đọc tiếp |
+| --- | --- | --- | --- |
+| Vệ | Sốt, sợ gió nhẹ, mạch phù | Có họng khô, ho, đau đầu? | Bài học qua ca sốt |
+| Khí | Sốt cao, khát, mồ hôi, rêu vàng | Có táo bón, bứt rứt? | How-to xử trí sốt |
+| Dinh | Sốt về đêm, bứt rứt, lưỡi đỏ | Có mê sảng, mất ngủ? | Bài cơ chế nhập dinh |
+| Huyết | Ban chẩn, xuất huyết, cuồng sảng | Có dấu nặng toàn thân? | Cờ đỏ và hội chẩn |
+
+</CompareTable>
+
+## Liên kết trong demo
+
+- [Học qua một ca sốt](/medical-site/cases/demo-on-benh-tutorial/)
+- [Xử trí ban đầu ca sốt](/medical-site/updates/demo-xu-tri-sot-on-benh/)
+- [Hiểu cơ chế vệ khí dinh huyết](/medical-site/topics/explanation/demo-co-che-ve-khi-dinh-huyet/)
+
+<SourceNote>
+
+- Demo cấu trúc: reference note.
+- Nội dung cần được biên tập trước khi xuất bản chính thức.
+
+</SourceNote>
+
+</MedicalNote>

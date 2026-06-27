@@ -1,0 +1,73 @@
+---
+title: "Template: Tutorial"
+description: "Khuôn MDX cho bài học theo lộ trình: dẫn người học đi từng bước."
+type: "template"
+category: "templates"
+diataxis: "tutorial"
+status: "draft"
+draft: true
+pagefind: false
+sidebar:
+  hidden: true
+---
+
+import MedicalNote from '~/components/MedicalNote.astro';
+import LearningPath from '~/components/LearningPath.astro';
+import KeyPoints from '~/components/KeyPoints.astro';
+import ClinicalPearl from '~/components/ClinicalPearl.astro';
+import SelfCheck from '~/components/SelfCheck.astro';
+import SourceNote from '~/components/SourceNote.astro';
+
+<MedicalNote title="Bài học theo lộ trình">
+
+<LearningPath
+  duration="30-45 phút"
+  level="Nhập môn / ôn lại"
+  before="Đã đọc mục tiêu chương hoặc bảng tra cứu liên quan"
+  goal="Làm được một việc cụ thể sau bài học"
+  practice="Đọc mục tiêu → đi qua ví dụ → làm case ngắn → tự kiểm"
+  check="Trả lời được câu hỏi tự kiểm hoặc làm quiz liên quan"
+/>
+
+## Mục tiêu học tập
+
+<KeyPoints>
+
+- Sau bài này, người học nắm được...
+- Người học phân biệt được...
+- Người học áp dụng được...
+
+</KeyPoints>
+
+## Bối cảnh
+
+## Bước 1
+
+## Bước 2
+
+## Bước 3
+
+<ClinicalPearl>
+
+- Điểm mấu chốt cần nhớ khi gặp trên lâm sàng.
+
+</ClinicalPearl>
+
+## Tự kiểm
+
+<SelfCheck>
+
+1. Câu hỏi kiểm tra hiểu bài?
+2. Tình huống nào dễ nhầm nhất?
+3. Khi nào cần đọc tiếp phần giải thích sâu?
+
+</SelfCheck>
+
+<SourceNote>
+
+- Nguồn chính:
+- Ngày rà soát:
+
+</SourceNote>
+
+</MedicalNote>

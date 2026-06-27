@@ -1,0 +1,69 @@
+---
+title: "Template: Treatment Guide"
+description: "Hướng dẫn điều trị: mục tiêu, lựa chọn, theo dõi, thất bại điều trị."
+type: "treatment-guide"
+category: "templates"
+diataxis: "how-to"
+medicineSystem: "modern"
+templateId: "treatment-guide"
+templateFamily: "modern"
+status: "draft"
+draft: true
+pagefind: false
+sidebar:
+  hidden: true
+---
+
+import TreatmentUpdate from '~/components/TreatmentUpdate.astro';
+import RedFlags from '~/components/RedFlags.astro';
+import AlgorithmBox from '~/components/AlgorithmBox.astro';
+import CompareTable from '~/components/CompareTable.astro';
+import EvidenceBox from '~/components/EvidenceBox.astro';
+import SourceNote from '~/components/SourceNote.astro';
+
+<TreatmentUpdate title="Điều trị">
+
+## Mục tiêu điều trị
+
+## Điều trị không thuốc
+
+## Điều trị thuốc
+
+<CompareTable title="Lựa chọn điều trị">
+
+| Lựa chọn | Khi dùng | Liều / cách dùng | Theo dõi | Lưu ý |
+| --- | --- | --- | --- | --- |
+|  |  |  |  |  |
+
+</CompareTable>
+
+## Thuật toán điều trị
+
+<AlgorithmBox>
+
+1. Đánh giá mức độ.
+2. Chọn điều trị đầu tay.
+3. Theo dõi đáp ứng.
+4. Đổi hướng nếu thất bại hoặc có biến chứng.
+
+</AlgorithmBox>
+
+<RedFlags>
+
+- Khi cần nhập viện / chuyển tuyến:
+
+</RedFlags>
+
+<EvidenceBox level="A/B/C">
+
+- Khuyến cáo / chứng cứ:
+
+</EvidenceBox>
+
+<SourceNote>
+
+- Nguồn:
+
+</SourceNote>
+
+</TreatmentUpdate>

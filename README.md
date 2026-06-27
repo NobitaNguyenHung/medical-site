@@ -4,6 +4,16 @@ Astro + Starlight + MDX site for a local medical knowledge base.
 
 ## Content Architecture
 
+The site follows a Diataxis-style information architecture: organize pages by
+what the reader is trying to do, while keeping the current file paths stable.
+
+| Reader need | Sidebar group | Typical content |
+| :-- | :-- | :-- |
+| Learn step by step | Học theo lộ trình | tutorials, clinical cases, quizzes |
+| Solve a clinical task | Xử trí lâm sàng | how-to guides, algorithms, treatment updates |
+| Look something up | Tra cứu nhanh | definitions, criteria, tables, drug notes |
+| Understand why | Hiểu sâu | mechanisms, source text, explanations |
+
 ```text
 MedicalSite/
 ├── Raw/
@@ -16,7 +26,7 @@ MedicalSite/
 │   │       │   └── on-benh/
 │   │       │       ├── tom-tat/      -> ../../../../../Raw/on-benh  (1 · tóm tắt)
 │   │       │       ├── nguyen-thuy/  (2 · nguyên thủy, .md/.mdx)
-│   │       │       └── luong-gia.mdx (3 · nhúng quiz HTML)
+│   │       │       └── luong-gia/    (3 · .mdx nhúng quiz HTML)
 │   │       ├── cases/        # template clinical-case
 │   │       ├── updates/      # template treatment-update
 │   │       ├── topics/       # template topic-index
@@ -29,6 +39,8 @@ MedicalSite/
 ```
 
 > **Cách thêm sách / case / quiz: xem [WORKFLOW.md](./WORKFLOW.md).**
+> **Cách chọn template cho chương/menu y khoa: xem [TEMPLATE_CATALOG.md](./TEMPLATE_CATALOG.md).**
+> **Skill nguồn để tái sử dụng workflow ingest: [medical-book-ingest](./codex-skills/medical-book-ingest/SKILL.md).**
 
 `Raw/` is the local inbox/source area. Copy files here first. It can contain
 messy imports such as Markdown, HTML exports, images, and source artifacts.
@@ -44,20 +56,24 @@ Recommended split:
 - `src/content/docs/books|cases|updates|topics`: curated MDX; consistent metadata; uses medical components.
 - `src/content/docs/templates`: hidden MDX templates for creating new content.
 
-### Book = 3 sections
+### Book = 3 sections, shown through Diataxis
 
 Each book lives in `src/content/docs/books/<book>/` and always has the same
-three sidebar sections:
+three content sections. The sidebar groups these sections by reader need rather
+than by folder name.
 
 | # | Section | Folder / file | Format |
 | :-- | :-- | :-- | :-- |
 | 1 | Lý thuyết tóm tắt | `tom-tat/` | `.md` / `.mdx` |
 | 2 | Lý thuyết nguyên thủy | `nguyen-thuy/` | `.md` / `.mdx` (trích sách gốc) |
-| 3 | Câu hỏi lượng giá | `luong-gia.mdx` | nhúng quiz HTML từ `public/quiz/<book>/` |
+| 3 | Câu hỏi lượng giá | `luong-gia/` | `.mdx` pages embedding quiz HTML from `public/quiz/<book>/` |
 
-The sidebar block for a book is explicit in `astro.config.mjs` (group `Sách` →
-copy the "MẪU 1 SÁCH" block). Sections 1 & 2 use `autogenerate`; section 3 is a
-single `luong-gia.mdx` that embeds the built quiz via `<QuizEmbed>`.
+The sidebar block is explicit in `astro.config.mjs`. For a new book, add its
+folders to the relevant Diataxis groups:
+
+- `luong-gia/` → `Học theo lộ trình`
+- `tom-tat/` → `Tra cứu nhanh`
+- `nguyen-thuy/` → `Hiểu sâu`
 
 ## Metadata
 
@@ -69,6 +85,7 @@ title: "Chẩn đoán Ôn bệnh"
 description: "Hệ thống hóa chẩn đoán ôn bệnh theo lưỡi, răng, ban chẩn và triệu chứng."
 type: "book-chapter"
 category: "books"
+diataxis: "explanation" # tutorial / how-to / reference / explanation
 specialty: "YHCT"
 source: "Giáo trình Ôn bệnh"
 status: "draft"
@@ -99,6 +116,26 @@ sidebar:
 
 Templates live in `src/content/docs/templates/`:
 
+Diataxis-first templates:
+
+- `tutorial.mdx` → `cases/` or guided book lessons (`diataxis: "tutorial"`)
+- `shared/learning-path.mdx` → course/chapter path pages in `learning-paths/`
+- `how-to-guide.mdx` → `updates/` or clinical algorithms (`diataxis: "how-to"`)
+- `reference-note.mdx` → quick lookup pages, usually `topics/reference/` (`diataxis: "reference"`)
+- `explanation.mdx` → mechanisms, theory, original-text commentary, usually `topics/explanation/` (`diataxis: "explanation"`)
+
+Specialized medical template sets:
+
+- `templates/modern/` → Y học hiện đại: disease, symptom, diagnosis, treatment, drug, antibiotic, micro, imaging, lab, case, evidence, procedure.
+- `templates/tcm/` → Y học cổ truyền: lý luận, cổ văn, chứng trạng, bệnh danh, vị thuốc, phương tễ, huyệt, kinh lạc, ca, an toàn.
+- `templates/shared/` → dùng chung: atlas ảnh, bảng so sánh, thuật toán, quiz, patient education, ôn thi, concept map, source original.
+- `templates/shared/chapter-summary.mdx`, `quick-reference.mdx`, `deep-explanation.mdx`, `assessment-mcq.mdx`, `flashcard-set.mdx`, `case-question-set.mdx` → output chuẩn cho mỗi chương sách.
+
+Use [TEMPLATE_CATALOG.md](./TEMPLATE_CATALOG.md) when deciding which one fits a
+chapter title, menu, or raw source file.
+
+Legacy/specialized templates are still available:
+
 - `book-chapter.mdx` → `books/<book>/tom-tat/`
 - `clinical-case.mdx` → `cases/`
 - `treatment-update.mdx` → `updates/`
@@ -110,9 +147,10 @@ frontmatter to publish. Also change the template metadata to the real content
 type and category:
 
 ```yaml
-type: "book-chapter" # or clinical-case / treatment-update / topic-index
-category: "books"   # or cases / updates / topics
-status: "draft"     # draft / review / published, depending on your workflow
+type: "tutorial"      # or how-to-guide / reference-note / explanation
+category: "cases"     # or books / updates / topics
+diataxis: "tutorial"  # tutorial / how-to / reference / explanation
+status: "draft"       # draft / review / published
 ```
 
 ## Medical Components
@@ -158,13 +196,16 @@ Run from the project root:
 | Command | Action |
 | :-- | :-- |
 | `npm install` | Install dependencies |
-| `npm run dev` | Start dev server at `http://localhost:4321` (hot reload) |
+| `astro dev --background` | Start managed background dev server |
+| `astro dev status` | Check background dev server status |
+| `astro dev logs` | Read background dev server logs |
+| `astro dev stop` | Stop background dev server |
 | `npm run build` | Build static site to `dist/` (also generates the Pagefind search index) |
 | `npm run preview` | Serve the built `dist/` locally to verify before deploy |
+| `npm run ingest:book -- Raw/<book> <slug> "Tên sách"` | Scan raw book and print ingest plan |
+| `npm run ingest:book -- Raw/<book> <slug> "Tên sách" --write` | Create book skeleton and learning path |
 
-> Astro's `dev` server runs in the foreground; there is no built-in
-> `--background`/`status`/`logs`/`stop`. To background it use your shell
-> (`npm run dev &`) or a process manager.
+Use the managed Astro background commands for local development in this repo.
 
 ## CodeGraph (code intelligence)
 
@@ -194,7 +235,10 @@ Quick version:
 
 1. Copy raw files into `Raw/<domain>/`.
 2. Expose / curate under `src/content/docs/` (symlink for quick, MDX for curated).
-   Only `.md`/`.mdx` there become pages; HTML/images in `Raw/` are source artifacts.
+   Choose the location by reader need: `luong-gia/` or `cases/` for learning,
+   `updates/` for how-to, `tom-tat/` or `topics/reference/` for reference,
+   `nguyen-thuy/` or `topics/explanation/` for explanation. Only `.md`/`.mdx` become pages; HTML/images in `Raw/` are
+   source artifacts.
 3. `npm run build && npm run preview` to verify locally.
 4. `git add -A && git commit -m "…" && git push` — GitHub Actions auto-builds and
    deploys to <https://nobitanguyenhung.github.io/medical-site/>.
@@ -204,9 +248,10 @@ Quick version:
 ### A. Thêm 1 file `.md` / `.mdx` (1 bài đọc)
 
 1. Đặt file vào **đúng thư mục** dưới `src/content/docs/`:
-   - bài cho sách Ôn bệnh (tóm tắt) → bỏ vào `Raw/on-benh/` (đã symlink sẵn vào `tom-tat/`).
-   - lý thuyết nguyên thủy → `src/content/docs/books/<sách>/nguyen-thuy/`.
-   - ca / cập nhật / chủ đề → `cases/` · `updates/` · `topics/` (copy từ `templates/`).
+   - Học theo lộ trình → `cases/` hoặc `books/<sách>/luong-gia/`.
+   - Xử trí lâm sàng → `updates/`.
+   - Tra cứu nhanh → `Raw/on-benh/` nếu là tóm tắt Ôn bệnh, hoặc `topics/reference/`.
+   - Hiểu sâu → `books/<sách>/nguyen-thuy/` hoặc `topics/explanation/`.
 2. Frontmatter tối thiểu: `title`. Tùy chọn: `sidebar: { order: N }` để xếp thứ tự.
 3. Chạy:
    ```bash
@@ -216,7 +261,8 @@ Quick version:
 4. ~1 phút sau hiện trên web. Menu tự cập nhật (section dùng `autogenerate`).
 
 > File `.md` **không cần** sửa config nếu nằm trong thư mục đã `autogenerate`.
-> Thêm **sách mới** mới phải sửa `astro.config.mjs` (copy block "MẪU 1 SÁCH").
+> Thêm **sách mới** mới phải sửa `astro.config.mjs` để thêm 3 nhánh sách vào
+> đúng nhóm Diátaxis.
 
 ### B. Thêm 1 file `.html` (quiz / trang tương tác build sẵn)
 
@@ -228,7 +274,8 @@ Quick version:
    import QuizEmbed from '~/components/QuizEmbed.astro';
    <QuizEmbed src="quiz/<sách>/<tên>.html" title="..." />
    ```
-   (sách đã có sẵn `luong-gia.mdx` — chỉ cần ghi đè file `.html`, khỏi sửa mdx.)
+   Nếu cập nhật quiz cũ và giữ nguyên tên file `.html`, thường khỏi sửa trang `.mdx`
+   trong `books/<sách>/luong-gia/`.
 3. `npm run build && git add -A && git commit -m "…" && git push`.
 
 > Mọi thứ trong `public/` được bê nguyên vào `dist/` theo đúng đường dẫn.

@@ -1,0 +1,56 @@
+---
+title: "Template: Reference Note"
+description: "Khuôn MDX cho trang tra cứu nhanh: định nghĩa, tiêu chuẩn, bảng, liều, phân loại."
+type: "template"
+category: "templates"
+diataxis: "reference"
+status: "draft"
+draft: true
+pagefind: false
+sidebar:
+  hidden: true
+---
+
+import MedicalNote from '~/components/MedicalNote.astro';
+import KeyPoints from '~/components/KeyPoints.astro';
+import CompareTable from '~/components/CompareTable.astro';
+import SourceNote from '~/components/SourceNote.astro';
+
+<MedicalNote title="Tra cứu nhanh">
+
+## Định nghĩa
+
+## Dùng khi cần tra
+
+<KeyPoints>
+
+- Ý chính 1
+- Ý chính 2
+- Ý chính 3
+
+</KeyPoints>
+
+## Bảng nhanh
+
+<CompareTable title="Bảng tra cứu">
+
+| Mục | Nội dung | Ghi chú |
+| --- | --- | --- |
+|  |  |  |
+
+</CompareTable>
+
+## Tiêu chuẩn / phân loại
+
+## Liên kết liên quan
+
+- [Bài liên quan](/medical-site/books/...)
+
+<SourceNote>
+
+- Nguồn:
+- Ngày rà soát:
+
+</SourceNote>
+
+</MedicalNote>

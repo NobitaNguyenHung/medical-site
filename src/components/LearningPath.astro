@@ -1,0 +1,51 @@
+---
+interface Props {
+	title?: string;
+	duration?: string;
+	level?: string;
+	before?: string;
+	goal?: string;
+	practice?: string;
+	check?: string;
+}
+
+const {
+	title = 'Lộ trình học',
+	duration = 'Chưa ước lượng',
+	level = 'Chưa phân tầng',
+	before = 'Không yêu cầu',
+	goal = 'Nắm ý chính và áp dụng vào bài tập/case.',
+	practice = 'Đọc ngắn, làm case, tự kiểm rồi ôn lại.',
+	check = 'Tự trả lời câu hỏi hoặc làm quiz.',
+} = Astro.props;
+---
+
+<aside class="learning-path">
+	<p class="learning-path__eyebrow">{title}</p>
+	<div class="learning-path__grid">
+		<div>
+			<span>Thời lượng</span>
+			<strong>{duration}</strong>
+		</div>
+		<div>
+			<span>Mức học</span>
+			<strong>{level}</strong>
+		</div>
+		<div>
+			<span>Cần biết trước</span>
+			<strong>{before}</strong>
+		</div>
+		<div>
+			<span>Đích đến</span>
+			<strong>{goal}</strong>
+		</div>
+		<div>
+			<span>Cách học</span>
+			<strong>{practice}</strong>
+		</div>
+		<div>
+			<span>Tự kiểm</span>
+			<strong>{check}</strong>
+		</div>
+	</div>
+</aside>

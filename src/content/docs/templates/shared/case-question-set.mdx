@@ -1,0 +1,54 @@
+---
+title: "Template: Case Question Set"
+description: "Bộ câu hỏi case ngắn theo chương: dữ kiện, câu hỏi, giải thích từng bước."
+type: "case-question-set"
+category: "templates"
+diataxis: "tutorial"
+medicineSystem: "shared"
+templateId: "case-question-set"
+templateFamily: "shared"
+status: "draft"
+draft: true
+pagefind: false
+sidebar:
+  hidden: true
+---
+
+import ClinicalCase from '~/components/ClinicalCase.astro';
+import CompareTable from '~/components/CompareTable.astro';
+import SelfCheck from '~/components/SelfCheck.astro';
+import SourceNote from '~/components/SourceNote.astro';
+
+<ClinicalCase title="Case lượng giá">
+
+## Tình huống
+
+## Dữ kiện chính
+
+<CompareTable title="Gom dữ kiện">
+
+| Dữ kiện | Ý nghĩa | Câu hỏi tiếp theo |
+| --- | --- | --- |
+|  |  |  |
+
+</CompareTable>
+
+## Câu hỏi
+
+<SelfCheck>
+
+1. Chẩn đoán / chứng / hướng xử trí nào phù hợp nhất?
+2. Dữ kiện nào quyết định?
+3. Nếu dữ kiện X thay đổi thì kết luận đổi thế nào?
+
+</SelfCheck>
+
+## Giải thích từng bước
+
+<SourceNote>
+
+- Nguồn chương:
+
+</SourceNote>
+
+</ClinicalCase>

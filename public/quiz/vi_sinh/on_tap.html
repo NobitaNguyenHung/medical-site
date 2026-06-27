@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashcards Ôn Tập Vi Sinh - Bài Tế bào vi khuẩn</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px auto;
+            max-width: 800px;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .flashcard-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .flashcard {
+            background: #fff;
+            border-left: 5px solid #3498db;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .question {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 15px;
+        }
+        details {
+            background: #ecf0f1;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        summary {
+            font-weight: bold;
+            color: #2980b9;
+            outline: none;
+        }
+        .answer {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #27ae60;
+        }
+        .rationale {
+            margin-top: 10px;
+            font-style: italic;
+            color: #555;
+            border-top: 1px dashed #ccc;
+            padding-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>BỘ FLASHCARD ÔN TẬP VI SINH</h1>
+    <h2>Phần 1: Bài Tế bào vi khuẩn</h2>
+
+    <div class="flashcard-container">
+
+        <!-- Flashcard 1 -->
+        <div class="flashcard">
+            <div class="question">Q: Cấu trúc đặc trưng của thành tế bào Gram dương và Gram âm là gì?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Gram dương có lớp peptidoglycan dày. Gram âm có lớp peptidoglycan mỏng và màng ngoài chứa lipopolysaccharide (LPS).</div>
+                <div class="rationale"><strong>Giải thích:</strong> Thành tế bào vi khuẩn Gram dương được cấu tạo chủ yếu bởi lớp peptidoglycan (mucopeptid) rất dày [1, 2]. Trong khi đó, thành tế bào Gram âm có lớp peptidoglycan là thành phần thứ yếu (rất mỏng) và được bao bọc bởi một lớp màng ngoài (outer membrane) gồm lớp đôi phospholipid, lipoprotein, các kênh porin và lipopolysaccharide (kháng nguyên O) [3-5].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 2 -->
+        <div class="flashcard">
+            <div class="question">Q: Kháng sinh tác động vào cấu trúc nào sẽ giết chết vi khuẩn (tác dụng diệt khuẩn)?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Thành tế bào (Peptidoglycan).</div>
+                <div class="rationale"><strong>Giải thích:</strong> Sự hình thành peptidoglycan được xúc tác bởi enzym transpeptidase (Protein Binding Penicillin - PBP) tạo cầu nối giữa các dây glycan [2]. Khi kháng sinh gắn vào enzym này, quá trình tổng hợp vách tế bào bị ức chế, làm vách yếu đi và tế bào vi khuẩn dễ bị vỡ ra do áp suất bên trong tế bào rất cao (có thể lớn gấp 20 lần áp suất bên ngoài) [2, 6].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 3 -->
+        <div class="flashcard">
+            <div class="question">Q: Kháng sinh tác động vào cấu trúc nào sẽ ức chế sự tăng trưởng của vi khuẩn (tác dụng kìm khuẩn)?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Ribosome (Tiểu đơn vị 30S hoặc 50S).</div>
+                <div class="rationale"><strong>Giải thích:</strong> Ribosome nằm trong tế bào chất có nhiệm vụ sinh tổng hợp protein. Các loại kháng sinh như chloramphenicol, erythromycin, tetracyclin, streptomycin sẽ bám vào rARN của các tiểu đơn vị 30S hoặc 50S, làm ức chế dịch mã, gây đọc sai hoặc ngăn cản sự chuyển peptid hóa, từ đó ức chế sự tăng trưởng của vi khuẩn mà không làm vỡ ngay tế bào [7, 8].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 4 -->
+        <div class="flashcard">
+            <div class="question">Q: Cấu trúc nào giúp vi khuẩn chống lại hiện tượng thực bào?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Nang (Capsule) và vách tế bào giàu lipid.</div>
+                <div class="rationale"><strong>Giải thích:</strong> Nang là cấu trúc đậm đặc bao ngoài tế bào giúp vi khuẩn kháng lại hiện tượng thực bào (ví dụ: phế cầu khuẩn có nang thì độc, mất nang sẽ mất lực độc) [9-11]. Ngoài ra, vách tế bào chứa hàm lượng lipid rất cao (lên tới 60%) như ở vi khuẩn lao (Mycobacterium) cũng giúp chúng không bị thực bào và chống lại tác động diệt khuẩn của cơ thể vật chủ [9, 12].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 5 -->
+        <div class="flashcard">
+            <div class="question">Q: Cấu tạo của plasmid đề kháng kháng sinh? Tại sao đề kháng do plasmid lại nguy hiểm?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Plasmid là ADN dạng vòng ngoài nhiễm sắc thể. Nguy hiểm vì chúng có thể nhân lên độc lập và lây truyền gen kháng thuốc giữa các vi khuẩn qua tiếp hợp (pili phái).</div>
+                <div class="rationale"><strong>Giải thích:</strong> Plasmid là phân tử ADN dạng vòng, nằm ngoài thể nhân, có khả năng tự sao chép độc lập trong tế bào và chứa các gen mang thông tin di truyền như Yếu tố đề kháng R [13]. Chúng rất nguy hiểm vì thông qua cấu trúc pili phái (Yếu tố F), các vi khuẩn có thể tiếp xúc và di chuyển, lan truyền gen kháng kháng sinh một cách nhanh chóng sang các vi khuẩn khác chưa kháng thuốc [13-15].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 6 -->
+        <div class="flashcard">
+            <div class="question">Q: Cấu trúc nào giúp vi khuẩn chống lại điều kiện bất lợi của môi trường?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Bào tử (Spore).</div>
+                <div class="rationale"><strong>Giải thích:</strong> Bào tử là dạng cấu tạo đặc biệt giúp vi khuẩn chống lại những điều kiện ngoại cảnh khắc nghiệt như nhiệt độ cao, lạnh, khô, ánh sáng. Cấu trúc bào tử có các lớp bao vỏ chứa protein giàu cystein giống keratin tạo sự bất thẩm thấu cao độ, và đặc biệt chứa acid dipicolinic kết hợp với calci giúp ổn định ADN chống lại tác động của nhiệt [16, 17].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 7 -->
+        <div class="flashcard">
+            <div class="question">Q: Phương pháp diệt bào tử và áp dụng thực tế ngành học là gì?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Cần sử dụng nhiệt độ cực cao kết hợp áp suất (như hấp tiệt trùng) thay vì hóa chất sát khuẩn thông thường.</div>
+                <div class="rationale"><strong>Giải thích:</strong> Do bào tử có các lớp vỏ chứa protein có thành phần cystein (giống keratin) và chứa hàm lượng lớn acid dipicolinic (5-15% trọng lượng khô) giúp kháng nhiệt và bất thẩm thấu mạnh mẽ [16, 17]. Trong thực hành y khoa, để đảm bảo vô trùng hoàn toàn (diệt cả bào tử), phải áp dụng các phương pháp tiệt khuẩn mạnh như dùng nhiệt độ và áp suất cao, không thể chỉ dựa vào thuốc sát khuẩn thông thường hoặc đun sôi [17, 18]. <i>(Lưu ý: Suy luận phần thực tế dựa vào tính kháng nhiệt độ cao của bào tử trong tài liệu)</i>.</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 8 -->
+        <div class="flashcard">
+            <div class="question">Q: Cấu trúc nào giúp vi khuẩn bám vào tế bào vật chủ?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Pili thường (Fimbriae) và Glycocalyx.</div>
+                <div class="rationale"><strong>Giải thích:</strong> Vi khuẩn sử dụng pili thường (có số lượng nhiều hơn pili phái) chứa protein lectin để bám dính. Lectin này có khả năng gắn chuyên biệt với các phân tử đường (glycolipid, glycoprotein) trên màng tế bào vật chủ [13, 15]. Ngoài ra, glycocalyx (ví dụ: nang hoặc lớp slime cấu tạo bởi polysaccharid) cũng hỗ trợ vi khuẩn dính chặt vào bề mặt tế bào mô [9, 11].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 9 -->
+        <div class="flashcard">
+            <div class="question">Q: Cơ chế tác động của các dung dịch sát khuẩn là gì?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Phá hủy tính toàn vẹn của màng tế bào chất hoặc biến tính protein vi khuẩn.</div>
+                <div class="rationale"><strong>Giải thích:</strong> Dựa trên đặc điểm tế bào, các dung dịch sát khuẩn, chất tẩy trùng (như phenol, clorur thủy ngân) tác động bằng cách đánh vào hệ thống màng tế bào hoặc protein. Màng tế bào chất (lớp protein và phospholipid kép) có vai trò rào thẩm thấu sống còn, khi bị tác nhân hóa học phá hủy sẽ làm tế bào chết [18, 19]. <i>(Ghi chú: Dung dịch sát khuẩn được đánh giá thông qua tính chống chịu của cấu trúc màng và vách trong tài liệu)</i>.</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 10 -->
+        <div class="flashcard">
+            <div class="question">Q: Các cấu trúc nào ở vi khuẩn ngăn ngừa sự thấm của kháng sinh?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Màng ngoài (Gram âm), Slime/Biofilm, và cấu tạo vách giàu lipid (vi khuẩn kháng acid).</div>
+                <div class="rationale"><strong>Giải thích:</strong> Sự thấm kháng sinh bị cản trở bởi nhiều cấu trúc: 
+                    1) Lớp màng ngoài của vi khuẩn Gram âm có các kênh porin giới hạn kích thước phân tử và khoảng periplasma chứa enzym phá hủy kháng sinh [5, 20]. 
+                    2) Lớp Slime hoặc Biofilm bao bọc bên ngoài bảo vệ cộng đồng vi khuẩn [11, 21]. 
+                    3) Vách tế bào chứa hàm lượng lipid rất cao (lên tới 60%) có ở họ vi khuẩn Mycobacteria (lao, phong) làm cho chúng bất thẩm thấu với nhiều loại kháng sinh và hoá chất [12].
+                </div>
+            </details>
+        </div>
+
+    </div>
+
+
+    <h2>Phần 2: Bài Liên hệ Vật chủ - Vi khuẩn</h2>
+
+    <div class="flashcard-container">
+
+        <!-- Flashcard 1 -->
+        <div class="flashcard">
+            <div class="question">Q: Mối nguy hiểm của vi khuẩn ngoại sinh là gì?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Gây bệnh truyền nhiễm và nhiễm trùng bệnh viện từ môi trường ngoài.</div>
+                <div class="rationale"><strong>Giải thích:</strong> Vi khuẩn ngoại sinh hiện diện ở đất, nước, không khí, vật dụng,... Mặc dù nhiều loại có lợi cho tự nhiên, nhưng mặt có hại của chúng là có khả năng gây bệnh truyền nhiễm hoặc nhiễm trùng bệnh viện. Ví dụ, vi khuẩn Aeromonas hydrophila từ ao hồ có thể xâm nhập qua vết thương và sinh sôi rất nhanh gây hoại tử [1, 2].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 2 -->
+        <div class="flashcard">
+            <div class="question">Q: Đặc điểm của vi khuẩn gây bệnh nhiễm không biểu lộ và mối nguy hiểm?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Sự phòng vệ của cơ thể làm giảm mức độ độc hại của vi khuẩn, người mang mầm bệnh nhưng không có triệu chứng. Nguy hiểm là họ trở thành "người lành mang trùng" lây lan ẩn khuất cho cộng đồng.</div>
+                <div class="rationale"><strong>Giải thích:</strong> Khi hệ thống phòng vệ của vật chủ đủ sức làm giảm sự độc hại của vi khuẩn nhưng không tiêu diệt hoàn toàn, cơ thể sẽ rơi vào trạng thái "nhiễm không biểu lộ" (như người mang vi khuẩn lao nhưng không bị bệnh lao phát tác). Sự nguy hiểm nằm ở chỗ mầm bệnh vẫn tồn tại, có thể phát triển thành bệnh khi cơ thể suy yếu và là nguồn lây truyền trong cộng đồng [3-5].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 3 -->
+        <div class="flashcard">
+            <div class="question">Q: Nguyên nhân gây loạn khuẩn ở ruột? Thường xảy ra trên các đối tượng nào?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Nguyên nhân chính là do sử dụng kháng sinh phổ rộng liều cao, kéo dài. Thường xảy ra ở những người lạm dụng kháng sinh.</div>
+                <div class="rationale"><strong>Giải thích:</strong> Bình thường, hệ vi khuẩn ở ruột có sự cân bằng. Việc sử dụng kháng sinh phổ rộng với liều cao và kéo dài sẽ tiêu diệt các vi khuẩn nhạy cảm có lợi, phá vỡ thế cân bằng và tạo cơ hội cho các vi khuẩn kháng thuốc (như Proteus) hoặc nấm men phát triển mạnh mẽ, gây viêm ruột và tiêu chảy [3, 6].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 4 -->
+        <div class="flashcard">
+            <div class="question">Q: Lực độc của vi khuẩn gia tăng khi nào?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Khi vi khuẩn lây truyền (di chuyển) nhiều lần qua các vật chủ.</div>
+                <div class="rationale"><strong>Giải thích:</strong> Vi khuẩn sẽ gia tăng lực độc nếu được di chuyển liên tục qua vật chủ đó. Trong các đợt dịch bệnh, vi khuẩn truyền từ người này sang người khác nên ngày càng trở nên độc hơn, bởi quá trình lây truyền cũng là quá trình chọn lọc tự nhiên: những vi khuẩn ít độc lực đã bị hệ thống miễn dịch tiêu diệt, chỉ những chủng có độc tính mạnh mới sống sót và phát tán [7, 8].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 5 -->
+        <div class="flashcard">
+            <div class="question">Q: Đối tượng gây bệnh của vi khuẩn gây bệnh cơ hội là ai?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Những người bị suy giảm miễn dịch, hoặc khi có cửa ngõ bất thường cho vi khuẩn xâm nhập.</div>
+                <div class="rationale"><strong>Giải thích:</strong> Vi khuẩn gây bệnh cơ hội (thường là cộng sinh hoặc ngoại sinh vô hại) chỉ có thể bùng phát gây bệnh trên "người không bình thường": những người bị suy giảm miễn dịch tự nhiên (di truyền), mắc hội chứng suy giảm miễn dịch mắc phải (AIDS), suy dinh dưỡng, mắc bệnh mãn tính, hoặc cơ thể bị chấn thương, phẫu thuật, đặt ống dẫn lưu tạo đường cho vi khuẩn xâm nhập [9-11].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 6 -->
+        <div class="flashcard">
+            <div class="question">Q: Các yếu tố tạo nên lực độc của vi khuẩn gồm những gì?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: 1) Khả năng bám dính; 2) Kháng thực bào; 3) Enzyme tấn công; 4) Sinh sản tạo sự xâm lăng; 5) Sản xuất độc tố.</div>
+                <div class="rationale"><strong>Giải thích:</strong> Lực độc của vi khuẩn phụ thuộc vào khả năng: gắn vào tế bào vật chủ (nhờ Pili, Glycocalyx), kháng lại khả năng thực bào của hệ miễn dịch (nhờ nang, cấu tạo vách giàu lipid), sử dụng các enzyme phân giải mô (hyaluronidase, kinase, collagenase) để khuếch tán, nhân đôi và phát triển trong mô, cuối cùng là khả năng sản xuất ra các nội độc tố hoặc ngoại độc tố [12-15].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 7 -->
+        <div class="flashcard">
+            <div class="question">Q: Các cơ chế gây bệnh của vi khuẩn là gì?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Gây bệnh bằng sự xâm lăng trực tiếp, hoặc sản xuất độc tố, hoặc phối hợp cả hai.</div>
+                <div class="rationale"><strong>Giải thích:</strong> Vi khuẩn có thể gây bệnh theo hai cơ chế chính: Xâm lăng (sinh sôi trực tiếp và làm hủy hoại mô, tế bào) và Sản xuất độc tố (bơm chất độc vào mô vật chủ). Một số vi khuẩn không cần xâm lăng sâu mà chỉ gây bệnh qua độc tố cực mạnh (ví dụ vi khuẩn uốn ván, bạch hầu) [14, 15].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 8 -->
+        <div class="flashcard">
+            <div class="question">Q: Ngoại độc tố protein (exotoxin) có những đặc điểm gì?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Cực kỳ độc, tác động chuyên biệt, tính kháng nguyên mạnh, và dễ biến tính (bởi nhiệt/formol) thành vô độc tố.</div>
+                <div class="rationale"><strong>Giải thích:</strong> Ngoại độc tố được sinh ra trong tế bào chất và phóng thích ra ngoài. Đặc điểm là <strong>rất độc</strong> (nồng độ tử vong cực nhỏ), tác động <strong>chuyên biệt</strong> lên các cơ quan (hướng thần kinh, hoại tử), và có <strong>tính kháng nguyên mạnh</strong> (giúp kích thích tạo kháng thể trung hòa). Vì là protein, nó <strong>dễ bị biến tính</strong> bởi nhiệt độ hoặc formol để trở thành vô độc tố (anatoxin) dùng làm vắc-xin [15-17].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 9 -->
+        <div class="flashcard">
+            <div class="question">Q: Ngoài yếu tố lực độc, điều kiện nào giúp vi khuẩn gây được bệnh nhiễm?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Ái lực với loại mô phù hợp, xâm nhập đúng đường, và tình trạng thể chất của vật chủ kém (suy yếu phòng vệ).</div>
+                <div class="rationale"><strong>Giải thích:</strong> Để nhiễm trùng thành công, vi khuẩn phải xâm nhập <strong>đúng đường</strong> (vd: vi khuẩn uốn ván đi vào đường tiêu hóa thì vô hại, nhưng vào vết thương hở mới gây bệnh) và tìm được cơ quan có <strong>ái lực</strong> để bám dính (như vi khuẩn thương hàn ái lực với mô ruột). Ngoài ra, phụ thuộc rất lớn vào <strong>yếu tố vật chủ</strong>: người có sức đề kháng yếu, môi trường tạp cư mất vệ sinh, chế độ dinh dưỡng kém sẽ dễ bị vi khuẩn đánh bại [10, 18-20].</div>
+            </details>
+        </div>
+
+    </div>
+
+
+    <h2>Phần 3: Bài Cầu khuẩn</h2>
+
+    <div class="flashcard-container">
+
+        <!-- Flashcard 1 -->
+        <div class="flashcard">
+            <div class="question">Q: Streptococcus pyogenes (Liên cầu nhóm A) gây biến chứng hậu nhiễm nguy hiểm nào? Hậu quả?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Biến chứng Sốt thấp khớp (Rheumatic fever).</div>
+                <div class="rationale"><strong>Giải thích:</strong> Vi khuẩn <i>Streptococcus pyogenes</i> lây nhiễm qua đường hô hấp [1]. Tuy không mô tả chi tiết các cơ quan bị tổn thương trong tài liệu, nhưng biến chứng hậu nhiễm được nhắc đến là "sốt thấp khớp". Hậu quả là bệnh nhân đã bị sốt thấp khớp bắt buộc phải sử dụng kháng sinh dự phòng để tránh tái phát và tổn thương nặng thêm [1].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 2 -->
+        <div class="flashcard">
+            <div class="question">Q: Cách phòng ngừa viêm họng do Streptococcus pyogenes ở trẻ em?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Tránh lây nhiễm qua đường hô hấp và dùng kháng sinh dự phòng (đối với trẻ đã có tiền sử sốt thấp khớp).</div>
+                <div class="rationale"><strong>Giải thích:</strong> Bệnh lây nhiễm chủ yếu qua đường hô hấp từ những người mang mầm bệnh hoặc bệnh nhân [1]. Việc phòng ngừa tập trung vào ngăn chặn lây truyền đường hô hấp. Đặc biệt, với những bệnh nhân đã từng bị biến chứng sốt thấp khớp, cần sử dụng kháng sinh dự phòng lâu dài [1].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 3 -->
+        <div class="flashcard">
+            <div class="question">Q: Staphylococcus aureus (Tụ cầu vàng): Khả năng gây bệnh?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Gây viêm tai-mũi-họng, Hội chứng sốc do độc tố (TSST), Ngộ độc thức ăn và Viêm ruột cấp tính.</div>
+                <div class="rationale"><strong>Giải thích:</strong> Tụ cầu vàng có thể gây ra nhiều bệnh lý đa dạng:
+                <br>- <i>Nhiễm trùng tại chỗ:</i> Viêm tai-mũi-họng (viêm amygdal, viêm xoang) [2].
+                <br>- <i>Toàn thân:</i> Hội chứng sốc do độc tố (TSST) gây sốt, phát ban, tróc da tay chân và trụy tim [2].
+                <br>- <i>Đường tiêu hóa:</i> Ngộ độc thức ăn do sinh enterotoxin và viêm ruột cấp tính (thường do loạn khuẩn sau khi dùng kháng sinh phổ rộng) [3, 4].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 4 -->
+        <div class="flashcard">
+            <div class="question">Q: Nguyên tắc điều trị ngộ độc thức ăn do Staphylococcus aureus?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Chủ yếu là điều trị triệu chứng (tự khỏi sau 24-48 giờ). Đề cao nguyên tắc phòng ngừa vệ sinh thực phẩm.</div>
+                <div class="rationale"><strong>Giải thích:</strong> Ngộ độc không phải do nhiễm trực tiếp vi khuẩn mà do <i>enterotoxin đã có sẵn trong thức ăn</i> (độc tố này không bị phân hủy khi đun sôi 100°C/30 phút) [3, 4]. Triệu chứng tiêu chảy, ói mửa xuất hiện nhanh (2-3 giờ sau ăn) và tự hết sau 24-48 giờ [4]. Nguyên tắc quan trọng nhất là phòng ngừa: bệnh nhân nhiễm trùng da không được chế biến thức ăn, thức ăn nấu xong phải ăn ngay hoặc làm lạnh [5, 6].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 5 -->
+        <div class="flashcard">
+            <div class="question">Q: MRSA là gì? Khả năng gây bệnh và độ nguy hiểm?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Là Tụ cầu vàng kháng Methicillin. Nguy hiểm vì lây lan qua tiếp xúc da, khó điều trị và cần cách ly nghiêm ngặt.</div>
+                <div class="rationale"><strong>Giải thích:</strong> MRSA (Methicillin-resistant <i>Staphylococcus aureus</i>) là chủng tụ cầu đã đề kháng với hầu hết các kháng sinh thông dụng (như Penicillin, Cephalosporin) [4, 5]. Chúng lây lan qua tiếp xúc da. Bệnh nhân nhiễm MRSA phải được áp dụng thủ tục cách ly nghiêm ngặt cho đến khi khỏi bệnh và phải dùng các kháng sinh dự phòng đặc biệt như Vancomycin, Daptomycin [5].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 6 -->
+        <div class="flashcard">
+            <div class="question">Q: Bệnh nhiễm nguy hiểm gây ra bởi Phế cầu khuẩn (Pneumococcus)?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Viêm phổi, viêm tai giữa, nhiễm trùng máu và viêm màng não. Thường gây tử vong ở xứ lạnh.</div>
+                <div class="rationale"><strong>Giải thích:</strong> Phế cầu khuẩn có khả năng gây ra các bệnh hô hấp như viêm phổi, viêm tai giữa [7]. Vi khuẩn này còn có thể xâm nhập sâu gây nhiễm trùng máu hoặc dịch não tủy (viêm màng não) [8]. Bệnh có mức độ nguy hiểm cao, đặc biệt thường gây tử vong ở các xứ lạnh [8].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 7 -->
+        <div class="flashcard">
+            <div class="question">Q: Cách phòng ngừa bệnh do Phế cầu khuẩn?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Sử dụng vắc-xin chứa thành phần polysaccharid nang của phế cầu.</div>
+                <div class="rationale"><strong>Giải thích:</strong> Vi khuẩn truyền nhiễm từ người mang bệnh hoặc người mang mầm bệnh không biểu lộ [9]. Phòng ngừa chủ yếu bằng vắc-xin. Có 2 loại chính:
+                <br>- <i>Synflorix:</i> Dùng cho trẻ em từ 2 tháng đến 5 tuổi [7].
+                <br>- <i>Pneumo23 (PPSV23):</i> Chứa 23 chủng, dùng cho trẻ từ 2-5 tuổi, người có bệnh mãn tính, người bị giảm miễn dịch và người lớn tuổi (chỉ cần tiêm 1 mũi, hiếm khi cần nhắc lại) [9].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 8 -->
+        <div class="flashcard">
+            <div class="question">Q: Lậu cầu (Neisseria gonorrhoeae): Khả năng gây bệnh ở Nam, Nữ và Trẻ sơ sinh?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Nam: Viêm niệu đạo (chảy mủ, tiểu buốt). Nữ: Viêm cổ tử cung, viêm ống dẫn trứng. Trẻ sơ sinh: Viêm kết mạc mắt có mủ.</div>
+                <div class="rationale"><strong>Giải thích:</strong> Lậu cầu là tác nhân gây bệnh lây truyền qua đường tình dục chỉ có ở người [10]:
+                <br>1. <strong>Ở nam:</strong> Viêm niệu đạo cấp tính (chảy mủ, tiểu buốt, gắt). Mãn tính gây viêm tinh hoàn, tuyến tiền liệt, xuất hiện mủ "Giọt sương ban mai" [11].
+                <br>2. <strong>Ở nữ:</strong> Ủ bệnh âm thầm, gây viêm cổ tử cung, âm đạo. Biến chứng nguy hiểm là viêm ống dẫn trứng [11].
+                <br>3. <strong>Trẻ sơ sinh:</strong> Bị lây từ mẹ khi sinh thường, gây viêm kết mạc có mủ, có thể dẫn đến mù lòa (phòng ngừa bằng đẻ mổ hoặc nhỏ mắt dung dịch Argerol) [12].
+                <br>4. <strong>Cơ quan khác:</strong> Có thể gây viêm họng, viêm trực tràng, nhiễm khuẩn huyết và viêm khớp [12].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 29 -->
+        <div class="flashcard">
+            <div class="question">Q: 29. Cách phòng ngừa lây nhiễm lậu từ mẹ sang con khi sinh?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Thực hiện sinh mổ hoặc nhỏ dung dịch Argerol vào mắt trẻ ngay sau khi sinh.</div>
+                <div class="rationale"><strong>Giải thích:</strong> Trẻ sơ sinh bị lây lậu cầu từ mẹ khi sinh qua ngả âm đạo thông thường, gây ra tình trạng viêm kết mạc có mủ và có thể dẫn đến hậu quả mù mắt [1]. Cách phòng ngừa lây nhiễm hiệu quả nhất là chỉ định sinh mổ [1]. Trong trường hợp sinh thường, bắt buộc phải nhỏ dung dịch Argerol (chứa dẫn chất bạc) vào mắt trẻ sơ sinh để sát khuẩn [1].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 30 -->
+        <div class="flashcard">
+            <div class="question">Q: 30. Cơ chế gây bệnh của vi khuẩn bạch hầu?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Sản xuất ngoại độc tố protein cực mạnh đi vào máu và tạo màng giả gây nghẹt thở tại yết hầu.</div>
+                <div class="rationale"><strong>Giải thích:</strong> Vi khuẩn bạch hầu (<i>C. diphtheriae</i>) gây bệnh chủ yếu do sản xuất ra loại ngoại độc tố protein rất mạnh [2]. Vi khuẩn này thường chỉ cố định tại yết hầu, phát triển và tạo ra lớp màng giả màu trắng xám, dai, khó bóc, có thể dẫn đến viêm hạch và nghẹt thở [2, 3]. Đặc biệt nguy hiểm là độc tố của vi khuẩn sẽ phân tán vào máu, sau đó cố định và gây tổn thương nặng nề cho tế bào nhiều cơ quan như cơ tim, dây thần kinh ngoại biên, thận và gan [3].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 31 -->
+        <div class="flashcard">
+            <div class="question">Q: 31. Nguyên tắc điều trị bệnh bạch hầu?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Phối hợp bắt buộc giữa Huyết thanh kháng độc tố (SAD) và Kháng sinh diệt vi khuẩn.</div>
+                <div class="rationale"><strong>Giải thích:</strong> Do cơ chế gây bệnh nguy hiểm nằm ở ngoại độc tố, nguyên tắc điều trị hàng đầu là phải dùng huyết thanh kháng độc tố bạch hầu SAD (Serum Anti Diphterique) nhằm trung hòa nhanh chóng độc tố trong cơ thể [4]. Song song đó, phải dùng kháng sinh để tiêu diệt vi khuẩn (nguồn sinh độc tố); trong đó Penicillin là lựa chọn tốt nhất, nếu bệnh nhân dị ứng thì có thể thay thế bằng Erythromycin, Amoxicillin hoặc Clindamycin [4].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 32 -->
+        <div class="flashcard">
+            <div class="question">Q: 32. Cách phòng ngừa bệnh bạch hầu?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Tiêm vắc-xin giải độc tố (thường tiêm phối hợp) và dùng kháng sinh dự phòng cho người mang trùng.</div>
+                <div class="rationale"><strong>Giải thích:</strong> Biện pháp phòng ngừa chủ động là dùng vắc-xin ngừa bạch hầu (bản chất là giải độc tố bạch hầu), thường được phối hợp chung với vắc-xin ngừa uốn ván và ho gà [4]. Bên cạnh đó, để cắt đứt nguồn lây, với những người mang vi khuẩn bạch hầu nhưng không có triệu chứng biểu lộ, cần phải điều trị bằng kháng sinh như uống Erythromycin hoặc tiêm bắp Benzathin Penicillin G [4].</div>
+            </details>
+        </div>
+
+    </div>
+
+    
+    <h2>Phần 4: Bài Vi khuẩn lao - Phong</h2>
+
+    <div class="flashcard-container">
+
+        <!-- Flashcard 1 -->
+        <div class="flashcard">
+            <div class="question">Q: Đặc điểm cấu tạo thành tế bào vi khuẩn lao là gì?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Chứa tỷ lệ lipid rất cao (lên tới 60%), đặc biệt là acid mycolic và yếu tố tạo xoắn (cord factor) [1, 2].</div>
+                <div class="rationale"><strong>Giải thích:</strong> Tỷ lệ lipid cao giúp thành tế bào vi khuẩn lao không bắt màu nhuộm thông thường (phải nhuộm bằng thuốc nhuộm mạnh như carbol fuschin nóng), đồng thời kháng lại acid, base, chất tẩy và chống lại sự thực bào [1, 3]. Trong đó, yếu tố tạo xoắn làm vi khuẩn xoắn vào nhau và liên quan mật thiết đến độc tính của vi khuẩn [2, 4].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 2 -->
+        <div class="flashcard">
+            <div class="question">Q: Đặc điểm trong đáp ứng miễn dịch của bệnh lao là gì?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Là đáp ứng miễn dịch qua trung gian tế bào (hoạt hóa đại bạch bào); các kháng thể dịch thể không có tác dụng bảo vệ [5].</div>
+                <div class="rationale"><strong>Giải thích:</strong> Sự nhiễm khuẩn trong bệnh lao là nhiễm khuẩn nội tế bào [5]. Khi vi khuẩn lao xâm nhập, hệ thống miễn dịch tế bào được kích động làm sinh sản lympho T và hoạt hóa đại bạch bào [5]. Các đại bạch bào hoạt hóa sẽ làm tăng các enzym ly giải để tiêu diệt vi khuẩn lao [6]. Các kháng thể thông thường (như agglutinin, opsonin) hoàn toàn không có tác dụng bảo vệ cơ thể trước vi khuẩn lao [5].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 3 -->
+        <div class="flashcard">
+            <div class="question">Q: Mục đích sử dụng phối hợp kháng sinh trong điều trị lao là gì?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Nhằm tác động đa dạng lên vi khuẩn và chống hiện tượng kháng thuốc [7].</div>
+                <div class="rationale"><strong>Giải thích:</strong> Trong điều trị lao, mỗi loại thuốc chống lao có một tác dụng khác biệt trên vi khuẩn (có thể là diệt khuẩn, kìm khuẩn, hoặc tác động vào các vị trí vi khuẩn khác nhau) [7]. Việc bắt buộc phối hợp kháng sinh (ví dụ: dùng chung Rifampicin, Isoniazid, Pyrazinamide, Ethambutol) trong một thời gian dài giúp đảm bảo tiêu diệt vi khuẩn triệt để và ngăn chặn vi khuẩn đột biến kháng thuốc [7].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 4 -->
+        <div class="flashcard">
+            <div class="question">Q: Nguyên nhân dẫn đến lao tiến triển?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Do sự giảm sút sức đề kháng và suy giảm miễn dịch của cơ thể vật chủ [6].</div>
+                <div class="rationale"><strong>Giải thích:</strong> Một người có thể bị nhiễm lao (lao tiềm ẩn) nhưng không mắc bệnh lao [6]. Bệnh lao sẽ bùng phát và tiến triển khi cơ thể bị suy giảm miễn dịch, hoặc cơ thể bị suy nhược do suy dinh dưỡng, lao động cực nhọc, mắc bệnh đái tháo đường, bệnh bụi phổi hoặc do hút thuốc lá [6].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 5 -->
+        <div class="flashcard">
+            <div class="question">Q: Đối tượng cần cách ly tuyệt đối với người bị lao?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Những người có yếu tố nguy cơ cao như suy giảm miễn dịch, mắc bệnh nền nặng hoặc đang dùng thuốc ức chế miễn dịch [8].</div>
+                <div class="rationale"><strong>Giải thích:</strong> Những người có yếu tố nguy cơ cao bao gồm: người nhiễm HIV mọi lứa tuổi, bệnh nhân đái tháo đường, suy thận, bụi phổi, người cấy ghép tạng và bệnh nhân đang dùng thuốc ức chế miễn dịch hoặc thuốc sinh học [8]. Những đối tượng này có tính nhạy cảm đặc biệt tăng cao với vi khuẩn gây bệnh chuyên biệt, do đó họ phải được cách ly tuyệt đối với nơi có người mắc bệnh để phòng tránh lây nhiễm chéo [9].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 6 -->
+        <div class="flashcard">
+            <div class="question">Q: Vi khuẩn gây bệnh phong (M. leprae) tác động vào cơ quan nào trên cơ thể?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Gây tổn thương chủ yếu ở ngoài da và các dây thần kinh ngoại biên [10].</div>
+                <div class="rationale"><strong>Giải thích:</strong> Vi khuẩn gây bệnh phong ưa thích nhiệt độ lạnh khoảng 30°C [10]. Chính vì vậy, chúng không phát triển mạnh ở các nội tạng nóng bên trong cơ thể mà thường khu trú, sinh sôi và gây tổn thương chủ yếu ở bề mặt ngoài da và dọc theo các dây thần kinh ngoại biên [10].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 7 -->
+        <div class="flashcard">
+            <div class="question">Q: Khi một người bị bệnh phong, vị trí nào chứa nhiều vi khuẩn nhất?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Trong dịch tiết ở mũi và tại các vết thương loét ngoài da [11].</div>
+                <div class="rationale"><strong>Giải thích:</strong> Khi hệ miễn dịch tế bào của bệnh nhân suy giảm, bệnh phong sẽ tiến triển và biểu hiện ở dạng "phong u" [11]. Ở thể bệnh nặng này, vi khuẩn sinh sôi vô cùng mạnh mẽ, tạo ra rất nhiều vi khuẩn nằm trong chất tiết ở mũi và các vết thương ngoài da, khiến người bệnh trở thành nguồn lây nhiễm rất lớn cho cộng đồng [11].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 8 -->
+        <div class="flashcard">
+            <div class="question">Q: Bệnh phong lây nhiễm qua con đường nào?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Lây nhiễm qua đường da (chỗ da sây sát) và qua đường hô hấp [10].</div>
+                <div class="rationale"><strong>Giải thích:</strong> Bệnh phong bị lây nhiễm chủ yếu do sự tiếp xúc nhiều và lâu dài với người bệnh [10]. Mầm bệnh có thể xâm nhập trực tiếp vào cơ thể vật chủ mới thông qua các vùng da bị sây sát hoặc lây truyền qua đường hô hấp khi hít phải dịch tiết [10].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 9 -->
+        <div class="flashcard">
+            <div class="question">Q: Cách điều trị bệnh phong hiệu quả nhất là gì?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Bắt buộc sử dụng phối hợp nhiều loại kháng sinh và sulfamid theo phác đồ chuẩn [12].</div>
+                <div class="rationale"><strong>Giải thích:</strong> Cách điều trị hiệu quả nhất đối với mầm bệnh là sử dụng phối hợp các loại kháng sinh và sulfamid như rifampicin, dapsone, clofazimin, sulfone [12]. Việc phối hợp nhiều loại thuốc là bắt buộc để ngăn chặn hiện tượng vi khuẩn kháng thuốc, tuân thủ đúng theo phác đồ của chương trình phòng chống phong quốc gia [12].</div>
+            </details>
+        </div>
+
+    </div>
+
+    
+    <h2>Phần 5: Bài Vi khuẩn gây bệnh đường ruột</h2>
+
+    <div class="flashcard-container">
+
+        <!-- Flashcard 1 -->
+        <div class="flashcard">
+            <div class="question">Q: Vi khuẩn dịch tả (V. cholerae) tiết ra loại độc tố nào và gây hậu quả nghiêm trọng gì?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Tiết ra ngoại độc tố ruột (Cholera toxin). Hậu quả: Gây tiêu chảy ồ ạt (phân như nước vo gạo), dẫn đến mất nước, mất điện giải trầm trọng và có thể tử vong do trụy tim mạch.</div>
+                <div class="rationale"><strong>Giải thích:</strong> Vi khuẩn dịch tả xâm nhập qua đường tiêu hóa, chịu được tác động của lysozyme và acid dạ dày để xuống ruột. Tại đây, chúng không phá hủy niêm mạc mà tiết ra ngoại độc tố ruột làm thay đổi bơm ion, khiến nước và điện giải ồ ạt xuất tiết vào lòng ruột. <br><span class="external-note">*Lưu ý: Hậu quả tiêu chảy ồ ạt là kiến thức ngoài tài liệu nguồn. Yếu tố lây truyền đường tiêu hóa được tham khảo từ [2, 3].</span></div>
+            </details>
+        </div>
+
+        <!-- Flashcard 2 -->
+        <div class="flashcard">
+            <div class="question">Q: Nguyên tắc điều trị và cách phòng ngừa bệnh dịch tả?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Điều trị: Quan trọng nhất là bù nước và điện giải nhanh chóng, kết hợp dùng kháng sinh. Phòng ngừa: Ăn chín uống sôi, vệ sinh môi trường và uống vắc-xin tả.</div>
+                <div class="rationale"><strong>Giải thích:</strong> Do nguyên nhân gây tử vong chính là mất nước và điện giải, việc truyền dịch (hoặc uống Oresol) phải được đặt lên hàng đầu để cứu sống bệnh nhân, kháng sinh chỉ đóng vai trò diệt vi khuẩn nhằm làm giảm sự bài tiết độc tố. <br><span class="external-note">*Lưu ý: Thông tin điều trị bù nước được bổ sung từ kiến thức y khoa ngoài nguồn.</span></div>
+            </details>
+        </div>
+
+        <!-- Flashcard 3 -->
+        <div class="flashcard">
+            <div class="question">Q: Độc tố, khả năng gây bệnh và biến chứng nguy hiểm của vi khuẩn Salmonella typhi?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Độc tố: Nội độc tố Lipopolysaccharid (LPS). Gây bệnh sốt thương hàn. Biến chứng: Xuất huyết tiêu hóa và thủng ruột.</div>
+                <div class="rationale"><strong>Giải thích:</strong> <i>Salmonella typhi</i> sinh ra nội độc tố LPS có phần Lipid A quyết định tính độc. Vi khuẩn này có ái lực đặc biệt với mô bạch huyết ở thành ruột (mảng Peyer). Quá trình viêm và hoại tử tại các mảng bạch huyết này có thể dẫn đến các biến chứng thủng thành ruột hoặc chảy máu ồ ạt đe dọa tính mạng. <br><span class="external-note">*Lưu ý: Cơ chế ái lực mô ruột và bản chất LPS được lấy từ [1, 2]. Các biến chứng thủng ruột là kiến thức bổ sung từ ngoài nguồn.</span></div>
+            </details>
+        </div>
+
+        <!-- Flashcard 4 -->
+        <div class="flashcard">
+            <div class="question">Q: Các loại Salmonella nào gây ngộ độc thực phẩm? Nguyên tắc điều trị và phòng ngừa chung của S. typhi?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Ngộ độc TP do S. typhimurium, S. enteritidis. Điều trị thương hàn: Kháng sinh đặc hiệu. Phòng ngừa: Vệ sinh an toàn thực phẩm, xử lý chất thải và tiêm vắc-xin.</div>
+                <div class="rationale"><strong>Giải thích:</strong> <i>Salmonella</i> có nhiều chủng, trong khi <i>S. typhi</i> gây thương hàn toàn thân, thì các chủng vi khuẩn lây từ động vật như <i>S. typhimurium</i> thường chỉ gây viêm ruột cấp (ngộ độc thực phẩm). Vì mầm bệnh lây qua đường tiêu hóa phân-miệng, vệ sinh thực phẩm và nguồn nước là nguyên tắc phòng ngừa tối thượng. <br><span class="external-note">*Lưu ý: Tên các chủng ngộ độc thực phẩm là kiến thức bổ sung từ ngoài nguồn.</span></div>
+            </details>
+        </div>
+
+        <!-- Flashcard 5 -->
+        <div class="flashcard">
+            <div class="question">Q: Độc tố và khả năng gây bệnh của vi khuẩn Shigella dysenteriae?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Sinh cả Nội độc tố (LPS) và Ngoại độc tố (Shiga toxin). Khả năng gây bệnh: Gây bệnh kiết lỵ trực khuẩn (đau quặn bụng, mót rặn, phân có nhầy máu).</div>
+                <div class="rationale"><strong>Giải thích:</strong> <i>Shigella dysenteriae</i> là một vi khuẩn Gram âm sinh nội độc tố protein và LPS khi bị tiêu giải, gây độc tố toàn thân. Đặc biệt, nó còn tiết ra ngoại độc tố Shiga gây hoại tử niêm mạc ruột non và ruột già, dẫn đến hội chứng lỵ đặc trưng là phân lỏng lẫn nhiều nhầy và máu. <br><span class="external-note">*Lưu ý: Việc Shigella có nội độc tố được tham khảo từ [1]. Triệu chứng lâm sàng bệnh lỵ là kiến thức bổ sung ngoài nguồn.</span></div>
+            </details>
+        </div>
+
+        <!-- Flashcard 6 -->
+        <div class="flashcard">
+            <div class="question">Q: Nguyên tắc điều trị và phòng ngừa bệnh do vi khuẩn Shigella?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Điều trị: Bù nước, điện giải và dùng kháng sinh sớm. Phòng ngừa: Cắt đứt đường lây phân - miệng (rửa tay, ăn chín, diệt ruồi nhặng).</div>
+                <div class="rationale"><strong>Giải thích:</strong> Việc điều trị cần có kháng sinh để tiêu diệt vi khuẩn, rút ngắn thời gian bài xuất vi khuẩn ra môi trường. Bệnh chủ yếu lây qua đường tiêu hóa, do đó vệ sinh cá nhân, kiểm soát nguồn nước và diệt vật trung gian mang mầm bệnh (ruồi, nhặng) là cốt lõi trong phòng bệnh. <br><span class="external-note">*Lưu ý: Đây là kiến thức y học cơ sở bổ sung ngoài tài liệu nguồn.</span></div>
+            </details>
+        </div>
+
+        <!-- Flashcard 7 -->
+        <div class="flashcard">
+            <div class="question">Q: Độc tố và khả năng gây bệnh của E. coli?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Độc tố: Nội độc tố LPS, và ngoại độc tố ruột (tùy chủng như ETEC sinh độc tố LT/ST...). Gây bệnh: Tiêu chảy, nhiễm trùng tiểu, viêm màng não trẻ sơ sinh và nhiễm trùng huyết.</div>
+                <div class="rationale"><strong>Giải thích:</strong> <i>E. coli</i> bình thường là vi khuẩn cộng sinh ở ruột, nhưng khi xâm nhập vào vị trí khác (như đường niệu) hoặc khi cơ thể nhiễm phải các chủng có độc lực cao (như chủng sinh độc tố ruột), chúng trở thành tác nhân gây bệnh cơ hội hoặc gây viêm ruột, tiêu chảy. <br><span class="external-note">*Lưu ý: Tính chất cộng sinh, cơ hội và nội độc tố LPS được lấy từ [1, 4, 5]. Chi tiết về độc tố LT/ST và các bệnh lý chi tiết là kiến thức ngoài nguồn.</span></div>
+            </details>
+        </div>
+
+        <!-- Flashcard 8 -->
+        <div class="flashcard">
+            <div class="question">Q: Nguyên tắc điều trị và phòng ngừa nhiễm khuẩn E. coli?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Điều trị: Bù nước (nếu tiêu chảy), dùng kháng sinh dựa trên kháng sinh đồ. Phòng ngừa: Vệ sinh thực phẩm, tránh lạm dụng kháng sinh gây loạn khuẩn.</div>
+                <div class="rationale"><strong>Giải thích:</strong> Vì <i>E. coli</i> có tỷ lệ kháng thuốc cao và đa dạng chủng, điều trị nhiễm trùng (như nhiễm trùng tiểu) thường cần dựa vào kháng sinh đồ. Đồng thời, không được lạm dụng kháng sinh phổ rộng để tránh tiêu diệt vi khuẩn có lợi, gây loạn khuẩn ruột tạo đà cho <i>E. coli</i> đề kháng bùng phát. <br><span class="external-note">*Lưu ý: Yếu tố lạm dụng kháng sinh gây loạn khuẩn được tham khảo từ [4].</span></div>
+            </details>
+        </div>
+
+        <!-- Flashcard 9 -->
+        <div class="flashcard">
+            <div class="question">Q: Pseudomonas aeruginosa (Trực khuẩn mủ xanh): Khả năng gây bệnh và đường lây nhiễm?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Gây nhiễm trùng cơ hội nặng (vết bỏng, viêm phổi, tiết niệu). Lây qua đường tiếp xúc môi trường y tế (nhiễm trùng bệnh viện), dụng cụ không vô trùng.</div>
+                <div class="rationale"><strong>Giải thích:</strong> Trực khuẩn mủ xanh là loại vi khuẩn ngoại sinh nguy hiểm trong môi trường bệnh viện. Chúng chủ yếu gây bệnh cơ hội ở những bệnh nhân suy giảm miễn dịch, tổn thương da (như bị bỏng) hoặc bệnh nhân phải can thiệp thiết bị y tế (ống thở, ống thông tiểu). <br><span class="external-note">*Lưu ý: Thông tin trực khuẩn mủ xanh là kiến thức y học bổ sung do tài liệu nguồn không chứa bài giảng này.</span></div>
+            </details>
+        </div>
+
+        <!-- Flashcard 10 -->
+        <div class="flashcard">
+            <div class="question">Q: Cách phòng ngừa Pseudomonas aeruginosa?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Tuân thủ nghiêm ngặt nguyên tắc vô khuẩn y tế, tiệt trùng thiết bị và rửa tay thường xuyên.</div>
+                <div class="rationale"><strong>Giải thích:</strong> Do trực khuẩn mủ xanh lây truyền chủ yếu qua các thiết bị y tế (ống thông, máy thở) và tiếp xúc chéo tại bệnh viện, đồng thời chúng có khả năng đề kháng mạnh với nhiều loại chất sát khuẩn và kháng sinh, nên kiểm soát nhiễm khuẩn bệnh viện và tiệt trùng thiết bị đúng chuẩn là phương pháp phòng ngừa quan trọng nhất. <br><span class="external-note">*Lưu ý: Đây là nguyên tắc vô khuẩn chung được bổ sung từ ngoài nguồn.</span></div>
+            </details>
+        </div>
+
+    </div>
+
+    
+    <h2>Phần 6: Bài Vi khuẩn giang mai (Treponema pallidum)</h2>
+
+    <div class="flashcard-container">
+
+        <!-- Flashcard 1 -->
+        <div class="flashcard">
+            <div class="question">Q: Khả năng gây bệnh và các giai đoạn tiến triển của bệnh giang mai?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Lây qua đường sinh dục. Gồm 3 giai đoạn: GĐ I (săng giang mai), GĐ II (đào ban lan tỏa - lây lan mạnh nhất), GĐ III (phá hủy nội tạng, thần kinh).</div>
+                <div class="rationale"><strong>Giải thích:</strong> Vi khuẩn xâm nhập tạo vết loét nông (săng) sau khoảng 3 tuần ủ bệnh [1]. Ở giai đoạn II (6-8 tuần sau), vi khuẩn vào máu gây tổn thương da lan tỏa (đào ban) và có mức độ lây nhiễm cao nhất [1, 2]. Giai đoạn III (thường vào năm thứ 3) gây phá hủy cơ thể với các biến chứng nặng như viêm động mạch chủ, liệt toàn thân hoặc rối loạn tâm thần [3, 4].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 2 -->
+        <div class="flashcard">
+            <div class="question">Q: Vi khuẩn giang mai lây nhiễm từ mẹ sang con vào tháng thứ mấy thai kỳ? Hậu quả?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Xảy ra từ tháng thứ 4 của thai kỳ. Gây thai chết lưu hoặc giang mai bẩm sinh (viêm giác mạc kẽ, điếc, thủng vòm họng).</div>
+                <div class="rationale"><strong>Giải thích:</strong> Xoắn khuẩn giang mai có thể vượt qua hàng rào nhau thai và lây nhiễm cho thai nhi từ tháng thứ 4 của thai kỳ [4]. Trẻ có thể tử vong khi còn trong bụng mẹ, hoặc sống sót nhưng mang các di chứng nặng nề của giang mai bẩm sinh muộn như viêm giác mạc kẽ (có thể dẫn đến mù lòa), điếc hai tai, thủng vòm miệng, mũi tẹt [4, 5].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 3 -->
+        <div class="flashcard">
+            <div class="question">Q: Kể tên các phương pháp chẩn đoán giang mai. Phản ứng nào là tầm soát, phản ứng nào là đặc hiệu?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Soi trực tiếp nền đen (GĐ I). Xét nghiệm gián tiếp gồm: Phản ứng không đặc hiệu (tầm soát - Reagin) và Phản ứng đặc hiệu (xác định định danh).</div>
+                <div class="rationale"><strong>Giải thích:</strong> Chẩn đoán trực tiếp bằng kính hiển vi nền đen chỉ áp dụng ở giai đoạn I khi dịch tiết tại săng có chứa nhiều vi khuẩn [6]. Ở các giai đoạn sau, chẩn đoán dựa vào kháng thể (gián tiếp): Phản ứng không đặc hiệu (tìm kháng thể Reagin) được dùng để tầm soát nhanh; Phản ứng đặc hiệu (tìm kháng thể kháng lại kháng nguyên chuyên biệt của Treponema) dùng để khẳng định chính xác bệnh [6].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 4 -->
+        <div class="flashcard">
+            <div class="question">Q: Nguyên tắc điều trị và phòng ngừa bệnh giang mai?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Điều trị: Dùng kháng sinh đặc hiệu, điều trị sớm và đồng thời cho cả bạn tình. Phòng ngừa: Tình dục an toàn, thử máu tầm soát thai kỳ (tháng 4, 6, 9).</div>
+                <div class="rationale"><strong>Giải thích:</strong> Bệnh chủ yếu lây qua đường tiếp xúc sinh dục [1], nên việc tuân thủ tình dục an toàn và điều trị triệt để cho cả bạn tình là nguyên tắc phòng ngừa bắt buộc. Để phòng ngừa giang mai bẩm sinh, phụ nữ mang thai cần được thử máu ít nhất 3 lần (vào tháng 4, 6 và 9 của thai kỳ) [4]. Vi khuẩn giang mai rất mỏng manh, nhanh chóng bị tiêu diệt khi ra ngoài cơ thể hoặc bởi nhiệt độ nóng, khô [7]. <br><span class="external-note">*Lưu ý: Mặc dù tài liệu hiện tại không nêu chi tiết tên thuốc do bị cắt đoạn, thông thường Penicillin là kháng sinh ưu tiên hàng đầu trong điều trị giang mai (kiến thức y khoa bổ sung ngoài nguồn).</span></div>
+            </details>
+        </div>
+
+    </div>
+
+   
+    <h2>Phần 7: Bài Vi khuẩn gây bệnh uốn ván (Clostridium tetani)</h2>
+
+    <div class="flashcard-container">
+
+        <!-- Flashcard 1 -->
+        <div class="flashcard">
+            <div class="question">Q: Loại độc tố của vi khuẩn uốn ván là gì?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Là ngoại độc tố protein hướng thần kinh cực mạnh, có tên là tetanospasmin [1].</div>
+                <div class="rationale"><strong>Giải thích:</strong> Vi khuẩn uốn ván (<i>Clostridium tetani</i>) sản xuất ra tetanospasmin, một ngoại độc tố protein gây độc thần kinh rất mạnh [1]. Độc tố này có nồng độ tử vong rất nhỏ và có ái lực đặc biệt với tổ chức thần kinh, gắn vào các thụ thể ở đầu tận cùng của tế bào thần kinh [1, 2].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 2 -->
+        <div class="flashcard">
+            <div class="question">Q: Khả năng và cơ chế gây bệnh của vi khuẩn uốn ván?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Gây co giật và co cứng cơ vân liên tục. Cơ chế do độc tố ngăn cản sự phóng thích các chất dẫn truyền thần kinh ức chế (GABA, glycine) [1, 3].</div>
+                <div class="rationale"><strong>Giải thích:</strong> Vi khuẩn xâm nhập qua vết thương [3]. Độc tố tetanospasmin làm mất tác dụng ức chế của các xynap, kích thích quá mức các cơ vân [1, 3]. Bệnh nhân khởi đầu bị tê lưỡi, cứng hàm (không mở miệng được), sau đó toàn phát sẽ bị co giật cứng toàn thân, co cơ mặt tạo "nụ cười nhăn nhó", uốn cong lưng, cứng cơ ngực và cơ hoành gây khó thở [3-5].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 3 -->
+        <div class="flashcard">
+            <div class="question">Q: Nguyên tắc điều trị bệnh uốn ván?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Diệt trừ vi khuẩn, trung hòa độc tố bằng kháng độc tố, ngăn ngừa co cứng cơ, hỗ trợ hô hấp và xử lý triệt để vết thương [5, 6].</div>
+                <div class="rationale"><strong>Giải thích:</strong> Bệnh nhân cần được chăm sóc ở phòng tĩnh để tránh mọi kích thích [5, 6]. Cần xử lý vết thương sạch sẽ để loại bỏ mầm bệnh [6]. Cực kỳ quan trọng là phải tiêm kháng độc tố uốn ván (hoặc globulin miễn dịch của người) trước khi xử lý vết thương nhằm trung hòa nhanh chóng độc tố đang lưu hành trong máu, giúp giảm tỷ lệ tử vong [6].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 4 -->
+        <div class="flashcard">
+            <div class="question">Q: Cách phòng ngừa bệnh uốn ván?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Tiêm vắc-xin gây miễn dịch chủ động, nhắc lại mỗi 10 năm, và đảm bảo nguyên tắc vô trùng (đặc biệt trong y tế, đỡ đẻ) [6, 7].</div>
+                <div class="rationale"><strong>Giải thích:</strong> Vắc-xin (thường là vô độc tố - anatoxin) cần hơn 2 tuần để phát huy hiệu quả, nên phải tiêm chủ động trước khi mắc bệnh [7, 8]. CDC khuyến cáo cần tiêm nhắc lại cứ mỗi 10 năm; nếu có vết thương bẩn mà tiêm chưa đủ 3 mũi hoặc không nhớ lịch tiêm thì cần tiêm bồi thêm 1 mũi [7]. Bệnh nhân đã phục hồi sau khi mắc uốn ván vẫn phải tiêm vắc-xin [6, 7]. Ngoài ra, bào tử uốn ván chịu nhiệt rất giỏi nên mọi dụng cụ phẫu thuật, đỡ đẻ phải được tiệt trùng ở nhiệt độ/áp suất cao [7, 9].</div>
+            </details>
+        </div>
+
+    </div>
+
+    <h2>Phần 8: Bài Virus và Các loại Virus gây bệnh</h2>
+
+    <div class="flashcard-container">
+
+        <!-- Flashcard 1 -->
+        <div class="flashcard">
+            <div class="question">Q: Cấu trúc bắt buộc và đặc điểm acid nucleic của virus?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Bắt buộc gồm: Acid nucleic và Capsid. Acid nucleic có thể là ADN hoặc ARN, dạng thẳng hoặc vòng, sợi đơn hoặc sợi đôi.</div>
+                <div class="rationale"><strong>Giải thích:</strong> Virus là cấu trúc không phải tế bào. Hạt virus hoàn chỉnh (Virion) có lõi là vật chất di truyền (chỉ chứa ADN hoặc ARN) [1, 2] và được bao bọc bởi lớp vỏ protein gọi là Capsid. Màng bao (Envelope) là cấu trúc có thể có hoặc không tùy loại virus [1].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 2 -->
+        <div class="flashcard">
+            <div class="question">Q: Cấu tạo và nhiệm vụ của vỏ Capsid và Màng bao (Envelope)?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Capsid: cấu tạo từ protein, bảo vệ hệ gen. Màng bao: lớp lipid kép có nguồn gốc từ tế bào vật chủ, chứa các gai glycoprotein giúp tấn công.</div>
+                <div class="rationale"><strong>Giải thích:</strong> Capsid đóng gói và bảo vệ vật liệu di truyền của virus, khá bền với nhiệt độ và pH [2, 3]. Màng bao cấu tạo bởi 2 lớp lipid lấy từ màng tế bào vật chủ, trên màng bao thường có các gai chứa enzym để giúp virus bám và xâm nhập vào tế bào mới [3, 4].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 3 -->
+        <div class="flashcard">
+            <div class="question">Q: Virus gây bệnh tiềm ẩn là gì? Kể tên đại diện.</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Là tình trạng bộ gen virus "ngủ đông" không nhân lên trong tế bào chủ, chờ cơ hội bùng phát. Đại diện: Nhóm virus Herpes.</div>
+                <div class="rationale"><strong>Giải thích:</strong> Bộ gen virus vẫn tồn tại trong tế bào ở trạng thái không sao chép (có thể hợp nhất vào ADN vật chủ hoặc dạng độc lập episome). Đây là đặc trưng của họ Herpesviridae như virus Herpes simplex, Varicella-zoster (thủy đậu), và Epstein-Barr [5].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 4 -->
+        <div class="flashcard">
+            <div class="question">Q: Virus Rubella: Khả năng gây bệnh, đường lây và cách phòng ngừa?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Lây qua đường hô hấp. Cực kỳ nguy hiểm cho thai nhi 3 tháng đầu. Phòng ngừa bằng vắc-xin sống giảm độc.</div>
+                <div class="rationale"><strong>Giải thích:</strong> Virus lây lan qua dịch tiết hô hấp, gây sốt, nổi mẩn đỏ [6, 7]. Bệnh đặc biệt nghiêm trọng nếu phụ nữ mang thai nhiễm trong 8-10 tuần đầu, gây tổn thương đa khuyết tật cho thai nhi hoặc thai chết lưu [8]. Phòng ngừa bằng cách tiêm vắc-xin giảm độc (không tiêm cho phụ nữ đang hoặc chuẩn bị mang thai trong 1 tháng) [9].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 5 -->
+        <div class="flashcard">
+            <div class="question">Q: Virus Thủy đậu (Trái rạ - VZV): Khả năng gây bệnh và biến chứng?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Gây bệnh trái rạ và bệnh Zona (giời leo) khi tái hoạt động. Biến chứng có thể gây viêm não, viêm phổi.</div>
+                <div class="rationale"><strong>Giải thích:</strong> Thuộc họ Herpesviridae (ADN). Ở lần nhiễm đầu tiên gây bệnh thủy đậu. Sau đó virus nằm tiềm ẩn trong dây thần kinh, khi hệ miễn dịch suy yếu sẽ tái hoạt động lan theo đường đi của dây thần kinh gây bệnh Zona [10-13].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 6 -->
+        <div class="flashcard">
+            <div class="question">Q: Chủng virus Tay-chân-miệng nguy hiểm nhất? Triệu chứng cần lưu ý?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Chủng EV-71. Triệu chứng nguy hiểm: giật mình, run chi, đi loạng choạng, sốt cao liên tục.</div>
+                <div class="rationale"><strong>Giải thích:</strong> Bệnh do nhóm Enterovirus gây ra, phổ biến là Coxsackie A16 và EV-71. Trong đó, EV-71 đặc biệt nguy hiểm vì gây biến chứng hệ thần kinh trung ương (viêm não, viêm màng não) có thể dẫn đến tử vong. Khi trẻ có các dấu hiệu thần kinh (giật mình, chới với, nôn ói) phải nhập viện ngay [14, 15].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 7 -->
+        <div class="flashcard">
+            <div class="question">Q: Con đường lây nhiễm và cách phòng ngừa Tay-chân-miệng?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Lây qua đường phân-miệng và tiếp xúc dịch tiết. Phòng ngừa bằng giữ vệ sinh (hiện chưa có vắc-xin).</div>
+                <div class="rationale"><strong>Giải thích:</strong> Lây chủ yếu qua tiếp xúc trực tiếp dịch mũi họng, nốt phỏng, hoặc qua dụng cụ, đồ chơi nhiễm bẩn. Trẻ rất dễ lây trong tuần đầu của bệnh. Do chưa có thuốc đặc hiệu và vắc-xin, biện pháp hữu hiệu nhất là vệ sinh răng miệng, rửa tay, và không làm vỡ các bóng nước để tránh nhiễm trùng thứ phát [15-17].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 8 -->
+        <div class="flashcard">
+            <div class="question">Q: Virus Dại (Rabies): Vị trí tấn công và khả năng gây bệnh?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Tấn công thụ thể Acethylcholin thần kinh. Gây tổn thương TKTW (cuồng, sợ nước, tử vong do liệt hô hấp).</div>
+                <div class="rationale"><strong>Giải thích:</strong> Virus dại có trong nước bọt chó, mèo, dơi lây sang người qua vết cắn [15, 18]. Virus bám vào thụ thể acethylcholin, nhân lên và đi theo dây thần kinh lên não. Bệnh có thời gian ủ bệnh dài, nhưng khi đã phát cơn dại (kích động, sợ nước, hôn mê) thì tỷ lệ tử vong gần như 100% do liệt hô hấp [18, 19].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 9 -->
+        <div class="flashcard">
+            <div class="question">Q: Xử lý và phòng ngừa khi bị chó (nghi dại) cắn?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Rửa vết thương bằng xà phòng ngay lập tức và tiêm vắc-xin phòng dại.</div>
+                <div class="rationale"><strong>Giải thích:</strong> Virus dại nhạy cảm và bị tiêu diệt bởi xà phòng đặc 20% và chất tẩy. Vì vậy sơ cứu quan trọng nhất là rửa vết thương bằng xà phòng. Sau đó phải tiêm vắc-xin phòng dại ngay, vì sau 10 ngày kháng thể trung hòa mới xuất hiện đủ để diệt virus trước khi chúng xâm nhập sâu vào thần kinh [19, 20].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 10 -->
+        <div class="flashcard">
+            <div class="question">Q: Đặc điểm cơ bản của Virus Sốt xuất huyết (Dengue)? Tại sao lần nhiễm sau lại nguy hiểm hơn?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Là virus ARN họ Flaviviridae (có 4 type). Lần nhiễm sau dễ bị sốc Dengue do phản ứng miễn dịch từ lần nhiễm trước.</div>
+                <div class="rationale"><strong>Giải thích:</strong> Virus Dengue có 4 type huyết thanh (DV1-DV4). Thường lần đầu mắc bệnh chỉ bị sốt Dengue cổ điển (nhẹ). Tuy nhiên, nếu mắc bệnh lần thứ 2 bởi một type virus khác, các kháng thể có sẵn không những không tiêu diệt được mà còn tạo phản ứng quá mức, gây ra biến chứng nặng nề là Hội chứng sốc Dengue (xuất huyết nặng, trụy mạch) [21]. <br><span class="external-note">*Lưu ý: Nguyên tắc điều trị Dengue ưu tiên truyền dịch chống sốc, hạ sốt bằng Paracetamol (cấm dùng Aspirin/Ibuprofen vì gây chảy máu) - Kiến thức bổ sung.</span></div>
+            </details>
+        </div>
+
+        <!-- Flashcard 11 -->
+        <div class="flashcard">
+            <div class="question">Q: So sánh đường lây nhiễm của virus Viêm gan A, B và C?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Viêm gan A (HAV) lây qua đường tiêu hóa (phân-miệng). Viêm gan B (HBV) và C (HCV) lây qua đường máu, tình dục và từ mẹ sang con.</div>
+                <div class="rationale"><strong>Giải thích:</strong> Viêm gan A gây bệnh cấp tính lây qua đường tiêu hóa [22, 23]. Viêm gan B (virus ADN sợi kép) và viêm gan C (virus ARN sợi đơn) lây chủ yếu qua đường máu và là tác nhân dẫn đến xơ gan, ung thư gan (viêm gan mãn tính). Cả HAV và HBV đều đã có vắc-xin phòng bệnh, trong khi HCV thì chưa có [24, 25].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 12 -->
+        <div class="flashcard">
+            <div class="question">Q: Virus HIV: Vị trí tấn công, cơ chế gây suy giảm miễn dịch và các giai đoạn bệnh?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Tấn công và phá hủy tế bào lympho T CD4+. Gồm 3 giai đoạn: Cấp tính, mãn tính (tiềm ẩn) và AIDS.</div>
+                <div class="rationale"><strong>Giải thích:</strong> HIV gắn vào thụ thể CD4 (và đồng thụ thể CCR5) trên bề mặt lympho T. Sau khi tích hợp ADN provirus vào gen của tế bào, nó điều khiển nhân lên và ly giải hàng loạt lympho bào T [26, 27]. Khi số lượng CD4+ giảm dưới 200/μl, hệ miễn dịch sụp đổ, cơ thể bước vào giai đoạn AIDS và tử vong vì các nhiễm trùng cơ hội (lao, nấm) [27, 28].</div>
+            </details>
+        </div>
+
+        <div class="flashcard-container">
+
+        <!-- Flashcard 13 -->
+        <div class="flashcard">
+            <div class="question">Q: 55. Đặc điểm, khả năng gây bệnh, nguyên tắc điều trị và phòng ngừa của Virus Dengue (Sốt xuất huyết)?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Virus ARN sợi đơn có màng bao, 4 type (DV1-DV4). Gây sốt xuất huyết, nguy hiểm nhất là hội chứng sốc Dengue. Điều trị chủ yếu truyền dịch cấp cứu và hạ sốt. Phòng ngừa bằng vắc-xin Takeda và diệt muỗi.</div>
+                <div class="rationale"><strong>Giải thích chi tiết:</strong>
+                <br><b>- Đặc điểm:</b> Thuộc họ Flaviviridae, là virus ARN sợi đơn dương (SS positive sense RNA), có màng bao [1]. Gồm 4 type huyết thanh (DV1, DV2, DV3, DV4) [1].
+                <br><b>- Khả năng gây bệnh:</b> Nhiễm lần đầu thường gây sốt Dengue cổ điển thể nhẹ. Lần nhiễm sau với type virus khác dễ gây Sốt xuất huyết Dengue/Hội chứng sốc Dengue (DSS) đe dọa tính mạng [2]. Triệu chứng nặng gồm giảm tiểu cầu (< 100.000/mm³) và cô đặc máu (chỉ số Hematocrit tăng >20%), dẫn đến thoát huyết tương, xuất huyết niêm mạc/nội tạng và sốc [3, 4].
+                <br><b>- Nguyên tắc điều trị:</b> Sốt xuất huyết Dengue bản chất không gây mất nước nhưng làm giảm thể tích tuần hoàn do thoát mạch, nên quan trọng nhất là truyền dịch cấp cứu sốc Dengue, kết hợp truyền máu nếu xuất huyết nặng [5, 6].
+                <br><b>- Phòng ngừa:</b> Dùng Vắc-xin Takeda (phòng ngừa cả 4 serotype, cho trẻ >4 tuổi) và kiểm soát véc tơ truyền bệnh: diệt muỗi Aedes aegypti, lăng quăng, dùng thuốc xua muỗi [6]. Muỗi Aedes hoạt động ban ngày nên phải chú ý phòng tránh đốt ban ngày [7].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 56 -->
+        <div class="flashcard">
+            <div class="question">Q: 56. Khả năng gây bệnh, đường lây nhiễm và cách phòng ngừa của Virus HAV (Viêm gan A)?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Gây viêm gan cấp tính (vàng da, rối loạn tiêu hóa). Lây qua đường tiêu hóa (phân - miệng). Phòng ngừa bằng tiêm vắc-xin và giữ vệ sinh ăn uống.</div>
+                <div class="rationale"><strong>Giải thích chi tiết:</strong>
+                <br><b>- Khả năng gây bệnh:</b> Gây viêm gan thể cấp tính với triệu chứng rối loạn tiêu hóa, nôn mửa, vàng da. Phần lớn có thể tự khỏi khi nghỉ ngơi. Khoảng 10% chuyển sang dạng mãn tính. Một số ít trường hợp gây viêm gan bùng phát nguy hiểm (kích hoạt quá mức tế bào Kupffer) dẫn đến suy gan, đặc biệt ở người có sẵn bệnh gan [8, 9].
+                <br><b>- Đường lây nhiễm:</b> Lây truyền chủ yếu qua đường ruột (phân - nước - thức ăn nhiễm virus) và có thể lây qua đường tình dục [7, 9].
+                <br><b>- Cách phòng ngừa:</b> Tiêm Globulin miễn dịch (ISG) hoặc tiêm vắc-xin phòng viêm gan A (như Havax, Twinrix, Avaxim 80UI) [10].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 57 -->
+        <div class="flashcard">
+            <div class="question">Q: 57. Khả năng gây bệnh, nguy cơ lây truyền HBV từ mẹ sang con và các nguyên tắc điều trị, lây nhiễm của Virus HBV (Viêm gan B)?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Trẻ nhiễm từ lúc sinh có 90% chuyển thành viêm gan mãn tính (nguy cơ ung thư gan). Lây qua máu, tình dục, mẹ sang con. Trẻ sơ sinh cần tiêm vắc-xin và kháng thể HBIG ngay sau sinh.</div>
+                <div class="rationale"><strong>Giải thích chi tiết:</strong>
+                <br><b>- Khả năng gây bệnh:</b> HBV gây viêm gan cấp tính (giống cảm cúm, vàng da, nước tiểu sẫm) và tiến triển thành viêm gan mãn tính. Ở thể mãn tính, khoảng 15-40% trường hợp sẽ phát triển thành xơ gan hoặc ung thư biểu mô tế bào gan (HCC) [11].
+                <br><b>- Mối nguy hiểm khi trẻ nhiễm từ mẹ:</b> Đây là con đường lây cực kỳ nguy hiểm. Nếu trẻ bị lây nhiễm ngay khi sinh, có tới <b>90% chuyển thành viêm gan mãn tính</b> mang theo suốt đời [11].
+                <br><b>- Cách phòng ngừa cho trẻ:</b> Bắt buộc tiêm vắc-xin ngừa viêm gan B cho trẻ sơ sinh vào 3 thời điểm: trong vòng 24h đầu, tháng thứ 1 và tháng thứ 6. Đồng thời, phải tiêm kết hợp huyết thanh Globulin miễn dịch viêm gan B (HBIG) ngay sau khi sinh [11, 12].
+                <br><b>- Đường lây nhiễm:</b> Lây qua đường ngoài ruột bao gồm đường máu, quan hệ tình dục và từ mẹ truyền sang con [7, 13].
+                <br><b>- Nguyên tắc điều trị HBV mãn tính:</b> <span class="external-note">*Lưu ý: Mặc dù tài liệu tập trung vào vắc-xin và sinh bệnh học, theo kiến thức y học, điều trị HBV mãn dựa vào sử dụng các thuốc kháng virus nhằm ức chế sự nhân lên của virus (như Tenofovir, Entecavir) và dùng Interferon để tăng cường miễn dịch [14].</span></div>
+            </details>
+        </div>
+
+        <!-- Flashcard 58 -->
+        <div class="flashcard">
+            <div class="question">Q: 58. Khả năng gây bệnh, đường lây nhiễm và nguyên tắc điều trị mãn tính của Virus HCV (Viêm gan C)?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: 80% người nhiễm sẽ chuyển sang viêm gan mãn tính gây xơ gan/ung thư gan. Lây qua đường máu. Điều trị hiệu quả bằng thuốc kháng virus tác động trực tiếp (DAAs).</div>
+                <div class="rationale"><strong>Giải thích chi tiết:</strong>
+                <br><b>- Khả năng gây bệnh:</b> Giai đoạn cấp tính thường nhẹ, không vàng da. Tuy nhiên, mức độ nguy hiểm rất cao do có tới <b>80% số người nhiễm chuyển sang viêm gan mãn tính</b>. Virus phát triển âm thầm vài chục năm và là nguyên nhân hàng đầu gây xơ gan, ung thư gan [15].
+                <br><b>- Đường lây nhiễm:</b> Lây truyền qua đường ngoài ruột (chủ yếu là đường máu): tiêm chích ma túy, dịch vụ y tế không an toàn, lây qua tình dục, từ mẹ sang con và dùng chung vật dụng cá nhân [7, 15].
+                <br><b>- Nguyên tắc điều trị mãn tính:</b> Hiện nay WHO khuyến cáo sử dụng các thuốc kháng virus tác động trực tiếp DAAs (Direct-Acting Antivirals). Việc phối hợp 2 loại thuốc DAAs có thể điều trị khỏi bệnh cho tất cả các dạng viêm gan mãn tính [16].</div>
+            </details>
+        </div>
+
+        <!-- Flashcard 59 -->
+        <div class="flashcard">
+            <div class="question">Q: 59. Vì sao nhiễm HIV nguy hiểm? Nguyên nhân tử vong, nguyên tắc điều trị và đường lây nhiễm HIV?</div>
+            <details>
+                <summary>Xem đáp án</summary>
+                <div class="answer">A: Nguy hiểm vì phá hủy hệ miễn dịch (CD4). Tử vong do nhiễm trùng cơ hội. Điều trị ngay bằng thuốc ARV. Lây qua máu, tình dục, mẹ sang con.</div>
+                <div class="rationale"><strong>Giải thích chi tiết:</strong>
+                <br><b>- Tại sao nguy hiểm:</b> HIV tấn công và phá hủy các tế bào miễn dịch (đặc biệt là lympho T CD4), làm cơ thể mất hoàn toàn khả năng phòng vệ trước các mầm bệnh thông thường, cuối cùng dẫn tới Hội chứng AIDS [13, 17, 18].
+                <br><b>- Các giai đoạn nhiễm:</b> Quá trình tiến triển chuyển từ giai đoạn phơi nhiễm/cấp tính sang giai đoạn mãn tính (tiềm ẩn) và cuối cùng sụp đổ thành giai đoạn AIDS [18]. <span class="external-note">*Giai đoạn lây nhiễm mạnh nhất thường rơi vào giai đoạn cấp (khi tải lượng virus tăng đột biến) và giai đoạn cuối AIDS.</span>
+                <br><b>- Nguyên nhân tử vong:</b> Bệnh nhân không chết trực tiếp do HIV mà tử vong do các <b>nhiễm trùng cơ hội</b> (như vi khuẩn Lao MTB, virus Herpes, Cytomegalovirus) và các dạng <b>ung thư</b> (ung thư hạch bạch huyết do Epstein-Barr, ung thư Kaposi's sarcoma) [18].
+                <br><b>- Nguyên tắc điều trị:</b> Bắt buộc điều trị bằng thuốc kháng virus ARV <b>ngay khi người bệnh được chẩn đoán</b>. Thuốc tác động qua nhiều cơ chế như ức chế enzym sao chép ngược, ức chế protease, ức chế hòa màng/xâm nhập và ức chế enzym tích hợp (integrase) [14, 19].
+                <br><b>- Đường lây & Phòng ngừa:</b> HIV lây truyền chủ yếu qua 3 con đường: máu, tinh dịch và dịch tiết âm đạo (quan hệ tình dục không an toàn, tiêm chích, lây từ mẹ sang con) [18, 19]. Phòng ngừa bằng cách tình dục an toàn, không dùng chung kim tiêm và dự phòng lây truyền mẹ con [13, 19].</div>
+            </details>
+        </div>
+
+    </div>
+
+    </div>
+
+</body>
+</html>

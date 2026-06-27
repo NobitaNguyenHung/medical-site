@@ -1,0 +1,68 @@
+---
+title: "Template: Assessment MCQ"
+description: "Bộ lượng giá cho một chương: ưu tiên nhúng quiz HTML nếu có, nếu không thì sinh MCQ/tự kiểm."
+type: "assessment-mcq"
+category: "templates"
+diataxis: "tutorial"
+medicineSystem: "shared"
+templateId: "assessment-mcq"
+templateFamily: "shared"
+status: "draft"
+draft: true
+pagefind: false
+sidebar:
+  hidden: true
+---
+
+import SelfCheck from '~/components/SelfCheck.astro';
+import QuizEmbed from '~/components/QuizEmbed.astro';
+import SourceNote from '~/components/SourceNote.astro';
+
+## Quiz HTML chuyên sâu
+
+Nếu Raw của sách có `Quiz/` hoặc `Quzi/` chứa file `.html` phù hợp chương này, nhúng trực tiếp:
+
+```mdx
+<QuizEmbed src="quiz/<sach>/<ten-file>.html" title="Tên quiz" height="85vh" />
+```
+
+Nếu chưa có HTML quiz, dùng phần MCQ tự tạo bên dưới.
+
+## Mục tiêu lượng giá
+
+- Nhớ:
+- Hiểu:
+- Áp dụng:
+- Phân biệt:
+
+## MCQ
+
+<SelfCheck>
+
+1. Câu hỏi 1?
+   - A.
+   - B.
+   - C.
+   - D.
+
+2. Câu hỏi 2?
+   - A.
+   - B.
+   - C.
+   - D.
+
+</SelfCheck>
+
+## Đáp án và giải thích
+
+| Câu | Đáp án | Vì sao đúng | Vì sao các lựa chọn khác sai |
+| --- | --- | --- | --- |
+| 1 |  |  |  |
+| 2 |  |  |  |
+
+<SourceNote>
+
+- Nguồn chương:
+- Quiz HTML:
+
+</SourceNote>
