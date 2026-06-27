@@ -1,0 +1,310 @@
+---
+const base = '/medical-site';
+
+const books = [
+  {
+    num: '01',
+    system: 'YHCT',
+    icon: 'ti-plant-2',
+    color: { bg: '#E1F5EE', accent: '#1D9E75', text: '#0F6E56' },
+    name: 'Ôn bệnh đại cương',
+    desc: 'Vệ Khí Dinh Huyết · biện thiệt · ban chẩn · phong ôn · xuân ôn',
+    pills: ['13 bài giảng', '7 quiz', '20 tóm tắt'],
+    href: `${base}/books/on-benh-dai-cuong/luong-gia/02-dai-cuong/`,
+    status: 'ready',
+  },
+  {
+    num: '02',
+    system: 'YHHĐ',
+    icon: 'ti-stethoscope',
+    color: { bg: '#EEEDFE', accent: '#7F77DD', text: '#534AB7' },
+    name: 'Triệu chứng học nội khoa',
+    desc: 'Tiếp cận triệu chứng · chẩn đoán phân biệt · tư duy bệnh lý',
+    pills: ['tóm tắt', 'lượng giá'],
+    href: `${base}/books/trieu_chung_hoc_noi_khoa_pnt/tom-tat/`,
+    status: 'building',
+  },
+];
+
+const utilities = [
+  {
+    icon: 'ti-route',
+    color: { bg: '#FAEEDA', text: '#854F0B' },
+    name: 'Lộ trình học',
+    desc: 'Có hướng dẫn từng bước',
+    href: `${base}/learning-paths/`,
+    wide: true,
+  },
+  {
+    icon: 'ti-clipboard-list',
+    color: { bg: '#FAECE7', text: '#993C1D' },
+    name: 'Ca lâm sàng',
+    desc: 'Học từng bước',
+    href: `${base}/cases/demo-on-benh-tutorial/`,
+  },
+  {
+    icon: 'ti-checklist',
+    color: { bg: '#E6F1FB', text: '#185FA5' },
+    name: 'Lượng giá',
+    desc: 'MCQ · Flashcard',
+    href: `${base}/books/on-benh-dai-cuong/luong-gia/01-onbenh-thayhung/`,
+  },
+  {
+    icon: 'ti-search',
+    color: { bg: '#F1EFE8', text: '#5F5E5A' },
+    name: 'Tra cứu nhanh',
+    desc: 'Bảng · Thuật ngữ',
+    href: `${base}/books/on-benh-dai-cuong/tom-tat/01-bai-1-dai-cuong-ve-on-benh/`,
+  },
+];
+---
+
+<div class="hd">
+
+  <div class="hd-hero">
+    <h1>Học liệu Y khoa</h1>
+    <p>Học theo lộ trình · Xử trí lâm sàng · Tra cứu nhanh · Hiểu sâu</p>
+  </div>
+
+  <section>
+    <div class="hd-section-label">Môn học</div>
+    <div class="hd-books">
+      {books.map((b) => (
+        <a href={b.href} class="hd-bcard" style={`--accent: ${b.color.accent};`}>
+          <div class="hd-bcard-top">
+            <span class="hd-num">{b.num} · {b.system}</span>
+            {b.status === 'building' && <span class="hd-badge-soon">đang xây</span>}
+          </div>
+          <div class="hd-icon" style={`background: ${b.color.bg};`}>
+            <i class={`ti ${b.icon}`} style={`color: ${b.color.text};`} aria-hidden="true"></i>
+          </div>
+          <div class="hd-bcard-name">{b.name}</div>
+          <div class="hd-bcard-desc">{b.desc}</div>
+          <div class="hd-pills">
+            {b.pills.map((p) => <span class="hd-pill">{p}</span>)}
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section>
+    <div class="hd-section-label">Công cụ học tập</div>
+
+    <a href={utilities[0].href} class="hd-wcard">
+      <div class="hd-icon" style={`background: ${utilities[0].color.bg};`}>
+        <i class={`ti ${utilities[0].icon}`} style={`color: ${utilities[0].color.text};`} aria-hidden="true"></i>
+      </div>
+      <div>
+        <div class="hd-wcard-name">{utilities[0].name}</div>
+        <div class="hd-wcard-desc">{utilities[0].desc}</div>
+      </div>
+      <i class="ti ti-arrow-right hd-arrow" aria-hidden="true"></i>
+    </a>
+
+    <div class="hd-utils">
+      {utilities.slice(1).map((u) => (
+        <a href={u.href} class="hd-ucard">
+          <div class="hd-icon hd-icon-sm" style={`background: ${u.color.bg};`}>
+            <i class={`ti ${u.icon}`} style={`color: ${u.color.text};`} aria-hidden="true"></i>
+          </div>
+          <div class="hd-ucard-name">{u.name}</div>
+          <div class="hd-ucard-desc">{u.desc}</div>
+          <div class="hd-ucard-bar" style={`background: ${u.color.bg};`}></div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+</div>
+
+<style>
+  .hd {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2.5rem 1.25rem 4rem;
+    font-family: var(--sl-font);
+  }
+
+  /* Hero */
+  .hd-hero {
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--sl-color-hairline);
+  }
+  .hd-hero h1 {
+    font-size: clamp(1.75rem, 5vw, 2.5rem);
+    font-weight: 600;
+    color: var(--sl-color-white);
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
+  }
+  .hd-hero p {
+    font-size: 1rem;
+    color: var(--sl-color-gray-2);
+  }
+
+  /* Section label */
+  .hd-section-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--sl-color-gray-3);
+    margin-bottom: 0.75rem;
+  }
+
+  /* Book cards grid — auto-fit, thêm môn tự scale */
+  .hd-books {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin-bottom: 2.5rem;
+  }
+
+  .hd-bcard {
+    display: flex;
+    flex-direction: column;
+    background: var(--sl-color-bg-sidebar);
+    border: 1px solid var(--sl-color-hairline);
+    border-left: 3px solid var(--accent);
+    border-radius: 14px;
+    padding: 1.25rem 1.25rem 1rem;
+    text-decoration: none;
+    transition: border-color 0.15s, transform 0.1s;
+  }
+  .hd-bcard:hover {
+    border-color: var(--accent);
+    transform: translateY(-1px);
+  }
+
+  .hd-bcard-top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 1rem;
+  }
+  .hd-num {
+    font-size: 0.7rem;
+    letter-spacing: 0.07em;
+    color: var(--sl-color-gray-3);
+    font-weight: 500;
+  }
+  .hd-badge-soon {
+    font-size: 0.65rem;
+    padding: 2px 8px;
+    border-radius: 99px;
+    background: var(--sl-color-bg-nav);
+    color: var(--sl-color-gray-3);
+    font-weight: 500;
+  }
+
+  .hd-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.85rem;
+    font-size: 1.2rem;
+  }
+  .hd-icon-sm {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    font-size: 1rem;
+    margin-bottom: 0.65rem;
+  }
+
+  .hd-bcard-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--sl-color-white);
+    margin-bottom: 0.3rem;
+    line-height: 1.3;
+  }
+  .hd-bcard-desc {
+    font-size: 0.8rem;
+    color: var(--sl-color-gray-2);
+    line-height: 1.5;
+    margin-bottom: 0.9rem;
+    flex: 1;
+  }
+
+  .hd-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  .hd-pill {
+    font-size: 0.7rem;
+    padding: 2px 9px;
+    border-radius: 99px;
+    border: 1px solid var(--sl-color-hairline);
+    color: var(--sl-color-gray-3);
+  }
+
+  /* Wide utility card */
+  .hd-wcard {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: var(--sl-color-bg-sidebar);
+    border: 1px solid var(--sl-color-hairline);
+    border-radius: 14px;
+    padding: 1rem 1.25rem;
+    text-decoration: none;
+    margin-bottom: 10px;
+    transition: border-color 0.15s;
+  }
+  .hd-wcard:hover { border-color: var(--sl-color-gray-4); }
+  .hd-wcard .hd-icon { margin: 0; flex-shrink: 0; }
+  .hd-wcard-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--sl-color-white);
+    margin-bottom: 2px;
+  }
+  .hd-wcard-desc { font-size: 0.78rem; color: var(--sl-color-gray-2); }
+  .hd-arrow { margin-left: auto; color: var(--sl-color-gray-4); font-size: 1rem; }
+
+  /* Utility cards grid */
+  .hd-utils {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 10px;
+  }
+  .hd-ucard {
+    background: var(--sl-color-bg-sidebar);
+    border: 1px solid var(--sl-color-hairline);
+    border-radius: 12px;
+    padding: 1rem 1rem 0.85rem;
+    text-decoration: none;
+    transition: border-color 0.15s;
+    display: flex;
+    flex-direction: column;
+  }
+  .hd-ucard:hover { border-color: var(--sl-color-gray-4); }
+  .hd-ucard-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--sl-color-white);
+    margin-bottom: 3px;
+  }
+  .hd-ucard-desc { font-size: 0.75rem; color: var(--sl-color-gray-2); flex: 1; }
+  .hd-ucard-bar { height: 2px; border-radius: 99px; margin-top: 0.85rem; }
+
+  /* Mobile */
+  @media (max-width: 480px) {
+    .hd { padding: 1.5rem 1rem 3rem; }
+    .hd-hero { margin-bottom: 2rem; }
+    .hd-books { grid-template-columns: 1fr; }
+    .hd-bcard { border-left-width: 3px; flex-direction: row; flex-wrap: wrap; gap: 0; }
+    .hd-bcard-top { margin-bottom: 0.75rem; width: 100%; }
+    .hd-icon { margin-bottom: 0; margin-right: 10px; width: 34px; height: 34px; font-size: 1rem; flex-shrink: 0; }
+    .hd-bcard-name { font-size: 0.9rem; }
+    .hd-utils { grid-template-columns: 1fr 1fr; }
+  }
+</style>

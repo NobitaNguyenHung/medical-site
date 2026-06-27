@@ -3,30 +3,9 @@ title: Học liệu Y khoa
 description: Thư viện học liệu y khoa cá nhân — đọc offline mọi thiết bị.
 template: splash
 hero:
-  tagline: Học theo lộ trình · Xử trí lâm sàng · Tra cứu nhanh · Hiểu sâu.
-  actions:
-    - text: Bắt đầu Ôn bệnh
-      link: /medical-site/books/on-benh-dai-cuong/luong-gia/02-dai-cuong/
-      icon: right-arrow
-    - text: Tra cứu Ôn bệnh
-      link: /medical-site/books/on-benh-dai-cuong/tom-tat/01-bai-1-dai-cuong-ve-on-benh/
-      icon: magnifier
-      variant: minimal
+  tagline: ""
 ---
 
-import { Card, CardGrid } from '@astrojs/starlight/components';
+import HomeDashboard from '~/components/HomeDashboard.astro';
 
-<CardGrid>
-	<Card title="Học theo lộ trình" icon="open-book">
-		Bài học, ca lâm sàng và lượng giá giúp đi từ nền tảng đến tự kiểm.
-	</Card>
-	<Card title="Xử trí lâm sàng" icon="right-arrow">
-		Hướng dẫn how-to cho chẩn đoán, điều trị, thuật toán và cập nhật thực hành.
-	</Card>
-	<Card title="Tra cứu nhanh" icon="magnifier">
-		Bảng, tiêu chuẩn, định nghĩa, thuốc và mục cần tìm nhanh khi học hoặc ôn tập.
-	</Card>
-	<Card title="Hiểu sâu" icon="pencil">
-		Nguyên thủy, cơ chế bệnh sinh, lý luận và chủ đề chuyên sâu để nối ý.
-	</Card>
-</CardGrid>
+<HomeDashboard />
