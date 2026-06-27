@@ -54,6 +54,7 @@ export default defineConfig({
 				{
 					label: 'Hiểu sâu',
 					items: [
+						{ label: 'Ôn bệnh đại cương · Bài giảng chuyên sâu', items: [{ autogenerate: { directory: 'books/on-benh-dai-cuong/bai-giang' } }] },
 						{ label: 'Ôn bệnh đại cương · Nguyên thủy', items: [{ autogenerate: { directory: 'books/on-benh-dai-cuong/nguyen-thuy' } }] },
 						{ label: 'Giải thích cơ chế', items: [{ autogenerate: { directory: 'topics/explanation' } }] },
 					],

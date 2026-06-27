@@ -46,13 +46,48 @@ Lỗi build sẽ chặn ngay ở bước 3 (local) — sửa xong mới push.
 
 ## 2. Cấu trúc 1 cuốn sách
 
-Mỗi sách nằm trong `src/content/docs/books/<slug-sách>/` với **3 mục**:
+Mỗi sách nằm trong `src/content/docs/books/<slug-sách>/` với **4 mục**:
 
 ```
 books/<sách>/
-├── tom-tat/          # 1 · Lý thuyết tóm tắt   (.md/.mdx)
-├── nguyen-thuy/      # 2 · Lý thuyết nguyên thủy (.md/.mdx, trích sách gốc)
-└── luong-gia/        # 3 · Câu hỏi lượng giá   (.mdx nhúng quiz HTML)
+├── tom-tat/          # 1 · Lý thuyết tóm tắt     (.md/.mdx) — 20% cốt lõi
+├── bai-giang/        # 2 · Bài giảng chuyên sâu   (.mdx)     — 50-60%, có flow/bảng/pearl
+├── nguyen-thuy/      # 3 · Lý thuyết nguyên thủy  (.md/.mdx) — 100%, trích sách gốc
+└── luong-gia/        # 4 · Câu hỏi lượng giá      (.mdx)     — nhúng quiz HTML
+```
+
+### Phân biệt 4 tầng nội dung
+
+| Tầng | Folder | Độ sâu | Đặc điểm | Sidebar |
+| :-- | :-- | :-- | :-- | :-- |
+| Tóm tắt | `tom-tat/` | 20% | Bullet, key point, ghi nhớ nhanh | Tra cứu nhanh |
+| **Bài giảng** | **`bai-giang/`** | **50-60%** | **Flow, bảng, pearl, lý luận BS** | **Hiểu sâu** |
+| Nguyên thủy | `nguyen-thuy/` | 100% | Trích nguyên bản, tra cứu gốc | Hiểu sâu |
+| Lượng giá | `luong-gia/` | — | Quiz HTML tương tác | Học theo lộ trình |
+
+### Bài giảng chuyên sâu (`bai-giang/`)
+
+Tầng nội dung giữa tom-tat và nguyen-thuy. Dành cho người đã đọc tóm tắt 20%
+và muốn hiểu **tại sao** — không phải thuộc thêm.
+
+**Đặc điểm:**
+- Cấu trúc theo luồng tư duy lâm sàng (không theo thứ tự chương sách)
+- Visual-first: Mermaid flowchart / SVG trước khi đọc text
+- Bảng so sánh, phân loại, decision point
+- `<ClinicalPearl>` — điều GS 30 năm sẽ nhấn mạnh
+- `<RedFlags>` — bẫy chẩn đoán, sai lầm thường gặp
+- 3 câu hỏi kích thích tư duy cuối bài (không phải MCQ)
+
+**Template:** `src/content/docs/templates/shared/deep-lecture.mdx`
+
+**Đặt tên file:** `<số>-<slug>.mdx` — ví dụ: `01-dai-cuong-on-benh.mdx`
+
+**Tạo bài giảng mới:**
+```bash
+cp src/content/docs/templates/shared/deep-lecture.mdx \
+   src/content/docs/books/<sách>/bai-giang/<số>-<slug>.mdx
+# Xóa draft/pagefind/sidebar.hidden trong frontmatter
+# Điền nội dung, build, push
 ```
 
 Quiz HTML (build từ skill `html-y-khoa`) đặt riêng trong:
@@ -72,6 +107,7 @@ Trong sidebar Diátaxis:
 
 - `luong-gia/` hiện ở **Học theo lộ trình**.
 - `tom-tat/` hiện ở **Tra cứu nhanh**.
+- `bai-giang/` hiện ở **Hiểu sâu** (trước `nguyen-thuy`).
 - `nguyen-thuy/` hiện ở **Hiểu sâu**.
 
 > `tom-tat/` có thể là symlink sang `Raw/<sách>/`. Khi đó `Raw/` vẫn là kho thô,

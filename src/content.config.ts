@@ -65,6 +65,7 @@ export const collections = {
 						'exam-review',
 						'concept-map',
 						'source-original',
+						'deep-lecture',
 						'algorithm',
 						'drug-note',
 						'template',

@@ -17,19 +17,21 @@ what the reader is trying to do, while keeping the current file paths stable.
 ```text
 MedicalSite/
 ├── Raw/
-│   └── on-benh/              # raw local source files copied into this repo
+│   └── <sách>/               # raw local source files — inbox, được phép lộn xộn
 ├── src/
 │   ├── content/
 │   │   └── docs/             # Starlight-rendered content
 │   │       ├── index.mdx
-│   │       ├── books/        # sách: mỗi sách 1 thư mục, 3 mục
-│   │       │   └── on-benh/
-│   │       │       ├── tom-tat/      -> ../../../../../Raw/on-benh  (1 · tóm tắt)
-│   │       │       ├── nguyen-thuy/  (2 · nguyên thủy, .md/.mdx)
-│   │       │       └── luong-gia/    (3 · .mdx nhúng quiz HTML)
+│   │       ├── books/        # sách: mỗi sách 1 thư mục, 4 mục
+│   │       │   └── <sách>/
+│   │       │       ├── tom-tat/      (1 · tóm tắt 20%,  .md/.mdx)
+│   │       │       ├── bai-giang/    (2 · bài giảng chuyên sâu 50-60%, .mdx)
+│   │       │       ├── nguyen-thuy/  (3 · nguyên thủy 100%, .md/.mdx)
+│   │       │       └── luong-gia/    (4 · .mdx nhúng quiz HTML)
 │   │       ├── cases/        # template clinical-case
 │   │       ├── updates/      # template treatment-update
 │   │       ├── topics/       # template topic-index
+│   │       ├── learning-paths/ # lộ trình học theo sách/môn
 │   │       └── templates/    # khuôn ẩn (draft)
 │   ├── components/           # MDX medical UI components
 │   └── styles/
@@ -56,23 +58,30 @@ Recommended split:
 - `src/content/docs/books|cases|updates|topics`: curated MDX; consistent metadata; uses medical components.
 - `src/content/docs/templates`: hidden MDX templates for creating new content.
 
-### Book = 3 sections, shown through Diataxis
+### Book = 4 sections, shown through Diataxis
 
 Each book lives in `src/content/docs/books/<book>/` and always has the same
-three content sections. The sidebar groups these sections by reader need rather
+four content sections. The sidebar groups these sections by reader need rather
 than by folder name.
 
-| # | Section | Folder / file | Format |
-| :-- | :-- | :-- | :-- |
-| 1 | Lý thuyết tóm tắt | `tom-tat/` | `.md` / `.mdx` |
-| 2 | Lý thuyết nguyên thủy | `nguyen-thuy/` | `.md` / `.mdx` (trích sách gốc) |
-| 3 | Câu hỏi lượng giá | `luong-gia/` | `.mdx` pages embedding quiz HTML from `public/quiz/<book>/` |
+| # | Section | Folder | Format | Độ sâu |
+| :-- | :-- | :-- | :-- | :-- |
+| 1 | Lý thuyết tóm tắt | `tom-tat/` | `.md` / `.mdx` | 20% — key points, ghi nhớ nhanh |
+| 2 | Bài giảng chuyên sâu | `bai-giang/` | `.mdx` | 50-60% — flow, bảng, pearl lâm sàng |
+| 3 | Lý thuyết nguyên thủy | `nguyen-thuy/` | `.md` / `.mdx` (trích sách gốc) | 100% — tra cứu gốc |
+| 4 | Câu hỏi lượng giá | `luong-gia/` | `.mdx` nhúng quiz HTML từ `public/quiz/<book>/` | — |
+
+**Tầng `bai-giang/`** là nội dung giữa tom-tat và nguyen-thuy: dành cho người đã
+đọc tóm tắt 20% và muốn hiểu **tại sao** — cấu trúc theo luồng tư duy lâm sàng,
+có Mermaid/SVG flowchart, bảng so sánh, `<ClinicalPearl>`, và 3 câu hỏi tư duy
+cuối bài. Template: `src/content/docs/templates/shared/deep-lecture.mdx`.
 
 The sidebar block is explicit in `astro.config.mjs`. For a new book, add its
 folders to the relevant Diataxis groups:
 
 - `luong-gia/` → `Học theo lộ trình`
 - `tom-tat/` → `Tra cứu nhanh`
+- `bai-giang/` → `Hiểu sâu` (trước `nguyen-thuy`)
 - `nguyen-thuy/` → `Hiểu sâu`
 
 ## Metadata
