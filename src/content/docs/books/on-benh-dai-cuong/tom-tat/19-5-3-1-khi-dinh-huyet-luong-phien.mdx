@@ -1,14 +1,14 @@
 ---
-title: "Tóm tắt · 5.3.1. Khí dinh huyết lưỡng phiên"
-description: "Bản tóm tắt 80/20 của chương 5.3.1. Khí dinh huyết lưỡng phiên."
+title: "Xuân ôn: khí dinh huyết và tâm bào"
+description: "Tóm tắt các thể nặng của Xuân ôn: khí dinh huyết lưỡng phiên, động huyết, tâm bào, chân âm và tà lưu âm phần."
 type: "chapter-summary"
 category: "books"
 diataxis: "tutorial"
-medicineSystem: "modern"
+medicineSystem: "tcm"
 source: "Raw"
 sourceDetail: "Raw/on_benh_dai_cuong/02_benh-lam-sang/xuan-on_002.md"
-status: "draft"
-generatedBy: "materialize-ingest"
+status: "ready"
+generatedBy: "codex-reviewed"
 summaryRule: "80-20"
 sidebar:
   order: 19
@@ -16,89 +16,61 @@ sidebar:
 
 import KeyPoints from '~/components/KeyPoints.astro';
 import CompareTable from '~/components/CompareTable.astro';
-import ClinicalPearl from '~/components/ClinicalPearl.astro';
+import MedicalNote from '~/components/MedicalNote.astro';
+import RedFlags from '~/components/RedFlags.astro';
 import SelfCheck from '~/components/SelfCheck.astro';
 import SourceNote from '~/components/SourceNote.astro';
 
-## Nắm nhanh theo 80/20
+## 20% cốt lõi
 
-<KeyPoints title="20% cốt lõi cần nắm">
+<KeyPoints title="Phần này là bản đồ biến chứng sâu của Xuân ôn">
 
-- 5.3.1. Khí dinh huyết lưỡng phiên
-- 5.3.2. Nhiệt thịnh động huyết
-- 5.3.3. Nhiệt nặng và huyết kết
-- 5.4. Nhiệt nhập tâm bào
-- 5.4.1. Phục nhiệt nội bế
+- **Khí dinh huyết lưỡng phiên**: nhiệt đốt nhiều tầng cùng lúc, biểu hiện sốt cao, khát, phiền táo, ban chẩn, có thể xuất huyết.
+- **Nhiệt thịnh động huyết**: huyết bị nhiệt bức, gây ban chẩn, thổ huyết, nục huyết hoặc xuất huyết khác.
+- **Nhiệt nặng huyết kết**: nhiệt và ứ kết lại, bệnh nặng hơn, cần vừa thanh nhiệt vừa hoạt huyết/tán kết tùy chứng.
+- **Nhiệt nhập tâm bào**: thần hôn, nói sảng, bế khiếu; là biến chứng nguy hiểm.
+- **Chân âm khuy tổn / âm hư phong động**: hậu kỳ âm dịch suy, sốt âm ỉ, lưỡi khô đỏ, run giật/co giật do hư phong.
+- **Tà lưu âm phần**: tà còn sót ở âm, sốt dai dẳng, cần tư âm thanh nhiệt, thấu tà.
 
 </KeyPoints>
 
-## Tóm tắt nhanh
+## Một câu nắm bài
 
-- Sốt cao. - Khát. - Đau đầu. - Phiên thao bất an. - Phát ban. - Nặng hơn thì thổ huyết. - Nục huyết.
+<MedicalNote title="Câu lõi">
+Xuân ôn nặng là nhiệt đi sâu và lan nhiều tầng: **đốt khí-dinh-huyết, bế tâm bào, rồi hao chân âm**.
+</MedicalNote>
 
-Do phục nhiệt nội phát, tích thịnh ở khí dinh huyết dẫn đến nhiệt độc nội thịnh nhiều động dinh huyết gây ra.
+## Bảng thể nặng
 
-## Sơ đồ 80/20
+<CompareTable title="Từ dấu hiệu đến tầng bệnh">
 
-```mermaid
-flowchart TD
-  A["Vấn đề chính của chương"] --> B["Khái niệm / định nghĩa"]
-  A --> C["Cơ chế / lý luận"]
-  A --> D["Dấu hiệu cần nhận ra"]
-  D --> E["Ứng dụng vào case / lượng giá"]
-```
-
-## Visual brief
-
-<CompareTable title="Hình nên bổ sung khi biên tập">
-
-| Loại hình | Khi dùng | Gợi ý tạo |
+| Thể | Dấu hiệu lõi | Ý nghĩa |
 | --- | --- | --- |
-| Sơ đồ Mermaid | Luồng cơ chế, phân loại, thuật toán | Dùng trực tiếp trong MDX. |
-| SVG tự vẽ | Bảng phân tầng, timeline, bản đồ khái niệm cần kiểm soát chính xác | Tạo file SVG trong `public/assets/<sách>/` rồi nhúng. |
-| Ảnh/illustration sinh bởi Codex | Cần minh họa sinh động, không cần độ chính xác giải phẫu tuyệt đối | Sinh ảnh rồi đặt vào `public/assets/<sách>/`, ghi chú là hình minh họa. |
-| Hình y khoa từ nguồn | X-quang, mô bệnh học, biểu đồ nghiên cứu | Chỉ dùng khi có quyền/nguồn rõ; ưu tiên trích dẫn. |
+| Khí dinh huyết lưỡng phiên | Sốt cao, khát, phiền, ban chẩn | Nhiệt nhiều tầng cùng thịnh |
+| Nhiệt thịnh động huyết | Ban chẩn, xuất huyết | Huyết bị nhiệt bức vọng hành |
+| Nhiệt nặng huyết kết | Nhiệt độc + ứ kết | Cần nghĩ nhiệt và ứ cùng tồn tại |
+| Phục nhiệt nội bế | Thần hôn, nói sảng | Tâm bào bị bế |
+| Chân âm khuy tổn | Lưỡi khô đỏ, mạch hư, sốt kéo dài | Can thận âm thương |
+| Âm hư phong động | Run giật, co giật cuối bệnh | Hư phong do âm huyết không nuôi cân mạch |
 
 </CompareTable>
 
-## Bản đồ chương
+## Red flags
 
-<CompareTable title="Cấu trúc chương">
-
-| Cấp | Mục | Cần rút theo 80/20 |
-| --- | --- | --- |
-| #### | 5.3.1. Khí dinh huyết lưỡng phiên | Cần rút ý 80/20 |
-| #### | 5.3.2. Nhiệt thịnh động huyết | Cần rút ý 80/20 |
-| #### | 5.3.3. Nhiệt nặng và huyết kết | Cần rút ý 80/20 |
-| ### | 5.4. Nhiệt nhập tâm bào | Cần rút ý 80/20 |
-| #### | 5.4.1. Phục nhiệt nội bế | Cần rút ý 80/20 |
-| #### | 5.4.2. Nội bế ngoại thoát | Cần rút ý 80/20 |
-| ### | 5.5. Nhiệt chứng chân âm | Cần rút ý 80/20 |
-| #### | 5.5.1. Chân âm khuy tổn | Cần rút ý 80/20 |
-| #### | 5.5.2. Âm hư phong động | Cần rút ý 80/20 |
-| ### | 5.6. Tà lưu âm phần | Cần rút ý 80/20 |
-
-</CompareTable>
-
-<ClinicalPearl>
-
-- Khi biên tập, hãy viết lại phần này sao cho người học nắm được lõi chương trong 3-5 phút trước khi đọc bản hiểu sâu.
-
-</ClinicalPearl>
+<RedFlags>
+- Ban chẩn kèm xuất huyết trong Xuân ôn là dấu hiệu huyết phận nặng.
+- Thần hôn không được xem là “mệt do sốt”; nghĩ nhiệt nhập tâm bào.
+- Co giật hậu kỳ không phải lúc nào cũng nhiệt cực; có thể là âm hư phong động.
+</RedFlags>
 
 ## Tự kiểm
 
 <SelfCheck>
-
-1. 20% ý nào giúp hiểu phần lớn chương này?
-2. Điểm nào dễ nhầm nhất khi áp dụng vào case?
-3. Nếu phải vẽ một sơ đồ duy nhất cho chương này, sơ đồ đó nên thể hiện quan hệ nào?
-
+1. Khí dinh huyết lưỡng phiên khác nhiệt thịnh động huyết thế nào?
+2. Vì sao nhiệt nhập tâm bào là mốc nguy hiểm?
+3. Dấu hiệu nào gợi chân âm đã tổn thương?
 </SelfCheck>
 
 <SourceNote>
-
 - Nguồn: `Raw/on_benh_dai_cuong/02_benh-lam-sang/xuan-on_002.md`
-- Gợi ý template: `symptom-approach`
-
 </SourceNote>

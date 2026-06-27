@@ -5,7 +5,27 @@
       "Bash(git commit -m ' *)",
       "Bash(git push *)",
       "Bash(npm run *)",
-      "Bash(git commit -m 'fix: remove stale on-benh sidebar groups and hero links → on-benh-dai-cuong *)"
+      "Bash(git commit -m 'fix: remove stale on-benh sidebar groups and hero links → on-benh-dai-cuong *)",
+      "Bash(python3 -c \"import json,sys; plan=json.load\\(sys.stdin\\); [print\\(f\\\\\"{c['order']}. {c['title']} \\({c['slug']}\\)\\\\\"\\) for c in plan['chapters']]\")",
+      "Bash(python3 -c \"import json,sys; plan=json.load\\(sys.stdin\\); print\\(list\\(plan.keys\\(\\)\\)\\)\")",
+      "Bash(git commit -m 'feat\\(sidebar\\): group Hiểu sâu by book — Ôn bệnh đại cương parent group *)",
+      "Bash(git commit -m 'docs\\(workflow\\): document nested sidebar pattern for Hiểu sâu + bai-giang/ setup *)",
+      "Bash(git commit -m 'fix: hero link → luong-gia/02-dai-cuong \\(correct slug\\) *)",
+      "Bash(git commit -m 'feat\\(bai-giang\\): add deep lectures — biện thiệt, ban chẩn, bạch bối *)",
+      "Bash(git commit -m 'feat\\(bai-giang\\): add comparison lecture — Ban · Chẩn · Bạch Bối *)",
+      "Bash(git commit -m 'refactor\\(luong-gia\\): rename files to shorter slugs, remove stale content *)",
+      "Bash(git commit -m 'fix: commit quiz HTML files and remove old on-benh quiz folder *)",
+      "mcp__visualize__read_me",
+      "mcp__visualize__show_widget",
+      "Bash(git commit -m 'feat\\(homepage\\): replace splash with custom dashboard layout *)",
+      "Bash(git commit -m 'refactor\\(homepage\\): extract books config to src/data/books.ts *)",
+      "Bash(git commit -m 'docs\\(workflow\\): add §3 dashboard — books.ts update pattern and color guide *)",
+      "Bash(npx astro *)",
+      "Bash(curl -s http://localhost:4321/medical-site/)",
+      "mcp__Claude_Preview__preview_start",
+      "mcp__Claude_in_Chrome__navigate",
+      "Bash(python3 -c ' *)",
+      "Bash(git commit -m 'docs\\(workflow\\): update §3 dashboard — data-only pattern, new home-config.ts + BookEntry fields *)"
     ]
   }
 }

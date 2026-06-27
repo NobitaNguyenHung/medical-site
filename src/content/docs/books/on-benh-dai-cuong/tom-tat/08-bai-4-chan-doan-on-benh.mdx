@@ -1,14 +1,14 @@
 ---
-title: "Tóm tắt · BÀI 4. CHẨN ĐOÁN ÔN BỆNH"
-description: "Bản tóm tắt 80/20 của chương BÀI 4. CHẨN ĐOÁN ÔN BỆNH."
+title: "Bài 4. Chẩn đoán Ôn bệnh"
+description: "Khung chẩn đoán Ôn bệnh qua lưỡi, răng, ban chẩn, bạch bối và các chứng thường gặp."
 type: "chapter-summary"
 category: "books"
 diataxis: "tutorial"
 medicineSystem: "tcm"
 source: "Raw"
 sourceDetail: "Raw/on_benh_dai_cuong/01_ly-thuyet/bai-04-chan-doan_001.md"
-status: "draft"
-generatedBy: "materialize-ingest"
+status: "ready"
+generatedBy: "codex-reviewed"
 summaryRule: "80-20"
 sidebar:
   order: 8
@@ -16,85 +16,73 @@ sidebar:
 
 import KeyPoints from '~/components/KeyPoints.astro';
 import CompareTable from '~/components/CompareTable.astro';
-import ClinicalPearl from '~/components/ClinicalPearl.astro';
+import MedicalNote from '~/components/MedicalNote.astro';
+import RedFlags from '~/components/RedFlags.astro';
 import SelfCheck from '~/components/SelfCheck.astro';
 import SourceNote from '~/components/SourceNote.astro';
 
-## Nắm nhanh theo 80/20
+## 20% cốt lõi
 
-<KeyPoints title="20% cốt lõi cần nắm">
+<KeyPoints title="Đọc chẩn đoán theo dấu hiệu có giá trị cao">
 
-- BÀI 4. CHẨN ĐOÁN ÔN BỆNH
-- 1. KHÁI NIỆM
-- 2. CÁC BỘ PHẬN CẦN BIỆN LUẬN TRONG CHẨN ĐOÁN ÔN BỆNH
-- 2.1. Biện thiết
-- 2.2. Nghiệm xỉ
+- Chẩn đoán Ôn bệnh vẫn dùng tứ chẩn, nhưng trọng điểm là **lưỡi, răng, ban chẩn, bạch bối, phát nhiệt, mồ hôi, thần chí, kinh quyết**.
+- **Rêu lưỡi** cho biết tà còn ở khí/phủ, thấp hay táo, nhiệt nhẹ hay nặng.
+- **Chất lưỡi** cho biết dinh huyết và âm dịch: đỏ, đỏ thẫm, khô, nứt, teo đều có giá trị tiên lượng.
+- **Răng và kẽ răng** phản ánh vị nhiệt, thận âm, huyết nhiệt và mức hao tân dịch.
+- **Ban chẩn/bạch bối** không chỉ là tổn thương da; chúng cho biết nhiệt độc, huyết phận, thấp nhiệt và khả năng tà được thấu ra ngoài.
+- Mục tiêu chẩn đoán là xác định **nguyên nhân, tính chất, vị trí, tà chính tiêu trưởng, bệnh danh và chứng hậu**.
 
 </KeyPoints>
 
-## Tóm tắt nhanh
+## Một câu nắm bài
 
-Phương pháp chẩn đoán của Ôn bệnh không ngoài vọng vấn vấn thiết, phạm vi của tứ chẩn. Do biểu hiện lâm sàng của ôn bệnh có tính đặc thù cho nên đã hình thành những phương pháp đặc thù như biện thiết, nghiệm xỉ, biện ban chẩn và bạch bối, biện phát nhiệt, mô hôi, thần chí và kinh quyết.
+<MedicalNote title="Câu lõi">
+Trong Ôn bệnh, dấu hiệu bên ngoài là bản đồ của nhiệt tà bên trong: lưỡi đọc khí-dinh-huyết, răng đọc tân dịch, ban chẩn đọc huyết nhiệt và độc tà.
+</MedicalNote>
 
-Thuần thực và chính xác vận dụng phương pháp chẩn đoán của ôn bệnh có thể cung cấp các dữ liệu để xác định được nguyên nhân bệnh, tính chất bệnh, vị trí bệnh, tà chính tiêu trưởng, bệnh danh và bệnh chứng.
+## Bảng đọc nhanh
 
-## Sơ đồ 80/20
+<CompareTable title="Dấu hiệu nào trả lời câu hỏi nào?">
+
+| Dấu hiệu | Câu hỏi nó trả lời | Ý nghĩa thường gặp |
+| --- | --- | --- |
+| Rêu trắng mỏng | Tà còn nông? | Vệ phần, biểu còn rõ |
+| Rêu vàng khô | Nhiệt đã vào khí/phủ? | Lý nhiệt, tân dịch thương |
+| Rêu nê/trọc | Có thấp không? | Thấp nhiệt, khí cơ bị bế |
+| Chất lưỡi đỏ thẫm | Đã vào dinh/huyết? | Nhiệt sâu, dễ nhiễu tâm hoặc động huyết |
+| Răng khô, kẽ răng bẩn | Tân dịch hao bao nhiêu? | Vị nhiệt, thận âm bị ảnh hưởng |
+| Ban chẩn | Huyết nhiệt/độc tà thế nào? | Cần phân biệt thấu thuận hay nội hãm |
+
+</CompareTable>
+
+## Sơ đồ chẩn đoán
 
 ```mermaid
 flowchart TD
-  A["Vấn đề chính của chương"] --> B["Khái niệm / định nghĩa"]
-  A --> C["Cơ chế / lý luận"]
-  A --> D["Dấu hiệu cần nhận ra"]
-  D --> E["Ứng dụng vào case / lượng giá"]
+  A["Bệnh nhân Ôn bệnh"] --> B["Nhìn lưỡi"]
+  B --> C["Rêu: tà khí/thấp/táo"]
+  B --> D["Chất: dinh huyết/âm dịch"]
+  A --> E["Xem răng, ban chẩn, bạch bối"]
+  E --> F["Đánh giá tân dịch, huyết nhiệt, độc tà"]
+  F --> G["Quy tầng bệnh và chọn pháp"]
 ```
 
-## Visual brief
+## Bẫy dễ nhầm
 
-<CompareTable title="Hình nên bổ sung khi biên tập">
-
-| Loại hình | Khi dùng | Gợi ý tạo |
-| --- | --- | --- |
-| Sơ đồ Mermaid | Luồng cơ chế, phân loại, thuật toán | Dùng trực tiếp trong MDX. |
-| SVG tự vẽ | Bảng phân tầng, timeline, bản đồ khái niệm cần kiểm soát chính xác | Tạo file SVG trong `public/assets/<sách>/` rồi nhúng. |
-| Ảnh/illustration sinh bởi Codex | Cần minh họa sinh động, không cần độ chính xác giải phẫu tuyệt đối | Sinh ảnh rồi đặt vào `public/assets/<sách>/`, ghi chú là hình minh họa. |
-| Hình y khoa từ nguồn | X-quang, mô bệnh học, biểu đồ nghiên cứu | Chỉ dùng khi có quyền/nguồn rõ; ưu tiên trích dẫn. |
-
-</CompareTable>
-
-## Bản đồ chương
-
-<CompareTable title="Cấu trúc chương">
-
-| Cấp | Mục | Cần rút theo 80/20 |
-| --- | --- | --- |
-| # | BÀI 4. CHẨN ĐOÁN ÔN BỆNH | Cần rút ý 80/20 |
-| ## | 1. KHÁI NIỆM | Cần rút ý 80/20 |
-| ## | 2. CÁC BỘ PHẬN CẦN BIỆN LUẬN TRONG CHẨN ĐOÁN ÔN BỆNH | Cần rút ý 80/20 |
-| ### | 2.1. Biện thiết | Cần rút ý 80/20 |
-| #### | 2.2. Nghiệm xỉ | Cần rút ý 80/20 |
-| #### | 2.3. Ban chẩn, bạch bối | Cần rút ý 80/20 |
-
-</CompareTable>
-
-<ClinicalPearl>
-
-- Khi biên tập, hãy viết lại phần này sao cho người học nắm được lõi chương trong 3-5 phút trước khi đọc bản hiểu sâu.
-
-</ClinicalPearl>
+<RedFlags>
+- Chỉ nhìn triệu chứng sốt mà bỏ lưỡi: dễ không biết bệnh còn ở khí hay đã vào dinh huyết.
+- Thấy ban chẩn là mừng vì “tà ra ngoài”: phải xem sắc, phân bố, mạch chứng và toàn trạng.
+- Rêu lưỡi biến nhanh trong Ôn bệnh; một lần khám không thay thế được theo dõi diễn biến.
+</RedFlags>
 
 ## Tự kiểm
 
 <SelfCheck>
-
-1. 20% ý nào giúp hiểu phần lớn chương này?
-2. Điểm nào dễ nhầm nhất khi áp dụng vào case?
-3. Nếu phải vẽ một sơ đồ duy nhất cho chương này, sơ đồ đó nên thể hiện quan hệ nào?
-
+1. Rêu vàng khô khác rêu vàng nê ở ý nghĩa bệnh cơ nào?
+2. Vì sao chất lưỡi đỏ thẫm nguy hiểm hơn rêu vàng đơn thuần?
+3. Ban chẩn cần đọc thêm những yếu tố nào ngoài việc “có ban”?
 </SelfCheck>
 
 <SourceNote>
-
 - Nguồn: `Raw/on_benh_dai_cuong/01_ly-thuyet/bai-04-chan-doan_001.md`
-- Gợi ý template: `deep-explanation`
-
 </SourceNote>

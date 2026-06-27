@@ -1,14 +1,14 @@
 ---
-title: "Tóm tắt · 2.4.2. Phục tà ôn bệnh"
-description: "Bản tóm tắt 80/20 của chương 2.4.2. Phục tà ôn bệnh."
+title: "Phục tà ôn bệnh"
+description: "Nắm lõi phục tà: tà phục tàng, lý nhiệt sơ khởi, truyền biến thuận nghịch và nguyên tắc thanh dưỡng thấu."
 type: "chapter-summary"
 category: "books"
 diataxis: "tutorial"
 medicineSystem: "tcm"
 source: "Raw"
 sourceDetail: "Raw/on_benh_dai_cuong/01_ly-thuyet/bai-02-nguyen-nhan-phat-benh_003.md"
-status: "draft"
-generatedBy: "materialize-ingest"
+status: "ready"
+generatedBy: "codex-reviewed"
 summaryRule: "80-20"
 sidebar:
   order: 5
@@ -16,85 +16,73 @@ sidebar:
 
 import KeyPoints from '~/components/KeyPoints.astro';
 import CompareTable from '~/components/CompareTable.astro';
-import ClinicalPearl from '~/components/ClinicalPearl.astro';
+import MedicalNote from '~/components/MedicalNote.astro';
+import RedFlags from '~/components/RedFlags.astro';
 import SelfCheck from '~/components/SelfCheck.astro';
 import SourceNote from '~/components/SourceNote.astro';
 
-## Nắm nhanh theo 80/20
+## 20% cốt lõi
 
-<KeyPoints title="20% cốt lõi cần nắm">
+<KeyPoints title="Nắm phục tà bằng 6 ý">
 
-- 2.4.2. Phục tà ôn bệnh
-- 3. NHẬN THỨC CỦA CÁC Y GIA NGÀY TRƯỚC VỀ NGUYÊN NHÂN CỦA ÔN BỆNH VÀ PHÁT BỆNH
-- 3.1. Nguyên nhân bệnh
-- 3.1.1. Lục dâm hóa hòa
-- 3.1.2. Học thuyết tạp khí
+- **Phục tà** là tà đã cảm trước đó nhưng không phát ngay, phục tàng trong cơ thể, chờ thời cơ mới phát Ôn bệnh.
+- Khi phát, bệnh thường **khởi từ lý**, nên ban đầu đã có sốt cao, phiền táo, khát, tiểu đỏ, lưỡi đỏ; nếu không có tái cảm thì có thể không thấy biểu chứng.
+- **Người âm tinh bất túc, chính khí suy** dễ bị phục tà vì không đủ sức đẩy tà ra ngay từ đầu.
+- Truyền biến có hai hướng: **từ lý đạt biểu** là thuận, bệnh giảm; **nội hãm sâu hơn** là nghịch, bệnh nặng và nhiều biến chứng.
+- Điều trị sơ khởi không lấy phát hãn làm chính mà lấy **thanh tiết lý nhiệt** làm chủ, phối **dưỡng âm** và **thấu tà**.
+- Học thuyết tân cảm bổ sung cho phục tà: không phải mọi Ôn bệnh đều do tà phục, nhiều bệnh là cảm tà rồi phát ngay.
 
 </KeyPoints>
 
-## Tóm tắt nhanh
+## Một câu nắm bài
 
-Còn gọi là phục khí ôn bệnh, đơn giản gọi là “phục tà” là chỉ sau khi cảm tà không phát bệnh ngay mà tà khí phục tàng chờ thời cơ mà phát Ôn bệnh.
+<MedicalNote title="Câu lõi">
+Phục tà là mô hình giải thích những ca Ôn bệnh **vừa khởi đã sâu**, không đi từ biểu rõ ràng, nên phải đọc theo lý nhiệt và chính khí chứ không xử trí như ngoại cảm mới đơn giản.
+</MedicalNote>
 
-Sơ khởi biểu hiện chức nhiệt, phiền thao, miệng khát, tiểu đỏ, lưỡi đỏ... một loạt triệu chứng lý nhiệt nội uất.
+## So sánh tân cảm và phục tà
 
-## Sơ đồ 80/20
+<CompareTable title="Điểm rẽ học thuật và lâm sàng">
+
+| Tiêu chí | Tân cảm | Phục tà |
+| --- | --- | --- |
+| Thời điểm phát | Cảm tà rồi phát ngay | Tà phục tàng, sau mới phát |
+| Vị trí sơ khởi | Biểu, phế vệ thường rõ | Lý, khí/dinh/huyết thường rõ |
+| Triệu chứng đầu | Sốt, hơi ố phong, ho, đau đầu | Sốt cao, phiền khát, tiểu đỏ, lưỡi đỏ |
+| Truyền biến | Từ biểu vào lý | Từ lý đạt biểu hoặc nội hãm |
+| Pháp sơ khởi | Giải biểu thấu tà | Thanh lý nhiệt, dưỡng âm, thấu tà |
+
+</CompareTable>
+
+## Sơ đồ phục tà
 
 ```mermaid
 flowchart TD
-  A["Vấn đề chính của chương"] --> B["Khái niệm / định nghĩa"]
-  A --> C["Cơ chế / lý luận"]
-  A --> D["Dấu hiệu cần nhận ra"]
-  D --> E["Ứng dụng vào case / lượng giá"]
+  A["Cảm tà trước"] --> B["Chính khí không đẩy hết tà"]
+  B --> C["Tà phục tàng"]
+  C --> D["Gặp thời cơ: khí hậu, tái cảm, lao lực, tình chí"]
+  D --> E["Lý nhiệt phát"]
+  E --> F{"Hướng đi"}
+  F -->|Ngoại đạt| G["Thuận: bệnh lui"]
+  F -->|Nội hãm| H["Nghịch: bệnh nặng"]
 ```
 
-## Visual brief
+## Bẫy dễ nhầm
 
-<CompareTable title="Hình nên bổ sung khi biên tập">
-
-| Loại hình | Khi dùng | Gợi ý tạo |
-| --- | --- | --- |
-| Sơ đồ Mermaid | Luồng cơ chế, phân loại, thuật toán | Dùng trực tiếp trong MDX. |
-| SVG tự vẽ | Bảng phân tầng, timeline, bản đồ khái niệm cần kiểm soát chính xác | Tạo file SVG trong `public/assets/<sách>/` rồi nhúng. |
-| Ảnh/illustration sinh bởi Codex | Cần minh họa sinh động, không cần độ chính xác giải phẫu tuyệt đối | Sinh ảnh rồi đặt vào `public/assets/<sách>/`, ghi chú là hình minh họa. |
-| Hình y khoa từ nguồn | X-quang, mô bệnh học, biểu đồ nghiên cứu | Chỉ dùng khi có quyền/nguồn rõ; ưu tiên trích dẫn. |
-
-</CompareTable>
-
-## Bản đồ chương
-
-<CompareTable title="Cấu trúc chương">
-
-| Cấp | Mục | Cần rút theo 80/20 |
-| --- | --- | --- |
-| #### | 2.4.2. Phục tà ôn bệnh | Cần rút ý 80/20 |
-| ### | 3. NHẬN THỨC CỦA CÁC Y GIA NGÀY TRƯỚC VỀ NGUYÊN NHÂN CỦA ÔN BỆNH VÀ PHÁT BỆNH | Cần rút ý 80/20 |
-| #### | 3.1. Nguyên nhân bệnh | Cần rút ý 80/20 |
-| #### | 3.1.1. Lục dâm hóa hòa | Cần rút ý 80/20 |
-| #### | 3.1.2. Học thuyết tạp khí | Cần rút ý 80/20 |
-| #### | 3.2. Phát bệnh | Cần rút ý 80/20 |
-
-</CompareTable>
-
-<ClinicalPearl>
-
-- Khi biên tập, hãy viết lại phần này sao cho người học nắm được lõi chương trong 3-5 phút trước khi đọc bản hiểu sâu.
-
-</ClinicalPearl>
+<RedFlags>
+- Lấy “có hay không có sốt” để phân biệt là sai; cả hai đều sốt. Hãy nhìn **biểu trước hay lý trước**.
+- Phục tà có thể kèm biểu chứng nếu bị tái cảm dẫn phát, nên đừng thấy biểu là loại trừ phục tà.
+- Nếu thấu tà không hết, bệnh dễ lui rồi trở lại, biến chứng nhiều và khó khỏi.
+</RedFlags>
 
 ## Tự kiểm
 
 <SelfCheck>
-
-1. 20% ý nào giúp hiểu phần lớn chương này?
-2. Điểm nào dễ nhầm nhất khi áp dụng vào case?
-3. Nếu phải vẽ một sơ đồ duy nhất cho chương này, sơ đồ đó nên thể hiện quan hệ nào?
-
+1. Vì sao phục tà thường nặng và dài hơn tân cảm?
+2. Dấu hiệu nào cho thấy phục tà đang “nội hãm” thay vì “ngoại đạt”?
+3. Ba chữ “thanh, dưỡng, thấu” tương ứng với vấn đề bệnh cơ nào?
 </SelfCheck>
 
 <SourceNote>
-
 - Nguồn: `Raw/on_benh_dai_cuong/01_ly-thuyet/bai-02-nguyen-nhan-phat-benh_003.md`
-- Gợi ý template: `deep-explanation`
-
 </SourceNote>

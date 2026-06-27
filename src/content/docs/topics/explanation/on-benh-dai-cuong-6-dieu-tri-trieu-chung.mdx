@@ -1,6 +1,6 @@
 ---
-title: "Hiểu sâu · 6. ĐIỀU TRỊ TRIỆU CHỨNG"
-description: "Bản hiểu sâu từ chương 6. ĐIỀU TRỊ TRIỆU CHỨNG."
+title: "Cơ chế · ĐIỀU TRỊ TRIỆU CHỨNG"
+description: "Bản giải thích cơ chế bằng sơ đồ, workflow và cầu nối lâm sàng từ chương 6. ĐIỀU TRỊ TRIỆU CHỨNG."
 type: "deep-explanation"
 category: "topics"
 diataxis: "explanation"
@@ -9,6 +9,7 @@ source: "Raw"
 sourceDetail: "Raw/on_benh_dai_cuong/02_benh-lam-sang/nguoc-tat_002.md"
 status: "draft"
 generatedBy: "materialize-ingest"
+explanationStyle: "mechanism-map"
 sidebar:
   order: 13
 ---
@@ -16,45 +17,92 @@ sidebar:
 import KeyPoints from '~/components/KeyPoints.astro';
 import CompareTable from '~/components/CompareTable.astro';
 import ClinicalPearl from '~/components/ClinicalPearl.astro';
+import MedicalNote from '~/components/MedicalNote.astro';
+import RedFlags from '~/components/RedFlags.astro';
+import SelfCheck from '~/components/SelfCheck.astro';
 import SourceNote from '~/components/SourceNote.astro';
 
-## Câu hỏi sâu của chương
+## Câu hỏi cơ chế
 
-<KeyPoints>
+<MedicalNote title="Đọc trang này để trả lời">
+Vì sao **ĐIỀU TRỊ TRIỆU CHỨNG** xảy ra, đi theo chuỗi nào, tạo dấu hiệu gì, và điểm rẽ nào làm đổi hướng chẩn đoán hoặc xử trí?
+</MedicalNote>
 
-- Vì sao chương này quan trọng trong Ôn bệnh học?
-- Cơ chế / lý luận nào là trục chính?
-- Điểm nào cần liên hệ với chẩn đoán hoặc điều trị?
+## Bản đồ cơ chế 1 trang
+
+<KeyPoints title="Nút cần nối bằng nhân quả">
+
+- **ĐIỀU TRỊ TRIỆU CHỨNG:** Dùng Giá trùng, Đào nhân, Đại hoàng, Đơn bì, Khương lang, Từ uy... Đây là trục đọc ban đầu, cần được nối tiếp bằng các nút cơ chế phía dưới. Giúp tránh nhầm bệnh danh giống nhau nhưng cơ chế khác nhau.
+- **Hàn chiến cao nhiệt:** Đặt mục này vào chuỗi cơ chế của bài: nó là nguyên nhân, tầng trung gian, biểu hiện, biến chứng hay hướng xử trí? Dùng để hoàn thiện bản đồ cơ chế của chương.
+- **Hôn mê:** Đặt mục này vào chuỗi cơ chế của bài: nó là nguyên nhân, tầng trung gian, biểu hiện, biến chứng hay hướng xử trí? Dùng để hoàn thiện bản đồ cơ chế của chương.
+- **DỰ PHÒNG VÀ ĐIỀU NHIỆP:** Nguyên tắc xử trí phải đi ngược lại cơ chế gây bệnh: giải cái đang bế, thanh cái đang nhiệt, hóa cái đang thấp, dưỡng cái đang hao. Giúp hiểu vì sao dùng pháp đó, không học pháp trị như câu thuộc lòng.
+- **Tóm tắt:** Đặt mục này vào chuỗi cơ chế của bài: nó là nguyên nhân, tầng trung gian, biểu hiện, biến chứng hay hướng xử trí? Dùng để hoàn thiện bản đồ cơ chế của chương.
 
 </KeyPoints>
 
-## Nền văn bản
+## Workflow diễn tiến
 
-Dùng Giá trùng, Đào nhân, Đại hoàng, Đơn bì, Khương lang, Từ uy... để hoạt huyết, hóa ứ, thông lạc khứ tích trệ để trợ Miết giáp tiêu tích.
+```mermaid
+flowchart TD
+  A["ĐIỀU TRỊ TRIỆU CHỨNG"] --> B["Hàn chiến cao nhiệt"]
+  B --> C["Hôn mê"]
+  C --> D{"DỰ PHÒNG VÀ ĐIỀU NHIỆP"}
+  D -->|còn nông / còn thuận| E["Nhận diện sớm"]
+  D -->|vào sâu / chuyển nặng| F["Theo dõi biến chứng"]
+  E --> G["Tóm tắt"]
+  F --> G
+```
 
-Dùng Bán hạ, Đinh lịch tử, Xạ can, Hậu phác để lý khí hóa đàm, khứ trừ khí trệ và đàm tích.
+## Cầu nối sách vở → lâm sàng
 
-<CompareTable title="Các ý cần đào sâu">
+<CompareTable title="Từ cơ chế đến quyết định">
 
-| Mục | Cơ chế / lý luận | Liên hệ lâm sàng |
-| --- | --- | --- |
-| 6. ĐIỀU TRỊ TRIỆU CHỨNG | Cần giải thích cơ chế / lý luận | Cần liên hệ lâm sàng |
-| 6.1. Hàn chiến cao nhiệt | Cần giải thích cơ chế / lý luận | Cần liên hệ lâm sàng |
-| 6.2. Hôn mê | Cần giải thích cơ chế / lý luận | Cần liên hệ lâm sàng |
-| 7. DỰ PHÒNG VÀ ĐIỀU NHIỆP | Cần giải thích cơ chế / lý luận | Cần liên hệ lâm sàng |
-| Tóm tắt | Cần giải thích cơ chế / lý luận | Cần liên hệ lâm sàng |
+| Nút cơ chế | Giải thích ngắn | Dấu hiệu kéo theo | Ý nghĩa chẩn đoán / xử trí |
+| --- | --- | --- | --- |
+| ĐIỀU TRỊ TRIỆU CHỨNG | Dùng Giá trùng, Đào nhân, Đại hoàng, Đơn bì, Khương lang, Từ uy... Đây là trục đọc ban đầu, cần được nối tiếp bằng các nút cơ chế phía dưới. | Dấu hiệu then chốt, dấu hiệu loại trừ, dấu hiệu báo bệnh đã đổi tầng. | Giúp tránh nhầm bệnh danh giống nhau nhưng cơ chế khác nhau. |
+| Hàn chiến cao nhiệt | Đặt mục này vào chuỗi cơ chế của bài: nó là nguyên nhân, tầng trung gian, biểu hiện, biến chứng hay hướng xử trí? | Tìm trong nguyên văn các dấu hiệu đi kèm và nối chúng với nút cơ chế. | Dùng để hoàn thiện bản đồ cơ chế của chương. |
+| Hôn mê | Đặt mục này vào chuỗi cơ chế của bài: nó là nguyên nhân, tầng trung gian, biểu hiện, biến chứng hay hướng xử trí? | Tìm trong nguyên văn các dấu hiệu đi kèm và nối chúng với nút cơ chế. | Dùng để hoàn thiện bản đồ cơ chế của chương. |
+| DỰ PHÒNG VÀ ĐIỀU NHIỆP | Nguyên tắc xử trí phải đi ngược lại cơ chế gây bệnh: giải cái đang bế, thanh cái đang nhiệt, hóa cái đang thấp, dưỡng cái đang hao. | Đáp ứng sau xử trí, dấu hiệu cần theo dõi, dấu hiệu không nên công phạt thêm. | Giúp hiểu vì sao dùng pháp đó, không học pháp trị như câu thuộc lòng. |
+| Tóm tắt | Đặt mục này vào chuỗi cơ chế của bài: nó là nguyên nhân, tầng trung gian, biểu hiện, biến chứng hay hướng xử trí? | Tìm trong nguyên văn các dấu hiệu đi kèm và nối chúng với nút cơ chế. | Dùng để hoàn thiện bản đồ cơ chế của chương. |
 
 </CompareTable>
 
+## Worked example
+
+1. Bắt đầu từ **ĐIỀU TRỊ TRIỆU CHỨNG**: hỏi đây là nguyên nhân, điều kiện nền hay định nghĩa khung.
+2. Nối sang **Hàn chiến cao nhiệt**: viết thành câu “vì X nên Y”, tránh chỉ chép lại heading.
+3. Kiểm bằng **Hôn mê**: dấu hiệu nào phải xuất hiện nếu cơ chế này đúng?
+4. Kết luận bằng quyết định: cần phân biệt với gì, theo dõi điểm rẽ nào, và nguyên tắc xử trí đi ngược lại cơ chế nào.
+
+<RedFlags>
+
+- Đừng học trang này như một danh sách thuật ngữ. Hãy đọc theo mũi tên: nguyên nhân → cơ chế → dấu hiệu → quyết định.
+- Nếu một dấu hiệu không nối được với cơ chế, quay lại nguyên thủy để kiểm tra văn cảnh trước khi ghi nhớ.
+- Bản tự sinh này là khung cơ chế; khi biên tập, cần thay các nhãn khái quát bằng sơ đồ chuyên biệt hơn cho từng bệnh/chứng.
+
+</RedFlags>
+
 <ClinicalPearl>
 
-- Trang này được sinh tự động từ heading; cần biên tập lại để thành bài hiểu sâu hoàn chỉnh.
+- Cơ chế chỉ có giá trị học tập khi nó dự đoán được dấu hiệu tiếp theo hoặc giải thích được vì sao phải chọn pháp trị này thay vì pháp trị khác.
 
 </ClinicalPearl>
+
+## Tự kiểm
+
+<SelfCheck>
+
+1. Cơ chế trung tâm của bài này là gì?
+2. Nút nào là điểm rẽ khiến bệnh nhẹ chuyển nặng hoặc từ biểu vào lý?
+3. Dấu hiệu nào giúp chứng minh cơ chế đang diễn ra?
+4. Nếu phải vẽ lại trong 60 giây, bạn sẽ giữ lại những mũi tên nào?
+
+</SelfCheck>
 
 <SourceNote>
 
 - Nguồn: `Raw/on_benh_dai_cuong/02_benh-lam-sang/nguoc-tat_002.md`
 - Gợi ý template: `symptom-approach`
+- Kiểu trình bày: mechanism map + workflow + worked example.
 
 </SourceNote>

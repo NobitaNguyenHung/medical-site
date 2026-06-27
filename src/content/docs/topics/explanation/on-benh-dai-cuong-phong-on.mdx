@@ -1,6 +1,6 @@
 ---
-title: "Hiểu sâu · PHONG ÔN"
-description: "Bản hiểu sâu từ chương PHONG ÔN."
+title: "Cơ chế · PHONG ÔN"
+description: "Bản giải thích cơ chế bằng sơ đồ, workflow và cầu nối lâm sàng từ chương PHONG ÔN."
 type: "deep-explanation"
 category: "topics"
 diataxis: "explanation"
@@ -9,6 +9,7 @@ source: "Raw"
 sourceDetail: "Raw/on_benh_dai_cuong/02_benh-lam-sang/phong-on_001.md"
 status: "draft"
 generatedBy: "materialize-ingest"
+explanationStyle: "mechanism-map"
 sidebar:
   order: 14
 ---
@@ -16,50 +17,93 @@ sidebar:
 import KeyPoints from '~/components/KeyPoints.astro';
 import CompareTable from '~/components/CompareTable.astro';
 import ClinicalPearl from '~/components/ClinicalPearl.astro';
+import MedicalNote from '~/components/MedicalNote.astro';
+import RedFlags from '~/components/RedFlags.astro';
+import SelfCheck from '~/components/SelfCheck.astro';
 import SourceNote from '~/components/SourceNote.astro';
 
-## Câu hỏi sâu của chương
+## Câu hỏi cơ chế
 
-<KeyPoints>
+<MedicalNote title="Đọc trang này để trả lời">
+Vì sao **PHONG ÔN** xảy ra, đi theo chuỗi nào, tạo dấu hiệu gì, và điểm rẽ nào làm đổi hướng chẩn đoán hoặc xử trí?
+</MedicalNote>
 
-- Vì sao chương này quan trọng trong Ôn bệnh học?
-- Cơ chế / lý luận nào là trục chính?
-- Điểm nào cần liên hệ với chẩn đoán hoặc điều trị?
+## Bản đồ cơ chế 1 trang
+
+<KeyPoints title="Nút cần nối bằng nhân quả">
+
+- **PHONG ÔN:** Phong ôn là do cảm thụ phong nhiệt bệnh tà gây ra một loại ngoại cảm nhiệt bệnh cấp tính với biểu hiện chứng hầu sơ khởi đặc trưng - phế vệ biểu nhiệt chứng. Đây là trục đọc ban đầu, cần được nối tiếp bằng các nút cơ chế phía dưới. Dùng làm trục chính để đọc phần còn lại của bài.
+- **KHÁI NIỆM:** Định nghĩa phải được chuyển thành mô hình: điều kiện nào tạo bệnh, giới hạn khái niệm ở đâu, khác gì với khái niệm gần nó. Giúp mở bài bằng khung tư duy, không sa vào định nghĩa rỗng.
+- **NGUYÊN NHÂN VÀ CƠ CHẾ SINH BỆNH:** Xác định tác nhân hoặc điều kiện khởi phát, rồi hỏi tác nhân đó đi vào cơ thể theo đường nào và đánh vào hệ nào trước. Giúp suy tà, phân biệt tân cảm với phục tà, và chọn hướng thấu tà hay thanh lý nhiệt.
+- **CHẨN ĐOÁN XÁC ĐỊNH:** Mỗi dấu hiệu phải được xem như bằng chứng của một cơ chế, không chỉ là tiêu chí liệt kê. Giúp tránh nhầm bệnh danh giống nhau nhưng cơ chế khác nhau.
+- **CHẨN ĐOÁN PHÂN BIỆT:** Mỗi dấu hiệu phải được xem như bằng chứng của một cơ chế, không chỉ là tiêu chí liệt kê. Giúp tránh nhầm bệnh danh giống nhau nhưng cơ chế khác nhau.
 
 </KeyPoints>
 
-## Nền văn bản
+## Workflow diễn tiến
 
-Phong ôn là do cảm thụ phong nhiệt bệnh tà gây ra một loại ngoại cảm nhiệt bệnh cấp tính với biểu hiện chứng hầu sơ khởi đặc trưng - phế vệ biểu nhiệt chứng.
+```mermaid
+flowchart TD
+  A["PHONG ÔN"] --> B["KHÁI NIỆM"]
+  B --> C["NGUYÊN NHÂN VÀ CƠ CHẾ SINH BỆNH"]
+  C --> D{"CHẨN ĐOÁN XÁC ĐỊNH"}
+  D -->|còn nông / còn thuận| E["Nhận diện sớm"]
+  D -->|vào sâu / chuyển nặng| F["Theo dõi biến chứng"]
+  E --> G["CHẨN ĐOÁN PHÂN BIỆT"]
+  F --> G
+```
 
-Bệnh có thể phát sinh trong bốn mùa nhưng gặp nhiều nhất ở mùa xuân và đông. Phát sinh vào mùa đông gọi là đông ôn.
+## Cầu nối sách vở → lâm sàng
 
-<CompareTable title="Các ý cần đào sâu">
+<CompareTable title="Từ cơ chế đến quyết định">
 
-| Mục | Cơ chế / lý luận | Liên hệ lâm sàng |
-| --- | --- | --- |
-| PHONG ÔN | Cần giải thích cơ chế / lý luận | Cần liên hệ lâm sàng |
-| 1. KHÁI NIỆM | Cần giải thích cơ chế / lý luận | Cần liên hệ lâm sàng |
-| 2. NGUYÊN NHÂN VÀ CƠ CHẾ SINH BỆNH | Cần giải thích cơ chế / lý luận | Cần liên hệ lâm sàng |
-| 3. CHẨN ĐOÁN XÁC ĐỊNH | Cần giải thích cơ chế / lý luận | Cần liên hệ lâm sàng |
-| 4. CHẨN ĐOÁN PHÂN BIỆT | Cần giải thích cơ chế / lý luận | Cần liên hệ lâm sàng |
-| 4.1. Xuân ôn | Cần giải thích cơ chế / lý luận | Cần liên hệ lâm sàng |
-| 4.2. Cảm mạo | Cần giải thích cơ chế / lý luận | Cần liên hệ lâm sàng |
-| 4.3. Ma chẩn | Cần giải thích cơ chế / lý luận | Cần liên hệ lâm sàng |
-| 4.4. Phế ung | Cần giải thích cơ chế / lý luận | Cần liên hệ lâm sàng |
-| 5. BIỆN CHỨNG LUẬN TRỊ | Cần giải thích cơ chế / lý luận | Cần liên hệ lâm sàng |
+| Nút cơ chế | Giải thích ngắn | Dấu hiệu kéo theo | Ý nghĩa chẩn đoán / xử trí |
+| --- | --- | --- | --- |
+| PHONG ÔN | Phong ôn là do cảm thụ phong nhiệt bệnh tà gây ra một loại ngoại cảm nhiệt bệnh cấp tính với biểu hiện chứng hầu sơ khởi đặc trưng - phế vệ biểu nhiệt chứng. Đây là trục đọc ban đầu, cần được nối tiếp bằng các nút cơ chế phía dưới. | Tìm trong nguyên văn các dấu hiệu đi kèm và nối chúng với nút cơ chế. | Dùng làm trục chính để đọc phần còn lại của bài. |
+| KHÁI NIỆM | Định nghĩa phải được chuyển thành mô hình: điều kiện nào tạo bệnh, giới hạn khái niệm ở đâu, khác gì với khái niệm gần nó. | Từ khóa định nghĩa, điểm phân biệt và phạm vi áp dụng. | Giúp mở bài bằng khung tư duy, không sa vào định nghĩa rỗng. |
+| NGUYÊN NHÂN VÀ CƠ CHẾ SINH BỆNH | Xác định tác nhân hoặc điều kiện khởi phát, rồi hỏi tác nhân đó đi vào cơ thể theo đường nào và đánh vào hệ nào trước. | Dấu hiệu sớm, mùa phát, đường vào, vị trí bị phạm đầu tiên. | Giúp suy tà, phân biệt tân cảm với phục tà, và chọn hướng thấu tà hay thanh lý nhiệt. |
+| CHẨN ĐOÁN XÁC ĐỊNH | Mỗi dấu hiệu phải được xem như bằng chứng của một cơ chế, không chỉ là tiêu chí liệt kê. | Dấu hiệu then chốt, dấu hiệu loại trừ, dấu hiệu báo bệnh đã đổi tầng. | Giúp tránh nhầm bệnh danh giống nhau nhưng cơ chế khác nhau. |
+| CHẨN ĐOÁN PHÂN BIỆT | Mỗi dấu hiệu phải được xem như bằng chứng của một cơ chế, không chỉ là tiêu chí liệt kê. | Dấu hiệu then chốt, dấu hiệu loại trừ, dấu hiệu báo bệnh đã đổi tầng. | Giúp tránh nhầm bệnh danh giống nhau nhưng cơ chế khác nhau. |
+| Xuân ôn | Đặt mục này vào chuỗi cơ chế của bài: nó là nguyên nhân, tầng trung gian, biểu hiện, biến chứng hay hướng xử trí? | Tìm trong nguyên văn các dấu hiệu đi kèm và nối chúng với nút cơ chế. | Dùng để hoàn thiện bản đồ cơ chế của chương. |
 
 </CompareTable>
 
+## Worked example
+
+1. Bắt đầu từ **PHONG ÔN**: hỏi đây là nguyên nhân, điều kiện nền hay định nghĩa khung.
+2. Nối sang **KHÁI NIỆM**: viết thành câu “vì X nên Y”, tránh chỉ chép lại heading.
+3. Kiểm bằng **NGUYÊN NHÂN VÀ CƠ CHẾ SINH BỆNH**: dấu hiệu nào phải xuất hiện nếu cơ chế này đúng?
+4. Kết luận bằng quyết định: cần phân biệt với gì, theo dõi điểm rẽ nào, và nguyên tắc xử trí đi ngược lại cơ chế nào.
+
+<RedFlags>
+
+- Đừng học trang này như một danh sách thuật ngữ. Hãy đọc theo mũi tên: nguyên nhân → cơ chế → dấu hiệu → quyết định.
+- Nếu một dấu hiệu không nối được với cơ chế, quay lại nguyên thủy để kiểm tra văn cảnh trước khi ghi nhớ.
+- Bản tự sinh này là khung cơ chế; khi biên tập, cần thay các nhãn khái quát bằng sơ đồ chuyên biệt hơn cho từng bệnh/chứng.
+
+</RedFlags>
+
 <ClinicalPearl>
 
-- Trang này được sinh tự động từ heading; cần biên tập lại để thành bài hiểu sâu hoàn chỉnh.
+- Cơ chế chỉ có giá trị học tập khi nó dự đoán được dấu hiệu tiếp theo hoặc giải thích được vì sao phải chọn pháp trị này thay vì pháp trị khác.
 
 </ClinicalPearl>
+
+## Tự kiểm
+
+<SelfCheck>
+
+1. Cơ chế trung tâm của bài này là gì?
+2. Nút nào là điểm rẽ khiến bệnh nhẹ chuyển nặng hoặc từ biểu vào lý?
+3. Dấu hiệu nào giúp chứng minh cơ chế đang diễn ra?
+4. Nếu phải vẽ lại trong 60 giây, bạn sẽ giữ lại những mũi tên nào?
+
+</SelfCheck>
 
 <SourceNote>
 
 - Nguồn: `Raw/on_benh_dai_cuong/02_benh-lam-sang/phong-on_001.md`
 - Gợi ý template: `deep-explanation`
+- Kiểu trình bày: mechanism map + workflow + worked example.
 
 </SourceNote>

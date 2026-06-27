@@ -199,16 +199,16 @@ function recommendedDestinations(classification, slug, order) {
 	return {
 		summary: `src/content/docs/books/${bookSlug}/tom-tat/${prefix}.mdx`,
 		original: `src/content/docs/books/${bookSlug}/nguyen-thuy/${prefix}.mdx`,
-		reference: `src/content/docs/topics/reference/${bookSlug}-${slug}.mdx`,
-		explanation: `src/content/docs/topics/explanation/${bookSlug}-${slug}.mdx`,
+		reference: `src/content/docs/topics/reference/${bookSlug}/${prefix}.mdx`,
+		explanation: `src/content/docs/topics/explanation/${bookSlug}/${prefix}.mdx`,
 		assessment: `src/content/docs/books/${bookSlug}/luong-gia/${prefix}-luong-gia.mdx`,
 		primary: classification.diataxis === 'how-to'
 			? `src/content/docs/updates/${bookSlug}-${slug}.mdx`
 			: classification.diataxis === 'reference'
-				? `src/content/docs/topics/reference/${bookSlug}-${slug}.mdx`
+				? `src/content/docs/topics/reference/${bookSlug}/${prefix}.mdx`
 				: classification.diataxis === 'tutorial'
 					? `src/content/docs/cases/${bookSlug}-${slug}.mdx`
-					: `src/content/docs/topics/explanation/${bookSlug}-${slug}.mdx`,
+					: `src/content/docs/topics/explanation/${bookSlug}/${prefix}.mdx`,
 	};
 }
 

@@ -1,14 +1,14 @@
 ---
-title: "Tóm tắt · PHONG ÔN"
-description: "Bản tóm tắt 80/20 của chương PHONG ÔN."
+title: "Phong ôn"
+description: "Nắm lõi Phong ôn: phong nhiệt phạm phế vệ, truyền biến nhanh và các thể điều trị chính."
 type: "chapter-summary"
 category: "books"
 diataxis: "tutorial"
 medicineSystem: "tcm"
 source: "Raw"
 sourceDetail: "Raw/on_benh_dai_cuong/02_benh-lam-sang/phong-on_001.md"
-status: "draft"
-generatedBy: "materialize-ingest"
+status: "ready"
+generatedBy: "codex-reviewed"
 summaryRule: "80-20"
 sidebar:
   order: 14
@@ -16,89 +16,72 @@ sidebar:
 
 import KeyPoints from '~/components/KeyPoints.astro';
 import CompareTable from '~/components/CompareTable.astro';
-import ClinicalPearl from '~/components/ClinicalPearl.astro';
+import MedicalNote from '~/components/MedicalNote.astro';
+import RedFlags from '~/components/RedFlags.astro';
 import SelfCheck from '~/components/SelfCheck.astro';
 import SourceNote from '~/components/SourceNote.astro';
 
-## Nắm nhanh theo 80/20
+## 20% cốt lõi
 
-<KeyPoints title="20% cốt lõi cần nắm">
+<KeyPoints title="Đọc Phong ôn bằng phế vệ">
 
-- PHONG ÔN
-- 1. KHÁI NIỆM
-- 2. NGUYÊN NHÂN VÀ CƠ CHẾ SINH BỆNH
-- 3. CHẨN ĐOÁN XÁC ĐỊNH
-- 4. CHẨN ĐOÁN PHÂN BIỆT
+- Phong ôn là ngoại cảm nhiệt bệnh cấp tính do **phong nhiệt bệnh tà**, sơ khởi đặc trưng là **phế vệ biểu nhiệt**.
+- Bệnh thường gặp mùa đông-xuân; mùa đông khí hậu ấm bất thường có thể gọi là đông ôn.
+- Bệnh cơ đầu tiên: phong nhiệt từ mũi miệng vào, **trước phạm phế**, làm phế thất tuyên túc.
+- Dấu hiệu khởi đầu: sốt, hơi ố phong, đau đầu, ho, khát nhẹ, rêu mỏng, đầu lưỡi đỏ, mạch phù sác.
+- Phong ôn có thể truyền vào khí phần: tà nhiệt ủng phế, phế nhiệt phủ thực, phế nhiệt chuyển trường, phát chẩn, dương minh tích nhiệt.
+- Phân biệt quan trọng: xuân ôn khởi từ lý nhiệt nặng; cảm mạo phong nhiệt nhẹ và ít truyền biến; ma chẩn có phát ban theo quy luật.
 
 </KeyPoints>
 
-## Tóm tắt nhanh
+## Một câu nắm bài
 
-Phong ôn là do cảm thụ phong nhiệt bệnh tà gây ra một loại ngoại cảm nhiệt bệnh cấp tính với biểu hiện chứng hầu sơ khởi đặc trưng - phế vệ biểu nhiệt chứng.
+<MedicalNote title="Câu lõi">
+Phong ôn là bài học về **phong nhiệt phạm phế trước**, rồi hoặc giải ở phế vệ, hoặc truyền nhanh vào khí phần và dương minh.
+</MedicalNote>
 
-Bệnh có thể phát sinh trong bốn mùa nhưng gặp nhiều nhất ở mùa xuân và đông. Phát sinh vào mùa đông gọi là đông ôn.
-
-## Sơ đồ 80/20
+## Đường truyền chính
 
 ```mermaid
 flowchart TD
-  A["Vấn đề chính của chương"] --> B["Khái niệm / định nghĩa"]
-  A --> C["Cơ chế / lý luận"]
-  A --> D["Dấu hiệu cần nhận ra"]
-  D --> E["Ứng dụng vào case / lượng giá"]
+  A["Phong nhiệt"] --> B["Phế vệ"]
+  B -->|Không giải| C["Tà nhập khí phần"]
+  C --> D["Tà nhiệt ủng phế"]
+  C --> E["Phế nhiệt phủ thực"]
+  C --> F["Phế nhiệt phát chẩn"]
+  C --> G["Dương minh tích nhiệt"]
 ```
 
-## Visual brief
+## Bảng thể thường gặp
 
-<CompareTable title="Hình nên bổ sung khi biên tập">
+<CompareTable title="Từ thể bệnh sang pháp">
 
-| Loại hình | Khi dùng | Gợi ý tạo |
+| Thể | Dấu hiệu chính | Pháp trị |
 | --- | --- | --- |
-| Sơ đồ Mermaid | Luồng cơ chế, phân loại, thuật toán | Dùng trực tiếp trong MDX. |
-| SVG tự vẽ | Bảng phân tầng, timeline, bản đồ khái niệm cần kiểm soát chính xác | Tạo file SVG trong `public/assets/<sách>/` rồi nhúng. |
-| Ảnh/illustration sinh bởi Codex | Cần minh họa sinh động, không cần độ chính xác giải phẫu tuyệt đối | Sinh ảnh rồi đặt vào `public/assets/<sách>/`, ghi chú là hình minh họa. |
-| Hình y khoa từ nguồn | X-quang, mô bệnh học, biểu đồ nghiên cứu | Chỉ dùng khi có quyền/nguồn rõ; ưu tiên trích dẫn. |
+| Tà tập phế vệ | Sốt, hơi ố phong, ho, khát nhẹ | Tân lương giải biểu, tuyên phế |
+| Tà nhiệt ủng phế | Sốt cao, ho suyễn, đàm vàng | Thanh nhiệt tuyên phế bình suyễn |
+| Phế nhiệt phủ thực | Ho suyễn kèm táo kết/đầy | Tuyên phế, tiết nhiệt, công hạ |
+| Phế nhiệt phát chẩn | Ban chẩn kèm phế nhiệt | Tuyên phế tiết nhiệt, lương dinh thấu chẩn |
+| Dương minh tích nhiệt | Sốt cao, khát, mồ hôi, rêu vàng | Thanh nhiệt bảo tân |
 
 </CompareTable>
 
-## Bản đồ chương
+## Bẫy dễ nhầm
 
-<CompareTable title="Cấu trúc chương">
-
-| Cấp | Mục | Cần rút theo 80/20 |
-| --- | --- | --- |
-| # | PHONG ÔN | Cần rút ý 80/20 |
-| ### | 1. KHÁI NIỆM | Cần rút ý 80/20 |
-| ## | 2. NGUYÊN NHÂN VÀ CƠ CHẾ SINH BỆNH | Cần rút ý 80/20 |
-| ## | 3. CHẨN ĐOÁN XÁC ĐỊNH | Cần rút ý 80/20 |
-| ## | 4. CHẨN ĐOÁN PHÂN BIỆT | Cần rút ý 80/20 |
-| ### | 4.1. Xuân ôn | Cần rút ý 80/20 |
-| ### | 4.2. Cảm mạo | Cần rút ý 80/20 |
-| ### | 4.3. Ma chẩn | Cần rút ý 80/20 |
-| ### | 4.4. Phế ung | Cần rút ý 80/20 |
-| ## | 5. BIỆN CHỨNG LUẬN TRỊ | Cần rút ý 80/20 |
-
-</CompareTable>
-
-<ClinicalPearl>
-
-- Khi biên tập, hãy viết lại phần này sao cho người học nắm được lõi chương trong 3-5 phút trước khi đọc bản hiểu sâu.
-
-</ClinicalPearl>
+<RedFlags>
+- Phong ôn không phải cảm mạo phong nhiệt nặng hơn một chút; điểm khác là truyền biến nhanh và nguy cơ vào sâu.
+- Không dùng phát hãn tân ôn kiểu Thương hàn cho phong ôn.
+- Khởi đầu nhẹ ở phế vệ nhưng xuất hiện thần chí bất thường là nghĩ nghịch truyền.
+</RedFlags>
 
 ## Tự kiểm
 
 <SelfCheck>
-
-1. 20% ý nào giúp hiểu phần lớn chương này?
-2. Điểm nào dễ nhầm nhất khi áp dụng vào case?
-3. Nếu phải vẽ một sơ đồ duy nhất cho chương này, sơ đồ đó nên thể hiện quan hệ nào?
-
+1. Vì sao Phong ôn “thủ tiên phạm phế”?
+2. Dấu hiệu nào phân biệt Phong ôn với Xuân ôn lúc khởi bệnh?
+3. Khi ho suyễn tăng, sốt cao, đàm vàng, bệnh đã chuyển hướng nào?
 </SelfCheck>
 
 <SourceNote>
-
 - Nguồn: `Raw/on_benh_dai_cuong/02_benh-lam-sang/phong-on_001.md`
-- Gợi ý template: `deep-explanation`
-
 </SourceNote>

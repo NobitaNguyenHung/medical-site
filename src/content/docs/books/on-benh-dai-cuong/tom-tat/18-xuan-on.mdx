@@ -1,14 +1,14 @@
 ---
-title: "Tóm tắt · XUÂN ÔN"
-description: "Bản tóm tắt 80/20 của chương XUÂN ÔN."
+title: "Xuân ôn"
+description: "Nắm lõi Xuân ôn: phục khí ôn bệnh, khởi từ lý nhiệt và dễ thương âm động phong."
 type: "chapter-summary"
 category: "books"
 diataxis: "tutorial"
 medicineSystem: "tcm"
 source: "Raw"
 sourceDetail: "Raw/on_benh_dai_cuong/02_benh-lam-sang/xuan-on_001.md"
-status: "draft"
-generatedBy: "materialize-ingest"
+status: "ready"
+generatedBy: "codex-reviewed"
 summaryRule: "80-20"
 sidebar:
   order: 18
@@ -16,89 +16,72 @@ sidebar:
 
 import KeyPoints from '~/components/KeyPoints.astro';
 import CompareTable from '~/components/CompareTable.astro';
-import ClinicalPearl from '~/components/ClinicalPearl.astro';
+import MedicalNote from '~/components/MedicalNote.astro';
+import RedFlags from '~/components/RedFlags.astro';
 import SelfCheck from '~/components/SelfCheck.astro';
 import SourceNote from '~/components/SourceNote.astro';
 
-## Nắm nhanh theo 80/20
+## 20% cốt lõi
 
-<KeyPoints title="20% cốt lõi cần nắm">
+<KeyPoints title="Xuân ôn = phục tà phát từ lý">
 
-- XUÂN ÔN
-- 1. KHÁI NIỆM
-- 2. NGUYÊN NHÂN VÀ CƠ CHẾ SINH BỆNH
-- 3. CHẨN ĐOÁN XÁC ĐỊNH
-- 3.1. Tính chất
+- Xuân ôn là một dạng **phục khí ôn bệnh**, thường phát mùa xuân hoặc giao thời đông-xuân/xuân-hạ.
+- Cơ chế lõi: tà nhiệt phục bên trong, gặp thời cơ thì phát; vì vậy bệnh **khởi đầu đã có lý nhiệt**.
+- Dấu hiệu sơ khởi: sốt cao, tâm phiền, miệng khát, tiểu đỏ, lưỡi đỏ, rêu vàng; có thể không có biểu chứng rõ.
+- Bệnh thường nặng, biến hóa nhanh, dễ vào khí, dinh, huyết, dễ động phong, động huyết và thương can thận âm về sau.
+- Phân biệt với Phong ôn: Phong ôn khởi ở phế vệ; Xuân ôn khởi sâu với lý nhiệt tích thịnh.
+- Trị pháp phải theo tầng phát: khí phần/dinh phần, dương minh tích nhiệt, nhiệt phiên khí dinh huyết, tâm bào, chân âm.
 
 </KeyPoints>
 
-## Tóm tắt nhanh
+## Một câu nắm bài
 
-Xuân ôn là do phong nhiệt bệnh tà nội phục mà phát, là một loại nhiệt bệnh cấp tính với đặc điểm khởi bệnh lập tức xuất hiện lý nhiệt chứng với sốt tâm phiền miệng khát, lưỡi đỏ, rêu vàng.
+<MedicalNote title="Câu lõi">
+Xuân ôn nguy hiểm vì bệnh nhân có thể vừa khởi bệnh đã ở **lý nhiệt sâu**, không đi qua phế vệ rõ như Phong ôn.
+</MedicalNote>
 
-Biểu hiện lâm sàng thường phát bệnh nhanh cấp, bệnh tình nặng, biến hóa nhanh, một bộ phận người bệnh sau khi cấp cứu thoát hiểm để lại di chứng. Bệnh thường phát vào mùa xuân hoặc giao thời đông xuân và xuân hạ.
-
-## Sơ đồ 80/20
+## Sơ đồ truyền biến
 
 ```mermaid
 flowchart TD
-  A["Vấn đề chính của chương"] --> B["Khái niệm / định nghĩa"]
-  A --> C["Cơ chế / lý luận"]
-  A --> D["Dấu hiệu cần nhận ra"]
-  D --> E["Ứng dụng vào case / lượng giá"]
+  A["Phục nhiệt"] --> B["Lý nhiệt sơ khởi"]
+  B --> C["Khí phần / dinh phần"]
+  C --> D["Dương minh tích nhiệt"]
+  C --> E["Khí dinh huyết lưỡng phiên"]
+  E --> F["Tâm bào / động huyết / động phong"]
+  F --> G["Can thận âm thương"]
 ```
 
-## Visual brief
+## Phân biệt nhanh
 
-<CompareTable title="Hình nên bổ sung khi biên tập">
+<CompareTable title="Xuân ôn và Phong ôn">
 
-| Loại hình | Khi dùng | Gợi ý tạo |
+| Tiêu chí | Xuân ôn | Phong ôn |
 | --- | --- | --- |
-| Sơ đồ Mermaid | Luồng cơ chế, phân loại, thuật toán | Dùng trực tiếp trong MDX. |
-| SVG tự vẽ | Bảng phân tầng, timeline, bản đồ khái niệm cần kiểm soát chính xác | Tạo file SVG trong `public/assets/<sách>/` rồi nhúng. |
-| Ảnh/illustration sinh bởi Codex | Cần minh họa sinh động, không cần độ chính xác giải phẫu tuyệt đối | Sinh ảnh rồi đặt vào `public/assets/<sách>/`, ghi chú là hình minh họa. |
-| Hình y khoa từ nguồn | X-quang, mô bệnh học, biểu đồ nghiên cứu | Chỉ dùng khi có quyền/nguồn rõ; ưu tiên trích dẫn. |
+| Kiểu phát | Phục tà | Tân cảm |
+| Vị trí đầu | Lý, khí/dinh | Phế vệ |
+| Khởi bệnh | Sốt cao, phiền khát, lưỡi đỏ | Sốt, ho, hơi ố phong, khát nhẹ |
+| Mức nặng | Thường nặng, biến nhanh | Có thể nhẹ nếu giải sớm |
+| Hậu kỳ | Dễ can thận âm thương | Thường phế vị âm thương |
 
 </CompareTable>
 
-## Bản đồ chương
+## Bẫy dễ nhầm
 
-<CompareTable title="Cấu trúc chương">
-
-| Cấp | Mục | Cần rút theo 80/20 |
-| --- | --- | --- |
-| # | XUÂN ÔN | Cần rút ý 80/20 |
-| ## | 1. KHÁI NIỆM | Cần rút ý 80/20 |
-| ## | 2. NGUYÊN NHÂN VÀ CƠ CHẾ SINH BỆNH | Cần rút ý 80/20 |
-| ## | 3. CHẨN ĐOÁN XÁC ĐỊNH | Cần rút ý 80/20 |
-| ### | 3.1. Tính chất | Cần rút ý 80/20 |
-| ### | 3.2. Bệnh sơ khởi đã xuất hiện chứng lý nhiệt tích thịnh như: | Cần rút ý 80/20 |
-| ### | 3.3. Căn cứ vào đặc điểm phát bệnh, biểu hiện lâm sàng, cảm tà nặng nhẹ và mức độ âm tĩnh khuỷu tổn của người bệnh có thể phân thành | Cần rút ý 80/20 |
-| ### | 3.4. Lâm sàng | Cần rút ý 80/20 |
-| ## | 4. CHẨN ĐOÁN PHÂN BIỆT | Cần rút ý 80/20 |
-| ### | 4.1. Phong ôn | Cần rút ý 80/20 |
-
-</CompareTable>
-
-<ClinicalPearl>
-
-- Khi biên tập, hãy viết lại phần này sao cho người học nắm được lõi chương trong 3-5 phút trước khi đọc bản hiểu sâu.
-
-</ClinicalPearl>
+<RedFlags>
+- Xuân ôn không phải “phong ôn mùa xuân”; điểm mấu chốt là phục tà phát từ lý.
+- Nếu dùng phát hãn mạnh vì thấy có chút biểu chứng, có thể làm âm tân tổn thêm.
+- Lý nhiệt sơ khởi kèm thần chí/ban chẩn là dấu hiệu vào sâu, không chờ bệnh “diễn tiến đủ tầng”.
+</RedFlags>
 
 ## Tự kiểm
 
 <SelfCheck>
-
-1. 20% ý nào giúp hiểu phần lớn chương này?
-2. Điểm nào dễ nhầm nhất khi áp dụng vào case?
-3. Nếu phải vẽ một sơ đồ duy nhất cho chương này, sơ đồ đó nên thể hiện quan hệ nào?
-
+1. Vì sao Xuân ôn dễ nặng hơn Phong ôn?
+2. Dấu hiệu nào chứng minh bệnh khởi từ lý?
+3. Tại sao hậu kỳ Xuân ôn hay nói đến can thận âm thương?
 </SelfCheck>
 
 <SourceNote>
-
 - Nguồn: `Raw/on_benh_dai_cuong/02_benh-lam-sang/xuan-on_001.md`
-- Gợi ý template: `deep-explanation`
-
 </SourceNote>

@@ -1,6 +1,6 @@
 ---
-title: "Hiểu sâu · XUÂN ÔN"
-description: "Bản hiểu sâu từ chương XUÂN ÔN."
+title: "Cơ chế · XUÂN ÔN"
+description: "Bản giải thích cơ chế bằng sơ đồ, workflow và cầu nối lâm sàng từ chương XUÂN ÔN."
 type: "deep-explanation"
 category: "topics"
 diataxis: "explanation"
@@ -9,6 +9,7 @@ source: "Raw"
 sourceDetail: "Raw/on_benh_dai_cuong/02_benh-lam-sang/xuan-on_001.md"
 status: "draft"
 generatedBy: "materialize-ingest"
+explanationStyle: "mechanism-map"
 sidebar:
   order: 18
 ---
@@ -16,50 +17,93 @@ sidebar:
 import KeyPoints from '~/components/KeyPoints.astro';
 import CompareTable from '~/components/CompareTable.astro';
 import ClinicalPearl from '~/components/ClinicalPearl.astro';
+import MedicalNote from '~/components/MedicalNote.astro';
+import RedFlags from '~/components/RedFlags.astro';
+import SelfCheck from '~/components/SelfCheck.astro';
 import SourceNote from '~/components/SourceNote.astro';
 
-## Câu hỏi sâu của chương
+## Câu hỏi cơ chế
 
-<KeyPoints>
+<MedicalNote title="Đọc trang này để trả lời">
+Vì sao **XUÂN ÔN** xảy ra, đi theo chuỗi nào, tạo dấu hiệu gì, và điểm rẽ nào làm đổi hướng chẩn đoán hoặc xử trí?
+</MedicalNote>
 
-- Vì sao chương này quan trọng trong Ôn bệnh học?
-- Cơ chế / lý luận nào là trục chính?
-- Điểm nào cần liên hệ với chẩn đoán hoặc điều trị?
+## Bản đồ cơ chế 1 trang
+
+<KeyPoints title="Nút cần nối bằng nhân quả">
+
+- **XUÂN ÔN:** Xuân ôn là do phong nhiệt bệnh tà nội phục mà phát, là một loại nhiệt bệnh cấp tính với đặc điểm khởi bệnh lập tức xuất hiện lý nhiệt chứng với sốt tâm phiền miệng khát, lưỡi đỏ, rêu vàng. Đây là trục đọc ban đầu, cần được nối tiếp bằng các nút cơ chế phía dưới. Dùng làm trục chính để đọc phần còn lại của bài.
+- **KHÁI NIỆM:** Định nghĩa phải được chuyển thành mô hình: điều kiện nào tạo bệnh, giới hạn khái niệm ở đâu, khác gì với khái niệm gần nó. Giúp mở bài bằng khung tư duy, không sa vào định nghĩa rỗng.
+- **NGUYÊN NHÂN VÀ CƠ CHẾ SINH BỆNH:** Xác định tác nhân hoặc điều kiện khởi phát, rồi hỏi tác nhân đó đi vào cơ thể theo đường nào và đánh vào hệ nào trước. Giúp suy tà, phân biệt tân cảm với phục tà, và chọn hướng thấu tà hay thanh lý nhiệt.
+- **CHẨN ĐOÁN XÁC ĐỊNH:** Mỗi dấu hiệu phải được xem như bằng chứng của một cơ chế, không chỉ là tiêu chí liệt kê. Giúp tránh nhầm bệnh danh giống nhau nhưng cơ chế khác nhau.
+- **Tính chất:** Đặt mục này vào chuỗi cơ chế của bài: nó là nguyên nhân, tầng trung gian, biểu hiện, biến chứng hay hướng xử trí? Dùng để hoàn thiện bản đồ cơ chế của chương.
 
 </KeyPoints>
 
-## Nền văn bản
+## Workflow diễn tiến
 
-Xuân ôn là do phong nhiệt bệnh tà nội phục mà phát, là một loại nhiệt bệnh cấp tính với đặc điểm khởi bệnh lập tức xuất hiện lý nhiệt chứng với sốt tâm phiền miệng khát, lưỡi đỏ, rêu vàng.
+```mermaid
+flowchart TD
+  A["XUÂN ÔN"] --> B["KHÁI NIỆM"]
+  B --> C["NGUYÊN NHÂN VÀ CƠ CHẾ SINH BỆNH"]
+  C --> D{"CHẨN ĐOÁN XÁC ĐỊNH"}
+  D -->|còn nông / còn thuận| E["Nhận diện sớm"]
+  D -->|vào sâu / chuyển nặng| F["Theo dõi biến chứng"]
+  E --> G["Tính chất"]
+  F --> G
+```
 
-Biểu hiện lâm sàng thường phát bệnh nhanh cấp, bệnh tình nặng, biến hóa nhanh, một bộ phận người bệnh sau khi cấp cứu thoát hiểm để lại di chứng. Bệnh thường phát vào mùa xuân hoặc giao thời đông xuân và xuân hạ.
+## Cầu nối sách vở → lâm sàng
 
-<CompareTable title="Các ý cần đào sâu">
+<CompareTable title="Từ cơ chế đến quyết định">
 
-| Mục | Cơ chế / lý luận | Liên hệ lâm sàng |
-| --- | --- | --- |
-| XUÂN ÔN | Cần giải thích cơ chế / lý luận | Cần liên hệ lâm sàng |
-| 1. KHÁI NIỆM | Cần giải thích cơ chế / lý luận | Cần liên hệ lâm sàng |
-| 2. NGUYÊN NHÂN VÀ CƠ CHẾ SINH BỆNH | Cần giải thích cơ chế / lý luận | Cần liên hệ lâm sàng |
-| 3. CHẨN ĐOÁN XÁC ĐỊNH | Cần giải thích cơ chế / lý luận | Cần liên hệ lâm sàng |
-| 3.1. Tính chất | Cần giải thích cơ chế / lý luận | Cần liên hệ lâm sàng |
-| 3.2. Bệnh sơ khởi đã xuất hiện chứng lý nhiệt tích thịnh như: | Cần giải thích cơ chế / lý luận | Cần liên hệ lâm sàng |
-| 3.3. Căn cứ vào đặc điểm phát bệnh, biểu hiện lâm sàng, cảm tà nặng nhẹ và mức độ âm tĩnh khuỷu tổn của người bệnh có thể phân thành | Cần giải thích cơ chế / lý luận | Cần liên hệ lâm sàng |
-| 3.4. Lâm sàng | Cần giải thích cơ chế / lý luận | Cần liên hệ lâm sàng |
-| 4. CHẨN ĐOÁN PHÂN BIỆT | Cần giải thích cơ chế / lý luận | Cần liên hệ lâm sàng |
-| 4.1. Phong ôn | Cần giải thích cơ chế / lý luận | Cần liên hệ lâm sàng |
+| Nút cơ chế | Giải thích ngắn | Dấu hiệu kéo theo | Ý nghĩa chẩn đoán / xử trí |
+| --- | --- | --- | --- |
+| XUÂN ÔN | Xuân ôn là do phong nhiệt bệnh tà nội phục mà phát, là một loại nhiệt bệnh cấp tính với đặc điểm khởi bệnh lập tức xuất hiện lý nhiệt chứng với sốt tâm phiền miệng khát, lưỡi đỏ, rêu vàng. Đây là trục đọc ban đầu, cần được nối tiếp bằng các nút cơ chế phía dưới. | Tìm trong nguyên văn các dấu hiệu đi kèm và nối chúng với nút cơ chế. | Dùng làm trục chính để đọc phần còn lại của bài. |
+| KHÁI NIỆM | Định nghĩa phải được chuyển thành mô hình: điều kiện nào tạo bệnh, giới hạn khái niệm ở đâu, khác gì với khái niệm gần nó. | Từ khóa định nghĩa, điểm phân biệt và phạm vi áp dụng. | Giúp mở bài bằng khung tư duy, không sa vào định nghĩa rỗng. |
+| NGUYÊN NHÂN VÀ CƠ CHẾ SINH BỆNH | Xác định tác nhân hoặc điều kiện khởi phát, rồi hỏi tác nhân đó đi vào cơ thể theo đường nào và đánh vào hệ nào trước. | Dấu hiệu sớm, mùa phát, đường vào, vị trí bị phạm đầu tiên. | Giúp suy tà, phân biệt tân cảm với phục tà, và chọn hướng thấu tà hay thanh lý nhiệt. |
+| CHẨN ĐOÁN XÁC ĐỊNH | Mỗi dấu hiệu phải được xem như bằng chứng của một cơ chế, không chỉ là tiêu chí liệt kê. | Dấu hiệu then chốt, dấu hiệu loại trừ, dấu hiệu báo bệnh đã đổi tầng. | Giúp tránh nhầm bệnh danh giống nhau nhưng cơ chế khác nhau. |
+| Tính chất | Đặt mục này vào chuỗi cơ chế của bài: nó là nguyên nhân, tầng trung gian, biểu hiện, biến chứng hay hướng xử trí? | Tìm trong nguyên văn các dấu hiệu đi kèm và nối chúng với nút cơ chế. | Dùng để hoàn thiện bản đồ cơ chế của chương. |
+| Bệnh sơ khởi đã xuất hiện chứng lý nhiệt tích thịnh như: | Đặt mục này vào chuỗi cơ chế của bài: nó là nguyên nhân, tầng trung gian, biểu hiện, biến chứng hay hướng xử trí? | Tìm trong nguyên văn các dấu hiệu đi kèm và nối chúng với nút cơ chế. | Dùng để hoàn thiện bản đồ cơ chế của chương. |
 
 </CompareTable>
 
+## Worked example
+
+1. Bắt đầu từ **XUÂN ÔN**: hỏi đây là nguyên nhân, điều kiện nền hay định nghĩa khung.
+2. Nối sang **KHÁI NIỆM**: viết thành câu “vì X nên Y”, tránh chỉ chép lại heading.
+3. Kiểm bằng **NGUYÊN NHÂN VÀ CƠ CHẾ SINH BỆNH**: dấu hiệu nào phải xuất hiện nếu cơ chế này đúng?
+4. Kết luận bằng quyết định: cần phân biệt với gì, theo dõi điểm rẽ nào, và nguyên tắc xử trí đi ngược lại cơ chế nào.
+
+<RedFlags>
+
+- Đừng học trang này như một danh sách thuật ngữ. Hãy đọc theo mũi tên: nguyên nhân → cơ chế → dấu hiệu → quyết định.
+- Nếu một dấu hiệu không nối được với cơ chế, quay lại nguyên thủy để kiểm tra văn cảnh trước khi ghi nhớ.
+- Bản tự sinh này là khung cơ chế; khi biên tập, cần thay các nhãn khái quát bằng sơ đồ chuyên biệt hơn cho từng bệnh/chứng.
+
+</RedFlags>
+
 <ClinicalPearl>
 
-- Trang này được sinh tự động từ heading; cần biên tập lại để thành bài hiểu sâu hoàn chỉnh.
+- Cơ chế chỉ có giá trị học tập khi nó dự đoán được dấu hiệu tiếp theo hoặc giải thích được vì sao phải chọn pháp trị này thay vì pháp trị khác.
 
 </ClinicalPearl>
+
+## Tự kiểm
+
+<SelfCheck>
+
+1. Cơ chế trung tâm của bài này là gì?
+2. Nút nào là điểm rẽ khiến bệnh nhẹ chuyển nặng hoặc từ biểu vào lý?
+3. Dấu hiệu nào giúp chứng minh cơ chế đang diễn ra?
+4. Nếu phải vẽ lại trong 60 giây, bạn sẽ giữ lại những mũi tên nào?
+
+</SelfCheck>
 
 <SourceNote>
 
 - Nguồn: `Raw/on_benh_dai_cuong/02_benh-lam-sang/xuan-on_001.md`
 - Gợi ý template: `deep-explanation`
+- Kiểu trình bày: mechanism map + workflow + worked example.
 
 </SourceNote>

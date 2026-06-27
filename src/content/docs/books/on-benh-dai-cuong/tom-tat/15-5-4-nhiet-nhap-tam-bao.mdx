@@ -1,14 +1,14 @@
 ---
-title: "Tóm tắt · 5.4. Nhiệt nhập tâm bào"
-description: "Bản tóm tắt 80/20 của chương 5.4. Nhiệt nhập tâm bào."
+title: "Phong ôn: dương minh, tâm bào và hồi phục"
+description: "Tóm tắt phần Phong ôn nặng: dương minh nhiệt, nhiệt nhập tâm bào, tâm dương hư suy và dư tà thương âm."
 type: "chapter-summary"
 category: "books"
 diataxis: "tutorial"
-medicineSystem: "modern"
+medicineSystem: "tcm"
 source: "Raw"
 sourceDetail: "Raw/on_benh_dai_cuong/02_benh-lam-sang/phong-on_002.md"
-status: "draft"
-generatedBy: "materialize-ingest"
+status: "ready"
+generatedBy: "codex-reviewed"
 summaryRule: "80-20"
 sidebar:
   order: 15
@@ -16,88 +16,61 @@ sidebar:
 
 import KeyPoints from '~/components/KeyPoints.astro';
 import CompareTable from '~/components/CompareTable.astro';
-import ClinicalPearl from '~/components/ClinicalPearl.astro';
+import MedicalNote from '~/components/MedicalNote.astro';
+import RedFlags from '~/components/RedFlags.astro';
 import SelfCheck from '~/components/SelfCheck.astro';
 import SourceNote from '~/components/SourceNote.astro';
 
-## Nắm nhanh theo 80/20
+## 20% cốt lõi
 
-<KeyPoints title="20% cốt lõi cần nắm">
+<KeyPoints title="Phần này là bản đồ biến nặng của Phong ôn">
 
-- 5.4. Nhiệt nhập tâm bào
-- 5.5. Điều trị triệu chứng
-- 5.5.1. Ho
-- 6. DỰ PHÒNG VÀ ĐIỀU HỘ
-- 6.1. Tăng cường chính khí
+- Khi tà vào **dương minh**, trọng điểm là nhiệt tích, phủ thực và thương tân: sốt cao, khát, táo kết, rêu vàng khô.
+- **Nhiệt kết trường phủ** cần nghĩ công hạ tiết nhiệt khi có táo kết, bụng đầy đau, rêu vàng khô.
+- **Vị nhiệt âm thương** là giai đoạn nhiệt lui chưa hết nhưng tân dịch đã tổn: miệng khô, khát, lưỡi đỏ ít rêu.
+- **Nhiệt nhập tâm bào** là bước ngoặt nguy hiểm: sốt cao, thần hôn, nói sảng, lưỡi đỏ thẫm.
+- Nếu tâm dương hư suy hoặc nội bế ngoại thoát, phải nghĩ cứu thoát, không còn là thanh nhiệt đơn thuần.
+- Giai đoạn hồi phục hay gặp dư tà chưa sạch, phế vị âm thương; trị phải dưỡng âm, thanh dư tà, không công phạt quá mức.
 
 </KeyPoints>
 
-## Tóm tắt nhanh
+## Một câu nắm bài
 
-- Nhiệt độc tích thịnh gia: Kim ngân hoa, Liên kiều, Bân lam căn, Đại thanh diệp... để thanh nhiệt giải độc.
+<MedicalNote title="Câu lõi">
+Phong ôn nặng đi theo hai hướng phải nhận ra sớm: **dương minh nhiệt kết** và **nhiệt nhập tâm bào**.
+</MedicalNote>
 
-- Nếu thấy phế nhiệt ứng thịnh mà ho suyễn gia: Hạnh nhân, Qua lâu bì, Ngân hoa, Ngự tinh thảo để thanh phế hóa đàm.
+## Bảng giai đoạn nặng
 
-## Sơ đồ 80/20
+<CompareTable title="Dấu hiệu quyết định hướng trị">
 
-```mermaid
-flowchart TD
-  A["Vấn đề chính của chương"] --> B["Khái niệm / định nghĩa"]
-  A --> C["Cơ chế / lý luận"]
-  A --> D["Dấu hiệu cần nhận ra"]
-  D --> E["Ứng dụng vào case / lượng giá"]
-```
-
-## Visual brief
-
-<CompareTable title="Hình nên bổ sung khi biên tập">
-
-| Loại hình | Khi dùng | Gợi ý tạo |
+| Bệnh cảnh | Dấu hiệu lõi | Pháp trị |
 | --- | --- | --- |
-| Sơ đồ Mermaid | Luồng cơ chế, phân loại, thuật toán | Dùng trực tiếp trong MDX. |
-| SVG tự vẽ | Bảng phân tầng, timeline, bản đồ khái niệm cần kiểm soát chính xác | Tạo file SVG trong `public/assets/<sách>/` rồi nhúng. |
-| Ảnh/illustration sinh bởi Codex | Cần minh họa sinh động, không cần độ chính xác giải phẫu tuyệt đối | Sinh ảnh rồi đặt vào `public/assets/<sách>/`, ghi chú là hình minh họa. |
-| Hình y khoa từ nguồn | X-quang, mô bệnh học, biểu đồ nghiên cứu | Chỉ dùng khi có quyền/nguồn rõ; ưu tiên trích dẫn. |
+| Nhiệt tích dương minh | Sốt cao, khát, mồ hôi, rêu vàng | Thanh nhiệt bảo tân |
+| Nhiệt kết trường phủ | Táo bón, bụng đầy đau, rêu vàng khô | Công hạ tiết nhiệt |
+| Vị nhiệt âm thương | Miệng khô, lưỡi đỏ ít rêu, hư phiền | Tiết nhiệt cứu tân |
+| Nhiệt hãm tâm bào | Thần hôn, nói sảng, lưỡi đỏ thẫm | Thanh tâm, khai khiếu |
+| Tâm dương hư suy | Mạch vi, mồ hôi lạnh, chi lạnh | Ích khí hồi dương, cố thoát |
+| Dư tà thương âm | Ho khan, miệng khô, mệt | Tư dưỡng phế vị, thanh dư tà |
 
 </CompareTable>
 
-## Bản đồ chương
+## Red flags
 
-<CompareTable title="Cấu trúc chương">
-
-| Cấp | Mục | Cần rút theo 80/20 |
-| --- | --- | --- |
-| #### | 5.4. Nhiệt nhập tâm bào | Cần rút ý 80/20 |
-| #### | 5.5. Điều trị triệu chứng | Cần rút ý 80/20 |
-| #### | 5.5.1. Ho | Cần rút ý 80/20 |
-| ### | 6. DỰ PHÒNG VÀ ĐIỀU HỘ | Cần rút ý 80/20 |
-| ### | 6.1. Tăng cường chính khí | Cần rút ý 80/20 |
-| ### | 6.2. Thuốc dự phòng | Cần rút ý 80/20 |
-| ### | 6.3. Hạn chế tụ tập đông trong lúc dịch | Cần rút ý 80/20 |
-| ### | 6.4. Môi trường | Cần rút ý 80/20 |
-| ### | 6.5. Phát hiện sớm biến chứng | Cần rút ý 80/20 |
-
-</CompareTable>
-
-<ClinicalPearl>
-
-- Khi biên tập, hãy viết lại phần này sao cho người học nắm được lõi chương trong 3-5 phút trước khi đọc bản hiểu sâu.
-
-</ClinicalPearl>
+<RedFlags>
+- Thần hôn trong Phong ôn là dấu hiệu nhiệt nhập tâm bào cho đến khi chứng minh ngược lại.
+- Táo bón trong sốt cao không chỉ là triệu chứng phụ; nó có thể là phủ thực cần công hạ đúng lúc.
+- Giai đoạn sau bệnh, dùng thuốc ôn táo hoặc công phạt mạnh dễ làm âm tân tổn thêm.
+</RedFlags>
 
 ## Tự kiểm
 
 <SelfCheck>
-
-1. 20% ý nào giúp hiểu phần lớn chương này?
-2. Điểm nào dễ nhầm nhất khi áp dụng vào case?
-3. Nếu phải vẽ một sơ đồ duy nhất cho chương này, sơ đồ đó nên thể hiện quan hệ nào?
-
+1. Nhiệt kết trường phủ khác vị nhiệt âm thương thế nào?
+2. Dấu hiệu nào khiến bạn nghĩ nhiệt đã nhập tâm bào?
+3. Vì sao sau Phong ôn cần chú ý phế vị âm thương?
 </SelfCheck>
 
 <SourceNote>
-
 - Nguồn: `Raw/on_benh_dai_cuong/02_benh-lam-sang/phong-on_002.md`
-- Gợi ý template: `symptom-approach`
-
 </SourceNote>

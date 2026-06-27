@@ -1,14 +1,14 @@
 ---
-title: "Tóm tắt · 2.4. Biện những chứng thường gặp"
-description: "Bản tóm tắt 80/20 của chương 2.4. Biện những chứng thường gặp."
+title: "Biện các chứng thường gặp"
+description: "Đọc nhanh ban chẩn, bạch bối, phát nhiệt, mồ hôi, thần chí và kinh trong Ôn bệnh."
 type: "chapter-summary"
 category: "books"
 diataxis: "tutorial"
-medicineSystem: "shared"
+medicineSystem: "tcm"
 source: "Raw"
 sourceDetail: "Raw/on_benh_dai_cuong/01_ly-thuyet/bai-04-chan-doan_002.md"
-status: "draft"
-generatedBy: "materialize-ingest"
+status: "ready"
+generatedBy: "codex-reviewed"
 summaryRule: "80-20"
 sidebar:
   order: 9
@@ -16,78 +16,61 @@ sidebar:
 
 import KeyPoints from '~/components/KeyPoints.astro';
 import CompareTable from '~/components/CompareTable.astro';
-import ClinicalPearl from '~/components/ClinicalPearl.astro';
+import MedicalNote from '~/components/MedicalNote.astro';
+import RedFlags from '~/components/RedFlags.astro';
 import SelfCheck from '~/components/SelfCheck.astro';
 import SourceNote from '~/components/SourceNote.astro';
 
-## Nắm nhanh theo 80/20
+## 20% cốt lõi
 
-<KeyPoints title="20% cốt lõi cần nắm">
+<KeyPoints title="Dấu hiệu thường gặp nhưng giá trị cao">
 
-- 2.4. Biện những chứng thường gặp
-- 2.4.5. Kinh
+- **Ban chẩn** cho biết nhiệt độc và huyết phận: cần đọc hình thái, sắc, phân bố, thấu hay không thấu.
+- **Bạch bối** thường gợi thấp nhiệt uất ở vệ khí; thấu phát tốt có thể là dấu hiệu tà được giải.
+- **Phát nhiệt** trong Ôn bệnh không chỉ là sốt; kiểu sốt giúp phân tầng vệ, khí, dinh, huyết và thấp/nhiệt.
+- **Mồ hôi** phản ánh vệ khí, tân dịch và mức bế uất: không mồ hôi, mồ hôi nhiều, mồ hôi lạnh đều khác ý nghĩa.
+- **Thần chí dị thường** là dấu hiệu nhiệt nhiễu tâm thần, đàm thấp bế khiếu hoặc nhiệt nhập tâm bào.
+- **Kinh/co giật** chia thực chứng động phong do nhiệt cực và hư chứng do âm huyết hao làm cân mạch thất dưỡng.
 
 </KeyPoints>
 
-## Tóm tắt nhanh
+## Một câu nắm bài
 
-Ban và chân khác nhau về hình thái và nguyên nhân phát sinh nên ý nghĩa chẩn đoán cũng khác nhau, thường thì ban và chân cùng xuất hiện một lúc, do đó tiền nhân thường gọi chung.
+<MedicalNote title="Câu lõi">
+Các chứng thường gặp là “đèn báo tầng bệnh”: ban chẩn báo huyết/độc, bạch bối báo thấp nhiệt, thần chí và kinh báo bệnh đã vào vùng nguy hiểm.
+</MedicalNote>
 
-Ban thường xuất hiện từng mảng dưới da, bằng phẳng sờ không có cảm giác cộm tay, ấn vào không đổi màu.
+## Bảng đọc triệu chứng
 
-## Sơ đồ 80/20
+<CompareTable title="Triệu chứng -> bệnh cơ cần nghĩ">
 
-```mermaid
-flowchart TD
-  A["Vấn đề chính của chương"] --> B["Khái niệm / định nghĩa"]
-  A --> C["Cơ chế / lý luận"]
-  A --> D["Dấu hiệu cần nhận ra"]
-  D --> E["Ứng dụng vào case / lượng giá"]
-```
-
-## Visual brief
-
-<CompareTable title="Hình nên bổ sung khi biên tập">
-
-| Loại hình | Khi dùng | Gợi ý tạo |
+| Triệu chứng | Cần hỏi/nhìn thêm | Bệnh cơ gợi ý |
 | --- | --- | --- |
-| Sơ đồ Mermaid | Luồng cơ chế, phân loại, thuật toán | Dùng trực tiếp trong MDX. |
-| SVG tự vẽ | Bảng phân tầng, timeline, bản đồ khái niệm cần kiểm soát chính xác | Tạo file SVG trong `public/assets/<sách>/` rồi nhúng. |
-| Ảnh/illustration sinh bởi Codex | Cần minh họa sinh động, không cần độ chính xác giải phẫu tuyệt đối | Sinh ảnh rồi đặt vào `public/assets/<sách>/`, ghi chú là hình minh họa. |
-| Hình y khoa từ nguồn | X-quang, mô bệnh học, biểu đồ nghiên cứu | Chỉ dùng khi có quyền/nguồn rõ; ưu tiên trích dẫn. |
+| Ban chẩn | Sắc đỏ/tím, thưa/dày, có thấu không | Nhiệt độc, huyết nhiệt, tà thấu hoặc nội hãm |
+| Bạch bối | Hạt trắng, phân bố, có vỡ thoát không | Thấp nhiệt uất ở vệ khí |
+| Sốt cao liên tục | Khát, mồ hôi, rêu vàng | Khí phần nhiệt thịnh |
+| Sốt đêm nặng | Tâm phiền, lưỡi đỏ thẫm | Nhiệt vào dinh |
+| Thần hôn, nói sảng | Đàm, thấp, sốt cao, lưỡi | Tâm bào bị nhiễu/bế |
+| Co giật | Sốt cao hay âm hư? | Nhiệt cực sinh phong hoặc âm hư phong động |
 
 </CompareTable>
 
-## Bản đồ chương
+## Bẫy dễ nhầm
 
-<CompareTable title="Cấu trúc chương">
-
-| Cấp | Mục | Cần rút theo 80/20 |
-| --- | --- | --- |
-| #### | 2.4. Biện những chứng thường gặp | Cần rút ý 80/20 |
-| #### | 2.4.5. Kinh | Cần rút ý 80/20 |
-
-</CompareTable>
-
-<ClinicalPearl>
-
-- Khi biên tập, hãy viết lại phần này sao cho người học nắm được lõi chương trong 3-5 phút trước khi đọc bản hiểu sâu.
-
-</ClinicalPearl>
+<RedFlags>
+- Ban thấu ra không luôn là tốt; ban tím tối, dày đặc, kèm thần hôn hoặc mạch suy là rất nặng.
+- Mồ hôi nhiều trong thử nhiệt có thể là hao khí tân, không phải “tà đã giải”.
+- Co giật cuối bệnh có thể do hư phong, không nên chỉ nghĩ nhiệt cực thực chứng.
+</RedFlags>
 
 ## Tự kiểm
 
 <SelfCheck>
-
-1. 20% ý nào giúp hiểu phần lớn chương này?
-2. Điểm nào dễ nhầm nhất khi áp dụng vào case?
-3. Nếu phải vẽ một sơ đồ duy nhất cho chương này, sơ đồ đó nên thể hiện quan hệ nào?
-
+1. Bạch bối có ý nghĩa khác ban chẩn như thế nào?
+2. Sốt đêm nặng hơn ngày gợi tầng bệnh nào?
+3. Làm sao phân biệt thực chứng động phong và hư chứng động phong?
 </SelfCheck>
 
 <SourceNote>
-
 - Nguồn: `Raw/on_benh_dai_cuong/01_ly-thuyet/bai-04-chan-doan_002.md`
-- Gợi ý template: `deep-explanation`
-
 </SourceNote>

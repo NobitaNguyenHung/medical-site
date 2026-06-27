@@ -1,14 +1,14 @@
 ---
-title: "Tóm tắt · 2.4.6. Quyết thoát"
-description: "Bản tóm tắt 80/20 của chương 2.4.6. Quyết thoát."
+title: "Quyết thoát"
+description: "Nắm nhanh quyết chứng và thoát chứng trong Ôn bệnh: nhiệt quyết, hàn quyết, chính khí suy và dấu hiệu nguy cấp."
 type: "chapter-summary"
 category: "books"
 diataxis: "tutorial"
-medicineSystem: "modern"
+medicineSystem: "tcm"
 source: "Raw"
 sourceDetail: "Raw/on_benh_dai_cuong/01_ly-thuyet/bai-04-chan-doan_003.md"
-status: "draft"
-generatedBy: "materialize-ingest"
+status: "ready"
+generatedBy: "codex-reviewed"
 summaryRule: "80-20"
 sidebar:
   order: 10
@@ -16,76 +16,59 @@ sidebar:
 
 import KeyPoints from '~/components/KeyPoints.astro';
 import CompareTable from '~/components/CompareTable.astro';
-import ClinicalPearl from '~/components/ClinicalPearl.astro';
+import MedicalNote from '~/components/MedicalNote.astro';
+import RedFlags from '~/components/RedFlags.astro';
 import SelfCheck from '~/components/SelfCheck.astro';
 import SourceNote from '~/components/SourceNote.astro';
 
-## Nắm nhanh theo 80/20
+## 20% cốt lõi
 
-<KeyPoints title="20% cốt lõi cần nắm">
+<KeyPoints title="Nhận ra tình huống nguy cấp">
 
-- 2.4.6. Quyết thoát
+- **Quyết** là tay chân lạnh do âm dương khí không thuận tiếp; trong Ôn bệnh thường phải phân biệt nhiệt quyết và hàn quyết.
+- **Thoát** là nguyên khí không giữ được, âm dương khí huyết tổn hại nặng, có thể xuất hiện mồ hôi lạnh, thở yếu, mạch vi tế.
+- **Nhiệt quyết**: bên ngoài chi lạnh nhưng bên trong nhiệt thịnh; thường kèm sốt cao, khát, bứt rứt, tiểu đỏ, lưỡi đỏ.
+- **Hàn quyết**: dương khí suy, lạnh thật; thường kèm sắc mặt trắng, sợ lạnh, tiêu lỏng, mạch trầm vi.
+- Trong Ôn bệnh, quyết thoát thường báo bệnh đã rất nặng: nhiệt độc, âm dịch hao, khí suy hoặc chính khí sắp không giữ được.
 
 </KeyPoints>
 
-## Tóm tắt nhanh
+## Một câu nắm bài
 
-Nguyên nhân trường hợp này trong “Thương hàn luận” nói: “Phàm quyết giả, âm dương khí bất tương thuận tiếp, tiện vì quyết”.
+<MedicalNote title="Câu lõi">
+Quyết thoát là lúc phải hỏi ngay: lạnh tay chân này là **nhiệt bế bên trong** hay **dương khí suy thật**, vì hướng xử trí trái nhau.
+</MedicalNote>
 
-Thoát chứng là chi sau khi âm dương khí huyết tổn hại nghiêm trọng, nguyên khí không thể nội thủ mà ngoại thoát.
+## Phân biệt nhanh
 
-## Sơ đồ 80/20
+<CompareTable title="Nhiệt quyết và hàn quyết">
 
-```mermaid
-flowchart TD
-  A["Vấn đề chính của chương"] --> B["Khái niệm / định nghĩa"]
-  A --> C["Cơ chế / lý luận"]
-  A --> D["Dấu hiệu cần nhận ra"]
-  D --> E["Ứng dụng vào case / lượng giá"]
-```
-
-## Visual brief
-
-<CompareTable title="Hình nên bổ sung khi biên tập">
-
-| Loại hình | Khi dùng | Gợi ý tạo |
+| Tiêu chí | Nhiệt quyết | Hàn quyết |
 | --- | --- | --- |
-| Sơ đồ Mermaid | Luồng cơ chế, phân loại, thuật toán | Dùng trực tiếp trong MDX. |
-| SVG tự vẽ | Bảng phân tầng, timeline, bản đồ khái niệm cần kiểm soát chính xác | Tạo file SVG trong `public/assets/<sách>/` rồi nhúng. |
-| Ảnh/illustration sinh bởi Codex | Cần minh họa sinh động, không cần độ chính xác giải phẫu tuyệt đối | Sinh ảnh rồi đặt vào `public/assets/<sách>/`, ghi chú là hình minh họa. |
-| Hình y khoa từ nguồn | X-quang, mô bệnh học, biểu đồ nghiên cứu | Chỉ dùng khi có quyền/nguồn rõ; ưu tiên trích dẫn. |
+| Bản chất | Nhiệt bế ở trong, dương không đạt ra ngoài | Dương khí suy, hàn thật |
+| Toàn thân | Sốt, phiền, khát, tiểu đỏ | Sợ lạnh, mệt lả, tiêu lỏng |
+| Lưỡi mạch | Lưỡi đỏ, rêu vàng/khô, mạch sác | Lưỡi nhợt, rêu trắng, mạch vi/trầm |
+| Ý nghĩa | Thực nhiệt nguy cấp | Chính hư dương thoát |
+| Hướng nghĩ | Thanh nhiệt, khai bế, cứu âm tùy chứng | Hồi dương, cứu thoát |
 
 </CompareTable>
 
-## Bản đồ chương
+## Red flags
 
-<CompareTable title="Cấu trúc chương">
-
-| Cấp | Mục | Cần rút theo 80/20 |
-| --- | --- | --- |
-| #### | 2.4.6. Quyết thoát | Cần rút ý 80/20 |
-
-</CompareTable>
-
-<ClinicalPearl>
-
-- Khi biên tập, hãy viết lại phần này sao cho người học nắm được lõi chương trong 3-5 phút trước khi đọc bản hiểu sâu.
-
-</ClinicalPearl>
+<RedFlags>
+- Tay chân lạnh trong sốt cao không được vội coi là hàn.
+- Mồ hôi lạnh, thở nhỏ yếu, mạch vi tế là dấu hiệu thoát, cần xử trí khẩn.
+- Quyết kèm thần hôn, co giật, ban tím là bệnh nặng, không còn là ngoại cảm thường.
+</RedFlags>
 
 ## Tự kiểm
 
 <SelfCheck>
-
-1. 20% ý nào giúp hiểu phần lớn chương này?
-2. Điểm nào dễ nhầm nhất khi áp dụng vào case?
-3. Nếu phải vẽ một sơ đồ duy nhất cho chương này, sơ đồ đó nên thể hiện quan hệ nào?
-
+1. Vì sao nhiệt quyết vẫn có tay chân lạnh?
+2. Dấu hiệu nào giúp phân biệt hàn quyết với nhiệt quyết nhanh nhất?
+3. Thoát chứng khác quyết chứng ở điểm nào?
 </SelfCheck>
 
 <SourceNote>
-
 - Nguồn: `Raw/on_benh_dai_cuong/01_ly-thuyet/bai-04-chan-doan_003.md`
-- Gợi ý template: `symptom-approach`
-
 </SourceNote>

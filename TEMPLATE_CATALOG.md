@@ -36,7 +36,7 @@ Luôn phân loại theo 4 tầng:
 | Mục lục môn học, kế hoạch chương, học bao lâu, thứ tự học | `learning-path` |
 | Tóm tắt chương, ý chính, bản đồ chương, học nhanh 80/20 | `chapter-summary` |
 | Tra cứu nhanh, bảng nhớ, tiêu chuẩn, link nhanh | `quick-reference` |
-| Hiểu sâu, cơ chế, lý luận, chú giải | `deep-explanation` |
+| Giải thích cơ chế, sinh bệnh học, vì sao có triệu chứng, diễn tiến nhân quả, workflow bệnh học | `deep-explanation` |
 | MCQ, câu hỏi trắc nghiệm, lượng giá | `assessment-mcq` |
 | Flashcard, ôn lặp lại | `flashcard-set` |
 | Case ngắn, câu hỏi tình huống | `case-question-set` |
@@ -136,7 +136,7 @@ Luôn phân loại theo 4 tầng:
 | `source-original` | `templates/shared/source-original.mdx` | Nguyên thủy / trích sách |
 | `chapter-summary` | `templates/shared/chapter-summary.mdx` | Bản tóm tắt chương theo 80/20, kèm sơ đồ/visual brief |
 | `quick-reference` | `templates/shared/quick-reference.mdx` | Bản tra cứu nhanh |
-| `deep-explanation` | `templates/shared/deep-explanation.mdx` | Bản hiểu sâu |
+| `deep-explanation` | `templates/shared/deep-explanation.mdx` | Bản đồ cơ chế + workflow + cầu nối lâm sàng |
 | `assessment-mcq` | `templates/shared/assessment-mcq.mdx` | Bộ câu hỏi MCQ |
 | `flashcard-set` | `templates/shared/flashcard-set.mdx` | Bộ flashcard |
 | `case-question-set` | `templates/shared/case-question-set.mdx` | Bộ câu hỏi case |

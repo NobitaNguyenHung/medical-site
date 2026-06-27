@@ -1,14 +1,14 @@
 ---
-title: "Tóm tắt · THỦ THẤP"
-description: "Bản tóm tắt 80/20 của chương THỦ THẤP."
+title: "Thử thấp"
+description: "Nắm lõi Thử thấp: thử nhiệt kèm thấp, bệnh dai dẳng ở tỳ vị/tam tiêu và các thể chính."
 type: "chapter-summary"
 category: "books"
 diataxis: "tutorial"
 medicineSystem: "tcm"
 source: "Raw"
 sourceDetail: "Raw/on_benh_dai_cuong/02_benh-lam-sang/thu-thap_001.md"
-status: "draft"
-generatedBy: "materialize-ingest"
+status: "ready"
+generatedBy: "codex-reviewed"
 summaryRule: "80-20"
 sidebar:
   order: 17
@@ -16,89 +16,61 @@ sidebar:
 
 import KeyPoints from '~/components/KeyPoints.astro';
 import CompareTable from '~/components/CompareTable.astro';
-import ClinicalPearl from '~/components/ClinicalPearl.astro';
+import MedicalNote from '~/components/MedicalNote.astro';
+import RedFlags from '~/components/RedFlags.astro';
 import SelfCheck from '~/components/SelfCheck.astro';
 import SourceNote from '~/components/SourceNote.astro';
 
-## Nắm nhanh theo 80/20
+## 20% cốt lõi
 
-<KeyPoints title="20% cốt lõi cần nắm">
+<KeyPoints title="Thử thấp = nóng + ẩm + bế">
 
-- THỦ THẤP
-- 1. KHÁI NIỆM
-- 2. NGUYÊN NHÂN VÀ CƠ CHẾ BỆNH
-- 3. CHẨN ĐOÁN XÁC ĐỊNH
-- 4. CHẨN ĐOÁN PHÂN BIỆT
+- Thử thấp là ngoại cảm nhiệt bệnh cấp tính do **thử nhiệt kèm thấp**, thường gặp mùa hè hoặc giao thời hè-thu.
+- Dấu hiệu lõi: sốt, phiền khát hoặc không khát rõ, nặng đầu mình, tức ngực, bụng đầy, nôn/tiêu lỏng, rêu nê, mạch nhu.
+- Bệnh cơ: thử nhiệt muốn bốc lên, thấp tà lại nặng dính và bế khí cơ, nên bệnh vừa nóng vừa nặng nề, dai dẳng.
+- Trọng điểm tạng phủ là **tỳ vị và tam tiêu**; thấp có thể làm thanh dương không thăng, khí cơ không thông.
+- Biện chứng chính: thử thấp tại vệ, tà cản vị trường, khốn trở trung tiêu, tràn lan tam tiêu, thương phế lạc, thương khí.
+- Pháp trị không chỉ thanh nhiệt; phải **thanh thử, hóa thấp, tuyên thông khí cơ**.
 
 </KeyPoints>
 
-## Tóm tắt nhanh
+## Một câu nắm bài
 
-Thủ thấp là do cảm thụ thủ thấp bệnh tà gây ra một dạng ngoại cảm nhiệt bệnh cấp tính với biểu hiện rõ nhất là thấp nhiệt chứng kèm thêm thấp tà uất trở chứng.
+<MedicalNote title="Câu lõi">
+Thử thấp khó ở chỗ không thể chỉ “thanh nhiệt”: nếu không hóa thấp và thông khí cơ, bệnh sẽ nặng nề, bứt rứt và dai dẳng.
+</MedicalNote>
 
-Trên lâm sàng ngoài những biểu hiện thấp nhiệt ra còn có hưng bỉ, thân thể nặng nề, rêu lưỡi nê, mạch nhu... Thủ thấp đa số phát trong mùa hè hoặc giao thời hè thu.
+## Bảng thể bệnh
 
-## Sơ đồ 80/20
+<CompareTable title="Nhìn triệu chứng để chọn pháp">
 
-```mermaid
-flowchart TD
-  A["Vấn đề chính của chương"] --> B["Khái niệm / định nghĩa"]
-  A --> C["Cơ chế / lý luận"]
-  A --> D["Dấu hiệu cần nhận ra"]
-  D --> E["Ứng dụng vào case / lượng giá"]
-```
-
-## Visual brief
-
-<CompareTable title="Hình nên bổ sung khi biên tập">
-
-| Loại hình | Khi dùng | Gợi ý tạo |
+| Thể | Dấu hiệu nổi bật | Pháp trị |
 | --- | --- | --- |
-| Sơ đồ Mermaid | Luồng cơ chế, phân loại, thuật toán | Dùng trực tiếp trong MDX. |
-| SVG tự vẽ | Bảng phân tầng, timeline, bản đồ khái niệm cần kiểm soát chính xác | Tạo file SVG trong `public/assets/<sách>/` rồi nhúng. |
-| Ảnh/illustration sinh bởi Codex | Cần minh họa sinh động, không cần độ chính xác giải phẫu tuyệt đối | Sinh ảnh rồi đặt vào `public/assets/<sách>/`, ghi chú là hình minh họa. |
-| Hình y khoa từ nguồn | X-quang, mô bệnh học, biểu đồ nghiên cứu | Chỉ dùng khi có quyền/nguồn rõ; ưu tiên trích dẫn. |
+| Thử thấp tại vệ | Sốt, hơi ố hàn, đầu mình nặng, rêu nê | Thanh thử hóa thấp, giải biểu |
+| Tà cản vị trường | Nôn, tiêu chảy, bụng đầy | Thanh hóa thấp nhiệt, điều vị trường |
+| Khốn trở trung tiêu | Tức ngực, đầy bụng, rêu nê dày | Thanh thử hóa thấp, tỉnh tỳ |
+| Tràn lan tam tiêu | Bệnh lan rộng, tiểu ít, thấp nhiệt toàn thân | Thanh nhiệt lợi thấp, tuyên thông tam tiêu |
+| Thương phế lạc | Ho, đàm, có thể lạc thương | Lương huyết, thanh thử bảo phế |
+| Thương khí | Mệt, khí suy sau thử nhiệt | Thanh thử hóa thấp, ích khí |
 
 </CompareTable>
 
-## Bản đồ chương
+## Bẫy dễ nhầm
 
-<CompareTable title="Cấu trúc chương">
-
-| Cấp | Mục | Cần rút theo 80/20 |
-| --- | --- | --- |
-| # | THỦ THẤP | Cần rút ý 80/20 |
-| ## | 1. KHÁI NIỆM | Cần rút ý 80/20 |
-| ## | 2. NGUYÊN NHÂN VÀ CƠ CHẾ BỆNH | Cần rút ý 80/20 |
-| ## | 3. CHẨN ĐOÁN XÁC ĐỊNH | Cần rút ý 80/20 |
-| ## | 4. CHẨN ĐOÁN PHÂN BIỆT | Cần rút ý 80/20 |
-| ### | 4.1. Thử ôn | Cần rút ý 80/20 |
-| ### | 4.2. Thấp ôn | Cần rút ý 80/20 |
-| ### | 4.3. Phục thử | Cần rút ý 80/20 |
-| ### | 5. BIỆN CHỨNG LUẬN TRỊ | Cần rút ý 80/20 |
-| ### | 5.1. Thử thấp tại vệ | Cần rút ý 80/20 |
-
-</CompareTable>
-
-<ClinicalPearl>
-
-- Khi biên tập, hãy viết lại phần này sao cho người học nắm được lõi chương trong 3-5 phút trước khi đọc bản hiểu sâu.
-
-</ClinicalPearl>
+<RedFlags>
+- Thử thấp có thể sốt không quá cao lúc đầu vì thấp che nhiệt; đừng vì vậy coi là nhẹ.
+- Rêu nê và nặng đầu mình là chìa khóa, không phải triệu chứng phụ.
+- Dùng thuốc quá hàn lương mà không hóa thấp có thể làm thấp càng trệ.
+</RedFlags>
 
 ## Tự kiểm
 
 <SelfCheck>
-
-1. 20% ý nào giúp hiểu phần lớn chương này?
-2. Điểm nào dễ nhầm nhất khi áp dụng vào case?
-3. Nếu phải vẽ một sơ đồ duy nhất cho chương này, sơ đồ đó nên thể hiện quan hệ nào?
-
+1. Vì sao Thử thấp dai dẳng hơn Thử nhiệt thuần túy?
+2. Dấu hiệu nào báo thấp đang khốn trung tiêu?
+3. Pháp trị Thử thấp cần thêm gì ngoài thanh nhiệt?
 </SelfCheck>
 
 <SourceNote>
-
 - Nguồn: `Raw/on_benh_dai_cuong/02_benh-lam-sang/thu-thap_001.md`
-- Gợi ý template: `deep-explanation`
-
 </SourceNote>

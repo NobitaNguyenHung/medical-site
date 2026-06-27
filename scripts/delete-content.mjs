@@ -46,6 +46,8 @@ function bookTargets(slug) {
 	const targets = [
 		path.resolve(cwd, 'src/content/docs/books', bookSlug),
 		path.resolve(cwd, 'src/content/docs/learning-paths', `${bookSlug}.mdx`),
+		path.resolve(cwd, 'src/content/docs/topics/reference', bookSlug),
+		path.resolve(cwd, 'src/content/docs/topics/explanation', bookSlug),
 		path.resolve(cwd, 'public/quiz', bookSlug),
 	];
 	targets.push(...filesStartingWith(path.resolve(cwd, 'src/content/docs/topics/reference'), `${bookSlug}-`));

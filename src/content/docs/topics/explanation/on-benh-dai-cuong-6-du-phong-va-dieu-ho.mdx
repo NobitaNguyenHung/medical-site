@@ -1,6 +1,6 @@
 ---
-title: "Hiểu sâu · 6. DỰ PHÒNG VÀ ĐIỀU HỘ"
-description: "Bản hiểu sâu từ chương 6. DỰ PHÒNG VÀ ĐIỀU HỘ."
+title: "Cơ chế · DỰ PHÒNG VÀ ĐIỀU HỘ"
+description: "Bản giải thích cơ chế bằng sơ đồ, workflow và cầu nối lâm sàng từ chương 6. DỰ PHÒNG VÀ ĐIỀU HỘ."
 type: "deep-explanation"
 category: "topics"
 diataxis: "explanation"
@@ -9,6 +9,7 @@ source: "Raw"
 sourceDetail: "Raw/on_benh_dai_cuong/02_benh-lam-sang/phong-on_003.md"
 status: "draft"
 generatedBy: "materialize-ingest"
+explanationStyle: "mechanism-map"
 sidebar:
   order: 16
 ---
@@ -16,46 +17,93 @@ sidebar:
 import KeyPoints from '~/components/KeyPoints.astro';
 import CompareTable from '~/components/CompareTable.astro';
 import ClinicalPearl from '~/components/ClinicalPearl.astro';
+import MedicalNote from '~/components/MedicalNote.astro';
+import RedFlags from '~/components/RedFlags.astro';
+import SelfCheck from '~/components/SelfCheck.astro';
 import SourceNote from '~/components/SourceNote.astro';
 
-## Câu hỏi sâu của chương
+## Câu hỏi cơ chế
 
-<KeyPoints>
+<MedicalNote title="Đọc trang này để trả lời">
+Vì sao **DỰ PHÒNG VÀ ĐIỀU HỘ** xảy ra, đi theo chuỗi nào, tạo dấu hiệu gì, và điểm rẽ nào làm đổi hướng chẩn đoán hoặc xử trí?
+</MedicalNote>
 
-- Vì sao chương này quan trọng trong Ôn bệnh học?
-- Cơ chế / lý luận nào là trục chính?
-- Điểm nào cần liên hệ với chẩn đoán hoặc điều trị?
+## Bản đồ cơ chế 1 trang
+
+<KeyPoints title="Nút cần nối bằng nhân quả">
+
+- **DỰ PHÒNG VÀ ĐIỀU HỘ:** Khâu quan trọng trong dự phòng phong ôn là tăng cường chính khí, nâng cao năng lực kháng ngự ngoại tà của cơ thể. Đây là trục đọc ban đầu, cần được nối tiếp bằng các nút cơ chế phía dưới. Giúp hiểu vì sao dùng pháp đó, không học pháp trị như câu thuộc lòng.
+- **Tăng cường chính khí:** Đặt mục này vào chuỗi cơ chế của bài: nó là nguyên nhân, tầng trung gian, biểu hiện, biến chứng hay hướng xử trí? Dùng để hoàn thiện bản đồ cơ chế của chương.
+- **Thuốc dự phòng:** Nguyên tắc xử trí phải đi ngược lại cơ chế gây bệnh: giải cái đang bế, thanh cái đang nhiệt, hóa cái đang thấp, dưỡng cái đang hao. Giúp hiểu vì sao dùng pháp đó, không học pháp trị như câu thuộc lòng.
+- **Hạn chế tụ tập đông trong lúc dịch:** Đặt mục này vào chuỗi cơ chế của bài: nó là nguyên nhân, tầng trung gian, biểu hiện, biến chứng hay hướng xử trí? Dùng để hoàn thiện bản đồ cơ chế của chương.
+- **Môi trường:** Đặt mục này vào chuỗi cơ chế của bài: nó là nguyên nhân, tầng trung gian, biểu hiện, biến chứng hay hướng xử trí? Dùng để hoàn thiện bản đồ cơ chế của chương.
 
 </KeyPoints>
 
-## Nền văn bản
+## Workflow diễn tiến
 
-Khâu quan trọng trong dự phòng phong ôn là tăng cường chính khí, nâng cao năng lực kháng ngự ngoại tà của cơ thể.
+```mermaid
+flowchart TD
+  A["DỰ PHÒNG VÀ ĐIỀU HỘ"] --> B["Tăng cường chính khí"]
+  B --> C["Thuốc dự phòng"]
+  C --> D{"Hạn chế tụ tập đông trong lúc dịch"}
+  D -->|còn nông / còn thuận| E["Nhận diện sớm"]
+  D -->|vào sâu / chuyển nặng| F["Theo dõi biến chứng"]
+  E --> G["Môi trường"]
+  F --> G
+```
 
-Chủ yếu chú ý sinh hoạt cá nhân giữ ấm, phòng nhiễm ngoại tà, duy trì không khí thông sạch trong phòng.
+## Cầu nối sách vở → lâm sàng
 
-<CompareTable title="Các ý cần đào sâu">
+<CompareTable title="Từ cơ chế đến quyết định">
 
-| Mục | Cơ chế / lý luận | Liên hệ lâm sàng |
-| --- | --- | --- |
-| 6. DỰ PHÒNG VÀ ĐIỀU HỘ | Cần giải thích cơ chế / lý luận | Cần liên hệ lâm sàng |
-| 6.1. Tăng cường chính khí | Cần giải thích cơ chế / lý luận | Cần liên hệ lâm sàng |
-| 6.2. Thuốc dự phòng | Cần giải thích cơ chế / lý luận | Cần liên hệ lâm sàng |
-| 6.3. Hạn chế tụ tập đông trong lúc dịch | Cần giải thích cơ chế / lý luận | Cần liên hệ lâm sàng |
-| 6.4. Môi trường | Cần giải thích cơ chế / lý luận | Cần liên hệ lâm sàng |
-| 6.5. Phát hiện sớm biến chứng | Cần giải thích cơ chế / lý luận | Cần liên hệ lâm sàng |
+| Nút cơ chế | Giải thích ngắn | Dấu hiệu kéo theo | Ý nghĩa chẩn đoán / xử trí |
+| --- | --- | --- | --- |
+| DỰ PHÒNG VÀ ĐIỀU HỘ | Khâu quan trọng trong dự phòng phong ôn là tăng cường chính khí, nâng cao năng lực kháng ngự ngoại tà của cơ thể. Đây là trục đọc ban đầu, cần được nối tiếp bằng các nút cơ chế phía dưới. | Đáp ứng sau xử trí, dấu hiệu cần theo dõi, dấu hiệu không nên công phạt thêm. | Giúp hiểu vì sao dùng pháp đó, không học pháp trị như câu thuộc lòng. |
+| Tăng cường chính khí | Đặt mục này vào chuỗi cơ chế của bài: nó là nguyên nhân, tầng trung gian, biểu hiện, biến chứng hay hướng xử trí? | Tìm trong nguyên văn các dấu hiệu đi kèm và nối chúng với nút cơ chế. | Dùng để hoàn thiện bản đồ cơ chế của chương. |
+| Thuốc dự phòng | Nguyên tắc xử trí phải đi ngược lại cơ chế gây bệnh: giải cái đang bế, thanh cái đang nhiệt, hóa cái đang thấp, dưỡng cái đang hao. | Đáp ứng sau xử trí, dấu hiệu cần theo dõi, dấu hiệu không nên công phạt thêm. | Giúp hiểu vì sao dùng pháp đó, không học pháp trị như câu thuộc lòng. |
+| Hạn chế tụ tập đông trong lúc dịch | Đặt mục này vào chuỗi cơ chế của bài: nó là nguyên nhân, tầng trung gian, biểu hiện, biến chứng hay hướng xử trí? | Tìm trong nguyên văn các dấu hiệu đi kèm và nối chúng với nút cơ chế. | Dùng để hoàn thiện bản đồ cơ chế của chương. |
+| Môi trường | Đặt mục này vào chuỗi cơ chế của bài: nó là nguyên nhân, tầng trung gian, biểu hiện, biến chứng hay hướng xử trí? | Tìm trong nguyên văn các dấu hiệu đi kèm và nối chúng với nút cơ chế. | Dùng để hoàn thiện bản đồ cơ chế của chương. |
+| Phát hiện sớm biến chứng | Dùng mô hình tầng để định vị bệnh: vệ thường nông, khí là nhiệt thịnh, dinh-huyết vào sâu; tam tiêu giúp định vị tạng phủ. | Sốt, khát, phiền, ban chẩn, thần chí, lưỡi mạch và vị trí tổn thương. | Giúp chuyển từ thuộc lòng triệu chứng sang định vị tầng bệnh và chọn pháp tương ứng. |
 
 </CompareTable>
 
+## Worked example
+
+1. Bắt đầu từ **DỰ PHÒNG VÀ ĐIỀU HỘ**: hỏi đây là nguyên nhân, điều kiện nền hay định nghĩa khung.
+2. Nối sang **Tăng cường chính khí**: viết thành câu “vì X nên Y”, tránh chỉ chép lại heading.
+3. Kiểm bằng **Thuốc dự phòng**: dấu hiệu nào phải xuất hiện nếu cơ chế này đúng?
+4. Kết luận bằng quyết định: cần phân biệt với gì, theo dõi điểm rẽ nào, và nguyên tắc xử trí đi ngược lại cơ chế nào.
+
+<RedFlags>
+
+- Đừng học trang này như một danh sách thuật ngữ. Hãy đọc theo mũi tên: nguyên nhân → cơ chế → dấu hiệu → quyết định.
+- Nếu một dấu hiệu không nối được với cơ chế, quay lại nguyên thủy để kiểm tra văn cảnh trước khi ghi nhớ.
+- Bản tự sinh này là khung cơ chế; khi biên tập, cần thay các nhãn khái quát bằng sơ đồ chuyên biệt hơn cho từng bệnh/chứng.
+
+</RedFlags>
+
 <ClinicalPearl>
 
-- Trang này được sinh tự động từ heading; cần biên tập lại để thành bài hiểu sâu hoàn chỉnh.
+- Cơ chế chỉ có giá trị học tập khi nó dự đoán được dấu hiệu tiếp theo hoặc giải thích được vì sao phải chọn pháp trị này thay vì pháp trị khác.
 
 </ClinicalPearl>
+
+## Tự kiểm
+
+<SelfCheck>
+
+1. Cơ chế trung tâm của bài này là gì?
+2. Nút nào là điểm rẽ khiến bệnh nhẹ chuyển nặng hoặc từ biểu vào lý?
+3. Dấu hiệu nào giúp chứng minh cơ chế đang diễn ra?
+4. Nếu phải vẽ lại trong 60 giây, bạn sẽ giữ lại những mũi tên nào?
+
+</SelfCheck>
 
 <SourceNote>
 
 - Nguồn: `Raw/on_benh_dai_cuong/02_benh-lam-sang/phong-on_003.md`
 - Gợi ý template: `tcm-pattern`
+- Kiểu trình bày: mechanism map + workflow + worked example.
 
 </SourceNote>

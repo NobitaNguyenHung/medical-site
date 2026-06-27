@@ -1,14 +1,14 @@
 ---
-title: "Tóm tắt · 2.3. Mối quan hệ giữa vệ, khí, dinh, huyết bệnh chứng và tam tiêu bệnh chứng"
-description: "Bản tóm tắt 80/20 của chương 2.3. Mối quan hệ giữa vệ, khí, dinh, huyết bệnh chứng và tam tiêu bệnh chứng."
+title: "Quan hệ vệ-khí-dinh-huyết và tam tiêu"
+description: "Cách phối hợp hai hệ biện chứng để định tầng bệnh và vị trí tổn thương trong Ôn bệnh."
 type: "chapter-summary"
 category: "books"
 diataxis: "tutorial"
-medicineSystem: "shared"
+medicineSystem: "tcm"
 source: "Raw"
 sourceDetail: "Raw/on_benh_dai_cuong/01_ly-thuyet/bai-03-bien-chung_002.md"
-status: "draft"
-generatedBy: "materialize-ingest"
+status: "ready"
+generatedBy: "codex-reviewed"
 summaryRule: "80-20"
 sidebar:
   order: 7
@@ -16,76 +16,60 @@ sidebar:
 
 import KeyPoints from '~/components/KeyPoints.astro';
 import CompareTable from '~/components/CompareTable.astro';
-import ClinicalPearl from '~/components/ClinicalPearl.astro';
+import MedicalNote from '~/components/MedicalNote.astro';
 import SelfCheck from '~/components/SelfCheck.astro';
 import SourceNote from '~/components/SourceNote.astro';
 
-## Nắm nhanh theo 80/20
+## 20% cốt lõi
 
-<KeyPoints title="20% cốt lõi cần nắm">
+<KeyPoints title="Cách ghép hai bản đồ">
 
-- 2.3. Mối quan hệ giữa vệ, khí, dinh, huyết bệnh chứng và tam tiêu bệnh chứng
+- **Vệ-khí-dinh-huyết** trả lời: tà nông hay sâu, nhiệt thịnh ở mức nào, đã chạm thần chí/huyết lạc chưa.
+- **Tam tiêu** trả lời: bệnh đang ở phế, tâm bào, tỳ vị, trường, can hay thận.
+- Thượng tiêu thường liên quan **phế vệ** và **tâm bào**; trung tiêu thường liên quan **khí phần dương minh** hoặc **thấp khốn tỳ**; hạ tiêu thường liên quan **can thận âm thương**.
+- Một chẩn đoán tốt nên nói được cả hai: ví dụ “khí phần, trung tiêu dương minh” hoặc “dinh phần, nhiệt nhập tâm bào”.
+- Tam tiêu còn giúp hiểu đường truyền: từ thượng xuống trung/hạ, hoặc nghịch truyền vào tâm bào.
 
 </KeyPoints>
 
-## Tóm tắt nhanh
+## Một câu nắm bài
 
-Phạm vi bệnh của tam tiêu gồm thượng tiêu chủ yếu gồm thủ thái âm phế và thủ quyết âm tâm bào; trung tiêu chủ yếu bao gồm dương minh vị, trường và túc thái âm tỳ; hạ tiêu bao gồm túc thiếu âm thận và túc quyết âm can.
+<MedicalNote title="Câu lõi">
+Vệ-khí-dinh-huyết là **chiều sâu**, tam tiêu là **địa chỉ**; phối hợp cả hai mới đọc được bệnh cảnh Ôn bệnh đầy đủ.
+</MedicalNote>
 
-“Ôn tà thượng thụ thủ tiên phạm phế” nghĩa là ôn tà xâm nhập đầu tiên là phạm vào phế.
+## Bảng phối hợp
 
-## Sơ đồ 80/20
+<CompareTable title="Một câu chẩn đoán nên có 2 phần">
+
+| Câu hỏi | Hệ dùng | Ví dụ trả lời |
+| --- | --- | --- |
+| Tà đã sâu đến đâu? | Vệ-khí-dinh-huyết | Vệ phần, khí phần, dinh phần, huyết phần |
+| Bệnh ở tạng phủ/vùng nào? | Tam tiêu | Phế vệ, dương minh vị-trường, tâm bào, can thận |
+| Nguy hiểm chính là gì? | Cả hai | Nghịch truyền tâm bào, nhiệt động huyết, âm hư phong động |
+| Pháp trị nên chọn gì? | Cả hai | Thanh khí, thanh dinh, lương huyết, tuyên phế, hóa thấp |
+
+</CompareTable>
+
+## Sơ đồ liên hệ
 
 ```mermaid
-flowchart TD
-  A["Vấn đề chính của chương"] --> B["Khái niệm / định nghĩa"]
-  A --> C["Cơ chế / lý luận"]
-  A --> D["Dấu hiệu cần nhận ra"]
-  D --> E["Ứng dụng vào case / lượng giá"]
+flowchart LR
+  A["Vệ"] --> B["Thượng tiêu: phế vệ"]
+  C["Khí"] --> D["Trung tiêu: vị/trường hoặc phế khí"]
+  E["Dinh"] --> F["Tâm bào, dinh âm"]
+  G["Huyết"] --> H["Can huyết, huyết lạc"]
+  I["Hạ tiêu"] --> J["Can thận âm thương"]
 ```
-
-## Visual brief
-
-<CompareTable title="Hình nên bổ sung khi biên tập">
-
-| Loại hình | Khi dùng | Gợi ý tạo |
-| --- | --- | --- |
-| Sơ đồ Mermaid | Luồng cơ chế, phân loại, thuật toán | Dùng trực tiếp trong MDX. |
-| SVG tự vẽ | Bảng phân tầng, timeline, bản đồ khái niệm cần kiểm soát chính xác | Tạo file SVG trong `public/assets/<sách>/` rồi nhúng. |
-| Ảnh/illustration sinh bởi Codex | Cần minh họa sinh động, không cần độ chính xác giải phẫu tuyệt đối | Sinh ảnh rồi đặt vào `public/assets/<sách>/`, ghi chú là hình minh họa. |
-| Hình y khoa từ nguồn | X-quang, mô bệnh học, biểu đồ nghiên cứu | Chỉ dùng khi có quyền/nguồn rõ; ưu tiên trích dẫn. |
-
-</CompareTable>
-
-## Bản đồ chương
-
-<CompareTable title="Cấu trúc chương">
-
-| Cấp | Mục | Cần rút theo 80/20 |
-| --- | --- | --- |
-| #### | 2.3. Mối quan hệ giữa vệ, khí, dinh, huyết bệnh chứng và tam tiêu bệnh chứng | Cần rút ý 80/20 |
-
-</CompareTable>
-
-<ClinicalPearl>
-
-- Khi biên tập, hãy viết lại phần này sao cho người học nắm được lõi chương trong 3-5 phút trước khi đọc bản hiểu sâu.
-
-</ClinicalPearl>
 
 ## Tự kiểm
 
 <SelfCheck>
-
-1. 20% ý nào giúp hiểu phần lớn chương này?
-2. Điểm nào dễ nhầm nhất khi áp dụng vào case?
-3. Nếu phải vẽ một sơ đồ duy nhất cho chương này, sơ đồ đó nên thể hiện quan hệ nào?
-
+1. Vì sao nói “dinh phần” chưa đủ nếu không biết có tâm bào hay chưa?
+2. “Thấp nhiệt trung tiêu” thường biểu hiện khác “nhiệt thịnh dương minh” thế nào?
+3. Một ca co giật cuối bệnh nên nghĩ tầng và tiêu nào?
 </SelfCheck>
 
 <SourceNote>
-
 - Nguồn: `Raw/on_benh_dai_cuong/01_ly-thuyet/bai-03-bien-chung_002.md`
-- Gợi ý template: `deep-explanation`
-
 </SourceNote>

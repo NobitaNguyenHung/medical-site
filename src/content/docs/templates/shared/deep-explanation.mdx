@@ -1,6 +1,6 @@
 ---
-title: "Template: Deep Explanation"
-description: "Bản hiểu sâu: cơ chế, lý luận, nguồn gốc, tranh luận và liên hệ lâm sàng."
+title: "Template: Mechanism Explainer"
+description: "Bản giải thích cơ chế: dùng sơ đồ, workflow và cầu nối lâm sàng để cô đọng kiến thức khó."
 type: "deep-explanation"
 category: "templates"
 diataxis: "explanation"
@@ -17,48 +17,88 @@ sidebar:
 import KeyPoints from '~/components/KeyPoints.astro';
 import CompareTable from '~/components/CompareTable.astro';
 import ClinicalPearl from '~/components/ClinicalPearl.astro';
+import MedicalNote from '~/components/MedicalNote.astro';
+import RedFlags from '~/components/RedFlags.astro';
+import SelfCheck from '~/components/SelfCheck.astro';
 import SourceNote from '~/components/SourceNote.astro';
 
-## Câu hỏi sâu của chương
+## Câu hỏi cơ chế
 
-## Tóm tắt cơ chế / lý luận
+<MedicalNote title="Câu hỏi dẫn đường">
+Vì sao hiện tượng này xảy ra, đi theo chuỗi nào, tạo ra dấu hiệu gì, và điểm nào làm thay đổi quyết định chẩn đoán hoặc điều trị?
+</MedicalNote>
+
+## Bản đồ cơ chế 1 trang
 
 <KeyPoints>
 
-- Cơ chế chính:
-- Ý nghĩa học thuật:
-- Ý nghĩa lâm sàng:
+- **Nút khởi phát:** tác nhân / điều kiện nền.
+- **Cơ chế trung gian:** đường bệnh lý nối nguyên nhân với biểu hiện.
+- **Điểm rẽ:** yếu tố làm bệnh nhẹ, nặng, chuyển tầng hoặc đổi pháp trị.
+- **Dấu hiệu quan sát:** triệu chứng, mạch, lưỡi, xét nghiệm hoặc hình ảnh.
+- **Hành động:** chẩn đoán phân biệt, nguyên tắc xử trí, câu hỏi lượng giá.
 
 </KeyPoints>
 
-## Diễn tiến logic
+## Workflow diễn tiến
 
 ```mermaid
-flowchart LR
-  A[Nguyên nhân / nền tảng] --> B[Cơ chế trung gian]
-  B --> C[Biểu hiện]
-  C --> D[Ứng dụng lâm sàng]
+flowchart TD
+  A["Tác nhân / điều kiện nền"] --> B["Cơ chế trung gian"]
+  B --> C{"Điểm rẽ quyết định"}
+  C -->|Nhẹ / còn ở nông| D["Biểu hiện sớm"]
+  C -->|Nặng / vào sâu| E["Biến chứng hoặc chuyển tầng"]
+  D --> F["Cách nhận ra"]
+  E --> F
+  F --> G["Nguyên tắc xử trí"]
 ```
 
-## So sánh các cách giải thích
+## Cầu nối sách vở → lâm sàng
 
-<CompareTable title="So sánh lý luận">
+<CompareTable title="Từ cơ chế đến quyết định">
 
-| Cách hiểu | Điểm mạnh | Giới hạn | Khi dùng |
+| Nút cơ chế | Giải thích ngắn | Dấu hiệu kéo theo | Ý nghĩa chẩn đoán / xử trí |
 | --- | --- | --- | --- |
 |  |  |  |  |
 
 </CompareTable>
 
+## Worked example
+
+1. Quan sát dấu hiệu nổi bật.
+2. Suy ngược nút cơ chế đang chi phối.
+3. Tìm điểm rẽ: còn ở nông hay đã vào sâu, còn thực hay đã hư, có bế hay có thoát.
+4. Chọn hướng xử trí hoặc câu hỏi cần kiểm chứng tiếp.
+
+<RedFlags>
+
+- Không biến trang này thành tóm tắt chương lần hai.
+- Không liệt kê heading của sách nếu chưa nối được bằng quan hệ nhân quả.
+- Không vẽ sơ đồ chỉ để trang trí; mỗi mũi tên phải có nghĩa học thuật.
+
+</RedFlags>
+
 <ClinicalPearl>
 
-- Điểm giúp nhớ lâu hoặc nối với case.
+- Một trang giải thích cơ chế tốt phải giúp người học trả lời được: “Nếu cơ chế này đúng, tôi sẽ thấy gì tiếp theo?”
 
 </ClinicalPearl>
+
+## Tự kiểm
+
+<SelfCheck>
+
+1. Cơ chế trung tâm của bài là gì?
+2. Nếu chỉ vẽ một sơ đồ, sơ đồ đó phải nối những nút nào?
+3. Dấu hiệu nào chứng minh bệnh đang đi theo nhánh nặng hơn?
+4. Điểm nào dễ nhầm với bệnh/cơ chế khác?
+
+</SelfCheck>
 
 <SourceNote>
 
 - Nguồn chương:
 - Nguồn bổ sung:
+- Gợi ý biên tập: ưu tiên Mermaid flowchart, bảng cơ chế → dấu hiệu, và worked example ngắn.
 
 </SourceNote>

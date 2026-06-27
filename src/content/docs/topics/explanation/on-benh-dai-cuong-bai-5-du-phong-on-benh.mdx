@@ -1,6 +1,6 @@
 ---
-title: "Hiểu sâu · BÀI 5. DỰ PHÒNG ÔN BỆNH"
-description: "Bản hiểu sâu từ chương BÀI 5. DỰ PHÒNG ÔN BỆNH."
+title: "Cơ chế · DỰ PHÒNG ÔN BỆNH"
+description: "Bản giải thích cơ chế bằng sơ đồ, workflow và cầu nối lâm sàng từ chương BÀI 5. DỰ PHÒNG ÔN BỆNH."
 type: "deep-explanation"
 category: "topics"
 diataxis: "explanation"
@@ -9,6 +9,7 @@ source: "Raw"
 sourceDetail: "Raw/on_benh_dai_cuong/01_ly-thuyet/bai-05-du-phong_001.md"
 status: "draft"
 generatedBy: "materialize-ingest"
+explanationStyle: "mechanism-map"
 sidebar:
   order: 11
 ---
@@ -16,48 +17,93 @@ sidebar:
 import KeyPoints from '~/components/KeyPoints.astro';
 import CompareTable from '~/components/CompareTable.astro';
 import ClinicalPearl from '~/components/ClinicalPearl.astro';
+import MedicalNote from '~/components/MedicalNote.astro';
+import RedFlags from '~/components/RedFlags.astro';
+import SelfCheck from '~/components/SelfCheck.astro';
 import SourceNote from '~/components/SourceNote.astro';
 
-## Câu hỏi sâu của chương
+## Câu hỏi cơ chế
 
-<KeyPoints>
+<MedicalNote title="Đọc trang này để trả lời">
+Vì sao **DỰ PHÒNG ÔN BỆNH** xảy ra, đi theo chuỗi nào, tạo dấu hiệu gì, và điểm rẽ nào làm đổi hướng chẩn đoán hoặc xử trí?
+</MedicalNote>
 
-- Vì sao chương này quan trọng trong Ôn bệnh học?
-- Cơ chế / lý luận nào là trục chính?
-- Điểm nào cần liên hệ với chẩn đoán hoặc điều trị?
+## Bản đồ cơ chế 1 trang
+
+<KeyPoints title="Nút cần nối bằng nhân quả">
+
+- **DỰ PHÒNG ÔN BỆNH:** Thời cổ đại từ rất sớm đối với Ôn bệnh đã có những chuyên đề thảo luận về dự phòng đó là “trị vị bệnh”. Đây là trục đọc ban đầu, cần được nối tiếp bằng các nút cơ chế phía dưới. Giúp hiểu vì sao dùng pháp đó, không học pháp trị như câu thuộc lòng.
+- **KHÁI NIỆM:** Định nghĩa phải được chuyển thành mô hình: điều kiện nào tạo bệnh, giới hạn khái niệm ở đâu, khác gì với khái niệm gần nó. Giúp mở bài bằng khung tư duy, không sa vào định nghĩa rỗng.
+- **PHƯƠNG PHÁP DỰ PHÒNG:** Nguyên tắc xử trí phải đi ngược lại cơ chế gây bệnh: giải cái đang bế, thanh cái đang nhiệt, hóa cái đang thấp, dưỡng cái đang hao. Giúp hiểu vì sao dùng pháp đó, không học pháp trị như câu thuộc lòng.
+- **Bồi cố chính khí, cường tráng thể chất:** Đặt mục này vào chuỗi cơ chế của bài: nó là nguyên nhân, tầng trung gian, biểu hiện, biến chứng hay hướng xử trí? Dùng để hoàn thiện bản đồ cơ chế của chương.
+- **Kịp thời chặn trị không chế lây lan:** Đặt mục này vào chuỗi cơ chế của bài: nó là nguyên nhân, tầng trung gian, biểu hiện, biến chứng hay hướng xử trí? Dùng để hoàn thiện bản đồ cơ chế của chương.
 
 </KeyPoints>
 
-## Nền văn bản
+## Workflow diễn tiến
 
-Thời cổ đại từ rất sớm đối với Ôn bệnh đã có những chuyên đề thảo luận về dự phòng đó là “trị vị bệnh”.
+```mermaid
+flowchart TD
+  A["DỰ PHÒNG ÔN BỆNH"] --> B["KHÁI NIỆM"]
+  B --> C["PHƯƠNG PHÁP DỰ PHÒNG"]
+  C --> D{"Bồi cố chính khí, cường tráng thể chất"}
+  D -->|còn nông / còn thuận| E["Nhận diện sớm"]
+  D -->|vào sâu / chuyển nặng| F["Theo dõi biến chứng"]
+  E --> G["Kịp thời chặn trị không chế lây lan"]
+  F --> G
+```
 
-Ôn bệnh là một dạng bệnh ngoại cảm nhiệt bệnh cấp tính trong đó đa số là những bệnh truyền nhiễm lây lan mà khởi bệnh lại nhanh thể bệnh mạnh và nguy cấp.
+## Cầu nối sách vở → lâm sàng
 
-<CompareTable title="Các ý cần đào sâu">
+<CompareTable title="Từ cơ chế đến quyết định">
 
-| Mục | Cơ chế / lý luận | Liên hệ lâm sàng |
-| --- | --- | --- |
-| BÀI 5. DỰ PHÒNG ÔN BỆNH | Cần giải thích cơ chế / lý luận | Cần liên hệ lâm sàng |
-| 1. KHÁI NIỆM | Cần giải thích cơ chế / lý luận | Cần liên hệ lâm sàng |
-| 2. PHƯƠNG PHÁP DỰ PHÒNG | Cần giải thích cơ chế / lý luận | Cần liên hệ lâm sàng |
-| 2.1. Bồi cố chính khí, cường tráng thể chất | Cần giải thích cơ chế / lý luận | Cần liên hệ lâm sàng |
-| 2.2. Kịp thời chặn trị không chế lây lan | Cần giải thích cơ chế / lý luận | Cần liên hệ lâm sàng |
-| 3. ỨNG DỤNG CÁC PHƯƠNG PHÁP TRONG PHÒNG BỆNH | Cần giải thích cơ chế / lý luận | Cần liên hệ lâm sàng |
-| 3.1. Theo Nội kinh | Cần giải thích cơ chế / lý luận | Cần liên hệ lâm sàng |
-| 3.2. Pháp vệ sinh của chân nhân Tôn Tử Mạo | Cần giải thích cơ chế / lý luận | Cần liên hệ lâm sàng |
+| Nút cơ chế | Giải thích ngắn | Dấu hiệu kéo theo | Ý nghĩa chẩn đoán / xử trí |
+| --- | --- | --- | --- |
+| DỰ PHÒNG ÔN BỆNH | Thời cổ đại từ rất sớm đối với Ôn bệnh đã có những chuyên đề thảo luận về dự phòng đó là “trị vị bệnh”. Đây là trục đọc ban đầu, cần được nối tiếp bằng các nút cơ chế phía dưới. | Đáp ứng sau xử trí, dấu hiệu cần theo dõi, dấu hiệu không nên công phạt thêm. | Giúp hiểu vì sao dùng pháp đó, không học pháp trị như câu thuộc lòng. |
+| KHÁI NIỆM | Định nghĩa phải được chuyển thành mô hình: điều kiện nào tạo bệnh, giới hạn khái niệm ở đâu, khác gì với khái niệm gần nó. | Từ khóa định nghĩa, điểm phân biệt và phạm vi áp dụng. | Giúp mở bài bằng khung tư duy, không sa vào định nghĩa rỗng. |
+| PHƯƠNG PHÁP DỰ PHÒNG | Nguyên tắc xử trí phải đi ngược lại cơ chế gây bệnh: giải cái đang bế, thanh cái đang nhiệt, hóa cái đang thấp, dưỡng cái đang hao. | Đáp ứng sau xử trí, dấu hiệu cần theo dõi, dấu hiệu không nên công phạt thêm. | Giúp hiểu vì sao dùng pháp đó, không học pháp trị như câu thuộc lòng. |
+| Bồi cố chính khí, cường tráng thể chất | Đặt mục này vào chuỗi cơ chế của bài: nó là nguyên nhân, tầng trung gian, biểu hiện, biến chứng hay hướng xử trí? | Tìm trong nguyên văn các dấu hiệu đi kèm và nối chúng với nút cơ chế. | Dùng để hoàn thiện bản đồ cơ chế của chương. |
+| Kịp thời chặn trị không chế lây lan | Đặt mục này vào chuỗi cơ chế của bài: nó là nguyên nhân, tầng trung gian, biểu hiện, biến chứng hay hướng xử trí? | Tìm trong nguyên văn các dấu hiệu đi kèm và nối chúng với nút cơ chế. | Dùng để hoàn thiện bản đồ cơ chế của chương. |
+| ỨNG DỤNG CÁC PHƯƠNG PHÁP TRONG PHÒNG BỆNH | Nguyên tắc xử trí phải đi ngược lại cơ chế gây bệnh: giải cái đang bế, thanh cái đang nhiệt, hóa cái đang thấp, dưỡng cái đang hao. | Đáp ứng sau xử trí, dấu hiệu cần theo dõi, dấu hiệu không nên công phạt thêm. | Giúp hiểu vì sao dùng pháp đó, không học pháp trị như câu thuộc lòng. |
 
 </CompareTable>
 
+## Worked example
+
+1. Bắt đầu từ **DỰ PHÒNG ÔN BỆNH**: hỏi đây là nguyên nhân, điều kiện nền hay định nghĩa khung.
+2. Nối sang **KHÁI NIỆM**: viết thành câu “vì X nên Y”, tránh chỉ chép lại heading.
+3. Kiểm bằng **PHƯƠNG PHÁP DỰ PHÒNG**: dấu hiệu nào phải xuất hiện nếu cơ chế này đúng?
+4. Kết luận bằng quyết định: cần phân biệt với gì, theo dõi điểm rẽ nào, và nguyên tắc xử trí đi ngược lại cơ chế nào.
+
+<RedFlags>
+
+- Đừng học trang này như một danh sách thuật ngữ. Hãy đọc theo mũi tên: nguyên nhân → cơ chế → dấu hiệu → quyết định.
+- Nếu một dấu hiệu không nối được với cơ chế, quay lại nguyên thủy để kiểm tra văn cảnh trước khi ghi nhớ.
+- Bản tự sinh này là khung cơ chế; khi biên tập, cần thay các nhãn khái quát bằng sơ đồ chuyên biệt hơn cho từng bệnh/chứng.
+
+</RedFlags>
+
 <ClinicalPearl>
 
-- Trang này được sinh tự động từ heading; cần biên tập lại để thành bài hiểu sâu hoàn chỉnh.
+- Cơ chế chỉ có giá trị học tập khi nó dự đoán được dấu hiệu tiếp theo hoặc giải thích được vì sao phải chọn pháp trị này thay vì pháp trị khác.
 
 </ClinicalPearl>
+
+## Tự kiểm
+
+<SelfCheck>
+
+1. Cơ chế trung tâm của bài này là gì?
+2. Nút nào là điểm rẽ khiến bệnh nhẹ chuyển nặng hoặc từ biểu vào lý?
+3. Dấu hiệu nào giúp chứng minh cơ chế đang diễn ra?
+4. Nếu phải vẽ lại trong 60 giây, bạn sẽ giữ lại những mũi tên nào?
+
+</SelfCheck>
 
 <SourceNote>
 
 - Nguồn: `Raw/on_benh_dai_cuong/01_ly-thuyet/bai-05-du-phong_001.md`
 - Gợi ý template: `deep-explanation`
+- Kiểu trình bày: mechanism map + workflow + worked example.
 
 </SourceNote>

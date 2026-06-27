@@ -1,14 +1,14 @@
 ---
-title: "Tóm tắt · BÀI 2. NGUYÊN NHÂN BỆNH VÀ PHÁT BỆNH"
-description: "Bản tóm tắt 80/20 của chương BÀI 2. NGUYÊN NHÂN BỆNH VÀ PHÁT BỆNH."
+title: "Bài 2. Nguyên nhân bệnh và phát bệnh"
+description: "Nắm lõi nguyên nhân Ôn bệnh: ôn tà, chính khí, đường xâm nhập, tân cảm và phục tà."
 type: "chapter-summary"
 category: "books"
 diataxis: "tutorial"
-medicineSystem: "shared"
+medicineSystem: "tcm"
 source: "Raw"
-sourceDetail: "Raw/on_benh_dai_cuong/01_ly-thuyet/bai-02-nguyen-nhan-phat-benh_001.md"
-status: "draft"
-generatedBy: "materialize-ingest"
+sourceDetail: "Raw/on_benh_dai_cuong/01_ly-thuyet/bai-02-nguyen-nhan-phat-benh_001.md; _002.md; _003.md"
+status: "ready"
+generatedBy: "codex-reviewed"
 summaryRule: "80-20"
 sidebar:
   order: 3
@@ -16,82 +16,76 @@ sidebar:
 
 import KeyPoints from '~/components/KeyPoints.astro';
 import CompareTable from '~/components/CompareTable.astro';
-import ClinicalPearl from '~/components/ClinicalPearl.astro';
+import MedicalNote from '~/components/MedicalNote.astro';
+import RedFlags from '~/components/RedFlags.astro';
 import SelfCheck from '~/components/SelfCheck.astro';
 import SourceNote from '~/components/SourceNote.astro';
 
-## Nắm nhanh theo 80/20
+## 20% cốt lõi
 
-<KeyPoints title="20% cốt lõi cần nắm">
+<KeyPoints title="Nắm 7 ý này là đọc được phần lớn chương">
 
-- BÀI 2. NGUYÊN NHÂN BỆNH VÀ PHÁT BỆNH
-- 1. KHÁI NIỆM
-- 2. NGUYÊN NHÂN VÀ CƠ CHẾ SINH BỆNH
-- 2.1. Nguyên nhân
+- **Ôn tà là nguyên nhân trực tiếp** của Ôn bệnh: có tính ôn nhiệt, từ ngoài vào, thường qua mũi miệng hoặc da lông, làm rối loạn vệ-khí-dinh-huyết và tam tiêu.
+- **Có tà chưa chắc phát bệnh**: phát hay không tùy tương quan giữa tà khí và chính khí. Chính khí suy, âm dịch kém, tỳ vị yếu, lao lực hoặc thất tình làm bệnh dễ phát và dễ nặng.
+- **Thẩm chứng cầu nhân** là cách học chương này: nhìn biểu hiện để suy loại tà, rồi từ loại tà chọn pháp trị.
+- **Ôn tà không chỉ một loại**: phong nhiệt phạm phế vệ; thử nhiệt vào dương minh và hao khí tân; thấp nhiệt khốn tỳ vị; táo nhiệt thương phế; ôn nhiệt phát từ lý; ôn độc/lệ khí gây nặng và lây.
+- **Đường vào định hướng tạng phủ đầu tiên**: mũi miệng thường liên quan phế-vị; ăn uống liên quan tỳ-vị; tiếp xúc/độc tà liên quan da, hầu họng, huyết lạc.
+- **Tân cảm và phục tà là điểm rẽ lớn nhất**: tân cảm phát ngay, thường từ biểu; phục tà ẩn trước rồi phát, thường từ lý nhiệt.
+- **Ý nghĩa lâm sàng**: đừng học nguyên nhân như danh mục. Hãy dùng nó để trả lời: tà gì, vào đâu, vì sao phát, đang biểu hay lý, nên thấu tà hay thanh lý nhiệt.
 
 </KeyPoints>
 
-## Tóm tắt nhanh
+## Một câu nắm bài
 
-Nhân tố gây Ôn bệnh là ôn tà, ôn tà có thể làm suy giảm chức năng vệ khí dinh huyết và các tạng phủ thuộc tam tiêu và tổn thương thực thể các tạng phủ, phá hoại trạng thái cân bằng tương đối mà gây bệnh.
+<MedicalNote title="Câu lõi">
+Ôn bệnh phát sinh khi **ôn tà gặp điều kiện thuận lợi trong cơ thể và hoàn cảnh**, rồi biểu hiện theo đường vào, loại tà và kiểu phát bệnh tân cảm hay phục tà.
+</MedicalNote>
 
-Cơ thể người cảm thụ ôn tà có phát bệnh hay không còn quyết định bởi tỷ lệ giữa tà khí và chính khí.
-
-## Sơ đồ 80/20
+## Sơ đồ quyết định
 
 ```mermaid
 flowchart TD
-  A["Vấn đề chính của chương"] --> B["Khái niệm / định nghĩa"]
-  A --> C["Cơ chế / lý luận"]
-  A --> D["Dấu hiệu cần nhận ra"]
-  D --> E["Ứng dụng vào case / lượng giá"]
+  A["Tiếp xúc ôn tà"] --> B{"Chính khí đủ mạnh?"}
+  B -->|Có| C["Không bệnh hoặc bệnh nhẹ"]
+  B -->|Không| D["Ôn bệnh phát"]
+  D --> E{"Phát ngay sau cảm tà?"}
+  E -->|Có| F["Tân cảm: biểu trước"]
+  E -->|Không| G["Phục tà: lý nhiệt trước"]
+  F --> H["Giải biểu, thấu tà"]
+  G --> I["Thanh lý nhiệt, dưỡng âm, thấu tà"]
 ```
 
-## Visual brief
+## Nhận diện nhanh các nhóm ôn tà
 
-<CompareTable title="Hình nên bổ sung khi biên tập">
+<CompareTable title="Từ dấu hiệu suy nguyên nhân">
 
-| Loại hình | Khi dùng | Gợi ý tạo |
+| Nhóm tà | Dấu hiệu 80/20 | Gợi ý bệnh cơ |
 | --- | --- | --- |
-| Sơ đồ Mermaid | Luồng cơ chế, phân loại, thuật toán | Dùng trực tiếp trong MDX. |
-| SVG tự vẽ | Bảng phân tầng, timeline, bản đồ khái niệm cần kiểm soát chính xác | Tạo file SVG trong `public/assets/<sách>/` rồi nhúng. |
-| Ảnh/illustration sinh bởi Codex | Cần minh họa sinh động, không cần độ chính xác giải phẫu tuyệt đối | Sinh ảnh rồi đặt vào `public/assets/<sách>/`, ghi chú là hình minh họa. |
-| Hình y khoa từ nguồn | X-quang, mô bệnh học, biểu đồ nghiên cứu | Chỉ dùng khi có quyền/nguồn rõ; ưu tiên trích dẫn. |
+| Phong nhiệt | Sốt, hơi ố phong, ho, đau họng, đầu lưỡi đỏ | Phạm phế vệ, truyền nhanh |
+| Thử nhiệt | Sốt cao, mồ hôi nhiều, khát, mặt đỏ, mạch hồng đại | Vào dương minh, hao khí tân |
+| Thấp nhiệt | Nặng đầu mình, tức ngực, đầy bụng, rêu nê, bệnh dai dẳng | Khốn tỳ vị, bế khí cơ |
+| Táo nhiệt | Ho khan, ít đàm, mũi họng khô, đại tiện táo | Thương phế vị âm tân |
+| Ôn nhiệt phục tà | Sơ khởi đã sốt cao, phiền khát, tiểu đỏ, lưỡi đỏ | Lý nhiệt tích thịnh |
+| Ôn độc / lệ khí | Phát cấp, nặng, lây lan, sưng đau, ban chẩn hoặc hầu họng | Độc nhiệt, có tính dịch |
 
 </CompareTable>
 
-## Bản đồ chương
+## Bẫy dễ nhầm
 
-<CompareTable title="Cấu trúc chương">
-
-| Cấp | Mục | Cần rút theo 80/20 |
-| --- | --- | --- |
-| # | BÀI 2. NGUYÊN NHÂN BỆNH VÀ PHÁT BỆNH | Cần rút ý 80/20 |
-| ## | 1. KHÁI NIỆM | Cần rút ý 80/20 |
-| ## | 2. NGUYÊN NHÂN VÀ CƠ CHẾ SINH BỆNH | Cần rút ý 80/20 |
-| #### | 2.1. Nguyên nhân | Cần rút ý 80/20 |
-
-</CompareTable>
-
-<ClinicalPearl>
-
-- Khi biên tập, hãy viết lại phần này sao cho người học nắm được lõi chương trong 3-5 phút trước khi đọc bản hiểu sâu.
-
-</ClinicalPearl>
+<RedFlags>
+- Nhầm **tân cảm** với **phục tà** chỉ vì cả hai đều sốt: hãy nhìn bệnh khởi từ biểu hay từ lý.
+- Thấy có biểu chứng rồi phát hãn mạnh: nếu nền là phục tà lý nhiệt, cách này dễ hao tân thương âm.
+- Học ôn độc/lệ khí như một loại tà cá nhân: phần này phải nghĩ thêm về lây lan, cách ly, phòng dịch.
+</RedFlags>
 
 ## Tự kiểm
 
 <SelfCheck>
-
-1. 20% ý nào giúp hiểu phần lớn chương này?
-2. Điểm nào dễ nhầm nhất khi áp dụng vào case?
-3. Nếu phải vẽ một sơ đồ duy nhất cho chương này, sơ đồ đó nên thể hiện quan hệ nào?
-
+1. Một bệnh nhân sốt cao, khát, lưỡi đỏ ngay từ đầu nhưng không rõ ố phong: vì sao nghi phục tà hơn tân cảm?
+2. Vì sao thấp nhiệt làm bệnh dai dẳng hơn phong nhiệt?
+3. Khi nhiều người cùng mắc một bệnh sốt cấp giống nhau, khung nguyên nhân phải đổi như thế nào?
 </SelfCheck>
 
 <SourceNote>
-
-- Nguồn: `Raw/on_benh_dai_cuong/01_ly-thuyet/bai-02-nguyen-nhan-phat-benh_001.md`
-- Gợi ý template: `deep-explanation`
-
+- Nguồn: `Raw/on_benh_dai_cuong/01_ly-thuyet/bai-02-nguyen-nhan-phat-benh_001.md`, `_002.md`, `_003.md`
 </SourceNote>

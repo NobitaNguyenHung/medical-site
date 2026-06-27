@@ -1,14 +1,14 @@
 ---
-title: "Tóm tắt · BÀI 3. BIỆN CHỨNG VỀ ÔN BỆNH"
-description: "Bản tóm tắt 80/20 của chương BÀI 3. BIỆN CHỨNG VỀ ÔN BỆNH."
+title: "Bài 3. Biện chứng Ôn bệnh"
+description: "Khung đọc Ôn bệnh bằng vệ-khí-dinh-huyết và tam tiêu."
 type: "chapter-summary"
 category: "books"
 diataxis: "tutorial"
 medicineSystem: "tcm"
 source: "Raw"
 sourceDetail: "Raw/on_benh_dai_cuong/01_ly-thuyet/bai-03-bien-chung_001.md"
-status: "draft"
-generatedBy: "materialize-ingest"
+status: "ready"
+generatedBy: "codex-reviewed"
 summaryRule: "80-20"
 sidebar:
   order: 6
@@ -16,84 +16,69 @@ sidebar:
 
 import KeyPoints from '~/components/KeyPoints.astro';
 import CompareTable from '~/components/CompareTable.astro';
-import ClinicalPearl from '~/components/ClinicalPearl.astro';
+import MedicalNote from '~/components/MedicalNote.astro';
+import RedFlags from '~/components/RedFlags.astro';
 import SelfCheck from '~/components/SelfCheck.astro';
 import SourceNote from '~/components/SourceNote.astro';
 
-## Nắm nhanh theo 80/20
+## 20% cốt lõi
 
-<KeyPoints title="20% cốt lõi cần nắm">
+<KeyPoints title="Hai bản đồ phải thuộc">
 
-- BÀI 3. BIỆN CHỨNG VỀ ÔN BỆNH
-- 1. KHÁI NIỆM
-- 2. BIỆN CHỨNG
-- 2.1. Vệ, khí, dinh, huyết biện chứng
-- 2.2. Tam tiêu biện chứng
+- Ôn bệnh biện chứng chủ yếu bằng hai bản đồ: **vệ-khí-dinh-huyết** và **tam tiêu**.
+- Vệ-khí-dinh-huyết mô tả **độ sâu và mức nặng**: vệ còn nông, khí đã thịnh nhiệt, dinh ảnh hưởng tâm thần, huyết có xuất huyết/động phong.
+- Tam tiêu mô tả **vị trí tạng phủ và đường lan**: thượng tiêu phế-tâm bào, trung tiêu tỳ-vị/trường, hạ tiêu can-thận.
+- Pháp trị đi theo tầng bệnh: vệ thì tân lương giải biểu; khí thì thanh khí; dinh thì thanh dinh thấu nhiệt; huyết thì lương huyết tán huyết.
+- Bệnh có thể truyền thuận, nghịch truyền, hoặc nhiều tầng đồng bệnh; vì vậy không học tuyến tính cứng.
+- Mục tiêu của biện chứng là biết **tà ở đâu, sâu đến đâu, chính khí còn bao nhiêu**, rồi chọn pháp.
 
 </KeyPoints>
 
-## Tóm tắt nhanh
+## Một câu nắm bài
 
-Vệ, khí, dinh, huyết và tam tiêu bệnh chứng là lý luận biện chứng chủ yếu của Ôn bệnh.
+<MedicalNote title="Câu lõi">
+Biện chứng Ôn bệnh là đặt bệnh nhân lên hai trục: **sâu-nông theo vệ khí dinh huyết** và **vị trí theo tam tiêu**.
+</MedicalNote>
 
-Sau khi ôn tà xâm nhập cơ thể sẽ gây ra chức năng thất điều của vệ, khí, dinh, huyết và những tạng phủ thuộc tam tiêu và nhiều khi cả những tổn thương thực thể mà sản sinh triệu chứng lâm sàng phức tạp đa dạng.
+## Bảng tầng bệnh
 
-## Sơ đồ 80/20
+<CompareTable title="Vệ khí dinh huyết">
+
+| Tầng | Dấu hiệu lõi | Ý nghĩa | Pháp chính |
+| --- | --- | --- | --- |
+| Vệ | Sốt, hơi ố phong, ho, mạch phù sác | Tà còn nông ở phế vệ | Tân lương giải biểu |
+| Khí | Sốt cao, khát, mồ hôi, không ố hàn | Lý nhiệt thịnh | Thanh khí tiết nhiệt |
+| Dinh | Sốt đêm nặng, tâm phiền, mê sảng nhẹ, lưỡi đỏ thẫm | Nhiệt vào dinh, nhiễu tâm | Thanh dinh thấu nhiệt |
+| Huyết | Ban chẩn, xuất huyết, co giật, hôn mê | Nhiệt động huyết, động phong | Lương huyết, tán huyết, tức phong |
+
+</CompareTable>
+
+## Tam tiêu để định vị
 
 ```mermaid
 flowchart TD
-  A["Vấn đề chính của chương"] --> B["Khái niệm / định nghĩa"]
-  A --> C["Cơ chế / lý luận"]
-  A --> D["Dấu hiệu cần nhận ra"]
-  D --> E["Ứng dụng vào case / lượng giá"]
+  A["Ôn tà"] --> B["Thượng tiêu: phế, tâm bào"]
+  B --> C["Trung tiêu: tỳ, vị, trường"]
+  C --> D["Hạ tiêu: can, thận"]
+  B -. nghịch truyền .-> E["Tâm bào: thần chí nguy hiểm"]
 ```
 
-## Visual brief
+## Bẫy dễ nhầm
 
-<CompareTable title="Hình nên bổ sung khi biên tập">
-
-| Loại hình | Khi dùng | Gợi ý tạo |
-| --- | --- | --- |
-| Sơ đồ Mermaid | Luồng cơ chế, phân loại, thuật toán | Dùng trực tiếp trong MDX. |
-| SVG tự vẽ | Bảng phân tầng, timeline, bản đồ khái niệm cần kiểm soát chính xác | Tạo file SVG trong `public/assets/<sách>/` rồi nhúng. |
-| Ảnh/illustration sinh bởi Codex | Cần minh họa sinh động, không cần độ chính xác giải phẫu tuyệt đối | Sinh ảnh rồi đặt vào `public/assets/<sách>/`, ghi chú là hình minh họa. |
-| Hình y khoa từ nguồn | X-quang, mô bệnh học, biểu đồ nghiên cứu | Chỉ dùng khi có quyền/nguồn rõ; ưu tiên trích dẫn. |
-
-</CompareTable>
-
-## Bản đồ chương
-
-<CompareTable title="Cấu trúc chương">
-
-| Cấp | Mục | Cần rút theo 80/20 |
-| --- | --- | --- |
-| # | BÀI 3. BIỆN CHỨNG VỀ ÔN BỆNH | Cần rút ý 80/20 |
-| ## | 1. KHÁI NIỆM | Cần rút ý 80/20 |
-| ## | 2. BIỆN CHỨNG | Cần rút ý 80/20 |
-| ### | 2.1. Vệ, khí, dinh, huyết biện chứng | Cần rút ý 80/20 |
-| #### | 2.2. Tam tiêu biện chứng | Cần rút ý 80/20 |
-
-</CompareTable>
-
-<ClinicalPearl>
-
-- Khi biên tập, hãy viết lại phần này sao cho người học nắm được lõi chương trong 3-5 phút trước khi đọc bản hiểu sâu.
-
-</ClinicalPearl>
+<RedFlags>
+- Không dùng vệ-khí-dinh-huyết thay thế hoàn toàn tam tiêu; hai hệ bổ sung nhau.
+- Không nghĩ bệnh luôn đi vệ rồi khí rồi dinh rồi huyết; phong ôn có thể nghịch truyền tâm bào, phục tà có thể phát từ lý.
+- Thấy sốt giảm nhưng lưỡi đỏ khô, mạch hư: có thể tà lui nhưng âm dịch đã thương.
+</RedFlags>
 
 ## Tự kiểm
 
 <SelfCheck>
-
-1. 20% ý nào giúp hiểu phần lớn chương này?
-2. Điểm nào dễ nhầm nhất khi áp dụng vào case?
-3. Nếu phải vẽ một sơ đồ duy nhất cho chương này, sơ đồ đó nên thể hiện quan hệ nào?
-
+1. Vì sao sốt cao khát nhiều khác với sốt đêm nặng và mê sảng?
+2. Một ca “tà ở khí phần, trung tiêu dương minh” nghĩa là gì?
+3. Khi nào phải nghĩ nhiệt đã nhập huyết?
 </SelfCheck>
 
 <SourceNote>
-
 - Nguồn: `Raw/on_benh_dai_cuong/01_ly-thuyet/bai-03-bien-chung_001.md`
-- Gợi ý template: `tcm-pattern`
-
 </SourceNote>

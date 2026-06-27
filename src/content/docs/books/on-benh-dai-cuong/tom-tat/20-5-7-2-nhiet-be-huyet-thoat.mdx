@@ -1,14 +1,14 @@
 ---
-title: "Tóm tắt · 5.7.2. Nhiệt bế huyết thoát"
-description: "Bản tóm tắt 80/20 của chương 5.7.2. Nhiệt bế huyết thoát."
+title: "Xuân ôn: nhiệt bế huyết thoát"
+description: "Tóm tắt tình huống nguy kịch trong Xuân ôn: nhiệt bế huyết thoát, dương khí bạo thoát, điều trị triệu chứng và dự phòng."
 type: "chapter-summary"
 category: "books"
 diataxis: "tutorial"
-medicineSystem: "modern"
+medicineSystem: "tcm"
 source: "Raw"
 sourceDetail: "Raw/on_benh_dai_cuong/02_benh-lam-sang/xuan-on_003.md"
-status: "draft"
-generatedBy: "materialize-ingest"
+status: "ready"
+generatedBy: "codex-reviewed"
 summaryRule: "80-20"
 sidebar:
   order: 20
@@ -16,87 +16,71 @@ sidebar:
 
 import KeyPoints from '~/components/KeyPoints.astro';
 import CompareTable from '~/components/CompareTable.astro';
-import ClinicalPearl from '~/components/ClinicalPearl.astro';
+import MedicalNote from '~/components/MedicalNote.astro';
+import RedFlags from '~/components/RedFlags.astro';
 import SelfCheck from '~/components/SelfCheck.astro';
 import SourceNote from '~/components/SourceNote.astro';
 
-## Nắm nhanh theo 80/20
+## 20% cốt lõi
 
-<KeyPoints title="20% cốt lõi cần nắm">
+<KeyPoints title="Nhận ra pha tối nguy hiểm">
 
-- 5.7.2. Nhiệt bế huyết thoát
-- 6. ĐIỀU TRỊ TRIỆU CHỨNG
-- 6.1. Đau đầu, nôn, cổ cứng
-- 6.2. Hôn mê
-- 7. DỰ PHÒNG VÀ ĐIỀU DƯỠNG
+- **Nhiệt bế huyết thoát** là tình huống nhiệt độc nội hãm, huyết bị bức loạn, chính khí suy; biểu hiện ban chẩn dày, sắc mặt nhợt, chi lạnh, mồ hôi lạnh, mạch vi tế.
+- **Dương khí bạo thoát** là chính khí suy sụp đột ngột: thở yếu, mồ hôi lạnh, chi quyết, mạch muốn tuyệt.
+- Đây là giai đoạn phải nghĩ song song: **khai bế, lương huyết, cứu thoát**, tùy chứng cụ thể.
+- Điều trị triệu chứng như đau đầu, nôn, cổ cứng, hôn mê không tách khỏi bệnh cơ nhiệt độc, tâm bào, can phong và âm dịch.
+- Dự phòng Xuân ôn vẫn quay về tránh phục tà phát, giữ chính khí, phát hiện sớm lý nhiệt và dấu hiệu vào sâu.
 
 </KeyPoints>
 
-## Tóm tắt nhanh
+## Một câu nắm bài
 
-- Khởi bệnh rất nhanh. - Toàn thân ban chẩn dày đặc thành từng mảng. - Sắc mặt nhợt nhạt. - Móng tay xanh tím. - Da có thể thấy hoa văn. - Tử chi không ấm. - Hơi thở nhỏ yếu. - Ra mồ hôi lạnh. - Lưỡi tối hơi tím. - Mạch vi tế.
+<MedicalNote title="Câu lõi">
+Nhiệt bế huyết thoát là lúc **tà nhiệt bế ở trong nhưng chính khí thoát ra ngoài**, nên chỉ thanh nhiệt là không đủ.
+</MedicalNote>
 
-Do tà thịnh chính suy, độc nhiệt nội hãm bức huyết vọng hành gây ra toàn thân ban chẩn dày đặc thành từng đám.
+## Bảng nhận diện nguy cấp
 
-## Sơ đồ 80/20
+<CompareTable title="Dấu hiệu cần phản ứng ngay">
+
+| Dấu hiệu | Gợi ý bệnh cơ | Ý nghĩa |
+| --- | --- | --- |
+| Ban chẩn dày, tím tối | Nhiệt độc huyết phận | Huyết bị bức, độc nhiệt sâu |
+| Sắc mặt nhợt, chi lạnh | Chính khí suy, dương không đạt | Nguy cơ thoát |
+| Mồ hôi lạnh, thở yếu | Dương khí bạo thoát | Cấp cứu |
+| Hôn mê | Tâm bào bị bế | Cần khai khiếu |
+| Đau đầu, nôn, cổ cứng | Nhiệt động phong/đàm nhiệt | Theo dõi biến chứng thần kinh |
+
+</CompareTable>
+
+## Sơ đồ pha nặng
 
 ```mermaid
 flowchart TD
-  A["Vấn đề chính của chương"] --> B["Khái niệm / định nghĩa"]
-  A --> C["Cơ chế / lý luận"]
-  A --> D["Dấu hiệu cần nhận ra"]
-  D --> E["Ứng dụng vào case / lượng giá"]
+  A["Phục nhiệt sâu"] --> B["Nhiệt độc nội hãm"]
+  B --> C["Huyết bị bức: ban, xuất huyết"]
+  B --> D["Tâm bào bị bế: hôn mê"]
+  C --> E["Chính khí suy"]
+  D --> E
+  E --> F["Huyết thoát / dương khí bạo thoát"]
 ```
 
-## Visual brief
+## Red flags
 
-<CompareTable title="Hình nên bổ sung khi biên tập">
-
-| Loại hình | Khi dùng | Gợi ý tạo |
-| --- | --- | --- |
-| Sơ đồ Mermaid | Luồng cơ chế, phân loại, thuật toán | Dùng trực tiếp trong MDX. |
-| SVG tự vẽ | Bảng phân tầng, timeline, bản đồ khái niệm cần kiểm soát chính xác | Tạo file SVG trong `public/assets/<sách>/` rồi nhúng. |
-| Ảnh/illustration sinh bởi Codex | Cần minh họa sinh động, không cần độ chính xác giải phẫu tuyệt đối | Sinh ảnh rồi đặt vào `public/assets/<sách>/`, ghi chú là hình minh họa. |
-| Hình y khoa từ nguồn | X-quang, mô bệnh học, biểu đồ nghiên cứu | Chỉ dùng khi có quyền/nguồn rõ; ưu tiên trích dẫn. |
-
-</CompareTable>
-
-## Bản đồ chương
-
-<CompareTable title="Cấu trúc chương">
-
-| Cấp | Mục | Cần rút theo 80/20 |
-| --- | --- | --- |
-| #### | 5.7.2. Nhiệt bế huyết thoát | Cần rút ý 80/20 |
-| ## | 6. ĐIỀU TRỊ TRIỆU CHỨNG | Cần rút ý 80/20 |
-| ### | 6.1. Đau đầu, nôn, cổ cứng | Cần rút ý 80/20 |
-| ### | 6.2. Hôn mê | Cần rút ý 80/20 |
-| ## | 7. DỰ PHÒNG VÀ ĐIỀU DƯỠNG | Cần rút ý 80/20 |
-| ### | 7.1. Phát bệnh | Cần rút ý 80/20 |
-| ### | 7.2. Dự phòng | Cần rút ý 80/20 |
-| #### | Tóm tắt | Cần rút ý 80/20 |
-
-</CompareTable>
-
-<ClinicalPearl>
-
-- Khi biên tập, hãy viết lại phần này sao cho người học nắm được lõi chương trong 3-5 phút trước khi đọc bản hiểu sâu.
-
-</ClinicalPearl>
+<RedFlags>
+- Ban dày kèm chi lạnh và mạch vi không phải “ban đã mọc ra tốt”, mà là dấu hiệu chính suy tà thịnh.
+- Hôn mê, cổ cứng, nôn trong Xuân ôn là dấu hiệu vào sâu, không chờ tự lui.
+- Mồ hôi lạnh trong bệnh nhiệt nặng là dấu hiệu thoát, khác mồ hôi do nhiệt bức ở khí phần.
+</RedFlags>
 
 ## Tự kiểm
 
 <SelfCheck>
-
-1. 20% ý nào giúp hiểu phần lớn chương này?
-2. Điểm nào dễ nhầm nhất khi áp dụng vào case?
-3. Nếu phải vẽ một sơ đồ duy nhất cho chương này, sơ đồ đó nên thể hiện quan hệ nào?
-
+1. Vì sao nhiệt bế huyết thoát vừa có dấu hiệu nhiệt độc vừa có dấu hiệu lạnh/suy?
+2. Dấu hiệu nào phân biệt mồ hôi do khí phần nhiệt với mồ hôi lạnh do thoát?
+3. Trong pha này, vì sao cần nghĩ “cứu thoát” bên cạnh “thanh nhiệt”?
 </SelfCheck>
 
 <SourceNote>
-
 - Nguồn: `Raw/on_benh_dai_cuong/02_benh-lam-sang/xuan-on_003.md`
-- Gợi ý template: `symptom-approach`
-
 </SourceNote>
