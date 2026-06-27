@@ -114,7 +114,52 @@ Trong sidebar Diátaxis:
 > nhưng chỉ file `.md`/`.mdx` mới thành trang; `.html` thô trong `Raw/` không dùng
 > cho quiz. Quiz HTML vẫn phải đặt ở `public/quiz/<sách>/`.
 
-## 3. Thêm 1 SÁCH mới (vd `vi-sinh`)
+## 3. Trang chủ Dashboard
+
+Trang chủ (`/medical-site/`) dùng component `src/components/HomeDashboard.astro`.
+Nội dung của nó được tách ra file config riêng:
+
+**`src/data/books.ts`** — nguồn duy nhất cho các card sách trên trang chủ.
+
+### Khi thêm sách mới — LUÔN cập nhật `books.ts`
+
+Thêm 1 object vào mảng `books` trong `src/data/books.ts`:
+
+```ts
+{
+  num: '03',                          // số thứ tự hiển thị
+  system: 'YHHĐ',                     // nhãn hệ thống y học
+  icon: 'ti-heart-rate-monitor',      // Tabler icon name
+  color: {
+    bg: '#E6F1FB',                    // màu nền icon (pastel)
+    accent: '#378ADD',                // màu border-left card
+    text: '#185FA5',                  // màu icon
+  },
+  name: 'Tim mạch học',
+  desc: 'Điện tim · suy tim · van tim · rối loạn nhịp',
+  pills: ['đang xây'],                // thẻ meta nhỏ dưới card
+  href: `/medical-site/books/tim-mach/`,
+  status: 'building',                 // 'ready' | 'building' | 'planned'
+},
+```
+
+Grid trang chủ dùng `auto-fit minmax(220px, 1fr)` — thêm bao nhiêu sách cũng tự scale,
+không cần sửa CSS hay layout.
+
+### Màu sắc gợi ý theo môn
+
+| Môn | bg | accent | text |
+|---|---|---|---|
+| YHCT | `#E1F5EE` | `#1D9E75` | `#0F6E56` |
+| Nội khoa | `#EEEDFE` | `#7F77DD` | `#534AB7` |
+| Tim mạch | `#E6F1FB` | `#378ADD` | `#185FA5` |
+| Nhi khoa | `#FAEEDA` | `#BA7517` | `#854F0B` |
+| Ngoại khoa | `#FAECE7` | `#D85A30` | `#712B13` |
+| Vi sinh | `#EAF3DE` | `#639922` | `#3B6D11` |
+
+---
+
+## 4. Thêm 1 SÁCH mới (vd `vi-sinh`)
 
 ### Cách tự động tạo skeleton từ Raw
 
@@ -176,38 +221,97 @@ Các file đã biên tập tay sẽ không bị ghi đè nếu không còn `gene
 
 5. Khai báo menu — `astro.config.mjs`:
 
-   **Học theo lộ trình** — thêm 2 item dưới group sách:
+   **Học theo lộ trình** — thêm group theo tên sách. Bên trong sách có lộ trình
+   và lượng giá:
    ```js
-   { label: 'Lộ trình Vi sinh', link: 'learning-paths/vi-sinh/' },
-   { label: 'Vi sinh · Lượng giá', items: [{ autogenerate: { directory: 'books/vi-sinh/luong-gia' } }] },
+   {
+     label: 'Vi sinh',
+     items: [
+       { label: 'Lộ trình học', link: 'learning-paths/vi-sinh/' },
+       { label: 'Lượng giá', items: [{ autogenerate: { directory: 'books/vi-sinh/luong-gia' } }] },
+     ],
+   },
    ```
 
-   **Tra cứu nhanh** — thêm:
+   > **Quy tắc lượng giá:** Nếu `Raw/<sách>/Quiz/` hoặc `Raw/<sách>/Quzi/`
+   > có file HTML, `materialize:ingest` tạo wrapper từ chính các HTML đó và
+   > không sinh trang lượng giá tự động theo từng chương. Chỉ khi không có HTML
+   > quiz mới sinh câu hỏi tự kiểm tạm.
+
+   **Tra cứu nhanh** — thêm group theo tên sách. Bên trong sách, nhóm `tom-tat/`
+   theo chương thay vì xổ phẳng toàn bộ bài:
    ```js
-   { label: 'Vi sinh · Tóm tắt', items: [{ autogenerate: { directory: 'books/vi-sinh/tom-tat' } }] },
+   {
+     label: 'Vi sinh',
+     items: [
+       {
+         label: 'Tóm tắt theo chương',
+         items: [
+           {
+             label: 'Chương 1. Đại cương',
+             items: [
+               { label: 'Đại cương vi sinh', link: 'books/vi-sinh/tom-tat/01-dai-cuong/' },
+               { label: 'Phân loại vi sinh', link: 'books/vi-sinh/tom-tat/02-phan-loai/' },
+             ],
+           },
+         ],
+       },
+       { label: 'Bảng tra cứu', items: [{ autogenerate: { directory: 'topics/reference/vi-sinh' } }] },
+     ],
+   },
    ```
 
-   **Hiểu sâu** — thêm group cha bao gồm 3 mục con (bắt buộc dùng cấu trúc nested này):
+   > **Quy tắc sidebar Tra cứu nhanh:** Luôn nhóm theo sách trước, rồi nhóm
+   > `Tóm tắt theo chương`. Không đặt tất cả file `tom-tat/` phẳng dưới một group.
+   > Title trang tóm tắt không thêm tiền tố “Tóm tắt 80/20” hoặc “Tóm tắt ·”.
+
+   **Hiểu sâu** — thêm group cha theo tên sách. `bai-giang/` có thể autogenerate
+   khi còn ít bài, nhưng `nguyen-thuy/` và `topics/explanation/` nên nhóm theo
+   chương/bài như `tom-tat/` để dễ đọc và dễ quản lý:
    ```js
    {
      label: 'Vi sinh',          // ← group cha = tên sách
      items: [
        { label: 'Bài giảng chuyên sâu', items: [{ autogenerate: { directory: 'books/vi-sinh/bai-giang' } }] },
-       { label: 'Nguyên thủy',          items: [{ autogenerate: { directory: 'books/vi-sinh/nguyen-thuy' } }] },
-       { label: 'Giải thích cơ chế',    items: [{ autogenerate: { directory: 'topics/explanation' } }] },
+       {
+         label: 'Nguyên thủy theo chương',
+         items: [
+           {
+             label: 'Chương 1. Đại cương',
+             items: [
+               { label: 'Nguyên văn chương 1', link: 'books/vi-sinh/nguyen-thuy/01-dai-cuong/' },
+               { label: 'Phân loại vi sinh', link: 'books/vi-sinh/nguyen-thuy/02-phan-loai/' },
+             ],
+           },
+         ],
+       },
+       {
+         label: 'Giải thích cơ chế theo chương',
+         items: [
+           {
+             label: 'Chương 1. Đại cương',
+             items: [
+               { label: 'Cơ chế nền', link: 'topics/explanation/vi-sinh/01-dai-cuong/' },
+               { label: 'Cơ chế phân loại', link: 'topics/explanation/vi-sinh/02-phan-loai/' },
+             ],
+           },
+         ],
+       },
      ],
    },
    ```
 
    > **Quy tắc sidebar Hiểu sâu:** Luôn nhóm theo sách (group cha = tên sách).
-   > Không đặt `bai-giang/` và `nguyen-thuy/` ngang hàng với các sách khác.
-   > Mẫu hiện tại: xem block `Ôn bệnh đại cương` trong `astro.config.mjs`.
+   > Không đặt `bai-giang/` và `nguyen-thuy/` ngang hàng với các sách khác. Với
+   > `nguyen-thuy/` và `topics/explanation/`, không autogenerate phẳng khi có nhiều
+   > file; giữ URL ổn định và chỉ chỉnh cách nhóm sidebar. Mẫu hiện tại: xem block
+   > `Ôn bệnh đại cương` trong `astro.config.mjs`.
 
 6. `npm run build` → push.
 
 > `QuizEmbed` tự thêm base path → quiz chạy đúng cả local lẫn GitHub Pages.
 
-## 4. Chọn template theo Diátaxis
+## 5. Chọn template theo Diátaxis
 
 Trước khi thêm bài, chọn theo nhu cầu người đọc:
 
@@ -240,9 +344,25 @@ Với một chương sách lớn, ưu tiên tạo nhiều view chuẩn hóa:
 
 - `chapter-summary.mdx` → bản tóm tắt 80/20 + sơ đồ/visual brief.
 - `quick-reference.mdx` → bản tra cứu.
-- `deep-explanation.mdx` → bản hiểu sâu.
+- `deep-explanation.mdx` → bản đồ cơ chế + workflow + cầu nối lâm sàng.
 - `assessment-mcq.mdx` / `flashcard-set.mdx` / `case-question-set.mdx` → lượng giá;
   ưu tiên nhúng HTML quiz nếu có trong `Raw/<sách>/Quiz` hoặc `Raw/<sách>/Quzi`.
+
+### Giải thích cơ chế (`deep-explanation`)
+
+Mục này không được là bảng liệt kê heading. Nó là nơi cô đọng phần khó bằng sơ đồ
+và chuỗi nhân quả, đặc biệt quan trọng cho bệnh học.
+
+Một trang cơ chế đạt yêu cầu cần có:
+
+- **Câu hỏi cơ chế:** vì sao bệnh/chứng xảy ra, đi theo chuỗi nào?
+- **Bản đồ cơ chế 1 trang:** 4-6 nút chính, mỗi nút nối được bằng quan hệ nhân quả.
+- **Workflow Mermaid:** nguyên nhân → cơ chế trung gian → dấu hiệu → điểm rẽ → xử trí.
+- **Cầu nối sách vở → lâm sàng:** cơ chế nào tạo dấu hiệu nào và đổi quyết định gì.
+- **Worked example:** một tình huống ngắn để người học thấy cách suy từ dấu hiệu về cơ chế.
+
+Nếu chưa đủ dữ kiện để viết chi tiết, vẫn phải sinh khung theo hướng mechanism map,
+không để các câu như “Cần giải thích cơ chế / lý luận”.
 
 ### Hình vẽ và sơ đồ trong tóm tắt
 
@@ -253,7 +373,7 @@ Với một chương sách lớn, ưu tiên tạo nhiều view chuẩn hóa:
   minh họa nếu không phải hình y khoa nguồn thật.
 - Hình y khoa thật: chỉ dùng khi có quyền/nguồn rõ, ưu tiên đặt trong `public/assets/<sách>/`.
 
-## 5. Thêm / cập nhật quiz HTML
+## 6. Thêm / cập nhật quiz HTML
 
 Quiz là file `.html` tương tác (build từ skill `html-y-khoa`). **Đặt trong `public/`,
 KHÔNG đặt trong `src/content/docs/`.**
@@ -274,7 +394,7 @@ npm run materialize:ingest -- Raw/<sách>/INGEST_PLAN.json
 Script sẽ cố gắng match quiz theo số thứ tự/tên chương. Nếu không match được, nó không
 nhúng bừa; trang lượng giá vẫn có câu hỏi tự kiểm để biên tập sau.
 
-### 5a. Thêm quiz MỚI
+### 6a. Thêm quiz MỚI
 
 ```bash
 # 1) chép file html vào public/quiz/<sách>/
@@ -303,7 +423,7 @@ import QuizEmbed from '~/components/QuizEmbed.astro';
 có base — component tự thêm `/medical-site/`. Có thể nhúng nhiều `<QuizEmbed>` trong
 1 trang `.mdx`, nhưng mặc định nên tách mỗi quiz thành 1 trang trong `luong-gia/`.
 
-### 5b. Cập nhật quiz CŨ
+### 6b. Cập nhật quiz CŨ
 
 Build lại bằng `html-y-khoa` → **ghi đè đúng tên file** trong `public/quiz/<sách>/`.
 Không cần sửa `.mdx`. Build → push.
@@ -311,17 +431,17 @@ Không cần sửa `.mdx`. Build → push.
 > Nếu lỡ bỏ `.html` vào `src/content/docs/...`: chuyển nó ra `public/quiz/<sách>/`,
 > xóa thư mục lạc, rồi trỏ `<QuizEmbed>` tới vị trí mới.
 
-## 6. Deploy
+## 7. Deploy
 
 - Workflow: `.github/workflows/deploy.yml` (GitHub Actions, Node 22).
 - Push `main` → tự build + deploy → https://nobitanguyenhung.github.io/medical-site/
 - Xem trạng thái: `gh run list` / `gh run watch <id>`.
 
-## 7. Xoá chương hoặc xoá sách
+## 8. Xoá chương hoặc xoá sách
 
 Luôn chạy thử trước, vì lệnh xoá có thể ảnh hưởng nhiều view sinh từ cùng một nguồn.
 
-### 7a. Xoá một chương
+### 8a. Xoá một chương
 
 Dry-run, chỉ xem danh sách sẽ xoá:
 
@@ -351,7 +471,7 @@ npm run build
 
 Nếu chỉ xoá view nhưng giữ item trong `INGEST_PLAN.json`, lần materialize sau có thể sinh lại chương đó. Muốn bỏ hẳn khỏi sách thì xoá/di chuyển raw file rồi chạy lại `ingest:book --write`.
 
-### 7b. Xoá cả cuốn sách
+### 8b. Xoá cả cuốn sách
 
 Dry-run:
 
@@ -375,8 +495,10 @@ Lệnh xoá sách gom các phần liên quan:
 
 - `src/content/docs/books/<slug-sách>/`
 - `src/content/docs/learning-paths/<slug-sách>.mdx`
-- `src/content/docs/topics/reference/<slug-sách>-*.mdx`
-- `src/content/docs/topics/explanation/<slug-sách>-*.mdx`
+- `src/content/docs/topics/reference/<slug-sách>/`
+- `src/content/docs/topics/explanation/<slug-sách>/`
+- `src/content/docs/topics/reference/<slug-sách>-*.mdx` nếu còn dữ liệu cũ
+- `src/content/docs/topics/explanation/<slug-sách>-*.mdx` nếu còn dữ liệu cũ
 - `public/quiz/<slug-sách>/`
 - Raw source nếu thêm `--raw`
 
