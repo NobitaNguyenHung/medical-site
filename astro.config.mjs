@@ -37,7 +37,25 @@ export default defineConfig({
 							label: 'Ôn bệnh đại cương',
 							items: [
 								{ label: 'Lộ trình học', link: 'learning-paths/on-benh-dai-cuong/' },
-								{ label: 'Lượng giá', items: [{ autogenerate: { directory: 'books/on-benh-dai-cuong/luong-gia' } }] },
+								{
+									label: 'Lượng giá',
+									items: [
+										{ label: 'Tổng hợp Ôn bệnh', link: 'books/on-benh-dai-cuong/luong-gia/01-onbenh-thayhung/' },
+										{
+											label: 'Theo bài',
+											collapsed: true,
+											items: [
+												{ label: 'Đại cương Ôn bệnh', link: 'books/on-benh-dai-cuong/luong-gia/02-dai-cuong/' },
+												{ label: 'Ngược tật', link: 'books/on-benh-dai-cuong/luong-gia/03-nguoc-tat/' },
+												{ label: 'Phong ôn', link: 'books/on-benh-dai-cuong/luong-gia/04-phong-on/' },
+												{ label: 'Thử thấp', link: 'books/on-benh-dai-cuong/luong-gia/05-thu-thap/' },
+												{ label: 'Xuân ôn', link: 'books/on-benh-dai-cuong/luong-gia/06-xuan-on/' },
+												{ label: 'Flashcard Xuân ôn', link: 'books/on-benh-dai-cuong/luong-gia/07-xuan-on-flashcard/' },
+												{ label: 'Biện chứng Ôn bệnh', link: 'books/on-benh-dai-cuong/luong-gia/08-bien-chung-on-benh/' },
+											],
+										},
+									],
+								},
 							],
 						},
 						{ label: 'Ca học từng bước', items: [{ autogenerate: { directory: 'cases' } }] },
