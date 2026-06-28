@@ -343,6 +343,9 @@ export default defineConfig({
 		AstroPWA({
 			registerType: 'autoUpdate',
 			workbox: {
+				// SW mới activate ngay, không chờ tab cũ đóng
+				skipWaiting: true,
+				clientsClaim: true,
 				// KHÔNG precache .html -> trang LUÔN lấy bản mới khi online (hết stale)
 				globPatterns: ['**/*.{js,css,svg,png,jpg,jpeg,webp,avif,woff,woff2,wasm}'],
 				cleanupOutdatedCaches: true,
