@@ -52,6 +52,7 @@ export default defineConfig({
 												{ label: 'Xuân ôn', link: 'books/on-benh-dai-cuong/luong-gia/06-xuan-on/' },
 												{ label: 'Flashcard Xuân ôn', link: 'books/on-benh-dai-cuong/luong-gia/07-xuan-on-flashcard/' },
 												{ label: 'Biện chứng Ôn bệnh', link: 'books/on-benh-dai-cuong/luong-gia/08-bien-chung-on-benh/' },
+												{ label: 'Biện chứng Ôn bệnh — Chuyên sâu', link: 'books/on-benh-dai-cuong/luong-gia/09-bien-chung-on-benh-chuyensau/' },
 											],
 										},
 									],
