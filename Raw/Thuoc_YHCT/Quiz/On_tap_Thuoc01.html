@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ôn Tập Thuốc YHCT 1 — Question Bank</title>
+<style>
+  :root {
+    --green: #16a34a; --green-light: #dcfce7; --green-border: #4ade80;
+    --red: #dc2626; --red-light: #fee2e2; --red-border: #f87171;
+    --blue: #2563eb; --blue-light: #dbeafe;
+    --gray: #6b7280; --gray-light: #f3f4f6;
+    --text: #111827; --border: #e5e7eb;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: #f0fdf4; color: var(--text); }
+
+  /* HEADER */
+  .header { background: linear-gradient(135deg, #065f46, #047857); color: white; padding: 20px 24px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+  .header h1 { font-size: 1.1rem; font-weight: 700; margin-bottom: 12px; }
+  .stats-row { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
+  .stat-chip { background: rgba(255,255,255,0.15); border-radius: 20px; padding: 4px 14px; font-size: 0.82rem; font-weight: 600; }
+  .stat-chip span { opacity: 0.8; font-weight: 400; }
+  .progress-bar-wrap { flex: 1; min-width: 120px; background: rgba(255,255,255,0.2); border-radius: 999px; height: 8px; }
+  .progress-bar-fill { height: 8px; background: #4ade80; border-radius: 999px; transition: width 0.4s; width: 0%; }
+  .btn-reset { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 6px 16px; border-radius: 8px; cursor: pointer; font-size: 0.82rem; font-weight: 600; transition: background 0.2s; }
+  .btn-reset:hover { background: rgba(255,255,255,0.25); }
+
+  /* MAIN */
+  .main { max-width: 860px; margin: 24px auto; padding: 0 16px 60px; }
+
+  /* QUESTION CARD */
+  .q-card { background: white; border: 1px solid var(--border); border-radius: 14px; padding: 20px; margin-bottom: 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); transition: box-shadow 0.2s; }
+  .q-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+  .q-header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px; }
+  .q-num { background: #065f46; color: white; border-radius: 8px; padding: 4px 10px; font-size: 0.78rem; font-weight: 700; white-space: nowrap; flex-shrink: 0; }
+  .q-text { font-size: 0.95rem; font-weight: 600; line-height: 1.55; }
+
+  /* OPTIONS */
+  .options { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+  .opt { display: flex; align-items: flex-start; gap: 10px; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 10px; cursor: pointer; transition: all 0.18s; font-size: 0.88rem; line-height: 1.5; }
+  .opt:hover:not(.disabled) { border-color: #059669; background: #f0fdf4; }
+  .opt-letter { background: var(--gray-light); border-radius: 6px; padding: 2px 8px; font-weight: 700; font-size: 0.8rem; flex-shrink: 0; color: #374151; }
+  .opt.selected { border-color: #2563eb; background: var(--blue-light); }
+  .opt.selected .opt-letter { background: var(--blue); color: white; }
+  .opt.correct { border-color: var(--green-border); background: var(--green-light); }
+  .opt.correct .opt-letter { background: var(--green); color: white; }
+  .opt.wrong { border-color: var(--red-border); background: var(--red-light); }
+  .opt.wrong .opt-letter { background: var(--red); color: white; }
+  .opt.disabled { cursor: default; }
+
+  /* BUTTONS */
+  .btn-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .btn-check { background: #065f46; color: white; border: none; padding: 8px 20px; border-radius: 8px; cursor: pointer; font-size: 0.85rem; font-weight: 600; transition: background 0.2s; }
+  .btn-check:hover:not(:disabled) { background: #047857; }
+  .btn-check:disabled { background: #9ca3af; cursor: default; }
+  .btn-reveal { background: white; color: #065f46; border: 1.5px solid #065f46; padding: 8px 20px; border-radius: 8px; cursor: pointer; font-size: 0.85rem; font-weight: 600; transition: all 0.2s; }
+  .btn-reveal:hover { background: #f0fdf4; }
+  .result-chip { display: none; padding: 6px 14px; border-radius: 20px; font-size: 0.82rem; font-weight: 700; }
+  .result-chip.show { display: inline-block; }
+  .result-chip.correct-chip { background: var(--green-light); color: var(--green); }
+  .result-chip.wrong-chip { background: var(--red-light); color: var(--red); }
+
+  /* EXPLANATION */
+  .explanation { display: none; margin-top: 14px; padding: 14px; background: #f0fdf4; border-left: 4px solid #059669; border-radius: 0 10px 10px 0; font-size: 0.87rem; line-height: 1.6; }
+  .explanation.show { display: block; }
+  .expl-label { font-weight: 700; color: #065f46; margin-bottom: 4px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .expl-answer { font-weight: 700; color: var(--green); margin-bottom: 6px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>📚 Ôn Tập Thuốc Y Học Cổ Truyền 1 — 80 Câu Hỏi</h1>
+  <div class="stats-row">
+    <div class="stat-chip">Đúng: <span id="scoreCorrect">0</span></div>
+    <div class="stat-chip">Sai: <span id="scoreWrong">0</span></div>
+    <div class="stat-chip">Đã làm: <span id="scoreDone">0</span>/80</div>
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressFill"></div></div>
+    <button class="btn-reset" onclick="resetAll()">↺ Làm lại từ đầu</button>
+  </div>
+</div>
+
+<div class="main" id="quizMain"></div>
+
+<script>
+const questions = [
+  {q:"\"Dương dược\" thường bao gồm các vị thuốc có tính chất và tác dụng nào?",opts:["Tính hàn, lương; vị khổ, toan; tác dụng trầm, giáng.","Tính ôn, nhiệt; vị tân, cam; tác dụng phù, thăng.","Tính bình; vị nhạt; tác dụng thẩm thấp.","Dùng điều trị các bệnh thuộc về \"Dương chứng\"."],ans:1,expl:"Dương dược gồm các thuốc tính phù, thăng, nhiệt, ôn; vị tân, cam — đối lập với Âm dược (tính trầm, giáng, hàn, lương)."},
+  {q:"Thuốc có vị Khổ thường quy vào tạng nào và có tác dụng chính là gì?",opts:["Quy vào tạng Can, tác dụng sơ Can và giải uất.","Quy vào tạng Tỳ, tác dụng kiện Tỳ và tiêu thực.","Quy vào tạng Thận, tác dụng bổ Thận và lợi thủy.","Quy vào tạng Tâm, tác dụng thanh Tâm giáng hỏa."],ans:3,expl:"Vị khổ (đắng) thuộc hành Hỏa, quy tạng Tâm. Tác dụng: thanh Tâm giáng hỏa, tiết nhiệt táo thấp (theo học thuyết Ngũ vị — Ngũ tạng)."},
+  {q:"Phương pháp nào trong Bát pháp được chỉ định để điều trị các chứng bệnh liên quan đến \"Nhiệt độc, sốt, viêm, nhọt\"?",opts:["Pháp Hãn.","Pháp Ôn.","Pháp Thanh.","Pháp Tiêu."],ans:2,expl:"Pháp Thanh (Thanh pháp): dùng thuốc tính hàn, lương để thanh giải lý nhiệt — chỉ định cho nhiệt độc, sốt cao, viêm, nhọt. Pháp Hãn dùng cho biểu chứng; Pháp Ôn dùng cho hàn chứng."},
+  {q:"Theo \"Thần Nông bản thảo kinh\", nhóm thuốc Thượng phẩm có đặc điểm gì?",opts:["Chủ yếu có tác dụng bổ dưỡng, không độc.","Dùng để chữa các bệnh nhẹ và thường ít độc.","Dùng để điều trị các bệnh cấp tính và thường có độc.","Chỉ bao gồm các vị thuốc có nguồn gốc từ khoáng vật."],ans:0,expl:"Thần Nông bản thảo kinh chia 365 vị thuốc thành 3 phẩm: Thượng phẩm (120 vị) bổ dưỡng, không độc, dùng lâu dài; Trung phẩm bổ dưỡng và trị bệnh; Hạ phẩm trị bệnh, thường có độc."},
+  {q:"Thuốc giải biểu là những vị thuốc có tác dụng và cách thức đưa ngoại tà ra ngoài như thế nào?",opts:["Chuyển hóa ngoại tà ngay tại tạng phủ bị bệnh.","Bài tiết ngoại tà thông qua đường đại tiện.","Đưa ngoại tà ra ngoài bằng đường mồ hôi.","Bài tiết ngoại tà chủ yếu qua đường nước tiểu."],ans:2,expl:"Thuốc giải biểu đưa ngoại tà (phong hàn, phong nhiệt) ra ngoài qua đường mồ hôi (phát hãn). Cơ chế: khai tấu lý, thông phế khí, tán hàn hoặc tán nhiệt."},
+  {q:"Các vị thuốc giải biểu thường có đặc điểm chung về quy kinh và thành phần hóa học (TPHH) như thế nào?",opts:["Quy kinh Tâm, Tỳ; TPHH chủ yếu là glycosid.","Quy kinh Phế; TPHH chủ yếu là tinh dầu.","Quy kinh Can, Thận; TPHH chủ yếu là alkaloid.","Quy kinh Vị, Đại trường; TPHH chủ yếu là tannin."],ans:1,expl:"Thuốc giải biểu đều quy kinh Phế (Phế chủ bì mao, khai khiếu ra mũi). TPHH chủ yếu là tinh dầu — giải thích tính bay hơi, không sắc lâu, dễ phát tán."},
+  {q:"Nhóm \"Tân lương giải biểu\" có đặc điểm về tính vị và chủ trị là gì?",opts:["Vị cay, ấm; dùng cho cảm phong hàn.","Vị cay, mát; dùng cho cảm phong nhiệt.","Vị đắng, hàn; dùng cho thực nhiệt tại lý.","Vị ngọt, bình; dùng cho người suy nhược cơ thể."],ans:1,expl:"Tân lương giải biểu: vị tân (cay) để phát tán, tính lương (mát) để thanh nhiệt. Chủ trị: cảm phong nhiệt (sốt cao, họng đỏ đau, ra mồ hôi). Phân biệt với Tân ôn giải biểu (vị cay, ấm — trị phong hàn)."},
+  {q:"Ngoài tác dụng phát tán phong hàn, Ma hoàng còn có công năng nổi bật nào giúp điều trị viêm khí quản mạn và hen phế quản?",opts:["Lợi sữa, an thai.","Thông khí, bình suyễn.","Hoạt huyết điều kinh.","Thanh Can minh mục."],ans:1,expl:"Ma hoàng (Ephedra sinica) chứa ephedrine — kích thích thụ thể β2 adrenergic, giãn phế quản. Công năng YHCT: tuyên Phế bình suyễn, dùng cho hen phế quản và viêm khí quản mạn."},
+  {q:"Vị thuốc nào có công năng \"Ôn kinh thông mạch, hành huyết chỉ thống\", dùng điều trị phong hàn thấp trẻ gây đau xương khớp?",opts:["Bạch chỉ.","Quế chi.","Tía tô.","Sinh khương."],ans:1,expl:"Quế chi (Cinnamomum cassia): ôn kinh thông mạch, hành huyết chỉ thống, phát hãn giải cơ. Phân biệt với Bạch chỉ (trị đau đầu, xoang mũi) và Sinh khương (ôn Vị chỉ nôn)."},
+  {q:"Với bệnh nhân có triệu chứng đau nhức vùng trán, hốc mắt, xương lông mày và viêm mũi xoang mủ, vị thuốc nào là lựa chọn phù hợp nhất?",opts:["Cảo bản.","Bạch chỉ.","Tế tân.","Tân di hoa."],ans:1,expl:"Bạch chỉ quy kinh Vị (đường kinh đi qua trán, hốc mắt), có tác dụng bài nùng (tiêu mủ), trị đau đầu vùng trán và viêm xoang mủ. Tân di hoa trị ngạt mũi; Tế tân trị đau răng, thần kinh tam thoa."},
+  {q:"Ngoài tác dụng giải biểu, vị thuốc Sinh khương được ứng dụng để điều trị trường hợp nào?",opts:["Buồn nôn, nôn mửa thai kỳ.","Táo bón do nhiệt kết.","Sốt cao kèm co giật.","Tiểu đỏ, tiểu buốt do thấp nhiệt."],ans:0,expl:"Sinh khương (gừng tươi): ôn Vị chỉ ẩu — chỉ định đặc hiệu cho nôn mửa thai kỳ (ốm nghén). Gừng tươi còn giải độc bán hạ, phụ tử. Không dùng cho nhiệt chứng, âm hư nội nhiệt."},
+  {q:"Vị thuốc nào có công năng \"Lý khí an thai\"?",opts:["Kinh giới.","Tô ngạnh.","Phòng phong.","Tân di."],ans:1,expl:"Tô ngạnh (cành tía tô): lý khí an thai, khoan hung giải uất. Phân biệt với Tô diệp (lá tía tô, phát hãn giải biểu mạnh hơn). Dùng cho thai động bất an do khí trệ."},
+  {q:"Bạc hà có thể dùng để điều trị chứng bệnh nào sau đây?",opts:["Đau đầu, đau mắt đỏ do phong nhiệt.","Đau thắt lưng do Thận hư.","Đau bụng kinh do hàn thấp.","Đau gáy do ngoại cảm phong hàn."],ans:0,expl:"Bạc hà (Mentha arvensis): tuyên tán phong nhiệt, thanh đầu mục, sơ Can giải uất. Chứa menthol — tác dụng kháng viêm, kháng khuẩn, gây lạnh tại chỗ. Trị đau đầu, đau mắt đỏ do phong nhiệt."},
+  {q:"Ngoài tác dụng tuyên tán phong nhiệt, Sài hồ còn có công năng nào?",opts:["Bình Can giải uất.","Kiện Tỳ hòa trung.","Thăng dương khí.","Thanh Can minh mục."],ans:0,expl:"Sài hồ (Bupleurum chinense): tuyên tán phong nhiệt + bình Can giải uất + thăng dương khí. Ba công năng này tạo nên vị thuốc đặc biệt — dùng trong Tiểu Sài Hồ Thang (trị thiếu dương chứng) và Tứ Nghịch Tán (trị Can khí uất kết)."},
+  {q:"KIÊNG KỴ chung của nhóm thuốc giải biểu là",opts:["Người mới bị ngoại cảm giai đoạn đầu.","Trẻ em bị sởi mới mọc còn mọc.","Sốt do âm hư, tự hãn do khí hư.","Người bị phù thũng phần trên cơ thể."],ans:2,expl:"Kiêng kị chung thuốc giải biểu: (1) Sốt do âm hư (không phải ngoại cảm); (2) Tự hãn/đạo hãn do khí hư/âm hư (dùng sẽ làm thoát tân dịch thêm); (3) Mất máu nhiều. Phân biệt: sởi chưa mọc ĐÓ chỉ định dùng thuốc giải biểu để thấu chẩn."},
+  {q:"Thuốc thanh nhiệt là những vị thuốc có tính chất và tác dụng gì?",opts:["Thuốc ôn nhiệt có tác dụng thanh giải biểu nhiệt.","Thuốc hàn lương có tác dụng thanh giải lý nhiệt.","Thuốc bình tính có tác dụng trừ phong thấp và lợi thủy.","Thuốc khổ hàn có tác dụng bồi bổ chính khí và nâng cao tân dịch."],ans:1,expl:"Thuốc thanh nhiệt: tính hàn hoặc lương, tác dụng thanh giải lý nhiệt — dùng khi tà nhiệt đã vào lý (khí phận, huyết phận, tạng phủ). Phân nhóm: giáng hỏa, táo thấp, giải độc, lương huyết, tư âm thoái nhiệt."},
+  {q:"Nên làm gì để giảm tác dụng phụ gây nôn mửa của thuốc thanh nhiệt tính khổ hàn?",opts:["Phối hợp với các thuốc dưỡng âm.","Thêm Gừng, uống thuốc khi còn nóng.","Tăng liều lượng thuốc vào mùa hè.","Chỉ sử dụng thuốc vào lúc đói."],ans:1,expl:"Thuốc thanh nhiệt khổ hàn (Hoàng liên, Hoàng cầm) dễ gây kích ứng dạ dày, buồn nôn. Thêm Gừng (ôn Vị chỉ ẩu) hoặc uống thuốc còn nóng giúp giảm tác dụng phụ này."},
+  {q:"Nguyên tắc nào sau đây là ĐÚNG khi sử dụng thuốc thanh nhiệt khi bệnh nhân vẫn còn biểu chứng?",opts:["Tuyệt đối không dùng thuốc thanh nhiệt khi còn biểu chứng.","Lấy thanh nhiệt làm chính, biểu tán làm phụ.","Biểu lý song giải, biểu tán làm chính.","Chỉ dùng thuốc thanh nhiệt giải độc để hỗ trợ tán biểu."],ans:2,expl:"Khi biểu chứng vẫn còn mà lý nhiệt đã xuất hiện (biểu lý đồng bệnh): áp dụng biểu lý song giải, nhưng ưu tiên tán biểu làm chính. Ví dụ: bài thuốc Ngân Kiều Tán kết hợp giải biểu và thanh nhiệt."},
+  {q:"Nhóm Thanh nhiệt giải độc thường được phối hợp với nhóm thuốc nào để chống tái phát và giảm tình trạng thiếu hụt tân dịch?",opts:["Thuốc ôn lý tán hàn.","Thuốc khu phong trừ thấp.","Thuốc phương hương hóa thấp.","Thuốc thanh nhiệt lương huyết."],ans:2,expl:"Nhóm Thanh nhiệt táo thấp (Hoàng liên, Hoàng bá, Long đởm thảo) phần lớn có vị rất đắng (khổ), tính hàn — đặc tính vừa thanh giải nhiệt vừa táo thấp. Phối hợp hóa thấp để chống tái phát."},
+  {q:"Kim ngân hoa có công năng đặc biệt nào giúp điều trị cảm phong nhiệt hoặc ôn nhiệt sơ khởi?",opts:["Thanh thấp nhiệt Vị tràng.","Tán phong nhiệt.","Lương huyết chỉ huyết.","Lợi niệu thông lâm."],ans:1,expl:"Kim ngân hoa (Lonicera japonica): có tính tuyên tán, vừa thanh nhiệt giải độc vừa tán phong nhiệt — nên dùng được trong giai đoạn đầu ôn bệnh (phần Vệ). Phân biệt với Liên kiều (thanh tâm giải độc mạnh hơn)."},
+  {q:"Theo lý luận ôn bệnh, nhóm thuốc Thanh nhiệt giáng hóa chủ yếu tác động vào phần nào của cơ thể?",opts:["Thanh giải thực nhiệt tại khí phận.","Thanh giải nhiệt thực tại huyết phận.","Thanh trừ thấp nhiệt tại Hạ tiêu.","Thanh trừ tà nhiệt tại phần Biểu."],ans:0,expl:"Theo Vệ-Khí-Doanh-Huyết của Diệp Thiên Sĩ: Thanh nhiệt giáng hỏa tác động tại Khí phận (hỏa nhiệt thực chứng). Thuốc đại diện: Thạch cao, Tri mẫu. Phân biệt với Thanh nhiệt lương huyết (tại huyết phận)."},
+  {q:"Vị thuốc nào thuộc nhóm vừa Thanh nhiệt giáng hóa vừa Tư âm thoái chưng, dùng cho người âm hư hóa vượng, tự hãn?",opts:["Chi tử.","Hạ khô thảo.","Tri mẫu.","Sinh địa."],ans:2,expl:"Tri mẫu (Anemarrhena asphodeloides): thanh nhiệt tả hỏa + tư âm nhuận táo + thoái hư nhiệt. Hay phối hợp với Thạch cao (thanh Phế Vị thực nhiệt) hoặc Hoàng bá (thanh Thận hỏa âm hư) trong Tri Bá Địa Hoàng Hoàn."},
+  {q:"Đặc điểm chung về tính vị và quy kinh của các thuốc \"Thanh nhiệt táo thấp\" là gì?",opts:["Vị ngọt, tính hàn; quy kinh Tâm, Phế.","Vị đắng, tính hàn; quy kinh Tâm, Đởm, Tiểu trường, Đại trường.","Vị cay, tính ôn; quy kinh Can, Thận, Tâm bào.","Vị nhạt, tính bình; quy kinh Thận, Phế, Tỳ."],ans:1,expl:"Nhóm thanh nhiệt táo thấp: vị khổ (đắng) tính hàn — khổ táo thấp, hàn thanh nhiệt. Quy kinh Tâm, Đởm, Tiểu trường, Đại trường. Đại diện: Hoàng liên (quy Tâm, Đại trường), Hoàng cầm (quy Phế, Đại trường, Tỳ)."},
+  {q:"Vị thuốc nào sau đây có tác dụng Thanh Tâm hóa trừ phiền, trị mất ngủ, miệng lưỡi phồng rộp do Tâm hóa thịnh?",opts:["Nhân trần.","Long đởm thảo.","Hoàng liên.","Địa cốt bì."],ans:2,expl:"Hoàng liên (Coptis chinensis): thanh Tâm hỏa, trừ phiền táo, điều trị mất ngủ, miệng lưỡi phồng rộp do Tâm hỏa thịnh. Trong bài Hoàng Liên A Giao Thang, Hoàng liên phối Thục địa để giao thông Tâm Thận."},
+  {q:"Các vị thuốc trừ hàn có các công năng chính gì?",opts:["Thanh nhiệt giải độc, lương huyết chỉ huyết.","Ôn trung, thông kinh hoạt lạc, hồi dương cứu nghịch.","Phát hãn giải biểu, tuyên Phế chỉ khái.","Tư âm dưỡng huyết, bình Can tiềm dương."],ans:1,expl:"Thuốc trừ hàn (ôn lý trừ hàn): 3 công năng chính: (1) Ôn trung tán hàn — trị Tỳ Vị hư hàn; (2) Thông kinh hoạt lạc — trị hàn tý; (3) Hồi dương cứu nghịch — trị vong dương, thoát dương."},
+  {q:"Đặc điểm chung về tính vị và quy kinh của các vị thuốc trừ hàn là gì?",opts:["Vị ngọt đắng, tính hàn lương; quy kinh Tâm, Can.","Vị cay, tính ôn hoặc nhiệt; quy kinh Tỳ, Thận.","Vị nhạt, tính bình; quy kinh Phế, Bàng quang.","Vị chua, tính bình; quy kinh Can, Thận."],ans:1,expl:"Thuốc trừ hàn: vị tân (cay) để thông dương tán hàn, tính ôn hoặc đại nhiệt. Quy kinh Tỳ, Thận (vị Tỳ hư hàn, Thận dương hư). Đại diện: Phụ tử (đại nhiệt, Tỳ Thận), Nhục quế (Tỳ Thận Can), Can khương (Tỳ Phế)."},
+  {q:"Trường hợp nào sau đây KHÔNG sử dụng thuốc trừ hàn?",opts:["Tỳ Vị hư hàn gây tiêu chảy, nôn mửa.","Thận dương hư gây sợ lạnh, chân tay lạnh.","Âm hư hóa vượng, Chân nhiệt giả hàn.","Phụ nữ sau sinh bị thiếu máu, suy nhược, không nhiệt chứng."],ans:2,expl:"Kiêng kị thuốc trừ hàn (đại nhiệt): âm hư hỏa vượng và chân nhiệt giả hàn (nhiệt cực sinh hàn — bề ngoài lạnh nhưng thực chất nhiệt). Dùng thuốc trừ hàn sẽ \"hỏa thượng thêm dầu\"."},
+  {q:"Công năng chính của Nhục quế là",opts:["Thanh Phế hóa đàm.","Bổ hỏa trợ dương.","Khai vị tiêu thực.","Triệt ngược."],ans:1,expl:"Nhục quế (Cinnamomum cassia — vỏ): bổ hỏa trợ dương (Thận dương hư), tán hàn chỉ thống, thông mạch ôn kinh. Phân biệt: Quế chi (cành — phát hãn, thông dương), Nhục quế (vỏ dày — bổ dương, trừ hàn sâu)."},
+  {q:"Ngoài tác dụng ôn trung tán hàn, Xuyên tiêu có công năng đặc biệt nào?",opts:["Chỉ huyết.","Khử trùng tiêu tích.","Bình Can tiềm dương.","Thông Tỳ khiếu."],ans:1,expl:"Xuyên tiêu (Zanthoxylum bungeanum): ôn trung tán hàn + khử trùng tiêu tích (trị giun đũa, giun kim). Thành phần sanshool có tác dụng tê liệt giun sán. Còn dùng ngoài trị ngứa da."},
+  {q:"Các thuốc Khai khiếu có tác dụng chính là",opts:["Trấn Tâm, bình Can, tiềm dương để điều trị sốt cao kinh giật.","Dưỡng Tâm, bổ Can huyết để điều trị mất ngủ, hồi hộp.","Tỉnh thần, trấn Tâm, trừ đờm, khôi phục tuần hoàn khí huyết.","Bổ huyết, hành huyết để điều trị các chứng ngứa, dị ứng."],ans:2,expl:"Thuốc khai khiếu: tỉnh thần (khai các lỗ khiếu bị bít tắc), trừ đờm, hành khí huyết, khôi phục tuần hoàn. Dùng cho bế chứng (hôn mê, co giật do đờm bít). Phân biệt: Bình can (tức phong) cho Can dương cường thịnh."},
+  {q:"Nhóm thuốc Bình can tức phong được chỉ định chủ yếu cho các trường hợp nào?",opts:["Can dương cường thịnh.","Âm huyết hư, Tỳ hư khiến Tâm không tàng được thần.","Hôn mê bế chứng do đàm che lấp các khiếu.","Ngoại cảm phong hàn, phong nhiệt giai đoạn đầu."],ans:0,expl:"Bình Can tức phong: chỉ định cho Can dương cường thịnh (tăng huyết áp, đau đầu, hoa mắt) và Can phong nội động (co giật, run rẩy). Phân biệt với Khai khiếu (bế chứng) và Dưỡng Tâm an thần (hư chứng mất ngủ)."},
+  {q:"Các vị thuốc Bình can có công năng chính là",opts:["Dưỡng Tâm an thần, nhuận táo thông tiện.","Bình Can tiềm dương, tức phong, chỉ kinh.","Phát tán phong thấp, thông kinh hoạt lạc.","Thanh nhiệt giải độc, tiêu thũng chỉ thống."],ans:1,expl:"Bình Can tức phong: bình Can tiềm dương (ức chế Can dương cường thịnh), tức phong chỉ kinh (dập tắt Can phong nội động). Thuốc đại diện: Thiên ma, Câu đằng, Cúc hoa (thực vật); Long cốt, Mẫu lệ (khoáng vật)."},
+  {q:"Vị thuốc nào sau đây dùng trị mất ngủ, hồi hộp do tâm thần bất an?",opts:["Chu sa.","Toan táo nhân.","Trân châu mẫu.","Ngưu hoàng."],ans:1,expl:"Toan táo nhân (Ziziphus jujuba var. spinosa): dưỡng Tâm bổ Can, an thần định chí — dùng cho hư chứng (mất ngủ do Tâm Tỳ hư, Can huyết hư). Phân biệt với Chu sa (trọng trấn an thần, thực chứng)."},
+  {q:"Toan táo nhân thường được bào chế như thế nào để có tác dụng dưỡng Tâm an thần tốt nhất?",opts:["Dùng tươi.","Sao đen.","Tẩm gừng sao.","Tẩm giấm sao."],ans:1,expl:"Toan táo nhân sao đen (sao đến đen): tăng tác dụng dưỡng Tâm an thần. Dùng tươi (sống) có thể gây kích thích thần kinh. Sao đúng mức (sao vàng-đen) tối ưu hóa thành phần saponin và flavonoid."},
+  {q:"Ngoài tác dụng an thần ích trí, Viễn chí còn có công năng nào sau đây?",opts:["Hóa đờm chỉ khái.","Nhuận tràng thông tiện.","Lợi niệu tiêu thũng.","Bình Can minh mục."],ans:0,expl:"Viễn chí (Polygala tenuifolia): an thần ích trí + hóa đàm chỉ khái + tiêu thũng. Thành phần saponin tenuifolin kích thích tiết dịch phế quản, tan đờm. Dùng trong bài An Thần Định Chí Hoàn."},
+  {q:"Xương bồ có tác dụng gì liên quan đến hệ hô hấp?",opts:["Thanh Phế chỉ khái, nhuận Phế hóa đờm.","Trục đờm thông Phế khí, chỉ khái, bình suyễn.","Ôn Phế trừ đờm, thông kinh lạc.","Tuyên tán phong nhiệt, trị ngoại cảm."],ans:1,expl:"Xương bồ (Acorus calamus): khai khiếu trục đờm + thông Phế khí bình suyễn. β-asarone trong xương bồ có tác dụng giãn phế quản, long đờm. Phối hợp với Viễn chí trong bài Xương Bồ Hoàn."},
+  {q:"Thuốc Thanh hóa nhiệt đờm thường có tính vị và chỉ định chính nào?",opts:["Vị cay, tính ôn; trị đờm hàn do Tỳ dương hư.","Vị cay, tính hàn/lương; trị nhiệt đờm.","Vị ngọt, tính bình; trị đờm thấp ở trung tiêu.","Vị đắng, tính đại nhiệt; trị chứng thoát dương."],ans:1,expl:"Thanh hóa nhiệt đờm: vị cay (thông khí trục đờm) tính hàn/lương (thanh nhiệt). Chủ trị: nhiệt đờm (đờm vàng, đặc, khó khạc; sốt viêm phổi). Phân biệt với Ôn hóa hàn đờm (vị cay ấm, đờm trắng loãng)."},
+  {q:"Nhóm thuốc Ôn hóa hàn đờm KIÊNG KỴ đối với đối tượng nào sau đây?",opts:["Người có tạng hàn.","Người bị âm hư.","Phụ nữ sau sinh bị thiếu máu.","Trẻ em bị ho do phong hàn."],ans:1,expl:"Ôn hóa hàn đờm (Bán hạ, Thiên nam tinh, Bạch phụ tử): tính ôn táo — làm hao tổn âm dịch. Kiêng kị: âm hư huyết hư, tân dịch kém. Trẻ em ho do phong hàn ĐÓ là chỉ định, không phải kiêng kị."},
+  {q:"Không chỉ hóa đờm, Bán hạ có công năng đặc trưng nào?",opts:["Tuyên Phế chỉ khái.","Giáng nghịch chỉ ẩu.","Thanh hóa trừ phiền.","Nhuận tràng thông tiện."],ans:1,expl:"Bán hạ (Pinellia ternata): táo thấp hóa đờm + giáng nghịch chỉ ẩu (hòa Vị giáng nghịch, trị nôn mửa). Cơ chế: ức chế trung tâm nôn. Phải bào chế (gừng sao, muối sao) để giảm độc."},
+  {q:"Ngoài tác dụng thanh Phế chỉ khái, Tang bạch bì còn có tác dụng gì?",opts:["Lợi thủy tiêu thũng.","Hoạt huyết hóa ứ.","Bổ huyết dưỡng Can.","Tư âm giáng hỏa."],ans:0,expl:"Tang bạch bì (vỏ rễ dâu): thanh Phế chỉ khái + lợi thủy tiêu thũng. Cơ chế lợi niệu: ức chế tái hấp thu Na+ tại ống thận. Dùng cho phù do Phế nhiệt (phế nguyên tính) hoặc phù thận."},
+  {q:"Tử uyển thường được dùng chung với vị thuốc nào để tăng hiệu quả hóa đờm chỉ khái?",opts:["Ngưu bàng tử.","Khoản đông hoa.","Ngưu hoàng.","Kim tiền thảo."],ans:1,expl:"Tử uyển + Khoản đông hoa: cặp đôi kinh điển (tương tu) — cùng ôn Phế hóa đờm, chỉ khái, bình suyễn. Tử uyển thiên về đờm, Khoản đông hoa thiên về ho. Thường xuất hiện cùng nhau trong các bài thuốc ho mạn."},
+  {q:"Tô tử được chỉ định chủ yếu cho trường hợp nào?",opts:["Ho khan do âm hư phế táo.","Khí nghịch gây ho suyễn và táo bón.","Sốt cao hôn mê bế chứng.","Phù toàn thân do Tỳ hư."],ans:1,expl:"Tô tử (hạt tía tô): giáng khí tiêu đờm + bình suyễn + nhuận tràng. Chỉ định: khí nghịch (ho suyễn do đờm khí) kết hợp táo bón (đặc biệt người cao tuổi). Bài Tô Tử Giáng Khí Thang."},
+  {q:"Điểm khác biệt cơ bản về cách thức đưa thủy thấp ra ngoài của thuốc Lợi thủy và thuốc Trục thủy là",opts:["Thuốc lợi thủy đưa thủy thấp ra qua đường đại tiện, thuốc trục thủy qua đường tiểu tiện.","Thuốc lợi thủy có tác dụng mạnh hơn thuốc trục thủy.","Thuốc trục thủy đưa thủy thấp ra ngoài bằng cả hai đường tiểu tiện và đại tiện.","Thuốc lợi thủy luôn có độc tính cao, tác dụng bài trừ thủy thấp mạnh hơn thuốc trục thủy."],ans:2,expl:"Phân biệt lợi thủy và trục thủy: Lợi thủy thẩm thấp → chủ yếu qua tiểu tiện (nhẹ, không độc). Trục thủy → qua CẢ HAI đường (đại tiện là chính + tiểu tiện), tác dụng mạnh, thường có độc. Dùng trục thủy cho phù nặng, cổ trướng."},
+  {q:"Vị thuốc nào sau đây chuyên trị sỏi mật và vàng da nhờ công năng lợi mật?",opts:["Đăng tâm thảo.","Kim tiền thảo.","Thông thảo.","Ý dĩ."],ans:1,expl:"Kim tiền thảo (Desmodium styracifolium): lợi mật, bài thạch (tán sỏi), lợi thủy thông lâm. Đặc trị sỏi mật, sỏi thận, vàng da tắc mật. Cơ chế: tăng bài tiết mật, giảm độ bão hòa cholesterol trong mật."},
+  {q:"KHÔNG sử dụng thuốc lợi niệu trong trường hợp nào?",opts:["Phù thũng do viêm thận cấp.","Thấp khớp gây đau nhức.","Bí tiểu do âm hư, thiếu tân dịch.","Sỏi tiết niệu gây tiểu buốt."],ans:2,expl:"Kiêng kị thuốc lợi thủy: bí tiểu do thiếu tân dịch, âm hư (không có thủy thấp thực sự mà do âm dịch kém). Dùng sẽ làm kiệt âm thêm. Các trường hợp A, B, D đều là chỉ định hợp lệ của thuốc lợi niệu."},
+  {q:"Đặc điểm chung của nhóm thuốc Trục thủy là",opts:["Tính vị ngọt bình, không độc.","Có độc, dùng khi phù nặng, cổ trướng.","Chỉ có tác dụng trên đường tiểu tiện.","Không sắc lâu vì hoạt chất kém bền với nhiệt."],ans:1,expl:"Nhóm trục thủy (Đại kích, Cam toại, Nguyên hoa, Khiên ngưu): đều có độc tính, tác dụng mạnh bạo. Chỉ dùng khi phù nặng, cổ trướng cấp thiết. Thận trọng với người suy kiệt, phụ nữ có thai."},
+  {q:"Nhóm thuốc Hóa thấp có đặc điểm về công năng chủ trị khác nhóm Khu phong trừ thấp như thế nào?",opts:["Bổ Can Thận, mạnh gân cốt mạnh hơn.","Hóa thấp trọc ở trung tiêu, kiện Tỳ.","Điều trị đau nhức xương khớp do ngoại cảm.","Phát hãn giải biểu để đưa thấp tà ra ngoài qua mồ hôi."],ans:1,expl:"Hóa thấp: trị thấp trọc ở trung tiêu (Tỳ Vị) — đầy bụng, buồn nôn, tiêu chảy, rêu lưỡi trắng nhờn. Khu phong trừ thấp: trị thấp tại cơ khớp — đau nhức xương khớp. Đây là hai nhóm khác biệt về vị trí bệnh."},
+  {q:"Đa số thuốc khu phong trừ thấp có tính vị",opts:["cam, hàn.","hàm, bình.","tân, khổ, ôn.","toan, lương."],ans:2,expl:"Thuốc khu phong trừ thấp: vị tân (cay) để phát tán phong tà, khổ (đắng) để táo thấp, tính ôn để tán hàn (hàn tý chiếm đa số). Đại diện: Độc hoạt, Khương hoạt, Uy linh tiên — đều tân khổ ôn."},
+  {q:"Đối với tình trạng Hành tý nên ưu tiên sử dụng nhóm thuốc nào?",opts:["Thuốc táo thấp.","Thuốc ôn kinh tán hàn.","Thuốc khu phong.","Thuốc thanh nhiệt trừ thấp."],ans:2,expl:"Phân loại Tý chứng: Hành tý (phong thắng — đau di chuyển) → khu phong; Thống tý (hàn thắng — đau cố định, lạnh) → tán hàn; Trước tý (thấp thắng — nặng nề, tê) → táo thấp; Nhiệt tý → thanh nhiệt."},
+  {q:"Với bệnh nhân phong tháp có teo cơ, cứng khớp, đau lưng, chân yếu, cần phối hợp thuốc khu phong trừ thấp với nhóm thuốc nào?",opts:["Thuốc hoạt huyết.","Thuốc bổ Can Thận.","Thuốc lợi niệu.","Thuốc bổ khí huyết."],ans:1,expl:"Phong thấp mạn tính gây teo cơ, yếu liệt, cứng khớp → tổn thương Can Thận (Can chủ cân, Thận chủ cốt). Phối hợp bổ Can Thận (Độc hoạt ký sinh thang: Tang ký sinh, Đỗ trọng, Ngưu tất)."},
+  {q:"Vị thuốc nào sau đây có độc tính cao, dùng điều trị liệt mềm, nhược cơ?",opts:["Hy thiêm.","Hoàng nàn.","Độc hoạt.","Tang ký sinh."],ans:1,expl:"Hoàng nàn (Strychnos nux-vomica — mã tiền): chứa strychnine và brucine — kích thích tủy sống, tăng trương lực cơ. Trị liệt mềm, nhược cơ, bán thân bất toại. Liều cao gây co giật tetanic — phải dùng đúng liều."},
+  {q:"Tang ký sinh có công năng chính là",opts:["Thanh nhiệt giải độc, trị mụn nhọt.","Khử phong thấp, an thai, lợi sữa.","Tuyên Tỳ khiếu, trị viêm xoang mũi.","Nhuận tràng thông tiện, trị táo bón."],ans:1,expl:"Tang ký sinh (Taxillus chinensis): khu phong thấp + bổ Can Thận cường cân cốt + an thai + lợi sữa. Đặc điểm: vừa khu tà (phong thấp) vừa phù chính (bổ Can Thận) → dùng lâu dài không sợ tổn hao."},
+  {q:"Điểm khác biệt về chỉ định điều trị giữa Khương hoạt và Độc hoạt là gì?",opts:["Độc hoạt trị đau nửa người trên, Khương hoạt trị đau nửa người dưới.","Khương hoạt trị đau vai, đau lưng; Độc hoạt trị đau thắt lưng, đầu gối.","Khương hoạt chuyên trị nhiệt tý, Độc hoạt chuyên trị hàn tý.","Độc hoạt có tác dụng an thần, Khương hoạt có tác dụng kiện Vị."],ans:1,expl:"Phân biệt quy kinh: Khương hoạt quy kinh Thái dương (Bàng quang) → trị đau vùng vai-gáy-lưng trên. Độc hoạt quy kinh Thái dương + Thiếu âm (Thận) → trị đau thắt lưng, đầu gối, chi dưới. \"Khương hoạt thượng hành, Độc hoạt hạ hành\"."},
+  {q:"Tần giao có đặc điểm công năng nào khác biệt với các vị thuốc khu phong trừ thấp khác?",opts:["Chuyên trị đau răng, hôi miệng.","Trừ phong thấp nhiệt, thanh thấp nhiệt.","Chuyên trị giun đũa, giun kim.","Tác dụng bổ hòa trợ dương."],ans:1,expl:"Tần giao (Gentiana macrophylla): đặc điểm duy nhất — trừ phong thấp NHIỆT (nhiệt tý) và thanh hư nhiệt (âm hư nội nhiệt). Phần lớn thuốc khu phong trừ thấp tính ôn. Tần giao tính bình/lương → dùng được cho cả hàn tý và nhiệt tý."},
+  {q:"Chủ trị chính Hoắc hương là",opts:["Đau nhức gân xương lâu ngày.","Đầy bụng, say nắng, nôn mửa.","Bế kinh do huyết ứ.","Ho lao, khái huyết."],ans:1,expl:"Hoắc hương (Pogostemon cablin): hóa thấp hòa Vị + giải thử (say nắng) + chỉ ẩu. Chủ trị: thấp trọc trung tiêu (đầy bụng, buồn nôn, tiêu chảy), say nóng mùa hè. Bài Hoắc Hương Chính Khí Tán — bài thuốc mùa hè kinh điển."},
+  {q:"Thuốc Lợi thủy thẩm thấp bài trừ thủy thấp mà không \"tả\" liên quan đến đặc điểm về \"vị\" nào?",opts:["Khổ.","Tân.","Đạm.","Toan."],ans:2,expl:"Vị đạm (nhạt): tác dụng thẩm thấp lợi thủy — thẩm (lọc) thủy thấp qua tiểu tiện mà không \"tả\" (không gây tiêu chảy). Ví dụ: Phục linh, Trư linh, Trạch tả đều có vị nhạt. Phân biệt với Khổ (táo thấp), Tân (thông dương hóa thấp)."},
+  {q:"Thuốc Khai khiếu có đặc điểm khí vị gì phù hợp với công năng \"tỉnh thần\"?",opts:["Cam, bình.","Tân, ôn.","Khổ, hàn.","Hàm, lương."],ans:1,expl:"Thuốc khai khiếu: vị tân (cay) tính ôn — tân tán để thông khai, thơm để tỉnh thần (phương hương khai khiếu). Hoạt chất tinh dầu thơm → kích thích thần kinh trung ương. Đại diện: Xạ hương, Bình phiến, Tô hợp hương đều vị tân ôn."},
+  {q:"Thuốc \"Trọng trấn an thần\" và \"Dưỡng tâm an thần\" có đặc điểm gì khác nhau?",opts:["Trọng trấn tính ôn; Dưỡng tâm tính Hàn.","Trọng trấn hàn, hàm; Dưỡng tâm bình, cam.","Cả hai đều có vị tân; Trọng trấn thêm vị khổ.","Trọng trấn vị toan, Dưỡng tâm vị khổ."],ans:1,expl:"Trọng trấn an thần (khoáng vật/động vật): Chu sa, Từ thạch, Long cốt, Mẫu lệ — tính hàn, vị hàm (mặn). Dưỡng tâm an thần (thảo mộc): Toan táo nhân, Bá tử nhân, Viễn chí — tính bình, vị cam (ngọt). Trọng trấn trị thực, Dưỡng tâm trị hư."},
+  {q:"Nhóm Thanh nhiệt táo thấp có tính vị đặc trưng nào để vừa thanh giải lý nhiệt vừa làm khô thấp tà?",opts:["Vị Tân, tính Ôn.","Vị Cam, tính Hàn.","Vị Khổ, tính Hàn.","Vị Đạm, tính Bình."],ans:2,expl:"Vị khổ (đắng) tính hàn: khổ → táo thấp; hàn → thanh nhiệt. Kết hợp khổ + hàn tạo nên tính năng đặc trưng \"thanh nhiệt táo thấp\". Đại diện: Hoàng liên (vị khổ hàn mạnh nhất), Hoàng bá, Hoàng cầm, Long đởm thảo."},
+  {q:"Vị thuốc nào có sự thay đổi công năng rõ rệt sau khi sao tẩm với gừng?",opts:["Phục linh.","Trạch tả.","Ý dĩ.","Xa tiền tử."],ans:2,expl:"Ý dĩ (Coix lacryma-jobi): Sống → lợi thấp nhiệt, thanh Phế giải độc (tính lương). Sao vàng hoặc sao tẩm gừng → ôn Tỳ bổ Phế, trị tiêu chảy do Tỳ Vị hư hàn. Đây là ví dụ điển hình về bào chế thay đổi công năng."},
+  {q:"Nhóm Trừ phong thấp chủ yếu quy vào các kinh nào?",opts:["Kinh Tâm, Phế, Thận.","Kinh Can, Thận, Tỳ.","Kinh Vị, Đại trường, Bàng quang.","Kinh Can, Tâm, Đởm."],ans:1,expl:"Thuốc khu phong trừ thấp quy kinh Can (Can chủ cân), Thận (Thận chủ cốt), Tỳ (Tỳ chủ tứ chi cơ nhục) — ba tạng liên quan trực tiếp đến xương khớp, gân cốt và cơ bắp."},
+  {q:"Điểm khác biệt về quy kinh giữa thuốc Bình Can tức phong và Khai khiếu là",opts:["Thuốc Bình Can quy kinh Thận; Khai khiếu quy kinh Tỳ.","Bình Can quy kinh Can; Khai khiếu quy kinh Phế, Tâm.","Cả hai đều quy kinh Can nhưng Khai khiếu quy thêm kinh Vị.","Bình can quy kinh Phế; Khai khiếu quy kinh Can."],ans:1,expl:"Bình Can tức phong → quy kinh Can (Can sinh phong, Can tàng huyết). Khai khiếu → quy kinh Phế (Phế khai khiếu ra mũi, phương hương vào Phế) và Tâm (Tâm tàng thần, khai khiếu để tỉnh thần). Đây là cơ sở lý luận quan trọng."},
+  {q:"Thuốc Lợi niệu và thuốc Trừ phong thấp quy vào các kinh nào?",opts:["Kinh Tỳ và Thận.","Kinh Tâm và Can.","Kinh Phế và Vị.","Kinh Bàng quang và Đởm."],ans:0,expl:"Điểm chung: cả Lợi niệu (lợi thủy thẩm thấp) và Trừ phong thấp đều quy kinh Tỳ (Tỳ chủ vận hóa thủy thấp) và Thận (Thận chủ thủy). Đây là nền tảng của cả hai nhóm trong xử lý thủy thấp."},
+  {q:"Thuốc Thanh nhiệt lương huyết và thuốc Trừ hàn là đều có thể quy kinh",opts:["Phế.","Vị.","Thận.","Đởm."],ans:2,expl:"Cả hai nhóm đều có thể quy kinh Thận: Thanh nhiệt lương huyết (Sinh địa, Huyền sâm — thanh Thận hỏa, tư Thận âm) và Trừ hàn (Phụ tử, Nhục quế — ôn Thận dương, bổ Thận hỏa). Thận là tạng có cả Thận âm và Thận dương."},
+  {q:"Nhóm thuốc Hóa thấp thường quy kinh nào?",opts:["Kinh Can và Thận.","Kinh Tỳ và Vị.","Kinh Phế và Tâm.","Kinh Bàng quang và Tiểu trường."],ans:1,expl:"Hóa thấp (hòa Vị tỉnh Tỳ): quy kinh Tỳ và Vị — vì thấp trọc ứ đọng ở trung tiêu (Tỳ Vị). Tỳ vận hóa thủy thấp, Vị thụ납và nạp thủy cốc. Đại diện: Hoắc hương, Thương truật, Hậu phác đều quy Tỳ Vị."},
+  {q:"Với bệnh nhân mất ngủ, hồi hộp, lo âu, nhóm thuốc nào là lựa chọn phù hợp nhất?",opts:["Trọng trấn an thần.","Dưỡng tâm an thần.","Khai khiếu tỉnh thần.","Bình Can tức phong."],ans:1,expl:"Mất ngủ, hồi hộp, lo âu là hư chứng (Tâm Tỳ hư, Can huyết hư) → Dưỡng tâm an thần (Toan táo nhân, Bá tử nhân, Viễn chí). Trọng trấn (thực chứng — sợ hãi, kinh giật). Khai khiếu (bế chứng — hôn mê)."},
+  {q:"Với bệnh nhân bị hôn mê bế chứng do đờm dãi bít tắc lỗ khiếu, cần áp dụng phương pháp điều trị nào?",opts:["Khai khiếu tỉnh thần.","Hồi dương cứu nghịch.","Dưỡng tâm an thần.","Bổ khí huyết."],ans:0,expl:"Hôn mê bế chứng (đờm bít lỗ khiếu, tà khí bế tắc): phương pháp Khai khiếu tỉnh thần — dùng thuốc thơm khai thông khiếu, đánh thức thần trí. Phân biệt với Thoát chứng (mồ hôi lạnh, tay chân lạnh) → Hồi dương cứu nghịch."},
+  {q:"Trường hợp phù thũng do Tỳ hư không vận hóa được thủy thấp, nên dùng vị thuốc nào để vừa lợi thủy vừa kiện Tỳ?",opts:["Trư linh.","Phục linh.","Trạch tả.","Mộc thông."],ans:1,expl:"Phục linh (Poria cocos): lợi thủy thẩm thấp + kiện Tỳ hòa trung + an thần. Đặc điểm: vừa trừ tà (lợi thủy) vừa phù chính (kiện Tỳ) — phù hợp cho Tỳ hư phù thũng. Trư linh lợi thủy mạnh hơn nhưng không kiện Tỳ."},
+  {q:"Vị thuốc nào phù hợp với chứng Can hỏa thượng viêm gây đau đầu, hoa mắt, chóng mặt và tăng huyết áp?",opts:["Phụ tử chế.","Câu đằng.","Can khương.","Nhục quế."],ans:1,expl:"Câu đằng (Uncaria rhynchophylla): bình Can tiềm dương, tức phong chỉ kinh. Alkaloid rhynchophyllin ức chế trung tâm vận mạch, chẹn kênh Ca²⁺ → hạ huyết áp. Không sắc quá 20 phút (alkaloid dễ phân hủy)."},
+  {q:"Với bệnh nhân Thận dương hư, sợ lạnh, chân tay lạnh, vị thuốc nào được ưu tiên để bổ hỏa trợ dương?",opts:["Hoàng liên.","Nhục quế.","Kim ngân hoa.","Diệp hạ châu."],ans:1,expl:"Nhục quế: bổ hỏa trợ dương (Thận dương hư) — là vị thuốc ưu tiên hàng đầu. Thành phần: cinnamaldehyde → kích thích hệ giao cảm, tăng tuần hoàn ngoại vi, ấm tứ chi. Dùng trong Bát Vị Quế Phụ Thang."},
+  {q:"Với bệnh nhân bị phù thũng kèm theo thiếu máu, suy dinh dưỡng, nên phối hợp thuốc lợi niệu với loại thuốc nào?",opts:["Thuốc giải độc.","Thuốc bổ dưỡng.","Thuốc phát hãn.","Thuốc tá hạ."],ans:1,expl:"Phù thũng kèm thiếu máu, suy dinh dưỡng (Tỳ hư, khí huyết hư): không dùng thuốc lợi niệu đơn thuần mạnh — sẽ làm kiệt thêm. Phối hợp thuốc bổ dưỡng (bổ khí, bổ huyết, kiện Tỳ) để vừa lợi thủy vừa phục hồi chính khí."},
+  {q:"Tại sao người âm hư hỏa vượng, tân dịch hao tổn lại KIÊNG KỴ dùng thuốc Ôn hóa hàn đờm?",opts:["Vì thuốc làm tăng tiết đờm dãi.","Vì thuốc làm hao tổn phần âm và tân dịch.","Vì thuốc quy kinh Can làm bốc hỏa.","Vì thuốc có độc tính cao với hệ tiêu hóa."],ans:1,expl:"Ôn hóa hàn đờm (Bán hạ, Thiên nam tinh): tính ôn táo → làm hao tổn âm dịch (táo lệ thương âm). Người âm hư hỏa vượng đã thiếu tân dịch → dùng thêm ôn táo sẽ \"thêm củi vào lửa\", tổn thương Phế âm."},
+  {q:"Trong điều trị trẻ em co giật do sốt cao, cần phối hợp thuốc Bình can tức phong với nhóm nào?",opts:["Thuốc trừ hàn.","Thuốc bổ âm.","Thuốc phát hãn mạnh.","Thuốc trục thủy."],ans:3,expl:"Trẻ em co giật do sốt cao (nhiệt cực sinh phong): phối hợp Bình can tức phong + Thanh nhiệt tả hỏa + Lương huyết — vì phong do nhiệt sinh, phải điều trị căn nguyên (thanh nhiệt lương huyết, tả hỏa) song song với tức phong."},
+  {q:"Nguyên tắc điều trị Lý nhiệt trong trường hợp Biểu chứng vẫn còn là gì?",opts:["Thanh lý nhiệt trước, giải biểu sau.","Biểu lý song giải, biểu tán làm chính.","Phải dùng ngay thuốc thanh nhiệt giải độc.","Tuyệt đối không dùng 2 loại thuốc này."],ans:1,expl:"Khi biểu chứng còn mà lý nhiệt đã xuất hiện: nguyên tắc biểu lý song giải. Biểu tán làm chính (ưu tiên đẩy tà ra ngoài trước) + Thanh lý làm phụ. Không được thanh lý đơn thuần — sẽ đóng cửa nhốt tà (phong hàn bị giữ lại)."},
+  {q:"Cần lưu ý gì trong bào chế vị thuốc Câu đằng để giữ được công năng hạ huyết áp?",opts:["Phải tẩm giấm sao vàng.","Không được sắc quá 20 phút.","Phải sắc trước các vị thuốc khác 1 tiếng.","Chỉ dùng dạng bột sống."],ans:1,expl:"Câu đằng: alkaloid rhynchophyllin và isorhynchophyllin bị phân hủy bởi nhiệt độ cao và thời gian kéo dài. Sắc quá 20 phút → mất hoàn toàn tác dụng hạ áp. Phải cho vào SAU CÙNG, sắc không quá 20 phút."},
+  {q:"Tại sao các thuốc Khai khiếu thường được dùng dạng hoàn tán thay vì sắc uống?",opts:["Vì thuốc có vị cay và rất đắng.","Vì hoạt chất dễ bay hơi.","Vì thuốc có độc tính khi gặp nhiệt độ cao.","Vì thuốc tan nhiều trong nước nóng."],ans:1,expl:"Thuốc khai khiếu (Xạ hương, Bình phiến, Tô hợp hương) chứa tinh dầu dễ bay hơi ở nhiệt độ cao. Sắc sẽ làm mất hoạt chất. Do đó dùng dạng hoàn tán — bảo toàn tinh dầu phương hương khai khiếu."},
+  {q:"Vị thuốc nào có tác dụng thanh giải thực nhiệt tại khí phận?",opts:["Kim ngân hoa.","Tri mẫu.","Hoàng cầm.","Mộc qua."],ans:1,expl:"Tri mẫu (và Thạch cao): thanh nhiệt giáng hỏa, tác dụng đặc hiệu tại Khí phận (phần khí — thực nhiệt). Kim ngân hoa và Liên kiều thuộc giải biểu + thanh nhiệt giải độc (phần Vệ-Khí). Hoàng cầm thanh Phế nhiệt."},
+  {q:"Trong trường hợp bệnh nhân ho rát họng, đờm đặc dính màu vàng, vị thuốc nào sau đây là lựa chọn tối ưu?",opts:["Can khương.","Tang bạch bì.","Bách bộ.","Tử uyển."],ans:1,expl:"Ho rát họng + đờm vàng đặc = Phế nhiệt đàm nhiệt. Tang bạch bì: thanh Phế hóa đờm nhiệt (tính lương). Phân biệt: Bách bộ và Tử uyển tính ôn → phù hợp đờm hàn, ho mạn. Can khương ôn Phế hóa hàn đờm."},
+  {q:"Thuốc vị toan thường quy vào tạng nào và có tác dụng đặc trưng gì?",opts:["Quy tạng Can, tác dụng sơ Can giải uất.","Quy tạng Tỳ, tác dụng kiện Tỳ tiêu thực.","Quy tạng Tâm, tác dụng thanh Tâm và giáng hỏa.","Quy tạng Phế, tác dụng tuyên Phế hành khí."],ans:0,expl:"Vị toan (chua) thuộc hành Mộc, quy tạng Can (Mộc tàng). Tác dụng: thu liễm (thu hồi, cố sáp) + sơ Can giải uất. Ví dụ: Bạch thược (toan, vi hàn — dưỡng huyết liễm âm, sơ Can), Ô mai (toan — thu liễm chỉ lỵ)."},
+  {q:"Vị cay của thuốc có liên quan với những công năng nào?",opts:["thu liễm, chỉ huyết.","hành khí, phát tán.","bổ Phế âm, nhuận táo.","bình Can, chỉ khái."],ans:1,expl:"Vị tân (cay): hành khí hoạt huyết (thông khí lợi huyết) + phát tán (tán phong hàn, khai tấu lý). Đây là hai công năng cơ bản của vị tân theo học thuyết Ngũ vị. Thu liễm = vị toan; nhuận táo = vị cam; bình Can = thuốc bình Can tức phong."}
+];
+
+let state = new Array(80).fill(null).map(() => ({selected: null, checked: false}));
+let scoreCorrect = 0, scoreWrong = 0, scoreDone = 0;
+
+function render() {
+  const main = document.getElementById('quizMain');
+  main.innerHTML = '';
+  questions.forEach((q, i) => {
+    const s = state[i];
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = 'card-' + i;
+
+    const letters = ['A','B','C','D'];
+    let optsHtml = '';
+    q.opts.forEach((opt, j) => {
+      let cls = 'opt';
+      if (s.checked) {
+        cls += ' disabled';
+        if (j === q.ans) cls += ' correct';
+        else if (j === s.selected && j !== q.ans) cls += ' wrong';
+      } else if (j === s.selected) {
+        cls += ' selected';
+      }
+      optsHtml += `<div class="${cls}" onclick="selectOpt(${i},${j})">
+        <span class="opt-letter">${letters[j]}</span>
+        <span>${opt}</span>
+      </div>`;
+    });
+
+    const chipClass = s.checked ? (s.selected === q.ans ? 'result-chip correct-chip show' : 'result-chip wrong-chip show') : 'result-chip';
+    const chipText = s.checked ? (s.selected === q.ans ? '✓ Đúng rồi!' : '✗ Chưa đúng') : '';
+    const explShow = s.checked ? 'explanation show' : 'explanation';
+
+    card.innerHTML = `
+      <div class="q-header">
+        <span class="q-num">Câu ${i+1}</span>
+        <div class="q-text">${q.q}</div>
+      </div>
+      <div class="options">${optsHtml}</div>
+      <div class="btn-row">
+        <button class="btn-check" onclick="checkAns(${i})" ${s.checked || s.selected===null ? 'disabled' : ''}>Kiểm tra</button>
+        <button class="btn-reveal" onclick="revealAns(${i})" ${s.checked ? 'disabled style="opacity:0.5"' : ''}>Xem đáp án</button>
+        <span class="${chipClass}">${chipText}</span>
+      </div>
+      <div class="${explShow}">
+        <div class="expl-label">Giải thích</div>
+        <div class="expl-answer">Đáp án đúng: ${letters[q.ans]}</div>
+        ${q.expl}
+      </div>
+    `;
+    main.appendChild(card);
+  });
+  updateStats();
+}
+
+function selectOpt(qi, oi) {
+  if (state[qi].checked) return;
+  state[qi].selected = oi;
+  const card = document.getElementById('card-' + qi);
+  const opts = card.querySelectorAll('.opt');
+  opts.forEach((o,j) => {
+    o.className = 'opt' + (j===oi ? ' selected' : '');
+    if (j===oi) o.querySelector('.opt-letter').style.background = '#2563eb', o.querySelector('.opt-letter').style.color = 'white';
+    else o.querySelector('.opt-letter').style.background = '', o.querySelector('.opt-letter').style.color = '';
+  });
+  card.querySelector('.btn-check').disabled = false;
+}
+
+function checkAns(qi) {
+  if (state[qi].checked) return;
+  const q = questions[qi];
+  const s = state[qi];
+  if (s.selected === null) return;
+  s.checked = true;
+  scoreDone++;
+  if (s.selected === q.ans) scoreCorrect++;
+  else scoreWrong++;
+  refreshCard(qi);
+  updateStats();
+}
+
+function revealAns(qi) {
+  const s = state[qi];
+  if (s.checked) return;
+  if (s.selected === null) s.selected = -1;
+  s.checked = true;
+  scoreDone++;
+  refreshCard(qi);
+  updateStats();
+}
+
+function refreshCard(qi) {
+  const q = questions[qi];
+  const s = state[qi];
+  const card = document.getElementById('card-' + qi);
+  const opts = card.querySelectorAll('.opt');
+  const letters = ['A','B','C','D'];
+  opts.forEach((o,j) => {
+    o.className = 'opt disabled';
+    o.querySelector('.opt-letter').style.background = '';
+    o.querySelector('.opt-letter').style.color = '';
+    if (j === q.ans) { o.classList.add('correct'); o.querySelector('.opt-letter').style.background = 'var(--green)'; o.querySelector('.opt-letter').style.color = 'white'; }
+    else if (j === s.selected && j !== q.ans) { o.classList.add('wrong'); o.querySelector('.opt-letter').style.background = 'var(--red)'; o.querySelector('.opt-letter').style.color = 'white'; }
+  });
+  const chip = card.querySelector('.result-chip');
+  if (s.selected === q.ans) { chip.className = 'result-chip correct-chip show'; chip.textContent = '✓ Đúng rồi!'; }
+  else { chip.className = 'result-chip wrong-chip show'; chip.textContent = '✗ Chưa đúng'; }
+  card.querySelector('.btn-check').disabled = true;
+  const revBtn = card.querySelector('.btn-reveal');
+  revBtn.disabled = true; revBtn.style.opacity = '0.5';
+  const expl = card.querySelector('.explanation');
+  expl.className = 'explanation show';
+}
+
+function updateStats() {
+  document.getElementById('scoreCorrect').textContent = scoreCorrect;
+  document.getElementById('scoreWrong').textContent = scoreWrong;
+  document.getElementById('scoreDone').textContent = scoreDone;
+  document.getElementById('progressFill').style.width = (scoreDone/80*100).toFixed(1) + '%';
+}
+
+function resetAll() {
+  if (!confirm('Làm lại từ đầu? Tất cả câu trả lời sẽ bị xóa.')) return;
+  state = new Array(80).fill(null).map(() => ({selected: null, checked: false}));
+  scoreCorrect = 0; scoreWrong = 0; scoreDone = 0;
+  render();
+}
+
+render();
+</script>
+</body>
+</html>

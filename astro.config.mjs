@@ -43,6 +43,15 @@ export default defineConfig({
 								},
 							],
 						},
+						{
+							label: 'Thuốc YHCT',
+							items: [
+								{
+									label: 'Lượng giá',
+									items: [{ autogenerate: { directory: 'books/thuoc-yhct/luong-gia' } }],
+								},
+							],
+						},
 						{ label: 'Ca học từng bước', items: [{ autogenerate: { directory: 'cases' } }] },
 					],
 				},
@@ -129,6 +138,22 @@ export default defineConfig({
 									],
 								},
 								{ label: 'Bảng tra cứu', items: [{ autogenerate: { directory: 'topics/reference' } }] },
+							],
+						},
+						{
+							label: 'Thuốc YHCT',
+							items: [
+								{
+									label: 'Tóm tắt theo chương',
+									items: [
+										{
+											label: 'Chương 2. Các nhóm thuốc',
+											items: [
+												{ label: 'Bài 19. Thuốc gây nôn', link: 'books/thuoc-yhct/tom-tat/19-thuoc-gay-non/' },
+											],
+										},
+									],
+								},
 							],
 						},
 					],
@@ -277,6 +302,34 @@ export default defineConfig({
 												{ label: 'Cơ chế xuân ôn', link: 'topics/explanation/on-benh-dai-cuong-xuan-on/' },
 												{ label: 'Cơ chế khí dinh huyết và tâm bào', link: 'topics/explanation/on-benh-dai-cuong-5-3-1-khi-dinh-huyet-luong-phien/' },
 												{ label: 'Cơ chế nhiệt bế huyết thoát', link: 'topics/explanation/on-benh-dai-cuong-5-7-2-nhiet-be-huyet-thoat/' },
+											],
+										},
+									],
+								},
+							],
+						},
+						{
+							label: 'Thuốc YHCT',
+							items: [
+								{ label: 'Bài giảng chuyên sâu', items: [{ autogenerate: { directory: 'books/thuoc-yhct/bai-giang' } }] },
+								{
+									label: 'Nguyên thủy theo chương',
+									items: [
+										{
+											label: 'Chương 2. Các nhóm thuốc',
+											items: [
+												{ label: 'Bài 19. Thuốc gây nôn', link: 'books/thuoc-yhct/nguyen-thuy/19-thuoc-gay-non/' },
+											],
+										},
+									],
+								},
+								{
+									label: 'Giải thích cơ chế theo chương',
+									items: [
+										{
+											label: 'Chương 2. Các nhóm thuốc',
+											items: [
+												{ label: 'Cơ chế thuốc gây nôn', link: 'topics/explanation/thuoc-yhct-19-thuoc-gay-non/' },
 											],
 										},
 									],

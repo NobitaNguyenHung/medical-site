@@ -1,0 +1,2978 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ôn Tập Thuốc YHCT2 — Question Bank</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d2e;
+    --surface2: #232640;
+    --accent: #6c63ff;
+    --accent2: #4ecdc4;
+    --correct: #22c55e;
+    --wrong: #ef4444;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --border: #2d3150;
+    --gold: #f59e0b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 20px;
+  }
+  .header {
+    text-align: center;
+    padding: 30px 20px 20px;
+    max-width: 800px;
+    margin: 0 auto 30px;
+  }
+  .header h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+  }
+  .header p { color: var(--muted); font-size: 0.9rem; }
+
+  .progress-wrap {
+    max-width: 800px;
+    margin: 0 auto 25px;
+    background: var(--surface);
+    border-radius: 12px;
+    padding: 16px 20px;
+    border: 1px solid var(--border);
+  }
+  .progress-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .progress-label { font-size: 0.85rem; color: var(--muted); }
+  .score-display {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--accent2);
+  }
+  .progress-bar-bg {
+    background: var(--border);
+    border-radius: 99px;
+    height: 8px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 99px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+
+  .quiz-container { max-width: 800px; margin: 0 auto; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 20px;
+    transition: border-color 0.3s;
+  }
+  .card.answered { border-color: var(--accent); }
+
+  .q-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+  .q-num {
+    background: linear-gradient(135deg, var(--accent), #9c8aff);
+    color: white;
+    font-weight: 700;
+    font-size: 0.8rem;
+    padding: 4px 10px;
+    border-radius: 99px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .q-text {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--text);
+  }
+
+  .options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+  .opt {
+    background: var(--surface2);
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.2s;
+    font-size: 0.93rem;
+    line-height: 1.4;
+  }
+  .opt:hover:not(.disabled) { border-color: var(--accent); background: #1f2340; }
+  .opt.selected { border-color: var(--accent); background: rgba(108,99,255,0.15); }
+  .opt.correct { border-color: var(--correct); background: rgba(34,197,94,0.12); }
+  .opt.wrong { border-color: var(--wrong); background: rgba(239,68,68,0.12); }
+  .opt.disabled { cursor: default; }
+  .opt-label {
+    font-weight: 700;
+    font-size: 0.85rem;
+    min-width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    background: var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.2s;
+  }
+  .opt.selected .opt-label { background: var(--accent); color: white; }
+  .opt.correct .opt-label { background: var(--correct); color: white; }
+  .opt.wrong .opt-label { background: var(--wrong); color: white; }
+
+  .actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .btn {
+    padding: 9px 18px;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+  }
+  .btn-check {
+    background: var(--accent);
+    color: white;
+  }
+  .btn-check:hover:not(:disabled) { background: #5b52e5; }
+  .btn-check:disabled { opacity: 0.4; cursor: default; }
+  .btn-reveal {
+    background: transparent;
+    border: 1.5px solid var(--border);
+    color: var(--muted);
+  }
+  .btn-reveal:hover { border-color: var(--accent2); color: var(--accent2); }
+
+  .result-chip {
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 99px;
+    display: none;
+  }
+  .result-chip.correct { background: rgba(34,197,94,0.15); color: var(--correct); border: 1px solid var(--correct); }
+  .result-chip.wrong { background: rgba(239,68,68,0.15); color: var(--wrong); border: 1px solid var(--wrong); }
+
+  .explain-box {
+    display: none;
+    margin-top: 16px;
+    background: var(--surface2);
+    border-left: 4px solid var(--accent2);
+    border-radius: 0 10px 10px 0;
+    padding: 14px 16px;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--text);
+  }
+  .explain-box .ans-line {
+    font-weight: 700;
+    color: var(--correct);
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+  }
+  .explain-box .explain-text { color: #cbd5e1; }
+
+  .reset-wrap {
+    max-width: 800px;
+    margin: 30px auto;
+    text-align: center;
+  }
+  .btn-reset {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    color: var(--muted);
+    padding: 12px 28px;
+    font-size: 0.95rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-reset:hover { border-color: var(--accent); color: var(--accent); }
+
+  .missing-note {
+    background: var(--surface);
+    border: 1px dashed var(--border);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    color: var(--muted);
+    font-size: 0.88rem;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Ôn Tập Thuốc YHCT2</h1>
+  <p>79 câu hỏi · Câu 23 bị khuyết trong đề gốc · Nguồn: Giáo trình YHCT</p>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-row">
+    <span class="progress-label" id="prog-text">0 / 79 câu đã trả lời</span>
+    <span class="score-display" id="score-text">Điểm: 0</span>
+  </div>
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="prog-bar"></div>
+  </div>
+</div>
+
+<div class="quiz-container" id="quiz">
+  <div class="card" id="card1">
+    <div class="q-header">
+      <span class="q-num">Câu 1</span>
+      <span class="q-text">Vị đặc trưng thường gặp nhất ở các thuốc bổ dưỡng là gì?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q1_o0" onclick="selectOpt(1,0)">
+      <span class="opt-label">A</span>
+      <span>Vị cay (tân)</span>
+    </div>
+    <div class="opt" id="q1_o1" onclick="selectOpt(1,1)">
+      <span class="opt-label">B</span>
+      <span>Vị mặn (hàm)</span>
+    </div>
+    <div class="opt" id="q1_o2" onclick="selectOpt(1,2)">
+      <span class="opt-label">C</span>
+      <span>Vị ngọt (cam)</span>
+    </div>
+    <div class="opt" id="q1_o3" onclick="selectOpt(1,3)">
+      <span class="opt-label">D</span>
+      <span>Vị chua (toan)</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check1" onclick="checkAns(1)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(1)">Xem đáp án</button>
+      <span class="result-chip" id="chip1"></span>
+    </div>
+    <div class="explain-box" id="exp1">
+      <div class="ans-line">✓ Đáp án đúng: C. Vị ngọt (cam)</div>
+      <div class="explain-text">Vị ngọt (cam) có tác dụng bổ dưỡng, hòa hoãn — đây là vị đặc trưng của nhóm thuốc bổ.</div>
+    </div>
+  </div>
+  <div class="card" id="card2">
+    <div class="q-header">
+      <span class="q-num">Câu 2</span>
+      <span class="q-text">Theo nguyên tắc sử dụng thuốc bổ dưỡng, tạng nào cần được ưu tiên bồi bổ trước để giúp hấp thu dưỡng chất tốt nhất?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q2_o0" onclick="selectOpt(2,0)">
+      <span class="opt-label">A</span>
+      <span>Tâm và Phế</span>
+    </div>
+    <div class="opt" id="q2_o1" onclick="selectOpt(2,1)">
+      <span class="opt-label">B</span>
+      <span>Can và Thận</span>
+    </div>
+    <div class="opt" id="q2_o2" onclick="selectOpt(2,2)">
+      <span class="opt-label">C</span>
+      <span>Tỳ và Vị</span>
+    </div>
+    <div class="opt" id="q2_o3" onclick="selectOpt(2,3)">
+      <span class="opt-label">D</span>
+      <span>Phế và Thận</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check2" onclick="checkAns(2)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(2)">Xem đáp án</button>
+      <span class="result-chip" id="chip2"></span>
+    </div>
+    <div class="explain-box" id="exp2">
+      <div class="ans-line">✓ Đáp án đúng: C. Tỳ và Vị</div>
+      <div class="explain-text">Theo nguyên tắc: "Tỳ Vị kiện vận thì phép Bổ mới có hiệu quả" — phải kiện Tỳ Vị trước để cơ thể hấp thu được thuốc bổ.</div>
+    </div>
+  </div>
+  <div class="card" id="card3">
+    <div class="q-header">
+      <span class="q-num">Câu 3</span>
+      <span class="q-text">Đối với tình trạng hư chứng lâu ngày, cách dùng thuốc bổ dưỡng đúng là:</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q3_o0" onclick="selectOpt(3,0)">
+      <span class="opt-label">A</span>
+      <span>Dùng ngay liều cao để hồi phục nhanh</span>
+    </div>
+    <div class="opt" id="q3_o1" onclick="selectOpt(3,1)">
+      <span class="opt-label">B</span>
+      <span>Dùng từ từ và tăng dần liều</span>
+    </div>
+    <div class="opt" id="q3_o2" onclick="selectOpt(3,2)">
+      <span class="opt-label">C</span>
+      <span>Chỉ dùng các vị thuốc có tính đại nhiệt</span>
+    </div>
+    <div class="opt" id="q3_o3" onclick="selectOpt(3,3)">
+      <span class="opt-label">D</span>
+      <span>Dùng kết hợp với nhiều thuốc tả hạ</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check3" onclick="checkAns(3)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(3)">Xem đáp án</button>
+      <span class="result-chip" id="chip3"></span>
+    </div>
+    <div class="explain-box" id="exp3">
+      <div class="ans-line">✓ Đáp án đúng: B. Dùng từ từ và tăng dần liều</div>
+      <div class="explain-text">Hư chứng lâu ngày (do hậu thiên) thì lấy bổ Tỳ Vị làm chính, dùng thuốc từ từ để cơ thể hấp thu từng bước — tránh bổ quá mạnh gây "thực bất thụ bổ".</div>
+    </div>
+  </div>
+  <div class="card" id="card4">
+    <div class="q-header">
+      <span class="q-num">Câu 4</span>
+      <span class="q-text">Đối với tình trạng suy kiệt đột ngột, nguyên tắc dùng thuốc bổ dưỡng là:</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q4_o0" onclick="selectOpt(4,0)">
+      <span class="opt-label">A</span>
+      <span>Dùng liều thấp để cơ thể thích nghi dần</span>
+    </div>
+    <div class="opt" id="q4_o1" onclick="selectOpt(4,1)">
+      <span class="opt-label">B</span>
+      <span>Dùng ngay liều cao</span>
+    </div>
+    <div class="opt" id="q4_o2" onclick="selectOpt(4,2)">
+      <span class="opt-label">C</span>
+      <span>Chỉ dùng thuốc bổ âm</span>
+    </div>
+    <div class="opt" id="q4_o3" onclick="selectOpt(4,3)">
+      <span class="opt-label">D</span>
+      <span>Phải dùng thuốc hành khí trước 3 ngày</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check4" onclick="checkAns(4)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(4)">Xem đáp án</button>
+      <span class="result-chip" id="chip4"></span>
+    </div>
+    <div class="explain-box" id="exp4">
+      <div class="ans-line">✓ Đáp án đúng: B. Dùng ngay liều cao</div>
+      <div class="explain-text">Trường hợp suy kiệt đột ngột (thoát dương) cần dùng liều cao ngay lập tức để hồi dương cứu nghịch, ví dụ dùng Độc sâm thang.</div>
+    </div>
+  </div>
+  <div class="card" id="card5">
+    <div class="q-header">
+      <span class="q-num">Câu 5</span>
+      <span class="q-text">Thuốc bổ Khí thường có tính vị và quy kinh chung là:</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q5_o0" onclick="selectOpt(5,0)">
+      <span class="opt-label">A</span>
+      <span>Vị khổ, tính hàn; quy kinh Tâm, Can</span>
+    </div>
+    <div class="opt" id="q5_o1" onclick="selectOpt(5,1)">
+      <span class="opt-label">B</span>
+      <span>Vị cam, tính ôn/bình; quy kinh Phế, Tỳ, Tâm, Thận</span>
+    </div>
+    <div class="opt" id="q5_o2" onclick="selectOpt(5,2)">
+      <span class="opt-label">C</span>
+      <span>Vị hàm, tính lương; quy kinh Thận, Đại trường</span>
+    </div>
+    <div class="opt" id="q5_o3" onclick="selectOpt(5,3)">
+      <span class="opt-label">D</span>
+      <span>Vị toan, tính bình; quy kinh Can, Tỳ</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check5" onclick="checkAns(5)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(5)">Xem đáp án</button>
+      <span class="result-chip" id="chip5"></span>
+    </div>
+    <div class="explain-box" id="exp5">
+      <div class="ans-line">✓ Đáp án đúng: B. Vị cam, tính ôn/bình; quy kinh Phế, Tỳ, Tâm, Thận</div>
+      <div class="explain-text">Thuốc bổ khí phần lớn có vị cam (ngọt), tính ôn/bình, quy kinh Phế và Tỳ — phù hợp với chức năng bổ Phế khí và kiện Tỳ khí.</div>
+    </div>
+  </div>
+  <div class="card" id="card6">
+    <div class="q-header">
+      <span class="q-num">Câu 6</span>
+      <span class="q-text">Nhóm thuốc có công năng bổ Thận tráng dương, mạnh cân cốt là:</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q6_o0" onclick="selectOpt(6,0)">
+      <span class="opt-label">A</span>
+      <span>Thuốc Khu phong trừ thấp</span>
+    </div>
+    <div class="opt" id="q6_o1" onclick="selectOpt(6,1)">
+      <span class="opt-label">B</span>
+      <span>Thuốc bổ Huyết</span>
+    </div>
+    <div class="opt" id="q6_o2" onclick="selectOpt(6,2)">
+      <span class="opt-label">C</span>
+      <span>Thuốc bổ Dương</span>
+    </div>
+    <div class="opt" id="q6_o3" onclick="selectOpt(6,3)">
+      <span class="opt-label">D</span>
+      <span>Thuốc Hồi dương cứu nghịch</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check6" onclick="checkAns(6)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(6)">Xem đáp án</button>
+      <span class="result-chip" id="chip6"></span>
+    </div>
+    <div class="explain-box" id="exp6">
+      <div class="ans-line">✓ Đáp án đúng: C. Thuốc bổ Dương</div>
+      <div class="explain-text">Nhóm thuốc Bổ Dương (như Lộc nhung, Phụ tử, Ba kích) có tác dụng ôn Thận tráng dương, mạnh gân cốt — chủ trị mệnh môn hỏa suy.</div>
+    </div>
+  </div>
+  <div class="card" id="card7">
+    <div class="q-header">
+      <span class="q-num">Câu 7</span>
+      <span class="q-text">Thuốc bổ Âm có đặc điểm chung về tính vị và quy kinh là:</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q7_o0" onclick="selectOpt(7,0)">
+      <span class="opt-label">A</span>
+      <span>Vị cam, tính hàn/lương; quy kinh Phế, Thận, Vị</span>
+    </div>
+    <div class="opt" id="q7_o1" onclick="selectOpt(7,1)">
+      <span class="opt-label">B</span>
+      <span>Vị tân, tính ôn; quy kinh Can, Thận</span>
+    </div>
+    <div class="opt" id="q7_o2" onclick="selectOpt(7,2)">
+      <span class="opt-label">C</span>
+      <span>Vị cam, tính bình; quy kinh Tâm, Tỳ</span>
+    </div>
+    <div class="opt" id="q7_o3" onclick="selectOpt(7,3)">
+      <span class="opt-label">D</span>
+      <span>Vị hàm, tính ôn; quy kinh Phế, Tỳ</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check7" onclick="checkAns(7)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(7)">Xem đáp án</button>
+      <span class="result-chip" id="chip7"></span>
+    </div>
+    <div class="explain-box" id="exp7">
+      <div class="ans-line">✓ Đáp án đúng: A. Vị cam, tính hàn/lương; quy kinh Phế, Thận, Vị</div>
+      <div class="explain-text">Thuốc bổ âm (như Thạch hộc, Sa sâm) thường có vị ngọt (cam), tính hàn/lương, quy kinh Phế, Vị, Thận — phù hợp để dưỡng tân dịch và bổ âm.</div>
+    </div>
+  </div>
+  <div class="card" id="card8">
+    <div class="q-header">
+      <span class="q-num">Câu 8</span>
+      <span class="q-text">Khi dùng thuốc bổ Âm, cần tránh sử dụng trong trường hợp nào?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q8_o0" onclick="selectOpt(8,0)">
+      <span class="opt-label">A</span>
+      <span>Sốt cao gây tân dịch hao tổn</span>
+    </div>
+    <div class="opt" id="q8_o1" onclick="selectOpt(8,1)">
+      <span class="opt-label">B</span>
+      <span>Chứng hàn, Tỳ Vị hư nhược</span>
+    </div>
+    <div class="opt" id="q8_o2" onclick="selectOpt(8,2)">
+      <span class="opt-label">C</span>
+      <span>Ho khan kéo dài do Phế táo</span>
+    </div>
+    <div class="opt" id="q8_o3" onclick="selectOpt(8,3)">
+      <span class="opt-label">D</span>
+      <span>Huyết hư gây chóng mặt</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check8" onclick="checkAns(8)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(8)">Xem đáp án</button>
+      <span class="result-chip" id="chip8"></span>
+    </div>
+    <div class="explain-box" id="exp8">
+      <div class="ans-line">✓ Đáp án đúng: B. Chứng hàn, Tỳ Vị hư nhược</div>
+      <div class="explain-text">Thuốc bổ Âm có tính hàn, gây nê trệ nên kiêng kỵ khi Tỳ Vị hư nhược, hàn thấp nội trở — dùng sẽ làm nặng thêm rối loạn tiêu hóa.</div>
+    </div>
+  </div>
+  <div class="card" id="card9">
+    <div class="q-header">
+      <span class="q-num">Câu 9</span>
+      <span class="q-text">Thuốc bổ Âm thường được phối hợp với thuốc lý khí kiện Tỳ nhằm mục đích gì?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q9_o0" onclick="selectOpt(9,0)">
+      <span class="opt-label">A</span>
+      <span>Tăng tính hàn của thuốc</span>
+    </div>
+    <div class="opt" id="q9_o1" onclick="selectOpt(9,1)">
+      <span class="opt-label">B</span>
+      <span>Khắc phục tính chất nê trệ của thuốc bổ âm</span>
+    </div>
+    <div class="opt" id="q9_o2" onclick="selectOpt(9,2)">
+      <span class="opt-label">C</span>
+      <span>Giảm tác dụng sinh tân dịch</span>
+    </div>
+    <div class="opt" id="q9_o3" onclick="selectOpt(9,3)">
+      <span class="opt-label">D</span>
+      <span>Tăng cường tác dụng thanh nhiệt</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check9" onclick="checkAns(9)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(9)">Xem đáp án</button>
+      <span class="result-chip" id="chip9"></span>
+    </div>
+    <div class="explain-box" id="exp9">
+      <div class="ans-line">✓ Đáp án đúng: B. Khắc phục tính chất nê trệ của thuốc bổ âm</div>
+      <div class="explain-text">Thuốc bổ Âm dễ gây khó tiêu, nên cần phối hợp thuốc lý khí kiện Tỳ để khắc phục tính nê trệ — giúp hấp thu thuốc tốt hơn.</div>
+    </div>
+  </div>
+  <div class="card" id="card10">
+    <div class="q-header">
+      <span class="q-num">Câu 10</span>
+      <span class="q-text">Chủ trị chung của thuốc bổ Dương bao gồm:</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q10_o0" onclick="selectOpt(10,0)">
+      <span class="opt-label">A</span>
+      <span>Phế hư ho suyễn, tân dịch hao tổn</span>
+    </div>
+    <div class="opt" id="q10_o1" onclick="selectOpt(10,1)">
+      <span class="opt-label">B</span>
+      <span>Huyết hư thiếu máu, mất ngủ</span>
+    </div>
+    <div class="opt" id="q10_o2" onclick="selectOpt(10,2)">
+      <span class="opt-label">C</span>
+      <span>Liệt dương, di tinh, đau nhức xương, tử cung lạnh</span>
+    </div>
+    <div class="opt" id="q10_o3" onclick="selectOpt(10,3)">
+      <span class="opt-label">D</span>
+      <span>Nội nhiệt tiêu khát, đạo hãn</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check10" onclick="checkAns(10)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(10)">Xem đáp án</button>
+      <span class="result-chip" id="chip10"></span>
+    </div>
+    <div class="explain-box" id="exp10">
+      <div class="ans-line">✓ Đáp án đúng: C. Liệt dương, di tinh, đau nhức xương, tử cung lạnh</div>
+      <div class="explain-text">Chủ trị chung của thuốc Bổ Dương là các chứng mệnh môn hỏa suy: liệt dương, di tinh, tử cung lạnh, lưng gối đau yếu — do Thận dương hư.</div>
+    </div>
+  </div>
+  <div class="card" id="card11">
+    <div class="q-header">
+      <span class="q-num">Câu 11</span>
+      <span class="q-text">Cam thảo tương phản với các vị thuốc nào sau đây?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q11_o0" onclick="selectOpt(11,0)">
+      <span class="opt-label">A</span>
+      <span>Lê lô, Ngũ linh chi</span>
+    </div>
+    <div class="opt" id="q11_o1" onclick="selectOpt(11,1)">
+      <span class="opt-label">B</span>
+      <span>Cam toại, Đại kích</span>
+    </div>
+    <div class="opt" id="q11_o2" onclick="selectOpt(11,2)">
+      <span class="opt-label">C</span>
+      <span>Ô đầu, Phụ tử</span>
+    </div>
+    <div class="opt" id="q11_o3" onclick="selectOpt(11,3)">
+      <span class="opt-label">D</span>
+      <span>Đan sâm, Ba kích</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check11" onclick="checkAns(11)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(11)">Xem đáp án</button>
+      <span class="result-chip" id="chip11"></span>
+    </div>
+    <div class="explain-box" id="exp11">
+      <div class="ans-line">✓ Đáp án đúng: B. Cam toại, Đại kích</div>
+      <div class="explain-text">Theo "Thập bát phản", Cam thảo phản Đại kích, Nguyên hoa, Cam toại, Hải tảo — tuyệt đối không được phối hợp trong bài thuốc.</div>
+    </div>
+  </div>
+  <div class="card" id="card12">
+    <div class="q-header">
+      <span class="q-num">Câu 12</span>
+      <span class="q-text">Vị thuốc nào có tác dụng "Kiện Tỳ ích khí, táo thấp, lợi thủy, cố biểu liễm hãn và an thai"?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q12_o0" onclick="selectOpt(12,0)">
+      <span class="opt-label">A</span>
+      <span>Hoài sơn</span>
+    </div>
+    <div class="opt" id="q12_o1" onclick="selectOpt(12,1)">
+      <span class="opt-label">B</span>
+      <span>Bạch truật</span>
+    </div>
+    <div class="opt" id="q12_o2" onclick="selectOpt(12,2)">
+      <span class="opt-label">C</span>
+      <span>Đảng sâm</span>
+    </div>
+    <div class="opt" id="q12_o3" onclick="selectOpt(12,3)">
+      <span class="opt-label">D</span>
+      <span>Đại táo</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check12" onclick="checkAns(12)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(12)">Xem đáp án</button>
+      <span class="result-chip" id="chip12"></span>
+    </div>
+    <div class="explain-box" id="exp12">
+      <div class="ans-line">✓ Đáp án đúng: B. Bạch truật</div>
+      <div class="explain-text">Bạch truật có đầy đủ tác dụng: kiện Tỳ, ích khí, táo thấp, lợi niệu, cố biểu liễm hãn và an thai — được gọi là "Tỳ tạng chi chính dược".</div>
+    </div>
+  </div>
+  <div class="card" id="card13">
+    <div class="q-header">
+      <span class="q-num">Câu 13</span>
+      <span class="q-text">Hoàng kỳ có tác dụng đặc biệt nào trong điều trị mụn nhọt?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q13_o0" onclick="selectOpt(13,0)">
+      <span class="opt-label">A</span>
+      <span>Thanh nhiệt giải độc</span>
+    </div>
+    <div class="opt" id="q13_o1" onclick="selectOpt(13,1)">
+      <span class="opt-label">B</span>
+      <span>Bài nùng, sinh cơ</span>
+    </div>
+    <div class="opt" id="q13_o2" onclick="selectOpt(13,2)">
+      <span class="opt-label">C</span>
+      <span>Hoạt huyết hóa ứ</span>
+    </div>
+    <div class="opt" id="q13_o3" onclick="selectOpt(13,3)">
+      <span class="opt-label">D</span>
+      <span>Lương huyết chỉ huyết</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check13" onclick="checkAns(13)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(13)">Xem đáp án</button>
+      <span class="result-chip" id="chip13"></span>
+    </div>
+    <div class="explain-box" id="exp13">
+      <div class="ans-line">✓ Đáp án đúng: B. Bài nùng, sinh cơ</div>
+      <div class="explain-text">Hoàng kỳ có tác dụng bổ khí, sinh cơ (bài nùng) đặc biệt hiệu quả trong điều trị mụn nhọt lâu lành — giúp tống mủ ra ngoài và tái tạo mô.</div>
+    </div>
+  </div>
+  <div class="card" id="card14">
+    <div class="q-header">
+      <span class="q-num">Câu 14</span>
+      <span class="q-text">Hoài sơn không chỉ bổ Tỳ, Phế mà còn có tác dụng gì quan trọng trên tạng Thận?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q14_o0" onclick="selectOpt(14,0)">
+      <span class="opt-label">A</span>
+      <span>Lợi niệu tiêu phù</span>
+    </div>
+    <div class="opt" id="q14_o1" onclick="selectOpt(14,1)">
+      <span class="opt-label">B</span>
+      <span>Bổ Thận sáp tinh</span>
+    </div>
+    <div class="opt" id="q14_o2" onclick="selectOpt(14,2)">
+      <span class="opt-label">C</span>
+      <span>Thanh nhiệt Thận kinh</span>
+    </div>
+    <div class="opt" id="q14_o3" onclick="selectOpt(14,3)">
+      <span class="opt-label">D</span>
+      <span>Tả hỏa Thận</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check14" onclick="checkAns(14)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(14)">Xem đáp án</button>
+      <span class="result-chip" id="chip14"></span>
+    </div>
+    <div class="explain-box" id="exp14">
+      <div class="ans-line">✓ Đáp án đúng: B. Bổ Thận sáp tinh</div>
+      <div class="explain-text">Hoài sơn không chỉ bổ Tỳ, Phế mà còn có tác dụng bổ Thận sáp tinh — dùng tốt trong chứng di tinh, tiểu đêm, lưng gối yếu.</div>
+    </div>
+  </div>
+  <div class="card" id="card15">
+    <div class="q-header">
+      <span class="q-num">Câu 15</span>
+      <span class="q-text">Vị thuốc nào có tác dụng "Nhu Can thư cân", dùng tốt cho chứng chân tay co rút?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q15_o0" onclick="selectOpt(15,0)">
+      <span class="opt-label">A</span>
+      <span>Đương quy</span>
+    </div>
+    <div class="opt" id="q15_o1" onclick="selectOpt(15,1)">
+      <span class="opt-label">B</span>
+      <span>Bạch thược</span>
+    </div>
+    <div class="opt" id="q15_o2" onclick="selectOpt(15,2)">
+      <span class="opt-label">C</span>
+      <span>Thục địa</span>
+    </div>
+    <div class="opt" id="q15_o3" onclick="selectOpt(15,3)">
+      <span class="opt-label">D</span>
+      <span>Long nhãn</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check15" onclick="checkAns(15)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(15)">Xem đáp án</button>
+      <span class="result-chip" id="chip15"></span>
+    </div>
+    <div class="explain-box" id="exp15">
+      <div class="ans-line">✓ Đáp án đúng: B. Bạch thược</div>
+      <div class="explain-text">Bạch thược có tác dụng "Nhu Can thư cân" (dưỡng can, làm mềm gân), rất tốt cho chứng chân tay co rút, chuột rút — Can chủ cân, Bạch thược dưỡng Can huyết.</div>
+    </div>
+  </div>
+  <div class="card" id="card16">
+    <div class="q-header">
+      <span class="q-num">Câu 16</span>
+      <span class="q-text">Vị thuốc bổ dương có tác dụng "Mạnh cân cốt, trừ phong thấp, bình suyễn" và úy Lôi hoàn là:</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q16_o0" onclick="selectOpt(16,0)">
+      <span class="opt-label">A</span>
+      <span>Đỗ trọng</span>
+    </div>
+    <div class="opt" id="q16_o1" onclick="selectOpt(16,1)">
+      <span class="opt-label">B</span>
+      <span>Ba kích</span>
+    </div>
+    <div class="opt" id="q16_o2" onclick="selectOpt(16,2)">
+      <span class="opt-label">C</span>
+      <span>Cẩu tích</span>
+    </div>
+    <div class="opt" id="q16_o3" onclick="selectOpt(16,3)">
+      <span class="opt-label">D</span>
+      <span>Tục đoạn</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check16" onclick="checkAns(16)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(16)">Xem đáp án</button>
+      <span class="result-chip" id="chip16"></span>
+    </div>
+    <div class="explain-box" id="exp16">
+      <div class="ans-line">✓ Đáp án đúng: B. Ba kích</div>
+      <div class="explain-text">Ba kích là vị thuốc úy Lôi hoàn (theo Thập cửu úy). Lưu ý: đặc điểm "bình suyễn" trong câu hỏi gốc có thể là lỗi đánh máy, tuy nhiên đáp án Ba kích vẫn đúng dựa trên tính úy.</div>
+    </div>
+  </div>
+  <div class="card" id="card17">
+    <div class="q-header">
+      <span class="q-num">Câu 17</span>
+      <span class="q-text">Vị thuốc nào có tên gọi khác là "Tắc kè đá", có tác dụng bổ Thận, liền xương và giải độc trị ngứa?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q17_o0" onclick="selectOpt(17,0)">
+      <span class="opt-label">A</span>
+      <span>Cốt toái bổ</span>
+    </div>
+    <div class="opt" id="q17_o1" onclick="selectOpt(17,1)">
+      <span class="opt-label">B</span>
+      <span>Cẩu tích</span>
+    </div>
+    <div class="opt" id="q17_o2" onclick="selectOpt(17,2)">
+      <span class="opt-label">C</span>
+      <span>Ba kích</span>
+    </div>
+    <div class="opt" id="q17_o3" onclick="selectOpt(17,3)">
+      <span class="opt-label">D</span>
+      <span>Phá cố chỉ</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check17" onclick="checkAns(17)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(17)">Xem đáp án</button>
+      <span class="result-chip" id="chip17"></span>
+    </div>
+    <div class="explain-box" id="exp17">
+      <div class="ans-line">✓ Đáp án đúng: A. Cốt toái bổ</div>
+      <div class="explain-text">Cốt toái bổ còn gọi là "Tắc kè đá", có tác dụng bổ Thận, liền xương, khu phong — thường dùng trị gãy xương chậm liền, đau lưng, ngứa da.</div>
+    </div>
+  </div>
+  <div class="card" id="card18">
+    <div class="q-header">
+      <span class="q-num">Câu 18</span>
+      <span class="q-text">Phá cố chỉ chủ trị chứng "Ngũ canh tả" do có công năng nào?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q18_o0" onclick="selectOpt(18,0)">
+      <span class="opt-label">A</span>
+      <span>Tỳ vị thực nhiệt</span>
+    </div>
+    <div class="opt" id="q18_o1" onclick="selectOpt(18,1)">
+      <span class="opt-label">B</span>
+      <span>Tỳ Thận dương hư</span>
+    </div>
+    <div class="opt" id="q18_o2" onclick="selectOpt(18,2)">
+      <span class="opt-label">C</span>
+      <span>Phế khí hư</span>
+    </div>
+    <div class="opt" id="q18_o3" onclick="selectOpt(18,3)">
+      <span class="opt-label">D</span>
+      <span>Can khí uất kết</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check18" onclick="checkAns(18)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(18)">Xem đáp án</button>
+      <span class="result-chip" id="chip18"></span>
+    </div>
+    <div class="explain-box" id="exp18">
+      <div class="ans-line">✓ Đáp án đúng: B. Tỳ Thận dương hư</div>
+      <div class="explain-text">Phá cố chỉ (và Nhục đậu khấu) trị "Ngũ canh tả" (tiêu chảy sáng sớm 5 giờ) do Tỳ Thận dương hư — đây là biểu hiện điển hình của Thận dương không ôn ấm được Tỳ.</div>
+    </div>
+  </div>
+  <div class="card" id="card19">
+    <div class="q-header">
+      <span class="q-num">Câu 19</span>
+      <span class="q-text">Ích trí nhân có công năng chính là:</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q19_o0" onclick="selectOpt(19,0)">
+      <span class="opt-label">A</span>
+      <span>Dưỡng âm nhuận Phế, giảm ho, giảm khát</span>
+    </div>
+    <div class="opt" id="q19_o1" onclick="selectOpt(19,1)">
+      <span class="opt-label">B</span>
+      <span>Ôn Tỳ Thận, cố tinh sáp niệu, chỉ tả</span>
+    </div>
+    <div class="opt" id="q19_o2" onclick="selectOpt(19,2)">
+      <span class="opt-label">C</span>
+      <span>Hoạt huyết hóa ứ, tiêu phù, giảm đau</span>
+    </div>
+    <div class="opt" id="q19_o3" onclick="selectOpt(19,3)">
+      <span class="opt-label">D</span>
+      <span>Thanh nhiệt lợi thấp, thoái hoàng</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check19" onclick="checkAns(19)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(19)">Xem đáp án</button>
+      <span class="result-chip" id="chip19"></span>
+    </div>
+    <div class="explain-box" id="exp19">
+      <div class="ans-line">✓ Đáp án đúng: B. Ôn Tỳ Thận, cố tinh sáp niệu, chỉ tả</div>
+      <div class="explain-text">Ích trí nhân có tính ôn, giúp ôn Tỳ Thận, cố tinh sáp niệu — dùng tốt trong chứng di tinh, tiểu nhiều, tiêu chảy do Tỳ Thận hư hàn.</div>
+    </div>
+  </div>
+  <div class="card" id="card20">
+    <div class="q-header">
+      <span class="q-num">Câu 20</span>
+      <span class="q-text">Nhục thung dung có tác dụng nhuận tràng, dùng điều trị táo bón do:</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q20_o0" onclick="selectOpt(20,0)">
+      <span class="opt-label">A</span>
+      <span>Thực nhiệt tích trệ</span>
+    </div>
+    <div class="opt" id="q20_o1" onclick="selectOpt(20,1)">
+      <span class="opt-label">B</span>
+      <span>Huyết hư, thiếu tân dịch</span>
+    </div>
+    <div class="opt" id="q20_o2" onclick="selectOpt(20,2)">
+      <span class="opt-label">C</span>
+      <span>Ẩm thực thất điều</span>
+    </div>
+    <div class="opt" id="q20_o3" onclick="selectOpt(20,3)">
+      <span class="opt-label">D</span>
+      <span>Hàn ngưng khí trệ</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check20" onclick="checkAns(20)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(20)">Xem đáp án</button>
+      <span class="result-chip" id="chip20"></span>
+    </div>
+    <div class="explain-box" id="exp20">
+      <div class="ans-line">✓ Đáp án đúng: B. Huyết hư, thiếu tân dịch</div>
+      <div class="explain-text">Nhục thung dung là thuốc bổ dương nhưng có tính nhuận nhu (tươi ẩm), giúp nhuận tràng thông tiện do huyết hư, thiếu tân dịch — rất phù hợp cho người cao tuổi.</div>
+    </div>
+  </div>
+  <div class="card" id="card21">
+    <div class="q-header">
+      <span class="q-num">Câu 21</span>
+      <span class="q-text">Sa sâm quy vào kinh Phế, Vị, có công năng chính là:</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q21_o0" onclick="selectOpt(21,0)">
+      <span class="opt-label">A</span>
+      <span>Bổ khí kiện Tỳ</span>
+    </div>
+    <div class="opt" id="q21_o1" onclick="selectOpt(21,1)">
+      <span class="opt-label">B</span>
+      <span>Dưỡng Phế âm, ích Vị</span>
+    </div>
+    <div class="opt" id="q21_o2" onclick="selectOpt(21,2)">
+      <span class="opt-label">C</span>
+      <span>Bổ thận tráng dương</span>
+    </div>
+    <div class="opt" id="q21_o3" onclick="selectOpt(21,3)">
+      <span class="opt-label">D</span>
+      <span>Chỉ huyết an thai</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check21" onclick="checkAns(21)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(21)">Xem đáp án</button>
+      <span class="result-chip" id="chip21"></span>
+    </div>
+    <div class="explain-box" id="exp21">
+      <div class="ans-line">✓ Đáp án đúng: B. Dưỡng Phế âm, ích Vị</div>
+      <div class="explain-text">Sa sâm dưỡng Phế âm, ích Vị sinh tân — dùng tốt trong chứng Phế âm hư (ho khan, khô họng) và Vị âm hư (miệng khát, kém ăn).</div>
+    </div>
+  </div>
+  <div class="card" id="card22">
+    <div class="q-header">
+      <span class="q-num">Câu 22</span>
+      <span class="q-text">Câu kỷ tử được đánh giá là vị thuốc dưỡng sinh tốt vì lý do:</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q22_o0" onclick="selectOpt(22,0)">
+      <span class="opt-label">A</span>
+      <span>Rất nóng, bổ dương mạnh</span>
+    </div>
+    <div class="opt" id="q22_o1" onclick="selectOpt(22,1)">
+      <span class="opt-label">B</span>
+      <span>Không nê trệ, không nóng</span>
+    </div>
+    <div class="opt" id="q22_o2" onclick="selectOpt(22,2)">
+      <span class="opt-label">C</span>
+      <span>Bổ Phế âm và Phế khí</span>
+    </div>
+    <div class="opt" id="q22_o3" onclick="selectOpt(22,3)">
+      <span class="opt-label">D</span>
+      <span>Vừa bổ âm vừa bổ dương</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check22" onclick="checkAns(22)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(22)">Xem đáp án</button>
+      <span class="result-chip" id="chip22"></span>
+    </div>
+    <div class="explain-box" id="exp22">
+      <div class="ans-line">✓ Đáp án đúng: B. Không nê trệ, không nóng</div>
+      <div class="explain-text">Câu kỷ tử được đánh giá cao trong dưỡng sinh vì "không nê trệ (như Thục địa), không nóng (như thuốc bổ dương)" — bổ Can Thận âm, ích tinh huyết mà không gây tác dụng phụ.</div>
+    </div>
+  </div>
+  <div class="missing-note">⚠️ <strong>Câu 23</strong> bị khuyết trong đề thi gốc — không có đáp án tương ứng trong tài liệu.</div>
+  <div class="card" id="card24">
+    <div class="q-header">
+      <span class="q-num">Câu 24</span>
+      <span class="q-text">Thiên hoa phấn tương phản với vị thuốc nào?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q24_o0" onclick="selectOpt(24,0)">
+      <span class="opt-label">A</span>
+      <span>Lê lô</span>
+    </div>
+    <div class="opt" id="q24_o1" onclick="selectOpt(24,1)">
+      <span class="opt-label">B</span>
+      <span>Phụ tử</span>
+    </div>
+    <div class="opt" id="q24_o2" onclick="selectOpt(24,2)">
+      <span class="opt-label">C</span>
+      <span>Ngũ linh chi</span>
+    </div>
+    <div class="opt" id="q24_o3" onclick="selectOpt(24,3)">
+      <span class="opt-label">D</span>
+      <span>Hải tảo</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check24" onclick="checkAns(24)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(24)">Xem đáp án</button>
+      <span class="result-chip" id="chip24"></span>
+    </div>
+    <div class="explain-box" id="exp24">
+      <div class="ans-line">✓ Đáp án đúng: B. Phụ tử</div>
+      <div class="explain-text">Thiên hoa phấn phản Ô đầu, Phụ tử (theo Thập bát phản) — tuyệt đối không được phối hợp, có thể gây phản ứng độc hại.</div>
+    </div>
+  </div>
+  <div class="card" id="card25">
+    <div class="q-header">
+      <span class="q-num">Câu 25</span>
+      <span class="q-text">Vị đặc trưng thường gặp nhất ở các thuốc nhóm Cố sáp là:</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q25_o0" onclick="selectOpt(25,0)">
+      <span class="opt-label">A</span>
+      <span>Vị cay, đắng</span>
+    </div>
+    <div class="opt" id="q25_o1" onclick="selectOpt(25,1)">
+      <span class="opt-label">B</span>
+      <span>Vị chua, chát</span>
+    </div>
+    <div class="opt" id="q25_o2" onclick="selectOpt(25,2)">
+      <span class="opt-label">C</span>
+      <span>Vị ngọt, nhạt</span>
+    </div>
+    <div class="opt" id="q25_o3" onclick="selectOpt(25,3)">
+      <span class="opt-label">D</span>
+      <span>Vị mặn, đắng</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check25" onclick="checkAns(25)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(25)">Xem đáp án</button>
+      <span class="result-chip" id="chip25"></span>
+    </div>
+    <div class="explain-box" id="exp25">
+      <div class="ans-line">✓ Đáp án đúng: B. Vị chua, chát</div>
+      <div class="explain-text">Đa số các vị thuốc Cố sáp đều có vị chua (toan) hoặc vị chát (sáp) — tính thu liễm cố sáp xuất phát từ hai vị này.</div>
+    </div>
+  </div>
+  <div class="card" id="card26">
+    <div class="q-header">
+      <span class="q-num">Câu 26</span>
+      <span class="q-text">Thuốc cố sáp được chỉ định chủ yếu cho các trường hợp nào sau đây?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q26_o0" onclick="selectOpt(26,0)">
+      <span class="opt-label">A</span>
+      <span>Hư chứng lâu ngày dẫn đến thoát chứng</span>
+    </div>
+    <div class="opt" id="q26_o1" onclick="selectOpt(26,1)">
+      <span class="opt-label">B</span>
+      <span>Thực nhiệt đang tiến triển mạnh tại khí phận</span>
+    </div>
+    <div class="opt" id="q26_o2" onclick="selectOpt(26,2)">
+      <span class="opt-label">C</span>
+      <span>Thấp tà mới xâm nhập vào cơ thể</span>
+    </div>
+    <div class="opt" id="q26_o3" onclick="selectOpt(26,3)">
+      <span class="opt-label">D</span>
+      <span>Tỳ Vị tích trệ giai đoạn đầu</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check26" onclick="checkAns(26)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(26)">Xem đáp án</button>
+      <span class="result-chip" id="chip26"></span>
+    </div>
+    <div class="explain-box" id="exp26">
+      <div class="ans-line">✓ Đáp án đúng: A. Hư chứng lâu ngày dẫn đến thoát chứng</div>
+      <div class="explain-text">Thuốc cố sáp chỉ định chủ yếu cho hư chứng lâu ngày dẫn đến thoát chứng, ngoại tà đã giải hết — không dùng khi còn ngoại tà (vì sẽ "bế môn lưu tặc").</div>
+    </div>
+  </div>
+  <div class="card" id="card27">
+    <div class="q-header">
+      <span class="q-num">Câu 27</span>
+      <span class="q-text">Khi điều trị các chứng ra mồ hôi nhiều kèm tay chân lạnh, nguy cơ thoát dương, cần phối hợp thuốc cố sáp với nhóm thuốc nào?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q27_o0" onclick="selectOpt(27,0)">
+      <span class="opt-label">A</span>
+      <span>Thuốc thanh nhiệt lương huyết</span>
+    </div>
+    <div class="opt" id="q27_o1" onclick="selectOpt(27,1)">
+      <span class="opt-label">B</span>
+      <span>Thuốc tả hạ thông tiện</span>
+    </div>
+    <div class="opt" id="q27_o2" onclick="selectOpt(27,2)">
+      <span class="opt-label">C</span>
+      <span>Thuốc bổ khí, hồi dương cứu nghịch</span>
+    </div>
+    <div class="opt" id="q27_o3" onclick="selectOpt(27,3)">
+      <span class="opt-label">D</span>
+      <span>Thuốc hành khí, hành huyết</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check27" onclick="checkAns(27)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(27)">Xem đáp án</button>
+      <span class="result-chip" id="chip27"></span>
+    </div>
+    <div class="explain-box" id="exp27">
+      <div class="ans-line">✓ Đáp án đúng: C. Thuốc bổ khí, hồi dương cứu nghịch</div>
+      <div class="explain-text">Mồ hôi nhiều, tay chân lạnh (nguy cơ thoát dương) cần liễm hãn kết hợp bổ khí + hồi dương cứu nghịch — chỉ cố sáp đơn thuần không đủ khi có nguy cơ thoát dương.</div>
+    </div>
+  </div>
+  <div class="card" id="card28">
+    <div class="q-header">
+      <span class="q-num">Câu 28</span>
+      <span class="q-text">Chứng "Thoát giang" do Thận hư bất cố thường được điều trị bằng nhóm thuốc nào?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q28_o0" onclick="selectOpt(28,0)">
+      <span class="opt-label">A</span>
+      <span>Cố biểu liễm hãn</span>
+    </div>
+    <div class="opt" id="q28_o1" onclick="selectOpt(28,1)">
+      <span class="opt-label">B</span>
+      <span>Sáp trường chỉ tả</span>
+    </div>
+    <div class="opt" id="q28_o2" onclick="selectOpt(28,2)">
+      <span class="opt-label">C</span>
+      <span>Cố tinh sáp niệu</span>
+    </div>
+    <div class="opt" id="q28_o3" onclick="selectOpt(28,3)">
+      <span class="opt-label">D</span>
+      <span>Thanh nhiệt táo thấp</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check28" onclick="checkAns(28)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(28)">Xem đáp án</button>
+      <span class="result-chip" id="chip28"></span>
+    </div>
+    <div class="explain-box" id="exp28">
+      <div class="ans-line">✓ Đáp án đúng: B. Sáp trường chỉ tả</div>
+      <div class="explain-text">"Thoát giang" (sa trực tràng) do Thận hư bất cố được điều trị bằng nhóm sáp trường chỉ tả — thu liễm ruột già, cố sáp hạ tiêu.</div>
+    </div>
+  </div>
+  <div class="card" id="card29">
+    <div class="q-header">
+      <span class="q-num">Câu 29</span>
+      <span class="q-text">Nhóm thuốc Sáp trường chỉ tả thường được phối hợp với thuốc bổ Tỳ nhằm mục đích gì?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q29_o0" onclick="selectOpt(29,0)">
+      <span class="opt-label">A</span>
+      <span>Tăng khả năng bài tiết mồ hôi</span>
+    </div>
+    <div class="opt" id="q29_o1" onclick="selectOpt(29,1)">
+      <span class="opt-label">B</span>
+      <span>Tăng công năng vận hóa của Tỳ</span>
+    </div>
+    <div class="opt" id="q29_o2" onclick="selectOpt(29,2)">
+      <span class="opt-label">C</span>
+      <span>Hỗ trợ thanh nhiệt ở vùng hạ tiêu</span>
+    </div>
+    <div class="opt" id="q29_o3" onclick="selectOpt(29,3)">
+      <span class="opt-label">D</span>
+      <span>Thúc đẩy tác dụng chỉ huyết, sinh cơ</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check29" onclick="checkAns(29)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(29)">Xem đáp án</button>
+      <span class="result-chip" id="chip29"></span>
+    </div>
+    <div class="explain-box" id="exp29">
+      <div class="ans-line">✓ Đáp án đúng: B. Tăng công năng vận hóa của Tỳ</div>
+      <div class="explain-text">Phối hợp với bổ Tỳ nhằm mục đích tăng công năng vận hóa của Tỳ — điều trị cả ngọn lẫn gốc, giải quyết căn nguyên tiêu chảy mạn.</div>
+    </div>
+  </div>
+  <div class="card" id="card30">
+    <div class="q-header">
+      <span class="q-num">Câu 30</span>
+      <span class="q-text">Ngoài tác dụng thu liễm cố sáp, Mẫu lệ còn có công năng đặc biệt nào sau đây?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q30_o0" onclick="selectOpt(30,0)">
+      <span class="opt-label">A</span>
+      <span>An thai, bổ khí</span>
+    </div>
+    <div class="opt" id="q30_o1" onclick="selectOpt(30,1)">
+      <span class="opt-label">B</span>
+      <span>Chế toan, nhuyễn kiên</span>
+    </div>
+    <div class="opt" id="q30_o2" onclick="selectOpt(30,2)">
+      <span class="opt-label">C</span>
+      <span>Thông kinh hoạt lạc</span>
+    </div>
+    <div class="opt" id="q30_o3" onclick="selectOpt(30,3)">
+      <span class="opt-label">D</span>
+      <span>Nhuận tràng thông tiện</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check30" onclick="checkAns(30)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(30)">Xem đáp án</button>
+      <span class="result-chip" id="chip30"></span>
+    </div>
+    <div class="explain-box" id="exp30">
+      <div class="ans-line">✓ Đáp án đúng: B. Chế toan, nhuyễn kiên</div>
+      <div class="explain-text">Mẫu lệ ngoài cố sáp còn có tác dụng nhuyễn kiên tán kết (tan tụ, tan hạch) và chế toan (giảm acid dạ dày) — dùng trị đau dạ dày tăng acid, u hạch cổ.</div>
+    </div>
+  </div>
+  <div class="card" id="card31">
+    <div class="q-header">
+      <span class="q-num">Câu 31</span>
+      <span class="q-text">Vị thuốc Liên tu quy vào các kinh nào?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q31_o0" onclick="selectOpt(31,0)">
+      <span class="opt-label">A</span>
+      <span>Can, Thận</span>
+    </div>
+    <div class="opt" id="q31_o1" onclick="selectOpt(31,1)">
+      <span class="opt-label">B</span>
+      <span>Phế, Đại trường</span>
+    </div>
+    <div class="opt" id="q31_o2" onclick="selectOpt(31,2)">
+      <span class="opt-label">C</span>
+      <span>Tâm, Tỳ, Thận</span>
+    </div>
+    <div class="opt" id="q31_o3" onclick="selectOpt(31,3)">
+      <span class="opt-label">D</span>
+      <span>Vị, Đởm</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check31" onclick="checkAns(31)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(31)">Xem đáp án</button>
+      <span class="result-chip" id="chip31"></span>
+    </div>
+    <div class="explain-box" id="exp31">
+      <div class="ans-line">✓ Đáp án đúng: C. Tâm, Tỳ, Thận</div>
+      <div class="explain-text">Liên tu quy kinh Tâm, Thận (có tài liệu ghi thêm Tỳ) để thanh Tâm, sáp tinh — dùng trị di tinh, đới hạ, tim hồi hộp do Tâm Thận bất giao.</div>
+    </div>
+  </div>
+  <div class="card" id="card32">
+    <div class="q-header">
+      <span class="q-num">Câu 32</span>
+      <span class="q-text">Vị thuốc nào có công năng cố tinh, thông kinh hoạt lạc?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q32_o0" onclick="selectOpt(32,0)">
+      <span class="opt-label">A</span>
+      <span>Kha tử</span>
+    </div>
+    <div class="opt" id="q32_o1" onclick="selectOpt(32,1)">
+      <span class="opt-label">B</span>
+      <span>Tang phiêu tiêu</span>
+    </div>
+    <div class="opt" id="q32_o2" onclick="selectOpt(32,2)">
+      <span class="opt-label">C</span>
+      <span>Ô mai</span>
+    </div>
+    <div class="opt" id="q32_o3" onclick="selectOpt(32,3)">
+      <span class="opt-label">D</span>
+      <span>Khiếm thực</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check32" onclick="checkAns(32)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(32)">Xem đáp án</button>
+      <span class="result-chip" id="chip32"></span>
+    </div>
+    <div class="explain-box" id="exp32">
+      <div class="ans-line">✓ Đáp án đúng: B. Tang phiêu tiêu</div>
+      <div class="explain-text">Tang phiêu tiêu có tác dụng cố tinh sáp niệu, thông kinh hoạt lạc — dùng trị di tinh, tiểu nhiều, tiểu đêm.</div>
+    </div>
+  </div>
+  <div class="card" id="card33">
+    <div class="q-header">
+      <span class="q-num">Câu 33</span>
+      <span class="q-text">Kha tử là vị thuốc thường được dùng để điều trị:</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q33_o0" onclick="selectOpt(33,0)">
+      <span class="opt-label">A</span>
+      <span>Mất ngủ, hồi hộp</span>
+    </div>
+    <div class="opt" id="q33_o1" onclick="selectOpt(33,1)">
+      <span class="opt-label">B</span>
+      <span>Ho lâu ngày, khàn tiếng</span>
+    </div>
+    <div class="opt" id="q33_o2" onclick="selectOpt(33,2)">
+      <span class="opt-label">C</span>
+      <span>Liệt dương, vô sinh</span>
+    </div>
+    <div class="opt" id="q33_o3" onclick="selectOpt(33,3)">
+      <span class="opt-label">D</span>
+      <span>Chóng mặt do Can dương vượng</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check33" onclick="checkAns(33)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(33)">Xem đáp án</button>
+      <span class="result-chip" id="chip33"></span>
+    </div>
+    <div class="explain-box" id="exp33">
+      <div class="ans-line">✓ Đáp án đúng: B. Ho lâu ngày, khàn tiếng</div>
+      <div class="explain-text">Kha tử liễm Phế, trị ho lâu ngày, viêm họng mạn, khàn tiếng — là vị thuốc đặc hiệu cho các bệnh lý thanh quản mạn tính.</div>
+    </div>
+  </div>
+  <div class="card" id="card34">
+    <div class="q-header">
+      <span class="q-num">Câu 34</span>
+      <span class="q-text">Dùng vị thuốc nào để điều trị "Ngũ canh tả" do Tỳ Thận dương hư?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q34_o0" onclick="selectOpt(34,0)">
+      <span class="opt-label">A</span>
+      <span>Ngũ vị tử</span>
+    </div>
+    <div class="opt" id="q34_o1" onclick="selectOpt(34,1)">
+      <span class="opt-label">B</span>
+      <span>Nhục đậu khấu</span>
+    </div>
+    <div class="opt" id="q34_o2" onclick="selectOpt(34,2)">
+      <span class="opt-label">C</span>
+      <span>Mẫu lệ</span>
+    </div>
+    <div class="opt" id="q34_o3" onclick="selectOpt(34,3)">
+      <span class="opt-label">D</span>
+      <span>Sơn thù</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check34" onclick="checkAns(34)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(34)">Xem đáp án</button>
+      <span class="result-chip" id="chip34"></span>
+    </div>
+    <div class="explain-box" id="exp34">
+      <div class="ans-line">✓ Đáp án đúng: B. Nhục đậu khấu</div>
+      <div class="explain-text">Nhục đậu khấu trị "Ngũ canh tả" do Tỳ Thận dương hư — ôn Tỳ sáp trường, thường phối hợp với Phá cố chỉ trong bài Tứ thần hoàn.</div>
+    </div>
+  </div>
+  <div class="card" id="card35">
+    <div class="q-header">
+      <span class="q-num">Câu 35</span>
+      <span class="q-text">Đặc điểm của vị thuốc Trầu không là gì?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q35_o0" onclick="selectOpt(35,0)">
+      <span class="opt-label">A</span>
+      <span>Vị đắng, tính lương; quy kinh Tâm, Tỳ</span>
+    </div>
+    <div class="opt" id="q35_o1" onclick="selectOpt(35,1)">
+      <span class="opt-label">B</span>
+      <span>Vị cay, tính ấm; quy kinh Tỳ, Phế</span>
+    </div>
+    <div class="opt" id="q35_o2" onclick="selectOpt(35,2)">
+      <span class="opt-label">C</span>
+      <span>Vị mặn, tính đại hàn; quy kinh Thận</span>
+    </div>
+    <div class="opt" id="q35_o3" onclick="selectOpt(35,3)">
+      <span class="opt-label">D</span>
+      <span>Vị ngọt, tính bình; quy kinh Can</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check35" onclick="checkAns(35)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(35)">Xem đáp án</button>
+      <span class="result-chip" id="chip35"></span>
+    </div>
+    <div class="explain-box" id="exp35">
+      <div class="ans-line">✓ Đáp án đúng: B. Vị cay, tính ấm; quy kinh Tỳ, Phế</div>
+      <div class="explain-text">Trầu không có vị cay (tân), tính ấm (ôn), quy kinh Tỳ, Phế — đặc điểm này giải thích tác dụng sát trùng, tiêu viêm khi dùng ngoài và tán hàn khi dùng trong.</div>
+    </div>
+  </div>
+  <div class="card" id="card36">
+    <div class="q-header">
+      <span class="q-num">Câu 36</span>
+      <span class="q-text">Khi dùng đường uống, Trầu không còn có tác dụng gì?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q36_o0" onclick="selectOpt(36,0)">
+      <span class="opt-label">A</span>
+      <span>Bổ thận tráng dương</span>
+    </div>
+    <div class="opt" id="q36_o1" onclick="selectOpt(36,1)">
+      <span class="opt-label">B</span>
+      <span>Tán phong hàn, hóa đờm</span>
+    </div>
+    <div class="opt" id="q36_o2" onclick="selectOpt(36,2)">
+      <span class="opt-label">C</span>
+      <span>Thanh nhiệt giải độc gan</span>
+    </div>
+    <div class="opt" id="q36_o3" onclick="selectOpt(36,3)">
+      <span class="opt-label">D</span>
+      <span>Cầm máu chỉ huyết</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check36" onclick="checkAns(36)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(36)">Xem đáp án</button>
+      <span class="result-chip" id="chip36"></span>
+    </div>
+    <div class="explain-box" id="exp36">
+      <div class="ans-line">✓ Đáp án đúng: B. Tán phong hàn, hóa đờm</div>
+      <div class="explain-text">Khi dùng đường uống, Trầu không tán phong hàn, hóa đờm chỉ khái — vị cay tính ấm giúp phát tán phong hàn ở Phế, hóa đờm hàn.</div>
+    </div>
+  </div>
+  <div class="card" id="card37">
+    <div class="q-header">
+      <span class="q-num">Câu 37</span>
+      <span class="q-text">Vị thuốc nào có tác dụng sát khuẩn, giảm ngứa và ôn Thận?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q37_o0" onclick="selectOpt(37,0)">
+      <span class="opt-label">A</span>
+      <span>Bạch đồng nữ</span>
+    </div>
+    <div class="opt" id="q37_o1" onclick="selectOpt(37,1)">
+      <span class="opt-label">B</span>
+      <span>Mù u</span>
+    </div>
+    <div class="opt" id="q37_o2" onclick="selectOpt(37,2)">
+      <span class="opt-label">C</span>
+      <span>Xà sàng tử</span>
+    </div>
+    <div class="opt" id="q37_o3" onclick="selectOpt(37,3)">
+      <span class="opt-label">D</span>
+      <span>Trầu không</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check37" onclick="checkAns(37)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(37)">Xem đáp án</button>
+      <span class="result-chip" id="chip37"></span>
+    </div>
+    <div class="explain-box" id="exp37">
+      <div class="ans-line">✓ Đáp án đúng: C. Xà sàng tử</div>
+      <div class="explain-text">Xà sàng tử có ba tác dụng đặc trưng: sát trùng chỉ dương (sát khuẩn, giảm ngứa), ôn Thận tráng dương, trừ hàn thấp — thường dùng ngoài da trị ngứa, lang ben.</div>
+    </div>
+  </div>
+  <div class="card" id="card38">
+    <div class="q-header">
+      <span class="q-num">Câu 38</span>
+      <span class="q-text">Bạch đồng nữ có công năng đặc trưng là:</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q38_o0" onclick="selectOpt(38,0)">
+      <span class="opt-label">A</span>
+      <span>Phát tán phong hàn</span>
+    </div>
+    <div class="opt" id="q38_o1" onclick="selectOpt(38,1)">
+      <span class="opt-label">B</span>
+      <span>Thanh nhiệt tiêu độc</span>
+    </div>
+    <div class="opt" id="q38_o2" onclick="selectOpt(38,2)">
+      <span class="opt-label">C</span>
+      <span>Thanh nhiệt táo thấp</span>
+    </div>
+    <div class="opt" id="q38_o3" onclick="selectOpt(38,3)">
+      <span class="opt-label">D</span>
+      <span>Cố tinh sáp niệu</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check38" onclick="checkAns(38)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(38)">Xem đáp án</button>
+      <span class="result-chip" id="chip38"></span>
+    </div>
+    <div class="explain-box" id="exp38">
+      <div class="ans-line">✓ Đáp án đúng: B. Thanh nhiệt tiêu độc</div>
+      <div class="explain-text">Bạch đồng nữ có công năng đặc trưng là thanh nhiệt tiêu độc, trừ thấp — dùng trị mụn nhọt, viêm da, thấp nhiệt.</div>
+    </div>
+  </div>
+  <div class="card" id="card39">
+    <div class="q-header">
+      <span class="q-num">Câu 39</span>
+      <span class="q-text">Chủ trị quan trọng của Mù u là:</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q39_o0" onclick="selectOpt(39,0)">
+      <span class="opt-label">A</span>
+      <span>Hen suyễn do hàn</span>
+    </div>
+    <div class="opt" id="q39_o1" onclick="selectOpt(39,1)">
+      <span class="opt-label">B</span>
+      <span>Bỏng, loét, thấp khớp</span>
+    </div>
+    <div class="opt" id="q39_o2" onclick="selectOpt(39,2)">
+      <span class="opt-label">C</span>
+      <span>Di tinh, mộng tinh</span>
+    </div>
+    <div class="opt" id="q39_o3" onclick="selectOpt(39,3)">
+      <span class="opt-label">D</span>
+      <span>Vàng da do viêm gan</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check39" onclick="checkAns(39)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(39)">Xem đáp án</button>
+      <span class="result-chip" id="chip39"></span>
+    </div>
+    <div class="explain-box" id="exp39">
+      <div class="ans-line">✓ Đáp án đúng: B. Bỏng, loét, thấp khớp</div>
+      <div class="explain-text">Mù u (Calophyllum inophyllum) có công năng chính là chữa bỏng, loét, vết thương ngoài da và thấp khớp — dầu Mù u (Tamanu oil) nổi tiếng trong y học dân gian.</div>
+    </div>
+  </div>
+  <div class="card" id="card40">
+    <div class="q-header">
+      <span class="q-num">Câu 40</span>
+      <span class="q-text">Thuốc lý huyết thường có vị nào sau đây để thực hiện chức năng "phát tán, hành huyết"?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q40_o0" onclick="selectOpt(40,0)">
+      <span class="opt-label">A</span>
+      <span>Vị khổ</span>
+    </div>
+    <div class="opt" id="q40_o1" onclick="selectOpt(40,1)">
+      <span class="opt-label">B</span>
+      <span>Vị tân</span>
+    </div>
+    <div class="opt" id="q40_o2" onclick="selectOpt(40,2)">
+      <span class="opt-label">C</span>
+      <span>Vị toan</span>
+    </div>
+    <div class="opt" id="q40_o3" onclick="selectOpt(40,3)">
+      <span class="opt-label">D</span>
+      <span>Vị hàm</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check40" onclick="checkAns(40)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(40)">Xem đáp án</button>
+      <span class="result-chip" id="chip40"></span>
+    </div>
+    <div class="explain-box" id="exp40">
+      <div class="ans-line">✓ Đáp án đúng: B. Vị tân</div>
+      <div class="explain-text">Vị cay (tân) có chức năng phát tán, hành huyết — thuốc lý huyết cần vị tân để kích thích tuần hoàn, thông ứ huyết.</div>
+    </div>
+  </div>
+  <div class="card" id="card41">
+    <div class="q-header">
+      <span class="q-num">Câu 41</span>
+      <span class="q-text">Thuốc lý huyết chủ yếu quy vào các kinh nào?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q41_o0" onclick="selectOpt(41,0)">
+      <span class="opt-label">A</span>
+      <span>Phế, Vị, Đại trường</span>
+    </div>
+    <div class="opt" id="q41_o1" onclick="selectOpt(41,1)">
+      <span class="opt-label">B</span>
+      <span>Tâm, Can, Tỳ</span>
+    </div>
+    <div class="opt" id="q41_o2" onclick="selectOpt(41,2)">
+      <span class="opt-label">C</span>
+      <span>Thận, Bàng quang, Đởm</span>
+    </div>
+    <div class="opt" id="q41_o3" onclick="selectOpt(41,3)">
+      <span class="opt-label">D</span>
+      <span>Tam tiêu, Tiểu trường</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check41" onclick="checkAns(41)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(41)">Xem đáp án</button>
+      <span class="result-chip" id="chip41"></span>
+    </div>
+    <div class="explain-box" id="exp41">
+      <div class="ans-line">✓ Đáp án đúng: B. Tâm, Can, Tỳ</div>
+      <div class="explain-text">Thuốc lý huyết chủ yếu quy kinh Tâm, Can, Tỳ — vì Tâm chủ huyết mạch, Can tàng huyết, Tỳ thống huyết.</div>
+    </div>
+  </div>
+  <div class="card" id="card42">
+    <div class="q-header">
+      <span class="q-num">Câu 42</span>
+      <span class="q-text">Các vị thuốc lý huyết tính ôn thường có tác dụng:</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q42_o0" onclick="selectOpt(42,0)">
+      <span class="opt-label">A</span>
+      <span>Lương huyết chỉ huyết</span>
+    </div>
+    <div class="opt" id="q42_o1" onclick="selectOpt(42,1)">
+      <span class="opt-label">B</span>
+      <span>Khứ ứ thông kinh hoạt lạc</span>
+    </div>
+    <div class="opt" id="q42_o2" onclick="selectOpt(42,2)">
+      <span class="opt-label">C</span>
+      <span>Thanh nhiệt ở dinh phận</span>
+    </div>
+    <div class="opt" id="q42_o3" onclick="selectOpt(42,3)">
+      <span class="opt-label">D</span>
+      <span>Thu liễm cầm máu</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check42" onclick="checkAns(42)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(42)">Xem đáp án</button>
+      <span class="result-chip" id="chip42"></span>
+    </div>
+    <div class="explain-box" id="exp42">
+      <div class="ans-line">✓ Đáp án đúng: B. Khứ ứ thông kinh hoạt lạc</div>
+      <div class="explain-text">Thuốc lý huyết tính ôn thường dùng để khứ ứ thông kinh hoạt lạc — ôn ấm kinh mạch giúp huyết lưu thông, tan ứ.</div>
+    </div>
+  </div>
+  <div class="card" id="card43">
+    <div class="q-header">
+      <span class="q-num">Câu 43</span>
+      <span class="q-text">Nguyên tắc phối hợp quan trọng nhất để tăng hiệu quả của thuốc lý huyết là:</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q43_o0" onclick="selectOpt(43,0)">
+      <span class="opt-label">A</span>
+      <span>Phối hợp với thuốc thanh nhiệt</span>
+    </div>
+    <div class="opt" id="q43_o1" onclick="selectOpt(43,1)">
+      <span class="opt-label">B</span>
+      <span>Phối hợp với thuốc lý khí</span>
+    </div>
+    <div class="opt" id="q43_o2" onclick="selectOpt(43,2)">
+      <span class="opt-label">C</span>
+      <span>Phối hợp với thuốc lợi thủy</span>
+    </div>
+    <div class="opt" id="q43_o3" onclick="selectOpt(43,3)">
+      <span class="opt-label">D</span>
+      <span>Phối hợp với thuốc tả hạ</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check43" onclick="checkAns(43)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(43)">Xem đáp án</button>
+      <span class="result-chip" id="chip43"></span>
+    </div>
+    <div class="explain-box" id="exp43">
+      <div class="ans-line">✓ Đáp án đúng: B. Phối hợp với thuốc lý khí</div>
+      <div class="explain-text">"Khí hành thì huyết hành" — nguyên tắc vàng là phối hợp thuốc lý huyết với thuốc lý khí để tăng hiệu quả hành huyết.</div>
+    </div>
+  </div>
+  <div class="card" id="card44">
+    <div class="q-header">
+      <span class="q-num">Câu 44</span>
+      <span class="q-text">Trong điều trị xuất huyết, cần lưu ý điều gì khi dùng thuốc chỉ huyết?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q44_o0" onclick="selectOpt(44,0)">
+      <span class="opt-label">A</span>
+      <span>Tuyệt đối không dùng chung với thuốc khác</span>
+    </div>
+    <div class="opt" id="q44_o1" onclick="selectOpt(44,1)">
+      <span class="opt-label">B</span>
+      <span>Phối hợp với thuốc hành huyết để phòng lưu ứ huyết</span>
+    </div>
+    <div class="opt" id="q44_o2" onclick="selectOpt(44,2)">
+      <span class="opt-label">C</span>
+      <span>Chỉ dùng thuốc chỉ huyết liều cao đơn thuần</span>
+    </div>
+    <div class="opt" id="q44_o3" onclick="selectOpt(44,3)">
+      <span class="opt-label">D</span>
+      <span>Phải dùng thuốc bổ khí trước 3 ngày</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check44" onclick="checkAns(44)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(44)">Xem đáp án</button>
+      <span class="result-chip" id="chip44"></span>
+    </div>
+    <div class="explain-box" id="exp44">
+      <div class="ans-line">✓ Đáp án đúng: B. Phối hợp với thuốc hành huyết để phòng lưu ứ huyết</div>
+      <div class="explain-text">Giai đoạn xuất huyết cần phối hợp thuốc chỉ huyết với thuốc hành huyết để phòng lưu ứ huyết — cầm máu mà không gây tắc ứ, theo nguyên tắc "chỉ huyết bất lưu ứ".</div>
+    </div>
+  </div>
+  <div class="card" id="card45">
+    <div class="q-header">
+      <span class="q-num">Câu 45</span>
+      <span class="q-text">Loại thuốc nào tuyệt đối không dùng cho phụ nữ có thai?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q45_o0" onclick="selectOpt(45,0)">
+      <span class="opt-label">A</span>
+      <span>Thuốc hoạt huyết mức độ nhẹ</span>
+    </div>
+    <div class="opt" id="q45_o1" onclick="selectOpt(45,1)">
+      <span class="opt-label">B</span>
+      <span>Thuốc bổ huyết</span>
+    </div>
+    <div class="opt" id="q45_o2" onclick="selectOpt(45,2)">
+      <span class="opt-label">C</span>
+      <span>Thuốc phá huyết</span>
+    </div>
+    <div class="opt" id="q45_o3" onclick="selectOpt(45,3)">
+      <span class="opt-label">D</span>
+      <span>Thuốc lương huyết chỉ huyết</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check45" onclick="checkAns(45)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(45)">Xem đáp án</button>
+      <span class="result-chip" id="chip45"></span>
+    </div>
+    <div class="explain-box" id="exp45">
+      <div class="ans-line">✓ Đáp án đúng: C. Thuốc phá huyết</div>
+      <div class="explain-text">Tuyệt đối không dùng thuốc phá huyết (Tam lăng, Nga truật...) cho phụ nữ có thai — tác dụng phá huyết mạnh có thể gây sảy thai.</div>
+    </div>
+  </div>
+  <div class="card" id="card46">
+    <div class="q-header">
+      <span class="q-num">Câu 46</span>
+      <span class="q-text">Nhóm thuốc "Thu liễm chỉ huyết" thường có đặc điểm vị gì?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q46_o0" onclick="selectOpt(46,0)">
+      <span class="opt-label">A</span>
+      <span>Cay, đắng</span>
+    </div>
+    <div class="opt" id="q46_o1" onclick="selectOpt(46,1)">
+      <span class="opt-label">B</span>
+      <span>Ngọt, nhạt</span>
+    </div>
+    <div class="opt" id="q46_o2" onclick="selectOpt(46,2)">
+      <span class="opt-label">C</span>
+      <span>Đắng, chát</span>
+    </div>
+    <div class="opt" id="q46_o3" onclick="selectOpt(46,3)">
+      <span class="opt-label">D</span>
+      <span>Mặn, cay</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check46" onclick="checkAns(46)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(46)">Xem đáp án</button>
+      <span class="result-chip" id="chip46"></span>
+    </div>
+    <div class="explain-box" id="exp46">
+      <div class="ans-line">✓ Đáp án đúng: C. Đắng, chát</div>
+      <div class="explain-text">Thu liễm chỉ huyết thường có vị đắng, chát (sáp) — tính thu liễm từ vị chát, tính thanh nhiệt từ vị đắng giúp cầm máu do nhiệt.</div>
+    </div>
+  </div>
+  <div class="card" id="card47">
+    <div class="q-header">
+      <span class="q-num">Câu 47</span>
+      <span class="q-text">Nhóm thuốc "Bổ ích chỉ huyết" được dùng cho trường hợp nào?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q47_o0" onclick="selectOpt(47,0)">
+      <span class="opt-label">A</span>
+      <span>Xuất huyết do chấn thương</span>
+    </div>
+    <div class="opt" id="q47_o1" onclick="selectOpt(47,1)">
+      <span class="opt-label">B</span>
+      <span>Tỳ hư, khí hư không thống nhiếp huyết</span>
+    </div>
+    <div class="opt" id="q47_o2" onclick="selectOpt(47,2)">
+      <span class="opt-label">C</span>
+      <span>Nhiệt tà vào huyết phận</span>
+    </div>
+    <div class="opt" id="q47_o3" onclick="selectOpt(47,3)">
+      <span class="opt-label">D</span>
+      <span>Huyết kém lưu thông gây sưng đau</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check47" onclick="checkAns(47)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(47)">Xem đáp án</button>
+      <span class="result-chip" id="chip47"></span>
+    </div>
+    <div class="explain-box" id="exp47">
+      <div class="ans-line">✓ Đáp án đúng: B. Tỳ hư, khí hư không thống nhiếp huyết</div>
+      <div class="explain-text">Bổ ích chỉ huyết dùng cho Tỳ hư, khí hư không thống nhiếp được huyết — Tỳ chủ thống huyết, khi Tỳ khí hư sẽ xuất huyết mạn tính.</div>
+    </div>
+  </div>
+  <div class="card" id="card48">
+    <div class="q-header">
+      <span class="q-num">Câu 48</span>
+      <span class="q-text">Để giảm đau do phong thấp tý, cần phối hợp thuốc lý huyết với nhóm thuốc nào?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q48_o0" onclick="selectOpt(48,0)">
+      <span class="opt-label">A</span>
+      <span>Ôn trung tán hàn</span>
+    </div>
+    <div class="opt" id="q48_o1" onclick="selectOpt(48,1)">
+      <span class="opt-label">B</span>
+      <span>Khu phong trừ thấp</span>
+    </div>
+    <div class="opt" id="q48_o2" onclick="selectOpt(48,2)">
+      <span class="opt-label">C</span>
+      <span>Bổ Can thận</span>
+    </div>
+    <div class="opt" id="q48_o3" onclick="selectOpt(48,3)">
+      <span class="opt-label">D</span>
+      <span>Hóa đàm nhuyễn kiên</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check48" onclick="checkAns(48)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(48)">Xem đáp án</button>
+      <span class="result-chip" id="chip48"></span>
+    </div>
+    <div class="explain-box" id="exp48">
+      <div class="ans-line">✓ Đáp án đúng: B. Khu phong trừ thấp</div>
+      <div class="explain-text">Đau do phong thấp tý cần phối hợp lý huyết với khu phong trừ thấp — huyết hành thì phong tự diệt, kết hợp trị cả huyết ứ lẫn phong thấp tà.</div>
+    </div>
+  </div>
+  <div class="card" id="card49">
+    <div class="q-header">
+      <span class="q-num">Câu 49</span>
+      <span class="q-text">Đan sâm kiêng kỵ phối hợp với vị thuốc nào?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q49_o0" onclick="selectOpt(49,0)">
+      <span class="opt-label">A</span>
+      <span>Cam thảo</span>
+    </div>
+    <div class="opt" id="q49_o1" onclick="selectOpt(49,1)">
+      <span class="opt-label">B</span>
+      <span>Lê lô</span>
+    </div>
+    <div class="opt" id="q49_o2" onclick="selectOpt(49,2)">
+      <span class="opt-label">C</span>
+      <span>Ô đầu</span>
+    </div>
+    <div class="opt" id="q49_o3" onclick="selectOpt(49,3)">
+      <span class="opt-label">D</span>
+      <span>Đại kích</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check49" onclick="checkAns(49)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(49)">Xem đáp án</button>
+      <span class="result-chip" id="chip49"></span>
+    </div>
+    <div class="explain-box" id="exp49">
+      <div class="ans-line">✓ Đáp án đúng: B. Lê lô</div>
+      <div class="explain-text">Theo Thập bát phản, Đan sâm kiêng kỵ dùng chung với Lê lô — tuyệt đối không phối hợp trong bài thuốc.</div>
+    </div>
+  </div>
+  <div class="card" id="card50">
+    <div class="q-header">
+      <span class="q-num">Câu 50</span>
+      <span class="q-text">Vị thuốc nào dùng điều trị đau vùng đầu, mặt do phong hàn?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q50_o0" onclick="selectOpt(50,0)">
+      <span class="opt-label">A</span>
+      <span>Đương quy</span>
+    </div>
+    <div class="opt" id="q50_o1" onclick="selectOpt(50,1)">
+      <span class="opt-label">B</span>
+      <span>Xuyên khung</span>
+    </div>
+    <div class="opt" id="q50_o2" onclick="selectOpt(50,2)">
+      <span class="opt-label">C</span>
+      <span>Ích mẫu</span>
+    </div>
+    <div class="opt" id="q50_o3" onclick="selectOpt(50,3)">
+      <span class="opt-label">D</span>
+      <span>Đan sâm</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check50" onclick="checkAns(50)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(50)">Xem đáp án</button>
+      <span class="result-chip" id="chip50"></span>
+    </div>
+    <div class="explain-box" id="exp50">
+      <div class="ans-line">✓ Đáp án đúng: B. Xuyên khung</div>
+      <div class="explain-text">Xuyên khung là thuốc hành khí hoạt huyết, đặc trị đau đầu do phong hàn — được mệnh danh là "đầu thống yếu dược" (thuốc chủ yếu trị đau đầu).</div>
+    </div>
+  </div>
+  <div class="card" id="card51">
+    <div class="q-header">
+      <span class="q-num">Câu 51</span>
+      <span class="q-text">Vị thuốc nào có công năng Hành khí chỉ thống, trị đau ngực sườn, thượng vị?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q51_o0" onclick="selectOpt(51,0)">
+      <span class="opt-label">A</span>
+      <span>Huyền hồ</span>
+    </div>
+    <div class="opt" id="q51_o1" onclick="selectOpt(51,1)">
+      <span class="opt-label">B</span>
+      <span>Huyền sâm</span>
+    </div>
+    <div class="opt" id="q51_o2" onclick="selectOpt(51,2)">
+      <span class="opt-label">C</span>
+      <span>Bạch đồng nữ</span>
+    </div>
+    <div class="opt" id="q51_o3" onclick="selectOpt(51,3)">
+      <span class="opt-label">D</span>
+      <span>Sa sâm</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check51" onclick="checkAns(51)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(51)">Xem đáp án</button>
+      <span class="result-chip" id="chip51"></span>
+    </div>
+    <div class="explain-box" id="exp51">
+      <div class="ans-line">✓ Đáp án đúng: A. Huyền hồ</div>
+      <div class="explain-text">Huyền hồ (Diên hồ sách) hành khí hoạt huyết chỉ thống, trị đau ngực sườn, thượng vị — được gọi là "chỉ thống yếu dược" hiệu quả nhất trong YHCT.</div>
+    </div>
+  </div>
+  <div class="card" id="card52">
+    <div class="q-header">
+      <span class="q-num">Câu 52</span>
+      <span class="q-text">Kê huyết đằng chủ yếu dùng cho trường hợp nào?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q52_o0" onclick="selectOpt(52,0)">
+      <span class="opt-label">A</span>
+      <span>Thận dương bất chấn, thoát chứng</span>
+    </div>
+    <div class="opt" id="q52_o1" onclick="selectOpt(52,1)">
+      <span class="opt-label">B</span>
+      <span>Huyết hư ứ trệ, đau khớp, vàng da</span>
+    </div>
+    <div class="opt" id="q52_o2" onclick="selectOpt(52,2)">
+      <span class="opt-label">C</span>
+      <span>Thanh nhiệt lương huyết, xuất huyết dưới da</span>
+    </div>
+    <div class="opt" id="q52_o3" onclick="selectOpt(52,3)">
+      <span class="opt-label">D</span>
+      <span>Cầm máu do chấn thương, trật đả</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check52" onclick="checkAns(52)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(52)">Xem đáp án</button>
+      <span class="result-chip" id="chip52"></span>
+    </div>
+    <div class="explain-box" id="exp52">
+      <div class="ans-line">✓ Đáp án đúng: B. Huyết hư ứ trệ, đau khớp, vàng da</div>
+      <div class="explain-text">Kê huyết đằng chủ yếu trị huyết hư ứ trệ, đau khớp, tê mỏi, vàng da — vừa bổ huyết vừa hoạt huyết, phù hợp điều trị mạn tính.</div>
+    </div>
+  </div>
+  <div class="card" id="card53">
+    <div class="q-header">
+      <span class="q-num">Câu 53</span>
+      <span class="q-text">Vị thuốc Nhũ hương có tính chất đặc trưng là:</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q53_o0" onclick="selectOpt(53,0)">
+      <span class="opt-label">A</span>
+      <span>Vị mặn, tính hàn</span>
+    </div>
+    <div class="opt" id="q53_o1" onclick="selectOpt(53,1)">
+      <span class="opt-label">B</span>
+      <span>Vị tân khổ, tính ôn</span>
+    </div>
+    <div class="opt" id="q53_o2" onclick="selectOpt(53,2)">
+      <span class="opt-label">C</span>
+      <span>Vị ngọt, tính bình</span>
+    </div>
+    <div class="opt" id="q53_o3" onclick="selectOpt(53,3)">
+      <span class="opt-label">D</span>
+      <span>Vị chua, tính đại hàn</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check53" onclick="checkAns(53)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(53)">Xem đáp án</button>
+      <span class="result-chip" id="chip53"></span>
+    </div>
+    <div class="explain-box" id="exp53">
+      <div class="ans-line">✓ Đáp án đúng: B. Vị tân khổ, tính ôn</div>
+      <div class="explain-text">Nhũ hương có vị cay (tân), đắng (khổ), tính ôn — phù hợp với tác dụng hành khí hoạt huyết, chỉ thống, tiêu thũng sinh cơ.</div>
+    </div>
+  </div>
+  <div class="card" id="card54">
+    <div class="q-header">
+      <span class="q-num">Câu 54</span>
+      <span class="q-text">Xích thược phối hợp với Sinh địa để điều trị trường hợp nào?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q54_o0" onclick="selectOpt(54,0)">
+      <span class="opt-label">A</span>
+      <span>Đau mắt đỏ</span>
+    </div>
+    <div class="opt" id="q54_o1" onclick="selectOpt(54,1)">
+      <span class="opt-label">B</span>
+      <span>Xuất huyết do nhiệt</span>
+    </div>
+    <div class="opt" id="q54_o2" onclick="selectOpt(54,2)">
+      <span class="opt-label">C</span>
+      <span>Chấn thương tụ huyết</span>
+    </div>
+    <div class="opt" id="q54_o3" onclick="selectOpt(54,3)">
+      <span class="opt-label">D</span>
+      <span>Mụn nhọt sưng đau</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check54" onclick="checkAns(54)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(54)">Xem đáp án</button>
+      <span class="result-chip" id="chip54"></span>
+    </div>
+    <div class="explain-box" id="exp54">
+      <div class="ans-line">✓ Đáp án đúng: B. Xuất huyết do nhiệt</div>
+      <div class="explain-text">Xích thược phối hợp Sinh địa để trị xuất huyết do huyết nhiệt — Sinh địa lương huyết, Xích thược tán ứ, kết hợp vừa cầm máu vừa tránh ứ huyết.</div>
+    </div>
+  </div>
+  <div class="card" id="card55">
+    <div class="q-header">
+      <span class="q-num">Câu 55</span>
+      <span class="q-text">Ngoài phá huyết, Nga truật còn có tác dụng:</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q55_o0" onclick="selectOpt(55,0)">
+      <span class="opt-label">A</span>
+      <span>Bổ huyết dưỡng Tâm, chỉ huyết</span>
+    </div>
+    <div class="opt" id="q55_o1" onclick="selectOpt(55,1)">
+      <span class="opt-label">B</span>
+      <span>Tiêu thực hóa tích trệ</span>
+    </div>
+    <div class="opt" id="q55_o2" onclick="selectOpt(55,2)">
+      <span class="opt-label">C</span>
+      <span>Thanh Can minh mục</span>
+    </div>
+    <div class="opt" id="q55_o3" onclick="selectOpt(55,3)">
+      <span class="opt-label">D</span>
+      <span>Bình Can, hạ huyết áp</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check55" onclick="checkAns(55)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(55)">Xem đáp án</button>
+      <span class="result-chip" id="chip55"></span>
+    </div>
+    <div class="explain-box" id="exp55">
+      <div class="ans-line">✓ Đáp án đúng: B. Tiêu thực hóa tích trệ</div>
+      <div class="explain-text">Nga truật ngoài phá huyết còn tiêu thực, hóa tích trệ — dùng trị tích thực, bụng đầy cứng, khối u bụng.</div>
+    </div>
+  </div>
+  <div class="card" id="card56">
+    <div class="q-header">
+      <span class="q-num">Câu 56</span>
+      <span class="q-text">Vị thuốc nào dùng trị đau dạ dày, tắc tia sữa?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q56_o0" onclick="selectOpt(56,0)">
+      <span class="opt-label">A</span>
+      <span>Tô mộc</span>
+    </div>
+    <div class="opt" id="q56_o1" onclick="selectOpt(56,1)">
+      <span class="opt-label">B</span>
+      <span>Tam lăng</span>
+    </div>
+    <div class="opt" id="q56_o2" onclick="selectOpt(56,2)">
+      <span class="opt-label">C</span>
+      <span>Một dược</span>
+    </div>
+    <div class="opt" id="q56_o3" onclick="selectOpt(56,3)">
+      <span class="opt-label">D</span>
+      <span>Đan sâm</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check56" onclick="checkAns(56)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(56)">Xem đáp án</button>
+      <span class="result-chip" id="chip56"></span>
+    </div>
+    <div class="explain-box" id="exp56">
+      <div class="ans-line">✓ Đáp án đúng: B. Tam lăng</div>
+      <div class="explain-text">Tam lăng có tác dụng hành khí chỉ thống, phá huyết, điều trị đau dạ dày do khí huyết ứ trệ và tắc tia sữa.</div>
+    </div>
+  </div>
+  <div class="card" id="card57">
+    <div class="q-header">
+      <span class="q-num">Câu 57</span>
+      <span class="q-text">Vị thuốc nào có công năng thanh tràng chỉ lị dùng điều trị kiết lị lâu ngày?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q57_o0" onclick="selectOpt(57,0)">
+      <span class="opt-label">A</span>
+      <span>Uất kim</span>
+    </div>
+    <div class="opt" id="q57_o1" onclick="selectOpt(57,1)">
+      <span class="opt-label">B</span>
+      <span>Tô mộc</span>
+    </div>
+    <div class="opt" id="q57_o2" onclick="selectOpt(57,2)">
+      <span class="opt-label">C</span>
+      <span>Hòe hoa</span>
+    </div>
+    <div class="opt" id="q57_o3" onclick="selectOpt(57,3)">
+      <span class="opt-label">D</span>
+      <span>Ngải diệp</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check57" onclick="checkAns(57)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(57)">Xem đáp án</button>
+      <span class="result-chip" id="chip57"></span>
+    </div>
+    <div class="explain-box" id="exp57">
+      <div class="ans-line">✓ Đáp án đúng: B. Tô mộc</div>
+      <div class="explain-text">Tô mộc thanh tràng chỉ lỵ, điều trị đi lỵ ra máu lâu ngày — đây là tác dụng đặc hiệu ít được biết đến của Tô mộc ngoài tác dụng hành huyết.</div>
+    </div>
+  </div>
+  <div class="card" id="card58">
+    <div class="q-header">
+      <span class="q-num">Câu 58</span>
+      <span class="q-text">Bạch cập KHÔNG được dùng chung với:</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q58_o0" onclick="selectOpt(58,0)">
+      <span class="opt-label">A</span>
+      <span>Lê lô</span>
+    </div>
+    <div class="opt" id="q58_o1" onclick="selectOpt(58,1)">
+      <span class="opt-label">B</span>
+      <span>Ô đầu</span>
+    </div>
+    <div class="opt" id="q58_o2" onclick="selectOpt(58,2)">
+      <span class="opt-label">C</span>
+      <span>Cam thảo</span>
+    </div>
+    <div class="opt" id="q58_o3" onclick="selectOpt(58,3)">
+      <span class="opt-label">D</span>
+      <span>Cam toại</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check58" onclick="checkAns(58)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(58)">Xem đáp án</button>
+      <span class="result-chip" id="chip58"></span>
+    </div>
+    <div class="explain-box" id="exp58">
+      <div class="ans-line">✓ Đáp án đúng: B. Ô đầu</div>
+      <div class="explain-text">Bạch cập phản Ô đầu theo Thập bát phản — tuyệt đối không được phối hợp, có thể gây phản ứng độc.</div>
+    </div>
+  </div>
+  <div class="card" id="card59">
+    <div class="q-header">
+      <span class="q-num">Câu 59</span>
+      <span class="q-text">Ngoài tác dụng chỉ huyết điều kinh, Ngải cứu còn có tác dụng:</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q59_o0" onclick="selectOpt(59,0)">
+      <span class="opt-label">A</span>
+      <span>Trừ hàn thấp, sát trùng</span>
+    </div>
+    <div class="opt" id="q59_o1" onclick="selectOpt(59,1)">
+      <span class="opt-label">B</span>
+      <span>Thanh nhiệt tiêu viêm</span>
+    </div>
+    <div class="opt" id="q59_o2" onclick="selectOpt(59,2)">
+      <span class="opt-label">C</span>
+      <span>Bình Can, hạ huyết áp</span>
+    </div>
+    <div class="opt" id="q59_o3" onclick="selectOpt(59,3)">
+      <span class="opt-label">D</span>
+      <span>Thông sữa, thông kinh lạc</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check59" onclick="checkAns(59)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(59)">Xem đáp án</button>
+      <span class="result-chip" id="chip59"></span>
+    </div>
+    <div class="explain-box" id="exp59">
+      <div class="ans-line">✓ Đáp án đúng: A. Trừ hàn thấp, sát trùng</div>
+      <div class="explain-text">Ngải cứu (Ngải diệp) có tác dụng trừ hàn thấp, sát trùng (trị giun) — đây là tác dụng bổ sung quan trọng ngoài chỉ huyết điều kinh.</div>
+    </div>
+  </div>
+  <div class="card" id="card60">
+    <div class="q-header">
+      <span class="q-num">Câu 60</span>
+      <span class="q-text">Vị thuốc nào có tác dụng thanh Phế tiêu viêm dùng điều trị viêm thanh đới?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q60_o0" onclick="selectOpt(60,0)">
+      <span class="opt-label">A</span>
+      <span>Liên tu</span>
+    </div>
+    <div class="opt" id="q60_o1" onclick="selectOpt(60,1)">
+      <span class="opt-label">B</span>
+      <span>Hòe hoa</span>
+    </div>
+    <div class="opt" id="q60_o2" onclick="selectOpt(60,2)">
+      <span class="opt-label">C</span>
+      <span>Xích thược</span>
+    </div>
+    <div class="opt" id="q60_o3" onclick="selectOpt(60,3)">
+      <span class="opt-label">D</span>
+      <span>Hồng hoa</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check60" onclick="checkAns(60)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(60)">Xem đáp án</button>
+      <span class="result-chip" id="chip60"></span>
+    </div>
+    <div class="explain-box" id="exp60">
+      <div class="ans-line">✓ Đáp án đúng: B. Hòe hoa</div>
+      <div class="explain-text">Hòe hoa có tác dụng thanh Phế tiêu viêm, trị viêm thanh đới khàn tiếng — ngoài ra còn lương huyết, chỉ huyết, trị trĩ xuất huyết.</div>
+    </div>
+  </div>
+  <div class="card" id="card61">
+    <div class="q-header">
+      <span class="q-num">Câu 61</span>
+      <span class="q-text">Đa số các vị thuốc lý khí có tính chất chung là:</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q61_o0" onclick="selectOpt(61,0)">
+      <span class="opt-label">A</span>
+      <span>Vị ngọt, tính hàn, tính nhuận</span>
+    </div>
+    <div class="opt" id="q61_o1" onclick="selectOpt(61,1)">
+      <span class="opt-label">B</span>
+      <span>Vị cay, tính ấm, mùi thơm, khô táo</span>
+    </div>
+    <div class="opt" id="q61_o2" onclick="selectOpt(61,2)">
+      <span class="opt-label">C</span>
+      <span>Vị đắng, tính đại hàn, quy kinh Thận</span>
+    </div>
+    <div class="opt" id="q61_o3" onclick="selectOpt(61,3)">
+      <span class="opt-label">D</span>
+      <span>Vị chua, tính bình, quy kinh Tâm</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check61" onclick="checkAns(61)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(61)">Xem đáp án</button>
+      <span class="result-chip" id="chip61"></span>
+    </div>
+    <div class="explain-box" id="exp61">
+      <div class="ans-line">✓ Đáp án đúng: B. Vị cay, tính ấm, mùi thơm, khô táo</div>
+      <div class="explain-text">Đa số thuốc lý khí có vị cay, tính ấm, mùi thơm, tính khô táo — vị cay giúp lý khí, mùi thơm khai uất, tính ấm ôn thông khí cơ.</div>
+    </div>
+  </div>
+  <div class="card" id="card62">
+    <div class="q-header">
+      <span class="q-num">Câu 62</span>
+      <span class="q-text">Nhóm thuốc lý khí thường quy vào các kinh nào sau đây?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q62_o0" onclick="selectOpt(62,0)">
+      <span class="opt-label">A</span>
+      <span>Tâm, Thận, Tiểu trường</span>
+    </div>
+    <div class="opt" id="q62_o1" onclick="selectOpt(62,1)">
+      <span class="opt-label">B</span>
+      <span>Phế, Tỳ, Vị, Can, Đởm</span>
+    </div>
+    <div class="opt" id="q62_o2" onclick="selectOpt(62,2)">
+      <span class="opt-label">C</span>
+      <span>Bàng quang, Tam tiêu, Tâm bào</span>
+    </div>
+    <div class="opt" id="q62_o3" onclick="selectOpt(62,3)">
+      <span class="opt-label">D</span>
+      <span>Đại trường, Thận, Can</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check62" onclick="checkAns(62)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(62)">Xem đáp án</button>
+      <span class="result-chip" id="chip62"></span>
+    </div>
+    <div class="explain-box" id="exp62">
+      <div class="ans-line">✓ Đáp án đúng: B. Phế, Tỳ, Vị, Can, Đởm</div>
+      <div class="explain-text">Thuốc hành khí quy kinh Phế, Tỳ, Vị, Can, Đởm — phù hợp với các tạng phủ liên quan đến vận hành khí cơ trong cơ thể.</div>
+    </div>
+  </div>
+  <div class="card" id="card63">
+    <div class="q-header">
+      <span class="q-num">Câu 63</span>
+      <span class="q-text">Tại sao thuốc lý khí cần thận trọng hoặc không dùng lâu ngày cho người âm hư?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q63_o0" onclick="selectOpt(63,0)">
+      <span class="opt-label">A</span>
+      <span>Vì thuốc có tính lương dễ gây nê trệ</span>
+    </div>
+    <div class="opt" id="q63_o1" onclick="selectOpt(63,1)">
+      <span class="opt-label">B</span>
+      <span>Vì thuốc dễ làm tổn hại chân âm</span>
+    </div>
+    <div class="opt" id="q63_o2" onclick="selectOpt(63,2)">
+      <span class="opt-label">C</span>
+      <span>Vì thuốc làm tăng huyết áp đột ngột</span>
+    </div>
+    <div class="opt" id="q63_o3" onclick="selectOpt(63,3)">
+      <span class="opt-label">D</span>
+      <span>Vì thuốc gây mất ngủ kéo dài</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check63" onclick="checkAns(63)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(63)">Xem đáp án</button>
+      <span class="result-chip" id="chip63"></span>
+    </div>
+    <div class="explain-box" id="exp63">
+      <div class="ans-line">✓ Đáp án đúng: B. Vì thuốc dễ làm tổn hại chân âm</div>
+      <div class="explain-text">Thuốc lý khí tân ôn táo nhiệt, dễ làm hao tổn tân dịch, tổn hại chân âm — người âm hư dùng lâu sẽ càng hao âm nặng hơn.</div>
+    </div>
+  </div>
+  <div class="card" id="card64">
+    <div class="q-header">
+      <span class="q-num">Câu 64</span>
+      <span class="q-text">Một lưu ý quan trọng khi sắc thuốc lý khí là gì?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q64_o0" onclick="selectOpt(64,0)">
+      <span class="opt-label">A</span>
+      <span>Sắc lâu để chiết hết hoạt chất</span>
+    </div>
+    <div class="opt" id="q64_o1" onclick="selectOpt(64,1)">
+      <span class="opt-label">B</span>
+      <span>Không sắc quá lâu</span>
+    </div>
+    <div class="opt" id="q64_o2" onclick="selectOpt(64,2)">
+      <span class="opt-label">C</span>
+      <span>Cần sắc chung với gừng</span>
+    </div>
+    <div class="opt" id="q64_o3" onclick="selectOpt(64,3)">
+      <span class="opt-label">D</span>
+      <span>Phải sắc bằng lửa lớn trong 2 giờ</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check64" onclick="checkAns(64)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(64)">Xem đáp án</button>
+      <span class="result-chip" id="chip64"></span>
+    </div>
+    <div class="explain-box" id="exp64">
+      <div class="ans-line">✓ Đáp án đúng: B. Không sắc quá lâu</div>
+      <div class="explain-text">Thuốc hành khí (chứa tinh dầu) không nên sắc quá lâu để tránh làm mất khí vị — tinh dầu dễ bay hơi khi đun lâu, mất tác dụng.</div>
+    </div>
+  </div>
+  <div class="card" id="card65">
+    <div class="q-header">
+      <span class="q-num">Câu 65</span>
+      <span class="q-text">Thuốc hành khí thường được phối hợp với thuốc bổ khí nhằm mục đích:</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q65_o0" onclick="selectOpt(65,0)">
+      <span class="opt-label">A</span>
+      <span>Giảm tính nê trệ của thuốc bổ khí</span>
+    </div>
+    <div class="opt" id="q65_o1" onclick="selectOpt(65,1)">
+      <span class="opt-label">B</span>
+      <span>Tăng tác dụng của thuốc hành khí</span>
+    </div>
+    <div class="opt" id="q65_o2" onclick="selectOpt(65,2)">
+      <span class="opt-label">C</span>
+      <span>Giảm tính mãnh liệt của thuốc hành khí</span>
+    </div>
+    <div class="opt" id="q65_o3" onclick="selectOpt(65,3)">
+      <span class="opt-label">D</span>
+      <span>Thay thế tác dụng của thuốc hành khí</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check65" onclick="checkAns(65)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(65)">Xem đáp án</button>
+      <span class="result-chip" id="chip65"></span>
+    </div>
+    <div class="explain-box" id="exp65">
+      <div class="ans-line">✓ Đáp án đúng: A. Giảm tính nê trệ của thuốc bổ khí</div>
+      <div class="explain-text">Hành khí phối hợp với Bổ khí để giảm bớt tính nê trệ của thuốc bổ — giúp thuốc bổ hấp thu tốt hơn, tránh đầy bụng khó tiêu.</div>
+    </div>
+  </div>
+  <div class="card" id="card66">
+    <div class="q-header">
+      <span class="q-num">Câu 66</span>
+      <span class="q-text">Công năng giáng khí của nhóm thuốc phá khí liên quan đến loại "vị" nào?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q66_o0" onclick="selectOpt(66,0)">
+      <span class="opt-label">A</span>
+      <span>Tân</span>
+    </div>
+    <div class="opt" id="q66_o1" onclick="selectOpt(66,1)">
+      <span class="opt-label">B</span>
+      <span>Khổ</span>
+    </div>
+    <div class="opt" id="q66_o2" onclick="selectOpt(66,2)">
+      <span class="opt-label">C</span>
+      <span>Hàm</span>
+    </div>
+    <div class="opt" id="q66_o3" onclick="selectOpt(66,3)">
+      <span class="opt-label">D</span>
+      <span>Toan</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check66" onclick="checkAns(66)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(66)">Xem đáp án</button>
+      <span class="result-chip" id="chip66"></span>
+    </div>
+    <div class="explain-box" id="exp66">
+      <div class="ans-line">✓ Đáp án đúng: B. Khổ</div>
+      <div class="explain-text">Vị đắng (khổ) có tác dụng giáng khí — nhóm thuốc phá khí giáng nghịch có vị đắng để hạ nghịch khí (Phế khí nghịch, Vị khí nghịch).</div>
+    </div>
+  </div>
+  <div class="card" id="card67">
+    <div class="q-header">
+      <span class="q-num">Câu 67</span>
+      <span class="q-text">Vị thuốc Phá khí giáng nghịch nào có tính ôn?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q67_o0" onclick="selectOpt(67,0)">
+      <span class="opt-label">A</span>
+      <span>Chỉ thực</span>
+    </div>
+    <div class="opt" id="q67_o1" onclick="selectOpt(67,1)">
+      <span class="opt-label">B</span>
+      <span>Chỉ xác</span>
+    </div>
+    <div class="opt" id="q67_o2" onclick="selectOpt(67,2)">
+      <span class="opt-label">C</span>
+      <span>Thanh bì</span>
+    </div>
+    <div class="opt" id="q67_o3" onclick="selectOpt(67,3)">
+      <span class="opt-label">D</span>
+      <span>Thị đế</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check67" onclick="checkAns(67)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(67)">Xem đáp án</button>
+      <span class="result-chip" id="chip67"></span>
+    </div>
+    <div class="explain-box" id="exp67">
+      <div class="ans-line">✓ Đáp án đúng: D. Thị đế</div>
+      <div class="explain-text">Thị đế có vị cay, đắng, tính ôn — khác với Chỉ thực, Chỉ xác có tính hàn/lương. Thị đế trị nấc cụt (ách nghịch) do hàn.</div>
+    </div>
+  </div>
+  <div class="card" id="card68">
+    <div class="q-header">
+      <span class="q-num">Câu 68</span>
+      <span class="q-text">Đặc điểm chung về quy kinh của nhóm Phá khí giáng nghịch là:</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q68_o0" onclick="selectOpt(68,0)">
+      <span class="opt-label">A</span>
+      <span>Phế và Vị</span>
+    </div>
+    <div class="opt" id="q68_o1" onclick="selectOpt(68,1)">
+      <span class="opt-label">B</span>
+      <span>Tâm và Can</span>
+    </div>
+    <div class="opt" id="q68_o2" onclick="selectOpt(68,2)">
+      <span class="opt-label">C</span>
+      <span>Thận và Bàng quang</span>
+    </div>
+    <div class="opt" id="q68_o3" onclick="selectOpt(68,3)">
+      <span class="opt-label">D</span>
+      <span>Đại trường và Tiểu trường</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check68" onclick="checkAns(68)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(68)">Xem đáp án</button>
+      <span class="result-chip" id="chip68"></span>
+    </div>
+    <div class="explain-box" id="exp68">
+      <div class="ans-line">✓ Đáp án đúng: A. Phế và Vị</div>
+      <div class="explain-text">Phá khí giáng nghịch (như Thị đế, Chỉ xác) thường quy vào Phế và Vị — vì Phế chủ tuyên giáng, Vị khí phải giáng, hai tạng phủ thường bị nghịch khí nhất.</div>
+    </div>
+  </div>
+  <div class="card" id="card69">
+    <div class="q-header">
+      <span class="q-num">Câu 69</span>
+      <span class="q-text">Sự khác biệt về tính chất giữa Trần bì và Thanh bì là:</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q69_o0" onclick="selectOpt(69,0)">
+      <span class="opt-label">A</span>
+      <span>Trần bì tính hàn, Thanh bì tính ôn</span>
+    </div>
+    <div class="opt" id="q69_o1" onclick="selectOpt(69,1)">
+      <span class="opt-label">B</span>
+      <span>Trần bì chủ kiện Tỳ, Thanh bì chủ sơ Can, phá khí</span>
+    </div>
+    <div class="opt" id="q69_o2" onclick="selectOpt(69,2)">
+      <span class="opt-label">C</span>
+      <span>Trần bì trị sán khí, Thanh bì trị ho đờm</span>
+    </div>
+    <div class="opt" id="q69_o3" onclick="selectOpt(69,3)">
+      <span class="opt-label">D</span>
+      <span>Trần bì nhiều tinh dầu phá khí mạnh hơn Thanh bì</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check69" onclick="checkAns(69)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(69)">Xem đáp án</button>
+      <span class="result-chip" id="chip69"></span>
+    </div>
+    <div class="explain-box" id="exp69">
+      <div class="ans-line">✓ Đáp án đúng: B. Trần bì chủ kiện Tỳ, Thanh bì chủ sơ Can, phá khí</div>
+      <div class="explain-text">Trần bì chủ thăng phù (hành khí kiện Vị Tỳ), còn Thanh bì chủ giáng (sơ Can, phá khí) — cùng là vỏ cam nhưng tuổi khác nhau dẫn đến tác dụng khác nhau.</div>
+    </div>
+  </div>
+  <div class="card" id="card70">
+    <div class="q-header">
+      <span class="q-num">Câu 70</span>
+      <span class="q-text">Vị thuốc Hương phụ có tính vị và quy kinh là:</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q70_o0" onclick="selectOpt(70,0)">
+      <span class="opt-label">A</span>
+      <span>Khổ, hàn; quy kinh Phế, Thận, Can</span>
+    </div>
+    <div class="opt" id="q70_o1" onclick="selectOpt(70,1)">
+      <span class="opt-label">B</span>
+      <span>Tân, vị khổ, bình; quy kinh Can, Tỳ, Tam tiêu</span>
+    </div>
+    <div class="opt" id="q70_o2" onclick="selectOpt(70,2)">
+      <span class="opt-label">C</span>
+      <span>Cam, ôn; quy kinh Thận, Tâm, Tỳ, Đại trường</span>
+    </div>
+    <div class="opt" id="q70_o3" onclick="selectOpt(70,3)">
+      <span class="opt-label">D</span>
+      <span>Toan, lương; quy kinh Tâm, Thận, Tỳ, Phế</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check70" onclick="checkAns(70)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(70)">Xem đáp án</button>
+      <span class="result-chip" id="chip70"></span>
+    </div>
+    <div class="explain-box" id="exp70">
+      <div class="ans-line">✓ Đáp án đúng: B. Tân, vị khổ, bình; quy kinh Can, Tỳ, Tam tiêu</div>
+      <div class="explain-text">Hương phụ có vị hơi cay (tân), hơi đắng (khổ), tính bình; quy kinh Can, Tỳ, Tam tiêu — được mệnh danh là "khí bệnh chi tổng tư" (thuốc chủ cho mọi bệnh khí).</div>
+    </div>
+  </div>
+  <div class="card" id="card71">
+    <div class="q-header">
+      <span class="q-num">Câu 71</span>
+      <span class="q-text">Quất hạch có công năng đặc biệt nào sau đây?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q71_o0" onclick="selectOpt(71,0)">
+      <span class="opt-label">A</span>
+      <span>Hạ huyết áp</span>
+    </div>
+    <div class="opt" id="q71_o1" onclick="selectOpt(71,1)">
+      <span class="opt-label">B</span>
+      <span>Tiêu viêm</span>
+    </div>
+    <div class="opt" id="q71_o2" onclick="selectOpt(71,2)">
+      <span class="opt-label">C</span>
+      <span>Bổ phế chỉ khái</span>
+    </div>
+    <div class="opt" id="q71_o3" onclick="selectOpt(71,3)">
+      <span class="opt-label">D</span>
+      <span>An thai chỉ huyết</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check71" onclick="checkAns(71)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(71)">Xem đáp án</button>
+      <span class="result-chip" id="chip71"></span>
+    </div>
+    <div class="explain-box" id="exp71">
+      <div class="ans-line">✓ Đáp án đúng: B. Tiêu viêm</div>
+      <div class="explain-text">Quất hạch có công năng tiêu viêm, trị viêm tuyến vú sưng đau, tinh hoàn sưng đau (sán khí) — là vị thuốc đặc hiệu trị viêm tuyến vú.</div>
+    </div>
+  </div>
+  <div class="card" id="card72">
+    <div class="q-header">
+      <span class="q-num">Câu 72</span>
+      <span class="q-text">Thuốc tả hạ được chỉ định sử dụng trong trường hợp nào sau đây?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q72_o0" onclick="selectOpt(72,0)">
+      <span class="opt-label">A</span>
+      <span>Biểu thực</span>
+    </div>
+    <div class="opt" id="q72_o1" onclick="selectOpt(72,1)">
+      <span class="opt-label">B</span>
+      <span>Lý thực</span>
+    </div>
+    <div class="opt" id="q72_o2" onclick="selectOpt(72,2)">
+      <span class="opt-label">C</span>
+      <span>Biểu hư</span>
+    </div>
+    <div class="opt" id="q72_o3" onclick="selectOpt(72,3)">
+      <span class="opt-label">D</span>
+      <span>Lý hư</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check72" onclick="checkAns(72)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(72)">Xem đáp án</button>
+      <span class="result-chip" id="chip72"></span>
+    </div>
+    <div class="explain-box" id="exp72">
+      <div class="ans-line">✓ Đáp án đúng: B. Lý thực</div>
+      <div class="explain-text">Thuốc tả hạ dùng khi bệnh tà ở lý (lý thực), gây chứng đại tiện bí — không dùng khi còn biểu chứng hoặc khi lý hư.</div>
+    </div>
+  </div>
+  <div class="card" id="card73">
+    <div class="q-header">
+      <span class="q-num">Câu 73</span>
+      <span class="q-text">Khi bệnh nhân có cả triệu chứng ở biểu (ngoại cảm) và lý (táo kết), nguyên tắc sử dụng thuốc là:</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q73_o0" onclick="selectOpt(73,0)">
+      <span class="opt-label">A</span>
+      <span>Chỉ dùng thuốc tả hạ liều cao</span>
+    </div>
+    <div class="opt" id="q73_o1" onclick="selectOpt(73,1)">
+      <span class="opt-label">B</span>
+      <span>Giải biểu trước, công lý sau</span>
+    </div>
+    <div class="opt" id="q73_o2" onclick="selectOpt(73,2)">
+      <span class="opt-label">C</span>
+      <span>Tuyệt đối không được dùng thuốc</span>
+    </div>
+    <div class="opt" id="q73_o3" onclick="selectOpt(73,3)">
+      <span class="opt-label">D</span>
+      <span>Chỉ dùng thuốc bổ Tỳ</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check73" onclick="checkAns(73)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(73)">Xem đáp án</button>
+      <span class="result-chip" id="chip73"></span>
+    </div>
+    <div class="explain-box" id="exp73">
+      <div class="ans-line">✓ Đáp án đúng: B. Giải biểu trước, công lý sau</div>
+      <div class="explain-text">Nếu biểu chứng vẫn còn, nguyên tắc là phải giải biểu trước, công lý sau — tránh tả hạ sớm sẽ "kéo tà vào trong" làm bệnh nặng thêm.</div>
+    </div>
+  </div>
+  <div class="card" id="card74">
+    <div class="q-header">
+      <span class="q-num">Câu 74</span>
+      <span class="q-text">Mật ong ngoài tác dụng nhuận tràng còn có khả năng giải độc cho vị thuốc nào sau đây?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q74_o0" onclick="selectOpt(74,0)">
+      <span class="opt-label">A</span>
+      <span>Đại hoàng</span>
+    </div>
+    <div class="opt" id="q74_o1" onclick="selectOpt(74,1)">
+      <span class="opt-label">B</span>
+      <span>Ô đầu</span>
+    </div>
+    <div class="opt" id="q74_o2" onclick="selectOpt(74,2)">
+      <span class="opt-label">C</span>
+      <span>Ba đậu</span>
+    </div>
+    <div class="opt" id="q74_o3" onclick="selectOpt(74,3)">
+      <span class="opt-label">D</span>
+      <span>Ma nhân</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check74" onclick="checkAns(74)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(74)">Xem đáp án</button>
+      <span class="result-chip" id="chip74"></span>
+    </div>
+    <div class="explain-box" id="exp74">
+      <div class="ans-line">✓ Đáp án đúng: B. Ô đầu</div>
+      <div class="explain-text">Mật ong có khả năng giải độc cho Ô đầu, Phụ tử — đây là lý do truyền thống thường dùng mật ong chế Ô đầu để giảm độc tính.</div>
+    </div>
+  </div>
+  <div class="card" id="card75">
+    <div class="q-header">
+      <span class="q-num">Câu 75</span>
+      <span class="q-text">Vị thuốc Ma nhân được sử dụng trong trường hợp nào là phù hợp nhất?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q75_o0" onclick="selectOpt(75,0)">
+      <span class="opt-label">A</span>
+      <span>Táo bón ở người mới ốm dậy, phụ nữ sau sinh và giúp lợi sữa</span>
+    </div>
+    <div class="opt" id="q75_o1" onclick="selectOpt(75,1)">
+      <span class="opt-label">B</span>
+      <span>Sốt cao co giật, táo kết thực nhiệt</span>
+    </div>
+    <div class="opt" id="q75_o2" onclick="selectOpt(75,2)">
+      <span class="opt-label">C</span>
+      <span>Phù bụng, viêm gan cổ trướng</span>
+    </div>
+    <div class="opt" id="q75_o3" onclick="selectOpt(75,3)">
+      <span class="opt-label">D</span>
+      <span>Đang bị tiêu chảy, đầy bụng</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check75" onclick="checkAns(75)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(75)">Xem đáp án</button>
+      <span class="result-chip" id="chip75"></span>
+    </div>
+    <div class="explain-box" id="exp75">
+      <div class="ans-line">✓ Đáp án đúng: A. Táo bón ở người mới ốm dậy, phụ nữ sau sinh và giúp lợi sữa</div>
+      <div class="explain-text">Ma nhân là thuốc nhuận hạ, rất tốt cho táo bón ở người già, người mới ốm dậy, phụ nữ sau sinh — tính nhuận ôn hòa, không gây tả mạnh.</div>
+    </div>
+  </div>
+  <div class="card" id="card76">
+    <div class="q-header">
+      <span class="q-num">Câu 76</span>
+      <span class="q-text">Các vị thuốc tiêu đạo có đặc điểm chung về tính vị và quy kinh là:</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q76_o0" onclick="selectOpt(76,0)">
+      <span class="opt-label">A</span>
+      <span>Vị cay, tính hàn; quy kinh Can, Thận</span>
+    </div>
+    <div class="opt" id="q76_o1" onclick="selectOpt(76,1)">
+      <span class="opt-label">B</span>
+      <span>Vị ngọt, tính ôn hoặc bình; quy kinh Tỳ, Vị</span>
+    </div>
+    <div class="opt" id="q76_o2" onclick="selectOpt(76,2)">
+      <span class="opt-label">C</span>
+      <span>Vị đắng, tính đại hàn; quy kinh Tâm, Phế</span>
+    </div>
+    <div class="opt" id="q76_o3" onclick="selectOpt(76,3)">
+      <span class="opt-label">D</span>
+      <span>Vị mặn, tính nhiệt; quy kinh Thận, Bàng quang</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check76" onclick="checkAns(76)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(76)">Xem đáp án</button>
+      <span class="result-chip" id="chip76"></span>
+    </div>
+    <div class="explain-box" id="exp76">
+      <div class="ans-line">✓ Đáp án đúng: B. Vị ngọt, tính ôn hoặc bình; quy kinh Tỳ, Vị</div>
+      <div class="explain-text">Đa số thuốc tiêu đạo có vị ngọt, tính ôn hoặc bình, quy kinh Tỳ, Vị — phù hợp với chức năng giúp Tỳ Vị vận hóa thức ăn.</div>
+    </div>
+  </div>
+  <div class="card" id="card77">
+    <div class="q-header">
+      <span class="q-num">Câu 77</span>
+      <span class="q-text">Khi điều trị sỏi mật, Kê nội kim thường được phối hợp với vị thuốc nào?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q77_o0" onclick="selectOpt(77,0)">
+      <span class="opt-label">A</span>
+      <span>Hồi hương</span>
+    </div>
+    <div class="opt" id="q77_o1" onclick="selectOpt(77,1)">
+      <span class="opt-label">B</span>
+      <span>Kim tiền thảo</span>
+    </div>
+    <div class="opt" id="q77_o2" onclick="selectOpt(77,2)">
+      <span class="opt-label">C</span>
+      <span>Đương quy</span>
+    </div>
+    <div class="opt" id="q77_o3" onclick="selectOpt(77,3)">
+      <span class="opt-label">D</span>
+      <span>Nhân sâm</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check77" onclick="checkAns(77)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(77)">Xem đáp án</button>
+      <span class="result-chip" id="chip77"></span>
+    </div>
+    <div class="explain-box" id="exp77">
+      <div class="ans-line">✓ Đáp án đúng: B. Kim tiền thảo</div>
+      <div class="explain-text">Kê nội kim thường phối hợp với Kim tiền thảo để trị sỏi mật, sỏi tiết niệu — Kim tiền thảo lợi mật, Kê nội kim tiêu tích, hai vị bổ trợ nhau.</div>
+    </div>
+  </div>
+  <div class="card" id="card78">
+    <div class="q-header">
+      <span class="q-num">Câu 78</span>
+      <span class="q-text">Nhóm thuốc nào sau đây có đặc điểm chung là vị chua, chát, quy kinh Tâm, Thận, Can, Đại trường?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q78_o0" onclick="selectOpt(78,0)">
+      <span class="opt-label">A</span>
+      <span>Thuốc Bổ huyết</span>
+    </div>
+    <div class="opt" id="q78_o1" onclick="selectOpt(78,1)">
+      <span class="opt-label">B</span>
+      <span>Thuốc Cố sáp</span>
+    </div>
+    <div class="opt" id="q78_o2" onclick="selectOpt(78,2)">
+      <span class="opt-label">C</span>
+      <span>Thuốc Lý khí</span>
+    </div>
+    <div class="opt" id="q78_o3" onclick="selectOpt(78,3)">
+      <span class="opt-label">D</span>
+      <span>Thuốc Tả hạ</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check78" onclick="checkAns(78)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(78)">Xem đáp án</button>
+      <span class="result-chip" id="chip78"></span>
+    </div>
+    <div class="explain-box" id="exp78">
+      <div class="ans-line">✓ Đáp án đúng: B. Thuốc Cố sáp</div>
+      <div class="explain-text">Thuốc Cố sáp có vị chua chát (thu liễm), quy kinh Tâm, Thận, Can, Đại trường — phù hợp để cố sáp các tạng phủ này.</div>
+    </div>
+  </div>
+  <div class="card" id="card79">
+    <div class="q-header">
+      <span class="q-num">Câu 79</span>
+      <span class="q-text">Đặc điểm "vị đắng, tính hàn" thường gặp ở nhóm thuốc nào dưới đây để giải quyết tình trạng "Nhiệt tà nhập huyết phận"?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q79_o0" onclick="selectOpt(79,0)">
+      <span class="opt-label">A</span>
+      <span>Thuốc Khứ ứ chỉ huyết</span>
+    </div>
+    <div class="opt" id="q79_o1" onclick="selectOpt(79,1)">
+      <span class="opt-label">B</span>
+      <span>Thuốc Lương huyết chỉ huyết</span>
+    </div>
+    <div class="opt" id="q79_o2" onclick="selectOpt(79,2)">
+      <span class="opt-label">C</span>
+      <span>Thuốc Bổ ích chỉ huyết</span>
+    </div>
+    <div class="opt" id="q79_o3" onclick="selectOpt(79,3)">
+      <span class="opt-label">D</span>
+      <span>Thuốc Thu liễm chỉ huyết</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check79" onclick="checkAns(79)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(79)">Xem đáp án</button>
+      <span class="result-chip" id="chip79"></span>
+    </div>
+    <div class="explain-box" id="exp79">
+      <div class="ans-line">✓ Đáp án đúng: B. Thuốc Lương huyết chỉ huyết</div>
+      <div class="explain-text">Thuốc Lương huyết chỉ huyết thường có tính vị đắng, hàn để trị nhiệt tà nhập huyết phận — tính hàn thanh nhiệt lương huyết, vị đắng giáng hỏa.</div>
+    </div>
+  </div>
+  <div class="card" id="card80">
+    <div class="q-header">
+      <span class="q-num">Câu 80</span>
+      <span class="q-text">Vị thuốc nào sau đây vừa thuộc nhóm Bổ Dương, vừa có tác dụng "Bình suyễn" do Thận hư không nạp được Phế khí?</span>
+    </div>
+    <div class="options">
+    <div class="opt" id="q80_o0" onclick="selectOpt(80,0)">
+      <span class="opt-label">A</span>
+      <span>Đỗ trọng</span>
+    </div>
+    <div class="opt" id="q80_o1" onclick="selectOpt(80,1)">
+      <span class="opt-label">B</span>
+      <span>Ba kích</span>
+    </div>
+    <div class="opt" id="q80_o2" onclick="selectOpt(80,2)">
+      <span class="opt-label">C</span>
+      <span>Cẩu tích</span>
+    </div>
+    <div class="opt" id="q80_o3" onclick="selectOpt(80,3)">
+      <span class="opt-label">D</span>
+      <span>Tục đoạn</span>
+    </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-check" id="check80" onclick="checkAns(80)" disabled>Kiểm tra</button>
+      <button class="btn btn-reveal" onclick="revealAns(80)">Xem đáp án</button>
+      <span class="result-chip" id="chip80"></span>
+    </div>
+    <div class="explain-box" id="exp80">
+      <div class="ans-line">✓ Đáp án đúng: B. Ba kích</div>
+      <div class="explain-text">Ba kích vừa thuộc nhóm Bổ Dương (ôn Thận), vừa có liên quan đến bình suyễn trong bệnh cảnh Thận không nạp Phế khí. Lưu ý: câu hỏi này có tranh luận học thuật vì Phá cố chỉ mới là thuốc bình suyễn điển hình nhất.</div>
+    </div>
+  </div>
+</div>
+
+<div class="reset-wrap">
+  <button class="btn-reset" onclick="resetAll()">↺ Làm lại từ đầu</button>
+</div>
+
+<script>
+const state = {};
+let answered = 0, correct = 0;
+const TOTAL = 79;
+const ANSWERS = {"1": 2, "2": 2, "3": 1, "4": 1, "5": 1, "6": 2, "7": 0, "8": 1, "9": 1, "10": 2, "11": 1, "12": 1, "13": 1, "14": 1, "15": 1, "16": 1, "17": 0, "18": 1, "19": 1, "20": 1, "21": 1, "22": 1, "24": 1, "25": 1, "26": 0, "27": 2, "28": 1, "29": 1, "30": 1, "31": 2, "32": 1, "33": 1, "34": 1, "35": 1, "36": 1, "37": 2, "38": 1, "39": 1, "40": 1, "41": 1, "42": 1, "43": 1, "44": 1, "45": 2, "46": 2, "47": 1, "48": 1, "49": 1, "50": 1, "51": 0, "52": 1, "53": 1, "54": 1, "55": 1, "56": 1, "57": 1, "58": 1, "59": 0, "60": 1, "61": 1, "62": 1, "63": 1, "64": 1, "65": 0, "66": 1, "67": 3, "68": 0, "69": 1, "70": 1, "71": 1, "72": 1, "73": 1, "74": 1, "75": 0, "76": 1, "77": 1, "78": 1, "79": 1, "80": 1};
+
+function selectOpt(qid, oi) {
+  if (state[qid] && state[qid].done) return;
+  if (!state[qid]) state[qid] = {};
+  const prev = state[qid].sel;
+  if (prev !== undefined) {
+    document.getElementById('q'+qid+'_o'+prev).classList.remove('selected');
+  }
+  state[qid].sel = oi;
+  document.getElementById('q'+qid+'_o'+oi).classList.add('selected');
+  document.getElementById('check'+qid).disabled = false;
+}
+
+function checkAns(qid) {
+  if (!state[qid] || state[qid].sel === undefined) return;
+  if (state[qid].done) return;
+  const sel = state[qid].sel;
+  const correct_idx = ANSWERS[qid];
+  state[qid].done = true;
+  lockCard(qid);
+  markOpts(qid, sel, correct_idx);
+  const isCorrect = sel === correct_idx;
+  showChip(qid, isCorrect);
+  showExplain(qid);
+  updateScore(isCorrect);
+  document.getElementById('card'+qid).classList.add('answered');
+}
+
+function revealAns(qid) {
+  if (state[qid] && state[qid].done) return;
+  if (!state[qid]) state[qid] = {};
+  state[qid].done = true;
+  const correct_idx = ANSWERS[qid];
+  lockCard(qid);
+  const sel = state[qid].sel;
+  markOpts(qid, sel, correct_idx);
+  if (sel !== undefined) {
+    const isCorrect = sel === correct_idx;
+    showChip(qid, isCorrect);
+    updateScore(isCorrect);
+  } else {
+    updateScore(false);
+  }
+  showExplain(qid);
+  document.getElementById('card'+qid).classList.add('answered');
+}
+
+function lockCard(qid) {
+  document.querySelectorAll('[id^="q'+qid+'_o"]').forEach(el => el.classList.add('disabled'));
+  document.getElementById('check'+qid).disabled = true;
+}
+
+function markOpts(qid, sel, correct_idx) {
+  if (sel !== undefined) {
+    const selEl = document.getElementById('q'+qid+'_o'+sel);
+    selEl.classList.remove('selected');
+    selEl.classList.add(sel === correct_idx ? 'correct' : 'wrong');
+  }
+  if (sel !== correct_idx) {
+    document.getElementById('q'+qid+'_o'+correct_idx).classList.add('correct');
+  }
+}
+
+function showChip(qid, isCorrect) {
+  const chip = document.getElementById('chip'+qid);
+  chip.style.display = 'inline-block';
+  chip.classList.add(isCorrect ? 'correct' : 'wrong');
+  chip.textContent = isCorrect ? '✓ Đúng rồi!' : '✗ Chưa đúng';
+}
+
+function showExplain(qid) {
+  document.getElementById('exp'+qid).style.display = 'block';
+}
+
+function updateScore(isCorrect) {
+  answered++;
+  if (isCorrect) correct++;
+  const pct = (answered / TOTAL * 100).toFixed(1);
+  document.getElementById('prog-bar').style.width = pct + '%';
+  document.getElementById('prog-text').textContent = answered + ' / ' + TOTAL + ' câu đã trả lời';
+  document.getElementById('score-text').textContent = 'Điểm: ' + correct + ' / ' + answered;
+}
+
+function resetAll() {
+  Object.keys(state).forEach(k => delete state[k]);
+  answered = 0; correct = 0;
+  document.getElementById('prog-bar').style.width = '0%';
+  document.getElementById('prog-text').textContent = '0 / ' + TOTAL + ' câu đã trả lời';
+  document.getElementById('score-text').textContent = 'Điểm: 0';
+  document.querySelectorAll('.opt').forEach(el => {
+    el.className = 'opt';
+  });
+  document.querySelectorAll('.card').forEach(el => el.classList.remove('answered'));
+  document.querySelectorAll('.result-chip').forEach(el => {
+    el.style.display = 'none';
+    el.className = 'result-chip';
+  });
+  document.querySelectorAll('.explain-box').forEach(el => el.style.display = 'none');
+  document.querySelectorAll('.btn-check').forEach(el => el.disabled = true);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>

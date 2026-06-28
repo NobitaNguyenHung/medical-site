@@ -58,6 +58,23 @@ export const books: BookEntry[] = [
     href: `${base}/books/trieu_chung_hoc_noi_khoa_pnt/tom-tat/`,
     status: 'building',
   },
+  {
+    num: '03',
+    system: 'YHCT',
+    icon: 'ti-leaf',
+    color: { bg: '#E1F5EE', accent: '#1D9E75', text: '#0F6E56' },
+    name: 'Thuốc Y học cổ truyền',
+    desc: 'Dược liệu · nhóm thuốc · tính vị quy kinh · chủ trị',
+    progress: 10,
+    stats: [
+      { value: 1, label: 'Bài giảng' },
+      { value: 2, label: 'Quiz' },
+      { value: 1, label: 'Tóm tắt' },
+    ],
+    illustration: 'herb',
+    href: `${base}/books/thuoc-yhct/luong-gia/01-on-tap-thuoc01/`,
+    status: 'building',
+  },
   // ── Thêm sách mới vào đây ──────────────────────────────────────────────────
   // {
   //   num: '03',

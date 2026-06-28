@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ôn Bệnh Đại Cương — Quiz & Flashcard</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f5f0;color:#1a1a1a;min-height:100vh}
+.header{background:#fff;border-bottom:1px solid #e5e5e0;padding:16px 24px;position:sticky;top:0;z-index:100}
+.header h1{font-size:18px;font-weight:600;color:#1a1a1a}
+.header p{font-size:13px;color:#666;margin-top:2px}
+.tabs-wrap{display:flex;gap:0;border-bottom:1px solid #e5e5e0;background:#fff;padding:0 24px;position:sticky;top:65px;z-index:99}
+.tab{padding:12px 20px;font-size:14px;cursor:pointer;border:none;background:none;color:#666;border-bottom:2px solid transparent;margin-bottom:-1px;font-family:inherit;font-weight:500;transition:color 0.15s}
+.tab:hover{color:#1a1a1a}
+.tab.active{color:#1a1a1a;border-bottom-color:#1a1a1a}
+.container{max-width:860px;margin:0 auto;padding:24px 24px 80px}
+/* MCQ */
+.score-bar{display:flex;align-items:center;gap:16px;background:#fff;border:1px solid #e5e5e0;border-radius:12px;padding:16px 20px;margin-bottom:20px}
+.score-big{font-size:28px;font-weight:700;min-width:70px}
+.score-info{flex:1}
+.score-label{font-size:12px;color:#888;margin-bottom:4px}
+.progress{height:6px;background:#e5e5e0;border-radius:3px;overflow:hidden}
+.progress-fill{height:6px;background:#1D9E75;border-radius:3px;transition:width 0.4s ease}
+.reset-btn,.export-btn{padding:8px 14px;font-size:13px;cursor:pointer;border:1px solid #d0d0c8;border-radius:8px;background:#fff;color:#1a1a1a;font-family:inherit;display:flex;align-items:center;gap:6px;white-space:nowrap}
+.reset-btn:hover,.export-btn:hover{background:#f5f5f0}
+.q-card{background:#fff;border:1px solid #e5e5e0;border-radius:12px;padding:20px;margin-bottom:14px}
+.q-card.answered{border-color:#d0d0c8}
+.q-meta{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;align-items:center}
+.q-num{font-size:12px;font-weight:600;color:#888}
+.badge{font-size:11px;padding:3px 8px;border-radius:6px;font-weight:500}
+.b-nhanBiet{background:#EAF3DE;color:#3B6D11}
+.b-hieu{background:#E6F1FB;color:#185FA5}
+.b-apDung{background:#FAEEDA;color:#854F0B}
+.b-phanTich{background:#FBEAF0;color:#993556}
+.b-tongHop{background:#EEEDFE;color:#534AB7}
+.b-level-cb{background:#f5f5f0;color:#666}
+.b-level-tb{background:#f0eeff;color:#534AB7}
+.b-level-nc{background:#fff0f0;color:#A32D2D}
+.q-stem{font-size:15px;line-height:1.65;margin-bottom:16px;color:#1a1a1a}
+.options{display:grid;gap:7px}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:11px 14px;border:1px solid #e5e5e0;border-radius:9px;cursor:pointer;font-size:14px;line-height:1.5;transition:all 0.12s;user-select:none}
+.opt:hover:not(.locked){background:#f9f9f7;border-color:#c0c0b8}
+.opt.selected{border-color:#378ADD;background:#f0f7ff}
+.opt.correct{border-color:#1D9E75;background:#e8f8f2;color:#085041}
+.opt.wrong{border-color:#E24B4A;background:#fff0f0;color:#501313}
+.opt-letter{width:24px;height:24px;min-width:24px;border-radius:50%;background:#f0f0e8;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:#666;transition:all 0.12s}
+.opt.correct .opt-letter{background:#1D9E75;color:#fff}
+.opt.wrong .opt-letter{background:#E24B4A;color:#fff}
+.opt.selected .opt-letter{background:#378ADD;color:#fff}
+.explain{margin-top:14px;border-radius:9px;overflow:hidden;display:none;border:1px solid #e5e5e0}
+.explain.show{display:block}
+.explain-correct{padding:12px 14px;background:#e8f8f2;border-bottom:1px solid #b2dece}
+.explain-correct strong{color:#085041;font-size:14px}
+.explain-why{padding:10px 14px;font-size:13px;line-height:1.6;color:#333;background:#fff}
+.explain-wrongs{padding:0 14px 12px;background:#fff}
+.explain-wrong-item{font-size:12px;color:#666;line-height:1.5;padding:3px 0;border-top:1px solid #f0f0e8}
+/* Flashcard */
+.fc-controls{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.fc-stats{font-size:13px;color:#666}
+.fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.fc{height:180px;cursor:pointer;perspective:700px}
+.fc-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform 0.4s cubic-bezier(.4,0,.2,1)}
+.fc.flipped .fc-inner{transform:rotateY(180deg)}
+.fc-front,.fc-back{position:absolute;inset:0;border:1px solid #e5e5e0;border-radius:12px;padding:16px;backface-visibility:hidden;display:flex;flex-direction:column;justify-content:space-between;background:#fff}
+.fc-back{background:#e8f8f2;border-color:#9FE1CB;transform:rotateY(180deg)}
+.fc-tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#999;margin-bottom:8px}
+.fc-back .fc-tag{color:#0F6E56}
+.fc-q{font-size:13px;font-weight:600;line-height:1.5;color:#1a1a1a}
+.fc-a{font-size:12px;line-height:1.65;color:#085041;flex:1;overflow:hidden}
+.fc-hint{font-size:11px;color:#aaa;display:flex;align-items:center;gap:4px}
+.fc-back .fc-hint{color:#5DCAA5}
+.fc-num{font-size:11px;font-weight:600;color:#0F6E56}
+/* Print */
+@media print{
+  .header,.tabs-wrap,.score-bar,.reset-btn,.export-btn,.fc-controls{display:none!important}
+  .container{padding:0;max-width:100%}
+  .q-card{break-inside:avoid;page-break-inside:avoid;border:1px solid #ccc;margin-bottom:8px}
+  .opt.correct{border-color:#1D9E75!important;background:#e8f8f2!important}
+  .explain{display:block!important}
+  .fc{height:auto}
+  .fc-inner{transform:none!important}
+  .fc-back{display:none}
+}
+.panel{display:none}.panel.active{display:block}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Ôn Bệnh Học — Đại Cương</h1>
+  <p>Giáo trình ĐH Y Dược Cần Thơ 2024 · TS.BS. Lê Minh Hoàng; BS. CKII. Lê Thị Ngoan</p>
+</div>
+
+<div class="tabs-wrap">
+  <button class="tab active" onclick="switchTab('mcq',this)">Trắc nghiệm MCQ (30 câu)</button>
+  <button class="tab" onclick="switchTab('fc',this)">Flashcard (30 thẻ)</button>
+</div>
+
+<div class="container">
+
+<!-- MCQ PANEL -->
+<div id="panel-mcq" class="panel active">
+  <div class="score-bar">
+    <div>
+      <div class="score-big" id="score-display">0/30</div>
+    </div>
+    <div class="score-info">
+      <div class="score-label">Đã trả lời: <span id="answered-count">0</span>/30 câu</div>
+      <div class="progress"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+    </div>
+    <button class="reset-btn" onclick="resetMCQ()"><i class="ti ti-refresh"></i> Làm lại</button>
+    <button class="export-btn" onclick="window.print()"><i class="ti ti-printer"></i> In</button>
+  </div>
+  <div id="mcq-list"></div>
+</div>
+
+<!-- FLASHCARD PANEL -->
+<div id="panel-fc" class="panel">
+  <div class="fc-controls">
+    <div class="fc-stats">Nhấn thẻ để lật — <span id="fc-seen">0</span>/30 đã xem</div>
+    <button class="reset-btn" onclick="resetFC()"><i class="ti ti-refresh"></i> Reset thẻ</button>
+  </div>
+  <div class="fc-grid" id="fc-grid"></div>
+</div>
+
+</div>
+
+<script>
+const BLOOM = {nB:'Nhận biết',hi:'Hiểu',aD:'Áp dụng',pT:'Phân tích',tH:'Tổng hợp'};
+const bloomClass = {nB:'b-nhanBiet',hi:'b-hieu',aD:'b-apDung',pT:'b-phanTich',tH:'b-tongHop'};
+const levelClass = {'Cơ bản':'b-level-cb','Trung bình':'b-level-tb','Nâng cao':'b-level-nc'};
+
+const MCQ = [
+  {bloom:'nB',level:'Cơ bản',stem:'Ôn bệnh học là môn học nghiên cứu điều gì?',
+   opts:['Quy luật phát sinh, phát triển của Ôn bệnh và phương pháp chẩn trị, dự phòng','Nguyên tắc điều trị nội thương tạp bệnh theo học thuyết tạng phủ','Phân loại bệnh truyền nhiễm theo vi sinh vật học hiện đại','Cơ chế bệnh sinh của bệnh hàn và nhiệt theo lục kinh biện chứng'],
+   ans:0,why:'Giáo trình định nghĩa: "Ôn bệnh học là môn lâm sàng học nghiên cứu quy luật phát sinh, phát triển của Ôn bệnh và phương pháp chẩn trị, dự phòng."',
+   wrongs:['B: Đây là mô tả của Nội khoa YHCT, không phải Ôn bệnh học','C: Phân loại vi sinh học thuộc vi sinh học hiện đại, không phải Ôn bệnh học','D: Lục kinh biện chứng thuộc Thương hàn luận, không phải Ôn bệnh học']},
+
+  {bloom:'nB',level:'Cơ bản',stem:'Phân biệt "Ôn bệnh" và "Ôn dịch" theo Chu Dương Tuấn:',
+   opts:['Ôn bệnh lây nhiều người; Ôn dịch chỉ lây một người','Ôn bệnh do phong nhiệt; Ôn dịch do thấp nhiệt gây ra','Ôn bệnh là bệnh lẻ tẻ từng người; Ôn dịch là hàng loạt người cùng mắc một lúc','Ôn bệnh biểu hiện nhẹ hơn; Ôn dịch nặng hơn về triệu chứng'],
+   ans:2,why:'Chu Dương Tuấn: "Một người bị bệnh gọi là Ôn, một địa phương nhiều người bị bệnh giống nhau gọi là Dịch." Phân biệt theo số người mắc, không theo nguyên nhân hay mức độ.',
+   wrongs:['A: Ngược lại — Ôn bệnh là bệnh LẺ TẺ từng người','B: Cả Ôn bệnh và Ôn dịch đều do ôn tà, không chia theo loại tà khác nhau','D: Mức độ nặng nhẹ không phải tiêu chí phân biệt hai khái niệm này']},
+
+  {bloom:'nB',level:'Cơ bản',stem:'Câu mở đầu của Diệp Thiên Sĩ trong Ôn nhiệt luận là câu nào?',
+   opts:['"Thương hàn hữu ngũ, ôn bệnh cư nhất"','"Ôn tà thượng thụ, thủ tiên phạm phế"','"Đông thương vụ hàn, xuân tất ôn bệnh"','"Nhiệt bệnh đều là một loại của thương hàn"'],
+   ans:1,why:'"Ôn tà thượng thụ, thủ tiên phạm phế" — Ôn tà cảm thụ từ trên xuống, trước hết phạm vào phế. Đây là câu cương lĩnh nêu cơ chế phát bệnh và đường xâm nhập của ôn tà.',
+   wrongs:['A: Câu này xuất phát từ Nạn kinh — Ngũ thập bát nạn, không phải Diệp Thiên Sĩ','C: Câu này từ Tố Vấn — Âm dương ứng tượng đại luận (Nội kinh), cơ sở lý luận phục khí','D: Câu này từ Tố Vấn nhiệt luận, dùng để chỉ quan niệm cũ gộp ôn bệnh vào thương hàn']},
+
+  {bloom:'nB',level:'Cơ bản',stem:'Phong ôn xuất hiện vào mùa nào và do tà khí nào chủ yếu?',
+   opts:['Giữa mùa xuân — ôn nhiệt tà phục','Mùa hè — thử nhiệt tà','Cuối đông đến đầu xuân — phong nhiệt tà','Mùa thu — táo nhiệt tà'],
+   ans:2,why:'Phong ôn (cuối đông — đầu xuân): "khí hậu có nhiều gió và ẩm tức là phong và ôn kết hợp gây bệnh." Tương đương Tây y: viêm phổi, cúm.',
+   wrongs:['A: Giữa mùa xuân là xuân ôn (phục tà), không phải phong ôn','B: Mùa hè là thử ôn (thử nhiệt) hoặc thử thấp','D: Mùa thu là thu táo, chủ khí táo nhiệt']},
+
+  {bloom:'nB',level:'Cơ bản',stem:'Ai là người sáng lập vệ-khí-dinh-huyết biện chứng và ai sáng lập tam tiêu biện chứng trong Ôn bệnh học?',
+   opts:['Cả hai đều do Ngô Cúc Thông sáng lập trong Ôn bệnh điều biện','Vệ-khí-dinh-huyết: Diệp Thiên Sĩ; Tam tiêu: Ngô Cúc Thông','Vệ-khí-dinh-huyết: Ngô Cúc Thông; Tam tiêu: Diệp Thiên Sĩ','Cả hai đều do Ngô Hựu Khả sáng lập trong Ôn dịch luận'],
+   ans:1,why:'Diệp Thiên Sĩ (Ôn nhiệt luận) sáng lập vệ-khí-dinh-huyết biện chứng. Ngô Cúc Thông (Ôn bệnh điều biện) sáng lập tam tiêu biện chứng, bổ sung điểm thiếu của Diệp.',
+   wrongs:['A: Sai — Diệp Thiên Sĩ sáng lập vệ-khí-dinh-huyết, Ngô Cúc Thông sáng lập tam tiêu','C: Ngược lại','D: Ngô Hựu Khả (Ôn dịch luận) đóng góp về lệ khí và đường lây, không sáng lập hai hệ biện chứng này']},
+
+  {bloom:'nB',level:'Cơ bản',stem:'Dựa vào tính chất bệnh chứng, Ôn bệnh được chia thành mấy loại chính?',
+   opts:['2 loại: ôn nhiệt và thấp nhiệt','3 loại: phong nhiệt, thấp nhiệt và táo nhiệt','4 loại theo bốn mùa: xuân ôn, thử ôn, thấp ôn, thu táo','5 loại theo ngũ tà: phong, hàn, thử, thấp, táo'],
+   ans:0,why:'Dựa vào có hay không kèm thấp tà: (1) Ôn nhiệt — chỉ nhiệt không thấp; (2) Thấp nhiệt — vừa nhiệt vừa thấp. Cách phân loại theo tứ thời hay vị trí là các cách phân loại khác.',
+   wrongs:['B: Không có loại phân chia thành 3 nhóm chính theo tính chất bệnh chứng','C: Phân loại theo mùa là cách khác, không phải theo tính chất bệnh chứng','D: Ngũ tà không phải tiêu chí phân loại Ôn bệnh theo tính chất bệnh chứng']},
+
+  {bloom:'hi',level:'Cơ bản',stem:'Ngô Hựu Khả (Ôn dịch luận, cuối đời Minh) được coi là tiên phong tư duy vi sinh học vì điểm lý luận nào?',
+   opts:['Ông dùng kính hiển vi phát hiện vi khuẩn trong đàm của người bệnh','Ông cho rằng lệ khí đặc thù riêng gây từng bệnh; xâm nhập qua mũi miệng; không phải phong hàn thử thấp thông thường','Ông sáng lập vệ-khí-dinh-huyết và chứng minh tà xâm nhập qua da','Ông phát hiện sốt rét do ký sinh trùng sốt rét gây ra'],
+   ans:1,why:'Ngô Hựu Khả: lệ khí ≈ tác nhân gây bệnh đặc hiệu; "bệnh khác nhau do lệ khí khác nhau" ≈ tính đặc hiệu mầm bệnh; lây qua mũi miệng ≈ đường lây. Tương đồng Germ Theory trước Pasteur ~200 năm.',
+   wrongs:['A: Kính hiển vi chưa tồn tại ở Trung Quốc thế kỷ 17 — đây là lý luận thuần túy','C: Vệ-khí-dinh-huyết do Diệp Thiên Sĩ sáng lập (nhà Thanh, sau Ngô); tà qua mũi miệng không phải qua da','D: Sốt rét (ngược tật) do ngược tà trong YHCT, không gắn với vi sinh học hiện đại']},
+
+  {bloom:'hi',level:'Cơ bản',stem:'Mùa xuân, chức năng nào của cơ thể dễ bị thất điều, tạo điều kiện cho phong nhiệt tà xâm phạm?',
+   opts:['Chức năng vận hóa của tỳ vị suy giảm, thủy thấp tích tụ','Chức năng phế vệ dễ bị thất điều, tấu lý sơ khai','Chức năng tàng tinh của thận suy, không ôn ấm được cơ thể','Chức năng sơ tiết của can khí thái quá, hóa hỏa'],
+   ans:1,why:'Giáo trình: "Mùa xuân chức năng phế vệ rất dễ bị thất chức, đây là điều kiện rất dễ bị phong nhiệt bệnh tà xâm nhập." Tấu lý sơ khai = lỗ chân lông mở rộng, tà dễ vào.',
+   wrongs:['A: Tỳ vị suy và thấp tích liên quan mùa hè cuối hạ (thấp ôn, thử thấp)','C: Thận dương suy liên quan bệnh mùa đông hoặc thể hàn','D: Can khí thái quá hóa hỏa là cơ chế nội thương, không giải thích tính mùa của ôn tà']},
+
+  {bloom:'hi',level:'Trung bình',stem:'Hao âm ở thượng tiêu trong Ôn bệnh (tổn thương phế âm) biểu hiện như thế nào?',
+   opts:['Miệng khát nhiều, muốn uống nước, lưỡi đỏ thẫm không rêu quang bóng','Mũi họng khô táo, ho khan không có đàm','Sốt thấp về đêm, lưỡng quyền đỏ, bàn tay chân nóng, co giật','Đại tiện táo bón, bụng đầy tức, mạch trầm thực'],
+   ans:1,why:'"Bệnh tại thượng tiêu gây tổn thương phế âm với triệu chứng miệng mũi hầu họng khô táo, ho khan, không đàm." Phế thuộc thượng tiêu, chủ khí.',
+   wrongs:['A: Đây là biểu hiện hao tổn vị âm (trung tiêu), không phải phế âm','C: Đây là biểu hiện can thận âm thương (hạ tiêu)','D: Đại tiện táo kèm bụng đầy là chứng thực (nhiệt kết đại trường), không phải hao âm']},
+
+  {bloom:'hi',level:'Trung bình',stem:'Hao âm ở hạ tiêu (tổn thương can thận âm) biểu hiện đặc trưng nào sau đây?',
+   opts:['Ho khan, mũi khô, đàm dính ít','Miệng khát, lưỡi đỏ thẫm không rêu, ăn ít','Sốt thấp về đêm, lưỡng quyền đỏ, bàn tay chân nóng, co giật, lưỡi khô đỏ teo','Sốt cao liên tục, tâm phiền, chiêm ngữ, ban chẩn nổi rõ'],
+   ans:2,why:'"Bệnh tà tại hạ tiêu thương tổn can thận âm với sốt thấp, uể oải, lưỡng quyền đỏ, tay chân nóng thậm chí nóng cả mu bàn tay chân, co giật, lưỡi khô đỏ mà teo."',
+   wrongs:['A: Biểu hiện thượng tiêu (phế âm thương)','B: Biểu hiện trung tiêu (vị âm thương)','D: Sốt cao kèm tâm phiền chiêm ngữ ban chẩn là dinh phần — tà chưa đến hạ tiêu']},
+
+  {bloom:'hi',level:'Trung bình',stem:'Đặc điểm nào phân biệt khởi bệnh của tân cảm Ôn bệnh và phục tà Ôn bệnh?',
+   opts:['Tân cảm: sốt kèm ố hàn nặng; Phục tà: sốt nhẹ, không ố hàn','Tân cảm: cảm tà → lập tức phát, biểu nhiệt là chủ; Phục tà: tà phục tàng → phát muộn, lý nhiệt là chủ ngay từ đầu','Tân cảm: chỉ xảy ra mùa xuân; Phục tà: xảy ra quanh năm','Tân cảm: lây nhiễm cao; Phục tà: không lây nhiễm'],
+   ans:1,why:'Tân cảm: "cảm tà lập tức phát, bệnh phát tại biểu, sơ khởi triệu chứng chủ yếu là biểu nhiệt chứng." Phục tà: "cảm tà → tà khí phục tàng → phát muộn, phát tại lý, sơ khởi triệu chứng chủ yếu là lý nhiệt."',
+   wrongs:['A: Không phải tiêu chí — cả hai đều có sốt; ố hàn nặng thuộc Thương hàn','C: Tân cảm và phục tà đều có thể xảy ra nhiều mùa','D: Tính lây nhiễm không phải tiêu chí phân biệt hai loại phát bệnh này']},
+
+  {bloom:'hi',level:'Trung bình',stem:'Ôn bệnh dễ hao tổn phần âm và tân dịch. Thương hàn dễ tổn thương điều gì? Cơ sở lý luận là gì?',
+   opts:['Hao tổn phần âm — vì hàn tà thiên thịnh cũng đốt hao tân dịch','Tổn thương phần dương khí — vì hàn là âm tà, âm thắng tất hại dương','Tổn thương khí huyết — vì thương hàn làm cản trở lưu thông','Hao tổn tinh tủy — vì lục kinh truyền biến đến thận kinh'],
+   ans:1,why:'"Dương thắng thương âm, âm thắng thương dương." Ôn nhiệt là dương tà → dương thịnh thương âm. Hàn là âm tà → âm thắng thương dương khí. Đây là quy luật cơ bản âm dương trong bệnh lý YHCT.',
+   wrongs:['A: Sai — hàn tà không đốt hao tân dịch mà tổn thương dương khí','C: Quá chung chung, không phải đặc điểm riêng của Thương hàn','D: Thận tinh tổn thương là biến chứng muộn, không phải đặc điểm bệnh lý chính']},
+
+  {bloom:'aD',level:'Trung bình',stem:'Bệnh nhân sốt 37,8°C, ố hàn nhẹ, miệng hơi khát, ho nhẹ, không mồ hôi, đau đầu, chót ria lưỡi đỏ nhẹ, mạch phù sác. Bệnh đang ở phần nào?',
+   opts:['Khí phần — nhiệt đã vào sâu, không còn ố hàn','Vệ phần — tà còn ở ngoài biểu, chưa vào lý','Dinh phần — nhiệt thương âm, sốt về đêm','Huyết phần — động huyết sắp xảy ra'],
+   ans:1,why:'Tam chứng vệ phần: sốt + HƠI ố hàn + miệng HƠI khát. Kèm: ho (phế vệ), mạch phù (biểu), lưỡi đỏ nhẹ. Pháp trị: tân lương giải biểu.',
+   wrongs:['A: Khí phần: sốt cao + KHÔNG ố hàn + khát nhiều + rêu vàng — chưa đến mức này','C: Dinh phần: sốt về đêm + tâm phiền + chiêm ngữ + lưỡi đỏ thẫm','D: Huyết phần: xuất huyết đa nơi + ban chẩn + lưỡi tối thẫm']},
+
+  {bloom:'aD',level:'Trung bình',stem:'Bệnh nhân sốt 40°C, không ố hàn, khát nước nhiều, tiểu vàng đỏ, rêu lưỡi vàng dày, mạch hồng đại sác. Pháp trị phù hợp nhất?',
+   opts:['Tân lương giải biểu — tà còn ở biểu','Thanh nhiệt tả hỏa; nếu đại tiện bí thêm công hạ','Thanh dinh thấu nhiệt — đã vào dinh phần','Lương huyết tán ứ — xuất huyết cần cầm'],
+   ans:1,why:'Tam chứng khí phần điển hình: sốt cao + KHÔNG ố hàn + khát mạnh + rêu vàng. Pháp trị khí phần: thanh nhiệt; nếu nhiệt kết trường phủ (đại tiện bí) thêm công hạ.',
+   wrongs:['A: Tân lương giải biểu cho vệ phần — bệnh đã vào khí phần','C: Dinh phần: sốt về đêm + lưỡi đỏ thẫm — chưa đến mức đó','D: Lương huyết cho huyết phần — chưa có xuất huyết']},
+
+  {bloom:'aD',level:'Trung bình',stem:'Bệnh nhân sốt về đêm (ban ngày sốt giảm), tâm phiền bất an, chiêm ngữ, lưỡi đỏ thẫm không rêu. Chứng hậu này thuộc phần nào và pháp trị?',
+   opts:['Khí phần — thanh nhiệt tả hỏa','Huyết phần — lương huyết tán ứ','Dinh phần — thanh dinh thấu nhiệt','Vệ phần — tân lương giải biểu'],
+   ans:2,why:'Tứ chứng dinh phần: (1) sốt về đêm, (2) tâm phiền, (3) chiêm ngữ, (4) lưỡi đỏ thẫm. Pháp trị: thanh dinh thấu nhiệt — vừa thanh nhiệt ở dinh, vừa thấu nhiệt ra khí phần.',
+   wrongs:['A: Khí phần: sốt cao liên tục + không ố hàn + khát, lưỡi vàng','B: Huyết phần: xuất huyết đa nơi + ban chẩn + lưỡi tối thẫm','D: Vệ phần: hơi sốt + ố hàn nhẹ + mạch phù']},
+
+  {bloom:'aD',level:'Trung bình',stem:'Bệnh nhân sốt cao, khạc ra máu tươi, đại tiện có máu, chảy máu cam, ban chẩn toàn thân đỏ thẫm, lưỡi tối thẫm. Pháp trị ưu tiên?',
+   opts:['Tân lương giải biểu — tà còn ở biểu','Thanh nhiệt tả hỏa — nhiệt khí phần','Lương huyết tán ứ — động huyết, hao huyết','Thanh dinh thấu nhiệt — nhiệt ở dinh'],
+   ans:2,why:'Huyết phần điển hình: xuất huyết đa nơi + ban chẩn + lưỡi tối thẫm. "Nhiệt thịnh bức huyết" → bức huyết xuất ngoài. Pháp trị: lương huyết (làm mát huyết) + tán ứ (tiêu ứ huyết).',
+   wrongs:['A: Biểu phần đã qua từ lâu','B: Khí phần: sốt cao + không ố hàn + khát, chưa xuất huyết','D: Dinh phần: sốt về đêm + tâm phiền, chưa đến mức xuất huyết đa nơi']},
+
+  {bloom:'aD',level:'Trung bình',stem:'Theo Diệp Thiên Sĩ, khi Ôn bệnh mới phát ở vệ phần kèm phong tà, nên thêm vị thuốc nào và mục đích là gì?',
+   opts:['Lô căn, Hoạt thạch — thấm thấp xuống dưới, không cho thấp kết cấu với nhiệt','Bạc hà, Ngưu bàng — tân tán sơ giải, thấu phong ra ngoài nhiệt','Phụ tử, Can khương — ôn dương để đẩy tà','Đại hoàng, Mang tiêu — công hạ thanh trừ nhiệt'],
+   ans:1,why:'"Ghé phong thì gia loại Bạc hà, Ngưu bàng... hoặc thấu phong ra ngoài nhiệt." Phong tà dương tà → cần tán giải, thấu ra ngoài. Nếu dùng hàn lương ngưng thì tà không giải được.',
+   wrongs:['A: Lô căn, Hoạt thạch dùng khi kèm THẤP tà, không phải phong tà','C: Tân ôn ôn dương không phù hợp với ôn tà là dương tà','D: Công hạ dành cho khí phần nhiệt kết trường phủ, không phải vệ phần biểu chứng']},
+
+  {bloom:'aD',level:'Trung bình',stem:'Theo Diệp Thiên Sĩ, khi Ôn bệnh kèm thấp tà ở trong, phải thêm loại thuốc nào và mục đích gì?',
+   opts:['Tân ôn mạnh để phá thấp bằng nhiệt, làm thấp hóa khí','Ngọt nhạt thấm thấp (Lô căn, Hoạt thạch) — thấm thấp xuống dưới, không cho thấp kết cấu với nhiệt','Khổ hàn thanh nhiệt mạnh — loại nhiệt sẽ kéo theo thấp tự giải','Phù chính bổ âm — tăng sức đề kháng để tự đẩy tà ra'],
+   ans:1,why:'"Ghé thấp thì gia loại Lô căn, Hoạt thạch, hoặc thấm thấp vào xương dưới nhiệt, không cho cấu kết với nhiệt, thế nhiệt tất bị cô lập." Thấp tính nhờn dính — phải thấm hóa, không thể dùng thuốc mạnh.',
+   wrongs:['A: Tân ôn gặp ôn tà gây hóa táo thêm, và nhiệt không thể phá thấp theo cách này','C: Khổ hàn ngưng trệ sẽ làm thấp bế lại, bệnh thêm nặng','D: Phù chính bổ âm không giải quyết thấp tà đang tồn tại']},
+
+  {bloom:'aD',level:'Nâng cao',stem:'Bệnh nhân cuối mùa hè, sốt khởi phát chậm không rõ, kèm nặng đầu, bụng đầy trướng, tiêu lỏng nước, ăn không tiêu, rêu lưỡi trắng nhờn dày. Thuộc loại Ôn bệnh nào?',
+   opts:['Phong ôn (ôn nhiệt loại) — thanh nhiệt khứ tà','Thấp ôn hoặc thử thấp (thấp nhiệt loại) — thanh nhiệt hóa thấp','Xuân ôn (phục tà loại) — thanh lý nhiệt','Thu táo (ôn nhiệt loại) — tân lương nhuận táo'],
+   ans:1,why:'"Thấp nhiệt loại: khởi bệnh chậm, thường kiêm cả hai loại chứng hậu thấp và nhiệt. Sơ khởi hiện tượng nhiệt không rõ lắm." Cuối hè + triệu chứng thấp nặng (đầy bụng, tiêu lỏng, rêu nhờn) → thấp ôn/thử thấp.',
+   wrongs:['A: Phong ôn: khởi cấp, nhiệt rõ, mùa xuân — không phù hợp','C: Xuân ôn phát mùa xuân, lý nhiệt ngay từ đầu','D: Thu táo mùa thu, biểu hiện khô ráo (mũi khô, ho khan) không có triệu chứng thấp']},
+
+  {bloom:'aD',level:'Nâng cao',stem:'Thi bài thuốc: khi ban đã xuất hiện mà nhiệt không giải, theo Diệp Thiên Sĩ nên dùng thuốc tính gì và bài thuốc nào (nặng)?',
+   opts:['Tân ôn giải biểu — để đẩy ban còn lại ra ngoài hoàn toàn','Cam hàn sinh tân dịch; nặng thì dùng như Ngọc nữ tiên (Thạch cao + Địa hoàng) để thanh nhiệt cứu âm','Khổ hàn tả hỏa — nhiệt còn vì hỏa quá mạnh','Bổ khí — vì chính khí suy không giải được nhiệt còn lại'],
+   ans:1,why:'"Ban xuất mà nhiệt không giải là tân dịch của vị kiệt, dùng thuốc cam hàn làm chủ, nặng thì như Ngọc nữ tiên." Cam hàn = ngọt mát để sinh tân dịch, thanh nhiệt đồng thời.',
+   wrongs:['A: Tân ôn gặp ôn tà nhiệt thịnh sẽ hóa táo thêm, làm bệnh nặng hơn','C: Khổ hàn tả hỏa (cần phân biệt với cam hàn); ban đã ra là do tân dịch kiệt, không phải hỏa quá mạnh đơn thuần','D: Đây là bệnh thực chứng, bổ khí không phù hợp']},
+
+  {bloom:'pT',level:'Nâng cao',stem:'Bệnh nhân sốt cao đột ngột 40,5°C, hôn mê, co giật toàn thân — không có giai đoạn sốt + ố hàn trước. Hiện tượng này gọi là gì và cơ chế?',
+   opts:['Thuận truyền vệ → khí → dinh → huyết tăng tốc','Nghịch truyền tâm bào: tà từ phế vệ thẳng vào tâm bào, bỏ qua khí phần, do tâm khí/tâm âm bất túc hoặc tà quá nặng','Truyền biến tam tiêu từ thượng nhanh xuống hạ','Phục tà bùng phát tại can thận gây co giật'],
+   ans:1,why:'"Ôn tà ở phế vệ... nếu tà không giải được kịp thời thì có thể từ phế hãm vào tâm bào, tạo thành bệnh tình ác hóa... gọi là nghịch truyền." Điều kiện: tâm khí/tâm âm bất túc hoặc tà nặng.',
+   wrongs:['A: Thuận truyền: vệ → dương minh khí phần từng bước, không gây hôn mê ngay','C: Tam tiêu là hệ thống vị trí tạng phủ khác với nghịch/thuận truyền','D: Co giật do can phong ở hạ tiêu là muộn, không giải thích được không có giai đoạn trước']},
+
+  {bloom:'pT',level:'Nâng cao',stem:'Tại sao khi Ôn bệnh mới phát KHÔNG được dùng tân ôn giải biểu (Ma hoàng, Quế chi) dù vẫn còn biểu chứng?',
+   opts:['Vì tân ôn gây ố hàn nhiều hơn, làm người bệnh không chịu được','Vì ôn tà là dương tà, tân ôn thêm nhiệt làm hóa táo tổn thương tân dịch; nếu ra mồ hôi nhiều thì âm lại càng hao','Vì Ma hoàng, Quế chi chỉ tác dụng trên kinh túc Thái dương, không tác dụng trên thủ Thái âm phế','Vì tân ôn ức chế vệ khí, làm tà dễ vào sâu hơn'],
+   ans:1,why:'"Ôn tà là dương, thì nên dùng phát tán nhẹ, nếu dùng thuốc mạnh làm ra mồ hôi nhiều thì sẽ tổn thương tân dịch, lại hóa táo thì thêm khó chữa." Nguyên tắc: tân lương nhẹ, không tân ôn.',
+   wrongs:['A: Không phải lý do, và không đúng về cơ chế','C: Tuy có lý trong YHCT nhưng không phải lý do chính — vấn đề là tính nhiệt của thuốc','D: Không đúng — tân ôn vẫn có tác dụng giải biểu nhưng sai tính chất với bệnh ôn nhiệt']},
+
+  {bloom:'pT',level:'Nâng cao',stem:'Vì sao bệnh trình Ôn bệnh thấp nhiệt (thấp ôn, thử thấp) kéo dài hơn Ôn bệnh ôn nhiệt thuần túy?',
+   opts:['Thấp nhiệt tấn công nhiều tạng phủ cùng lúc nên cần thời gian điều trị dài hơn','Thấp tà có tính nhờn dính ngưng trệ, khó giải; thấp bế nhiệt lại; phải hóa táo hóa hỏa mới có thể vào dinh huyết; nếu điều trị sai thấp càng bế','Bệnh nhân thấp nhiệt thường có chính khí suy hơn nên kháng tà kém','Thuốc thanh nhiệt hóa thấp ít hơn thuốc thanh nhiệt đơn thuần nên khó điều trị'],
+   ans:1,why:'"Đặc tính của thấp là nhờn, dính, ngưng, trệ, dây dưa khó giải, nếu chữa không đúng cách thì thấp bế nhiệt lại, bệnh sẽ khó khỏi." Đây là đặc tính cố hữu của thấp tà.',
+   wrongs:['A: Số tạng phủ không quyết định bệnh trình','C: Chính khí suy là yếu tố cá thể, không phải đặc điểm bệnh lý của thấp nhiệt','D: Không có bằng chứng về số lượng thuốc, và không phải lý do bệnh lý']},
+
+  {bloom:'pT',level:'Nâng cao',stem:'Bệnh nhân sốt cao 39,5°C ngay lập tức từ ngày đầu, không có giai đoạn sốt nhẹ + ố hàn trước đó. Điều này gợi ý loại Ôn bệnh nào theo phân loại phát bệnh?',
+   opts:['Tân cảm Ôn bệnh — biểu nhiệt điển hình với ố hàn rõ ràng','Phục tà Ôn bệnh — tà phục tàng trước, phát tại lý → lý nhiệt ngay từ đầu, không có biểu chứng','Ôn dịch — tính lưu hành cao, biểu hiện nặng nề hơn','Thấp nhiệt Ôn bệnh — thường khởi phát đột ngột kèm thấp'],
+   ans:1,why:'"Phục tà Ôn bệnh: sơ khởi triệu chứng chủ yếu là lý nhiệt. Nếu không do tân cảm kích phát thì không có biểu chứng như xuân ôn." Lý nhiệt ngay từ đầu không qua biểu chứng = phục tà.',
+   wrongs:['A: Tân cảm bắt đầu bằng biểu nhiệt (ố hàn + sốt nhẹ), không phải lý nhiệt ngay','C: Ôn dịch là về số lượng người mắc, không phải cách phân loại phát bệnh','D: Thấp nhiệt trái lại thường khởi phát CHẬM, nhiệt không rõ']},
+
+  {bloom:'pT',level:'Nâng cao',stem:'Xuân ôn là phục tà Ôn bệnh. Theo YHCT, tà phục tàng ở đâu và khi nào phát?',
+   opts:['Phong nhiệt tàng phục ở phế mùa xuân → phát ngay trong cùng mùa xuân','Hàn tà (hoặc ôn nhiệt tà) cảm thụ mùa đông → phục tàng trong cơ thể → đến mùa xuân mới phát','Thấp tà tàng phục ở tỳ vị suốt mùa hè → phát vào mùa xuân năm sau','Lệ khí đặc thù của mùa xuân phục trong cơ thể từ nhỏ → đến tuổi trưởng thành phát'],
+   ans:1,why:'"Đông thương vụ hàn, xuân tất ôn bệnh" (Nội kinh) — hàn tà/ôn nhiệt tà cảm thụ mùa đông, tàng phục trong cơ thể, xuân đến hóa nhiệt phát. Xuân ôn là ví dụ điển hình của phục tà.',
+   wrongs:['A: Tân cảm mới phát ngay; phục tà phải qua thời gian tàng phục','C: Sai mùa và tạng — thấp tàng ở tỳ không phải cơ chế phục tà cổ điển','D: Phục tà theo YHCT không liên quan tuổi phát bệnh']},
+
+  {bloom:'tH',level:'Nâng cao',stem:'Nhận định nào phản ánh đúng nhất mối quan hệ giữa Ôn bệnh học và Thương hàn luận về bản chất học thuật?',
+   opts:['Hai học thuyết độc lập, đối lập và phủ nhận nhau hoàn toàn — không thể dùng cùng nhau','Ôn bệnh học ra đời sau nên hoàn toàn thay thế Thương hàn luận trong thực hành lâm sàng','Ôn bệnh học kế thừa và phát triển từ Thương hàn luận — bổ sung phần thiếu hụt khi xử lý bệnh ôn nhiệt; cả hai đều có giá trị','Thương hàn luận chỉ còn giá trị lịch sử, Ôn bệnh học đã giải quyết được tất cả bệnh ngoại cảm'],
+   ans:2,why:'"Quan hệ về Ôn bệnh học và Thương hàn luận là mối quan hệ kế thừa và phát triển." Ôn bệnh bổ sung điểm thiếu của Thương hàn khi xử lý bệnh ôn nhiệt, không phủ nhận.',
+   wrongs:['A: Ngô Cúc Thông ghi nhận mối kế thừa — không đối lập','B: "Vận dụng phương pháp Thương hàn luận... thì rất hẹp" nhưng không có nghĩa thay thế hoàn toàn','D: Thương hàn luận vẫn dùng cho ngoại cảm phong hàn đến ngày nay']},
+
+  {bloom:'tH',level:'Nâng cao',stem:'Vương An Đạo (cuối đời Nguyên) được Ngô Cúc Thông đánh giá là "người đầu tiên thoát ly cái bóng của Thương hàn luận." Lý do cốt lõi là gì?',
+   opts:['Ông sáng lập vệ-khí-dinh-huyết biện chứng cho Ôn bệnh','Ông rạch ròi phân biệt Ôn bệnh và Thương hàn: "pháp trị nên chủ yếu thanh lý nhiệt, giải biểu chỉ là phụ"','Ông phát hiện đường lây qua mũi miệng của ôn tà','Ông tổng hợp Ôn bệnh học thành môn độc lập với tác phẩm Ôn bệnh điều biện'],
+   ans:1,why:'"Trong Y kinh tố hồi tập ông nói: Ôn bệnh không thể nhầm lẫn với Thương hàn... pháp trị nên chủ yếu là thanh lý nhiệt, giải biểu chỉ là phụ." Đây là bước đột phá căn bản về nguyên tắc điều trị.',
+   wrongs:['A: Vệ-khí-dinh-huyết do Diệp Thiên Sĩ (nhà Thanh) sáng lập, sau Vương An Đạo ~2 thế kỷ','C: Đường lây qua mũi miệng do Ngô Hựu Khả (đầu nhà Minh) đề xuất','D: Ôn bệnh điều biện do Ngô Cúc Thông (nhà Thanh) viết']},
+
+  {bloom:'tH',level:'Nâng cao',stem:'Lưu Hà Gian (Kim Nguyên) có câu truyền tụng "Nhiệt bệnh sùng Hà Gian." Đóng góp cốt lõi của ông là gì?',
+   opts:['Sáng lập tam tiêu biện chứng, phân ba mức thượng trung hạ tiêu','Đề xuất "lục khí đều từ hỏa biến hóa" và khai sáng phương pháp thanh nhiệt giải độc; phản đối tân ôn giải biểu','Phân biệt rõ tân cảm và phục tà trong Ôn bệnh học','Tổng hợp kinh nghiệm đời Thanh, bổ sung điểm thiếu của vệ-khí-dinh-huyết'],
+   ans:1,why:'"Lưu Hà Gian cho rằng lục khí đều từ hỏa khí biến hóa ra... từ đó ông sáng chế Song giải tán, Phòng phong thông thánh tán... là người đầu tiên bắt đầu khai sáng phương pháp thanh nhiệt giải độc."',
+   wrongs:['A: Tam tiêu biện chứng do Ngô Cúc Thông (nhà Thanh)','C: Phân biệt tân cảm/phục tà do Uông Thạch Sơn (nhà Minh)','D: Bổ sung vệ-khí-dinh-huyết là Ngô Cúc Thông, không phải Lưu Hà Gian']},
+
+  {bloom:'tH',level:'Nâng cao',stem:'Tính giai đoạn trong quá trình Ôn bệnh có ý nghĩa lâm sàng căn bản nhất là gì?',
+   opts:['Cho biết thời gian điều trị cần thiết và tiên lượng bệnh nhân cụ thể','Phản ánh quy luật: bệnh từ biểu vào lý, từ nhẹ đến nặng, từ thực sang hư — từ đó biện chứng đúng giai đoạn, luận trị chính xác','Giúp phân biệt bệnh nhiễm virus với bệnh vi khuẩn theo thời gian diễn tiến','Xác định mùa phát bệnh và chọn thuốc theo tứ thời'],
+   ans:1,why:'"Tính giai đoạn... là căn cứ phân biệt với nội thương tạp bệnh... phản ánh ôn tà từ biểu vào lý, bệnh tình từ nhẹ đến nặng, từ thực chuyển hư." Đây là nền tảng của biện chứng luận trị Ôn bệnh.',
+   wrongs:['A: Tiên lượng cá thể phụ thuộc nhiều yếu tố hơn chỉ tính giai đoạn','C: YHCT không phân biệt virus/vi khuẩn theo giai đoạn','D: Tứ thời là về tính thời tiết, không phải tính giai đoạn']},
+
+  {bloom:'tH',level:'Nâng cao',stem:'Tại sao không thể đồng nhất tất cả bệnh truyền nhiễm cấp tính là Ôn bệnh?',
+   opts:['Vì Ôn bệnh chỉ xảy ra ở người lớn, không xảy ra ở trẻ em','Vì một số bệnh truyền nhiễm (uốn ván, ký sinh trùng) không có đặc tính nhiệt của Ôn bệnh; một số Ôn bệnh (say nắng) lại không lây nhiễm','Vì bệnh truyền nhiễm do virus không nằm trong phạm vi YHCT','Vì Ôn bệnh chỉ bao gồm bệnh phát vào mùa xuân và hè'],
+   ans:1,why:'"Bệnh uốn ván và đại bộ phận bệnh ký sinh trùng hay có tính truyền nhiễm nhưng lại không có đặc tính của Ôn bệnh... Một số bệnh Ôn bệnh như say nắng tuy thuộc phạm vi Ôn bệnh nhưng lại không có tính lây truyền." Hai chiều đều không đồng nhất.',
+   wrongs:['A: Tuổi không phải tiêu chí phân loại Ôn bệnh','C: YHCT cổ đại không phân loại theo virus/vi khuẩn','D: Ôn bệnh xảy ra bốn mùa, không chỉ xuân hè']}
+];
+
+const FC = [
+  {tag:'Định nghĩa',q:'Ôn bệnh học nghiên cứu điều gì? Vị trí trong lâm sàng YHCT?',
+   a:'Nghiên cứu: quy luật phát sinh, phát triển của Ôn bệnh + phương pháp chẩn trị, dự phòng.\nVị trí: thuộc nội khoa lâm sàng. Biện chứng luận trị Ôn bệnh còn chỉ đạo các khoa khác khi có phát nhiệt.'},
+  {tag:'Định nghĩa',q:'2 hàm ý cốt lõi trong khái niệm Ôn bệnh là gì?',
+   a:'1. Nguyên nhân: ôn tà (ngoại cảm — loại trừ hoàn toàn nội thương)\n2. Cơ chế đặc trưng: nhiệt thiên thịnh → dễ hóa táo → tổn thương âm\n→ Quyết định thuộc tính ôn nhiệt của bệnh'},
+  {tag:'Định nghĩa',q:'Phân biệt Ôn bệnh và Ôn dịch. Trích dẫn Chu Dương Tuấn.',
+   a:'"Một người bị bệnh gọi là Ôn, một địa phương nhiều người bị bệnh giống nhau gọi là Dịch."\nÔn bệnh = lẻ tẻ từng người\nÔn dịch = hàng loạt người cùng mắc\nPhân biệt theo số người, không theo nguyên nhân hay mức độ'},
+  {tag:'Lịch sử',q:'Nội kinh đóng góp gì cho Ôn bệnh học? 3 điểm chính.',
+   a:'1. Lần đầu ghi bệnh danh "Ôn bệnh" (Lục nguyên chính kỷ đại luận)\n2. Cơ sở phục khí: "Đông thương vụ hàn, xuân tất ôn bệnh" (Tố Vấn)\n3. Nguyên tắc điều trị: "Nhiệt dâm vụ nội trị dĩ hàm hàn; phong dâm vụ nội trị dĩ tân lương"'},
+  {tag:'Lịch sử',q:'Lưu Hà Gian (Kim Nguyên) đóng góp gì? Tại sao hậu thế truyền câu "Nhiệt bệnh sùng Hà Gian"?',
+   a:'Đề xuất: "lục khí đều từ hỏa khí biến hóa → đều là nhiệt chứng"\nPhản đối tân ôn giải biểu cho nhiệt bệnh\nKhai sáng phương pháp THANH NHIỆT GIẢI ĐỘC\nSáng chế: Song giải tán, Phòng phong thông thánh tán\n→ Bước đột phá lớn đưa Ôn bệnh học ra khỏi bóng Thương hàn'},
+  {tag:'Lịch sử',q:'Vương An Đạo (cuối Nguyên) đóng góp gì khiến Ngô Cúc Thông gọi ông là người đầu tiên "thoát ly cái bóng Thương hàn luận"?',
+   a:'Rạch ròi phân biệt Ôn bệnh ≠ Thương hàn\nNguyên tắc điều trị: "pháp trị nên chủ yếu là THANH LÝ NHIỆT, giải biểu chỉ là phụ"\n→ Căn bản khác Thương hàn (tân ôn giải biểu là chính)'},
+  {tag:'Lịch sử',q:'Ngô Hựu Khả (cuối Minh — Ôn dịch luận) đóng góp gì? Vì sao tương đồng Germ Theory?',
+   a:'Ôn dịch do LỆ KHÍ (không phải phong hàn thử thấp thông thường)\nMỗi bệnh do lệ khí đặc thù riêng ≈ tính đặc hiệu mầm bệnh\nXâm nhập qua MŨI MIỆNG ≈ đường lây (droplet/fecal-oral)\n→ Germ Theory trước Pasteur ~200 năm'},
+  {tag:'Lịch sử',q:'Diệp Thiên Sĩ (nhà Thanh) đóng góp gì? Trích câu mở đầu Ôn nhiệt luận.',
+   a:'Câu mở đầu: "Ôn tà thượng thụ, thủ tiên phạm phế"\nSáng lập: VỆ-KHÍ-DINH-HUYẾT biện chứng\nPhát triển: tứ chẩn đặc trưng Ôn bệnh (biện lưỡi, nghiệm răng, biện ban chẩn)\nChế định pháp trị từng giai đoạn'},
+  {tag:'Lịch sử',q:'Ngô Cúc Thông (nhà Thanh — Ôn bệnh điều biện) đóng góp gì bổ sung cho Diệp Thiên Sĩ?',
+   a:'Sáng lập: TAM TIÊU biện chứng\nChế định: tam tiêu phân chứng trị liệu đại pháp\nBổ sung điểm thiếu hụt của vệ-khí-dinh-huyết (đặc biệt về vị trí tạng phủ)\nViết Ôn bệnh điều biện theo hình thức điều văn như Thương hàn luận'},
+  {tag:'Tính chất',q:'5 tính chất gây bệnh của ôn tà là gì?',
+   a:'1. Tính TRUYỀN NHIỄM — lây qua mũi miệng (thiên thụ) hoặc tiếp xúc (truyền nhiễm)\n2. Tính LƯU HÀNH — thiên hành / thời hành; đại dịch hoặc bạo phát\n3. Tính THỜI TIẾT — mỗi mùa có ôn tà đặc trưng\n4. Tính KHU VỰC — địa hình, khí hậu, thể chất dân cư\n5. Tính GIAI ĐOẠN — vệ→khí→dinh→huyết→hồi phục'},
+  {tag:'Tính chất',q:'Tính thời tiết của Ôn bệnh: mỗi mùa tương ứng tà khí nào?',
+   a:'Xuân: phong nhiệt → phong ôn\nHè (đầu): thử nhiệt → thử ôn\nGiữa hè/Hè-Thu: thử thấp → thử thấp bệnh\nCuối hè: thấp nhiệt → thấp ôn\nThu: táo nhiệt → thu táo\nĐông: ôn khí trái tiết → đông ôn'},
+  {tag:'Tính chất',q:'Tính giai đoạn của Ôn bệnh: 5 giai đoạn và đặc điểm tổng quát mỗi giai đoạn.',
+   a:'1. Vệ phần: tà ở ngoài biểu, bệnh nhẹ nhất\n2. Khí phần: lý nhiệt cực thịnh\n3. Dinh phần: dinh nhiệt âm thương\n4. Huyết phần: động huyết, hao huyết\n5. Hồi phục: chính khí hồi, tà lui\nQuy luật: biểu→lý, nông→sâu, thực→hư'},
+  {tag:'Lâm sàng',q:'4 biểu hiện lâm sàng đặc trưng của Ôn bệnh.',
+   a:'1. KHỞI BỆNH CẤP, TRUYỀN BIẾN NHANH\n2. PHÁT NHIỆT là chủ chứng (kèm: khát, tiểu đỏ, lưỡi đỏ, mạch sác)\n3. CHỨNG NGUY HIỂM: ban chẩn, động phong (co giật), động huyết (xuất huyết đa nơi), bế khiếu (hôn mê)\n4. HAO ÂM THƯƠNG TÂN (thượng/trung/hạ tiêu)'},
+  {tag:'Lâm sàng',q:'Hao âm thương tân ở 3 tiêu — biểu hiện từng mức.',
+   a:'THƯỢNG TIÊU (phế âm): mũi họng khô táo, ho khan không đàm\nTRUNG TIÊU (vị âm): miệng khát, ăn ít, lưỡi đỏ thẫm không rêu "quang bóng như gương"\nHẠ TIÊU (can thận âm): sốt thấp về đêm, lưỡng quyền đỏ, tay chân nóng, co giật, lưỡi khô đỏ teo'},
+  {tag:'Phân loại',q:'Ôn nhiệt (không thấp) vs Thấp nhiệt — so sánh đặc điểm và trị pháp.',
+   a:'ÔN NHIỆT: khởi cấp, nhiệt rõ, dễ thương âm, bệnh trình ngắn → Thanh nhiệt khứ tà\nVí dụ: phong ôn, xuân ôn, thử ôn, thu táo, ngược tật\nTHẤP NHIỆT: khởi chậm, sốt không rõ, bệnh trình dài, dai dẳng → Thanh nhiệt hóa thấp\nVí dụ: thấp ôn, thử thấp, phục thử, hoắc loạn'},
+  {tag:'Phân loại',q:'Tân cảm vs Phục tà Ôn bệnh — phân biệt cơ chế và khởi bệnh.',
+   a:'TÂN CẢM: cảm tà → lập tức phát → biểu nhiệt là chủ (ố hàn + sốt nhẹ)\nVí dụ: phong ôn, thu táo, đại đầu ôn\nPHỤC TÀ: cảm tà → phục tàng → phát muộn → lý nhiệt là chủ ngay (không ố hàn, sốt cao ngay)\nVí dụ: xuân ôn, phục thử'},
+  {tag:'Biện chứng',q:'Vệ phần — tam chứng nhận biết + pháp trị + ví dụ thuốc.',
+   a:'TAM CHỨNG: sốt + HƠI ố hàn + miệng HƠI khát\nKèm: ho, mạch phù sác, lưỡi đỏ nhẹ\nPHÁP TRỊ: Tân lương giải biểu\nVí dụ thuốc ghé phong: + Bạc hà, Ngưu bàng\nGhé thấp: + Lô căn, Hoạt thạch'},
+  {tag:'Biện chứng',q:'Khí phần — tam chứng nhận biết + pháp trị.',
+   a:'TAM CHỨNG: sốt cao + KHÔNG ố hàn + khát nhiều + rêu lưỡi vàng\nKèm: mạch hồng đại, tiểu đỏ\nPHÁP TRỊ: Thanh nhiệt (tả hỏa)\nNếu nhiệt kết trường phủ (đại tiện bí): thêm Công hạ\nDương minh khí phần (vị nhiệt): Bạch hổ thang'},
+  {tag:'Biện chứng',q:'Dinh phần — tứ chứng nhận biết + pháp trị.',
+   a:'TỨ CHỨNG: (1) sốt về đêm (ban ngày giảm) + (2) tâm phiền + (3) chiêm ngữ + (4) lưỡi đỏ thẫm không rêu\nPHÁP TRỊ: Thanh dinh thấu nhiệt\n= vừa thanh nhiệt ở dinh, vừa thấu nhiệt ra khí phần'},
+  {tag:'Biện chứng',q:'Huyết phần — tứ chứng nhận biết + pháp trị.',
+   a:'TỨ CHỨNG: (1) xuất huyết đa nơi + (2) ban chẩn đỏ thẫm/tím + (3) lưỡi tối thẫm + (4) sốt cao\nCơ chế: "nhiệt thịnh bức huyết"\nPHÁP TRỊ: Lương huyết tán ứ\n= làm mát huyết để cầm xuất huyết + tiêu ứ huyết đã hình thành'},
+  {tag:'Biện chứng',q:'Nghịch truyền tâm bào — cơ chế, điều kiện, biểu hiện lâm sàng.',
+   a:'CƠ CHẾ: tà từ phế vệ thẳng vào tâm bào (bỏ qua khí phần)\nĐIỀU KIỆN: tâm khí/tâm âm bất túc HOẶC tà khí quá nặng\nBIỂU HIỆN: hôn mê đột ngột, co giật, chiêm ngữ nặng, nội bế ngoại thoát\nPhân biệt: thuận truyền = vệ→dương minh khí phần từng bước'},
+  {tag:'So sánh',q:'Phong ôn vs Thương hàn — bảng so sánh 5 tiêu chí.',
+   a:'Nguyên nhân: Phong nhiệt vs Phong hàn\nĐường vào: Mũi miệng vs Da bì mao\nKinh bắt đầu: Thủ Thái âm Phế vs Túc Thái dương Bàng quang\nSốt: Ngay + không ố hàn mạnh + KHÁT vs Sốt + ố hàn NẶNG + không khát\nPháp trị: TÂN LƯƠNG giải biểu vs TÂN ÔN giải biểu'},
+  {tag:'So sánh',q:'Vì sao không dùng tân ôn giải biểu cho Ôn bệnh dù còn biểu chứng?',
+   a:'"Ôn tà là dương, dùng thuốc mạnh ra mồ hôi nhiều → tổn thương tân dịch → hóa táo → thêm khó chữa."\nNguyên tắc: Tân LƯƠNG nhẹ — thấu tà ra ngoài mà không làm hao thêm âm tân\nMa hoàng, Quế chi = tân ÔN = cấm kỵ trong Ôn bệnh'},
+  {tag:'Tam tiêu',q:'Tam tiêu biện chứng (Ngô Cúc Thông) — 3 tiêu, tạng phủ, truyền biến.',
+   a:'THƯỢNG TIÊU: Phế + Tâm bào → vệ phần, dinh phần nghịch truyền\nTRUNG TIÊU: Tỳ Vị + Đại trường → khí phần nặng\nHẠ TIÊU: Can + Thận → hạ tiêu âm thương\nTRUYỀN BIẾN: Thượng → Trung → Hạ (bệnh ngày càng sâu)'},
+  {tag:'Phạm vi',q:'Bệnh Tây y nào thuộc phạm vi Ôn bệnh? Cho 5 ví dụ.',
+   a:'Cúm, viêm phổi (phong ôn)\nViêm não Nhật Bản B (xuân ôn)\nSốt xuất huyết Dengue (ôn bệnh phát chẩn)\nSốt rét (ngược tật)\nThương hàn/Phó thương hàn, nhiễm khuẩn huyết (thấp ôn, thử thấp)\nSay nắng nặng (thử ôn)\n→ Đặc điểm chung: cấp tính + nhiệt + có/không lây'},
+  {tag:'Phạm vi',q:'Bệnh nào KHÔNG thuộc phạm vi Ôn bệnh dù là bệnh truyền nhiễm? Vì sao?',
+   a:'KHÔNG thuộc Ôn bệnh:\n• Uốn ván — có lây nhưng không có đặc tính nhiệt của Ôn bệnh\n• Bệnh ký sinh trùng (giun sán) — không đặc tính nhiệt\n• Sốt trong nội thương — không phải ngoại cảm ôn tà\nQuy tắc: phải có cả 2 tiêu chí: ngoại cảm + ôn tà gây nhiệt'},
+  {tag:'Phân loại',q:'Kể 5 cách đặt tên Ôn bệnh của cổ nhân.',
+   a:'1. Theo MÙA: xuân ôn, đông ôn\n2. Theo TỨ THỜI CHỦ KHÍ: phong ôn (xuân), thử ôn (hè), thấp ôn (giữa hè)\n3. Kết hợp MÙA + KHÍ: thu táo\n4. Theo TRIỆU CHỨNG ĐẶC TRƯNG: đại đầu ôn (đầu sưng to), lạn hầu sa (bạch hầu)\n5. Theo TÌNH HÌNH LƯU HÀNH: ôn dịch, thiên hành bệnh'},
+  {tag:'Lâm sàng',q:'Tam chứng giúp nhận biết Ôn bệnh lâm sàng (phân biệt với Thương hàn và nội thương)?',
+   a:'1. SỐT NGAY từ đầu (không phải sốt muộn như nội thương)\n2. KHÔNG ố hàn nặng hoặc chỉ ố hàn rất nhẹ (khác Thương hàn)\n3. KHÁT nước ngay từ đầu (hóa táo thương âm — khác Thương hàn không khát)\n+ Bệnh NGOẠI CẢM (không phải nội thương tạp bệnh)'},
+  {tag:'Lâm sàng',q:'Theo dõi ban chẩn trong Ôn bệnh: 6 đặc điểm cần quan sát.',
+   a:'1. HÌNH THÁI (ban hay chẩn, phẳng hay nổi)\n2. MÀU SẮC (hồng nhạt → đỏ → đỏ thẫm → tím — nặng dần)\n3. SỐ LƯỢNG\n4. PHÂN BỐ\n5. THỜI GIAN XUẤT HIỆN và THỨ TỰ\n6. THỜI GIAN DUY TRÌ\n→ "Ban ra được" = nhiệt có lối thoát; ban tím tối = huyết nhiệt cực nặng'},
+  {tag:'Biện chứng',q:'Bảng cheat-sheet: 4 phần vệ-khí-dinh-huyết — dấu hiệu phân biệt nhanh.',
+   a:'VỆ: sốt + HƠI ố hàn + HƠI khát → Tân lương giải biểu\nKHÍ: sốt cao + KHÔNG ố hàn + KHÁT nhiều + rêu vàng → Thanh nhiệt/Công hạ\nDINH: sốt ĐÊM + phiền + chiêm ngữ + lưỡi đỎ THẪM → Thanh dinh thấu nhiệt\nHUYẾT: XUẤT HUYẾT đa nơi + BAN + lưỡi TỐI THẪM → Lương huyết tán ứ'}
+];
+
+let answered = new Array(MCQ.length).fill(null);
+let fcSeen = new Set();
+
+function updateScore(){
+  const correct = answered.filter(a=>a===true).length;
+  const done = answered.filter(a=>a!==null).length;
+  document.getElementById('score-display').textContent = correct+'/'+MCQ.length;
+  document.getElementById('answered-count').textContent = done;
+  document.getElementById('prog-fill').style.width = (done/MCQ.length*100)+'%';
+}
+
+function buildMCQ(){
+  const list = document.getElementById('mcq-list');
+  list.innerHTML='';
+  MCQ.forEach((q,qi)=>{
+    const card=document.createElement('div');
+    card.className='q-card';
+    card.id='q'+qi;
+    const letters=['A','B','C','D'];
+    card.innerHTML=`
+      <div class="q-meta">
+        <span class="q-num">Câu ${qi+1}</span>
+        <span class="badge ${bloomClass[q.bloom]}">${BLOOM[q.bloom]}</span>
+        <span class="badge ${levelClass[q.level]}">${q.level}</span>
+      </div>
+      <div class="q-stem">${q.stem}</div>
+      <div class="options">
+        ${q.opts.map((o,oi)=>`<div class="opt" id="opt-${qi}-${oi}" onclick="pick(${qi},${oi})">
+          <div class="opt-letter">${letters[oi]}</div><span>${o}</span>
+        </div>`).join('')}
+      </div>
+      <div class="explain" id="exp-${qi}">
+        <div class="explain-correct"><strong>✓ ${letters[q.ans]}. ${q.opts[q.ans]}</strong></div>
+        <div class="explain-why">${q.why}</div>
+        <div class="explain-wrongs">${q.wrongs.map(w=>`<div class="explain-wrong-item">• ${w}</div>`).join('')}</div>
+      </div>`;
+    list.appendChild(card);
+  });
+}
+
+function pick(qi,oi){
+  if(answered[qi]!==null) return;
+  answered[qi] = oi===MCQ[qi].ans;
+  const letters=['A','B','C','D'];
+  MCQ[qi].opts.forEach((_,i)=>{
+    const el=document.getElementById('opt-'+qi+'-'+i);
+    el.classList.add('locked');
+    el.onclick=null;
+    if(i===MCQ[qi].ans) el.classList.add('correct');
+    else if(i===oi && oi!==MCQ[qi].ans) el.classList.add('wrong');
+  });
+  document.getElementById('exp-'+qi).classList.add('show');
+  document.getElementById('q'+qi).classList.add('answered');
+  updateScore();
+}
+
+function resetMCQ(){
+  answered=new Array(MCQ.length).fill(null);
+  updateScore();
+  buildMCQ();
+}
+
+function buildFC(){
+  const grid=document.getElementById('fc-grid');
+  grid.innerHTML='';
+  FC.forEach((f,i)=>{
+    const div=document.createElement('div');
+    div.className='fc';
+    div.innerHTML=`<div class="fc-inner">
+      <div class="fc-front">
+        <div>
+          <div class="fc-tag">${f.tag} · Thẻ ${i+1}</div>
+          <div class="fc-q">${f.q}</div>
+        </div>
+        <div class="fc-hint">↻ Nhấn để xem đáp án</div>
+      </div>
+      <div class="fc-back">
+        <div>
+          <div class="fc-tag">Đáp án · ${f.tag}</div>
+          <div class="fc-a">${f.a.replace(/\n/g,'<br>')}</div>
+        </div>
+        <div class="fc-num">Thẻ ${i+1}/30</div>
+      </div>
+    </div>`;
+    div.onclick=()=>{
+      div.classList.toggle('flipped');
+      if(div.classList.contains('flipped')){fcSeen.add(i);}
+      document.getElementById('fc-seen').textContent=fcSeen.size;
+    };
+    grid.appendChild(div);
+  });
+}
+
+function resetFC(){
+  fcSeen=new Set();
+  document.getElementById('fc-seen').textContent='0';
+  document.querySelectorAll('.fc').forEach(c=>c.classList.remove('flipped'));
+}
+
+function switchTab(id,btn){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('panel-'+id).classList.add('active');
+}
+
+buildMCQ();
+buildFC();
+updateScore();
+</script>
+</body>
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{TITLE}}</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#0f172a;color:#e2e8f0;min-height:100vh}
+header{background:linear-gradient(135deg,#1e3a5f,#0f2744);padding:20px 24px;border-bottom:2px solid #2563eb}
+header h1{font-size:1.5rem;color:#60a5fa;letter-spacing:.5px}
+header p{font-size:.85rem;color:#94a3b8;margin-top:4px}
+.tabs{display:flex;gap:0;background:#1e293b;border-bottom:2px solid #334155}
+.tab-btn{flex:1;padding:14px;cursor:pointer;background:none;border:none;color:#94a3b8;font-size:.95rem;font-weight:600;transition:all .2s;border-bottom:3px solid transparent}
+.tab-btn.active{color:#60a5fa;border-bottom-color:#2563eb;background:#0f172a}
+.tab-btn:hover:not(.active){background:#334155;color:#e2e8f0}
+.tab-content{display:none;padding:20px 16px}
+.tab-content.active{display:block}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.filter-btn{padding:6px 14px;border-radius:20px;border:1px solid #334155;background:#1e293b;color:#94a3b8;cursor:pointer;font-size:.8rem;transition:all .2s}
+.filter-btn.active{background:#2563eb;color:#fff;border-color:#2563eb}
+.stats-bar{display:flex;gap:16px;margin-bottom:16px;padding:10px 16px;background:#1e293b;border-radius:8px;font-size:.85rem;flex-wrap:wrap}
+.stat{color:#94a3b8}.stat span{color:#60a5fa;font-weight:700}
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.card-wrap{perspective:1000px;height:200px;cursor:pointer}
+.card-wrap.tall{height:280px}
+.card-inner{position:relative;width:100%;height:100%;transition:transform .55s;transform-style:preserve-3d}
+.card-wrap.flipped .card-inner{transform:rotateY(180deg)}
+.card-face{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:12px;padding:16px;display:flex;flex-direction:column;justify-content:space-between}
+.card-front{background:linear-gradient(135deg,#1e3a5f,#0f2744);border:1px solid #2563eb}
+.card-back{background:linear-gradient(135deg,#14532d,#052e16);border:1px solid #16a34a;transform:rotateY(180deg)}
+.card-topic{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;opacity:.85;margin-bottom:8px}
+.card-q{font-size:.9rem;line-height:1.5;flex:1;display:flex;align-items:center}
+.card-a{font-size:.82rem;line-height:1.55;flex:1;overflow-y:auto}
+.card-a ul{padding-left:16px}.card-a li{margin-bottom:3px}
+.card-hint{font-size:.7rem;color:#64748b;text-align:right}
+.mcq-progress{margin-bottom:20px}
+.progress-bar{height:6px;background:#1e293b;border-radius:3px;margin-top:6px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,#2563eb,#16a34a);transition:width .4s;border-radius:3px}
+.question-card{background:#1e293b;border-radius:12px;padding:20px;margin-bottom:16px;border:1px solid #334155;transition:border-color .3s}
+.question-card.correct{border-color:#16a34a;background:#0f2d1a}
+.question-card.wrong{border-color:#dc2626;background:#2d0f0f}
+.q-header{display:flex;gap:10px;align-items:flex-start;margin-bottom:12px;flex-wrap:wrap}
+.q-num{background:#2563eb;color:#fff;border-radius:6px;padding:2px 8px;font-size:.75rem;font-weight:700;white-space:nowrap}
+.q-topic-tag{background:#334155;color:#94a3b8;border-radius:6px;padding:2px 8px;font-size:.72rem}
+.q-bloom{background:#7c3aed33;color:#a78bfa;border-radius:6px;padding:2px 8px;font-size:.72rem}
+.q-stem{font-size:.92rem;line-height:1.6;color:#e2e8f0;margin-bottom:14px;font-weight:500}
+.q-scenario{background:#0f172a;border-left:3px solid #2563eb;padding:10px 14px;border-radius:4px;font-size:.85rem;color:#94a3b8;margin-bottom:12px;line-height:1.6}
+.options{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+.option{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border-radius:8px;border:1px solid #334155;cursor:pointer;transition:all .2s;background:#0f172a}
+.option:hover:not(.disabled){background:#1e3a5f;border-color:#2563eb}
+.option.selected{background:#1e3a5f;border-color:#2563eb}
+.option.correct-ans{background:#052e16;border-color:#16a34a;color:#4ade80}
+.option.wrong-ans{background:#2d0f0f;border-color:#dc2626;color:#f87171}
+.option.disabled{cursor:default}
+.opt-label{font-weight:700;min-width:20px;color:#60a5fa}
+.opt-text{font-size:.88rem;line-height:1.5}
+.reveal-btn{padding:8px 18px;background:#2563eb;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:.85rem;font-weight:600;transition:all .2s}
+.reveal-btn:hover{background:#1d4ed8}
+.reveal-btn:disabled{background:#334155;color:#64748b;cursor:default}
+.explanation{display:none;margin-top:12px;padding:14px;background:#0f172a;border-radius:8px;border:1px solid #334155}
+.explanation.show{display:block}
+.exp-correct{color:#4ade80;font-weight:700;margin-bottom:8px}
+.exp-text{font-size:.85rem;line-height:1.6;color:#cbd5e1}
+.exp-key{font-size:.82rem;color:#fbbf24;margin-top:8px;font-style:italic}
+.hidden{display:none!important}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:#0f172a}::-webkit-scrollbar-thumb{background:#334155;border-radius:3px}
+.reset-btn{padding:8px 18px;background:#334155;color:#e2e8f0;border:none;border-radius:8px;cursor:pointer;font-size:.85rem;transition:all .2s;margin-left:auto;display:block}
+.reset-btn:hover{background:#475569}
+.empty{color:#64748b;font-size:.9rem;padding:20px;text-align:center}
+</style>
+</head>
+<body>
+<header>
+  <h1>{{HEADER_H1}}</h1>
+  <p>{{HEADER_P}}</p>
+</header>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('fc')" id="tab-btn-fc">🃏 Flashcard</button>
+  <button class="tab-btn" onclick="switchTab('mcq')" id="tab-btn-mcq">📝 MCQ (SBA)</button>
+</div>
+
+<div id="tab-fc" class="tab-content active">
+  <div class="stats-bar">
+    <div class="stat">Tổng: <span id="fc-total">0</span> thẻ</div>
+    <div class="stat">Đã lật: <span id="fc-flipped">0</span></div>
+    <div class="stat">Chủ đề: <span id="fc-topics">0</span></div>
+  </div>
+  <div class="filters" id="fc-filters"></div>
+  <div class="cards-grid" id="fc-grid"></div>
+</div>
+
+<div id="tab-mcq" class="tab-content">
+  <div class="mcq-progress">
+    <div class="stats-bar">
+      <div class="stat">Đã trả lời: <span id="mcq-answered">0</span>/<span id="mcq-total">0</span></div>
+      <div class="stat">Đúng: <span id="mcq-correct-count">0</span></div>
+      <div class="stat">Tỉ lệ: <span id="mcq-pct">0%</span></div>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="mcq-bar" style="width:0%"></div></div>
+  </div>
+  <div class="filters" id="mcq-filters"></div>
+  <button class="reset-btn" onclick="resetMCQ()">↺ Reset bài</button>
+  <div id="mcq-list" style="margin-top:16px"></div>
+</div>
+
+<script>
+const TOPICS = {{TOPICS_JSON}};
+const COLORS = {{COLORS_JSON}};
+const flashcards = {{FLASHCARDS_JSON}};
+const mcqs = {{MCQS_JSON}};
+
+let fcFlipped = 0;
+let mcqAnswered = 0, mcqCorrect = 0;
+let fcFilter = 'Tất cả', mcqFilter = 'Tất cả';
+
+function initCounts(){
+  document.getElementById('tab-btn-fc').textContent = '🃏 ' + flashcards.length + ' Flashcard';
+  document.getElementById('tab-btn-mcq').textContent = '📝 ' + mcqs.length + ' MCQ (SBA)';
+  document.getElementById('fc-total').textContent = flashcards.length;
+  document.getElementById('fc-topics').textContent = TOPICS.length;
+  document.getElementById('mcq-total').textContent = mcqs.length;
+}
+
+function switchTab(t){
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active',i===(t==='fc'?0:1)));
+  document.getElementById('tab-fc').classList.toggle('active',t==='fc');
+  document.getElementById('tab-mcq').classList.toggle('active',t==='mcq');
+}
+
+function buildFilters(containerId, filterVar, onChangeFn){
+  const c = document.getElementById(containerId);
+  const cats = ['Tất cả',...TOPICS];
+  c.innerHTML = '';
+  cats.forEach(function(t){
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn' + (t === filterVar ? ' active' : '');
+    btn.textContent = t;
+    btn.onclick = function(){ onChangeFn(t); };
+    c.appendChild(btn);
+  });
+}
+
+function renderFlashcards(){ buildFilters('fc-filters', fcFilter, fcSetFilter); renderFCGrid(); }
+function fcSetFilter(t){ fcFilter = t; buildFilters('fc-filters', fcFilter, fcSetFilter); renderFCGrid(); }
+
+function renderFCGrid(){
+  const grid = document.getElementById('fc-grid');
+  const cards = fcFilter === 'Tất cả' ? flashcards : flashcards.filter(function(c){ return c.topic === fcFilter; });
+  if(!cards.length){ grid.innerHTML = '<div class="empty">Không có thẻ nào.</div>'; return; }
+  grid.innerHTML = cards.map(function(c){
+    return '<div class="card-wrap' + (c.tall ? ' tall' : '') + '" id="fc-' + c.id + '" onclick="flipCard(' + c.id + ')">' +
+      '<div class="card-inner">' +
+        '<div class="card-face card-front">' +
+          '<div class="card-topic" style="color:' + (COLORS[c.topic]||'#60a5fa') + '">' + c.topic + ' • Thẻ ' + c.id + '</div>' +
+          '<div class="card-q">' + c.q + '</div>' +
+          '<div class="card-hint">Chạm để xem đáp án →</div>' +
+        '</div>' +
+        '<div class="card-face card-back">' +
+          '<div class="card-topic" style="color:' + (COLORS[c.topic]||'#16a34a') + '">' + c.topic + ' • Đáp án</div>' +
+          '<div class="card-a">' + c.a + '</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function flipCard(id){
+  const el = document.getElementById('fc-'+id);
+  const wasFlipped = el.classList.contains('flipped');
+  el.classList.toggle('flipped');
+  if(!wasFlipped){ fcFlipped++; document.getElementById('fc-flipped').textContent = fcFlipped; }
+}
+
+function renderMCQ(){ buildFilters('mcq-filters', mcqFilter, mcqSetFilter); renderMCQList(); }
+function mcqSetFilter(t){ mcqFilter = t; buildFilters('mcq-filters', mcqFilter, mcqSetFilter); renderMCQList(); }
+
+function renderMCQList(){
+  const list = document.getElementById('mcq-list');
+  const qs = mcqFilter === 'Tất cả' ? mcqs : mcqs.filter(function(q){ return q.topic === mcqFilter; });
+  if(!qs.length){ list.innerHTML = '<div class="empty">Không có câu hỏi nào.</div>'; return; }
+  list.innerHTML = qs.map(function(q){
+    const scenario = q.scenario ? '<div class="q-scenario">📋 ' + q.scenario + '</div>' : '';
+    const opts = q.opts.map(function(o, i){
+      return '<div class="option" id="opt-' + q.id + '-' + i + '" onclick="selectOpt(' + q.id + ',' + i + ')">' +
+        '<span class="opt-label">' + String.fromCharCode(65+i) + '.</span>' +
+        '<span class="opt-text">' + o.substring(3) + '</span>' +
+      '</div>';
+    }).join('');
+    return '<div class="question-card" id="qcard-' + q.id + '">' +
+      '<div class="q-header">' +
+        '<span class="q-num">Câu ' + q.id + '</span>' +
+        '<span class="q-topic-tag" style="border-left:3px solid ' + (COLORS[q.topic]||'#334155') + ';padding-left:8px">' + q.topic + '</span>' +
+        (q.bloom ? '<span class="q-bloom">' + q.bloom + '</span>' : '') +
+      '</div>' +
+      scenario +
+      '<div class="q-stem">' + q.stem + '</div>' +
+      '<div class="options">' + opts + '</div>' +
+      '<button class="reveal-btn" id="rbtn-' + q.id + '" onclick="revealAns(' + q.id + ')">Xem đáp án</button>' +
+      '<div class="explanation" id="exp-' + q.id + '">' +
+        '<div class="exp-correct">✓ Đáp án đúng: ' + q.ans + '</div>' +
+        '<div class="exp-text">' + q.exp + '</div>' +
+        (q.key ? '<div class="exp-key">💡 Key: ' + q.key + '</div>' : '') +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function selectOpt(qid, optIdx){
+  const q = mcqs.find(function(x){ return x.id === qid; });
+  const card = document.getElementById('qcard-'+qid);
+  if(card.classList.contains('correct') || card.classList.contains('wrong')) return;
+  q.opts.forEach(function(_,i){ document.getElementById('opt-'+qid+'-'+i).classList.remove('selected'); });
+  document.getElementById('opt-'+qid+'-'+optIdx).classList.add('selected');
+}
+
+function revealAns(qid){
+  const q = mcqs.find(function(x){ return x.id === qid; });
+  const card = document.getElementById('qcard-'+qid);
+  if(card.classList.contains('correct') || card.classList.contains('wrong')) return;
+  const correctIdx = q.ans.charCodeAt(0) - 65;
+  const selectedEl = document.querySelector('#qcard-'+qid+' .option.selected');
+  let selectedIdx = -1;
+  if(selectedEl) selectedIdx = parseInt(selectedEl.id.split('-')[2]);
+  q.opts.forEach(function(_,i){
+    const opt = document.getElementById('opt-'+qid+'-'+i);
+    opt.classList.add('disabled');
+    if(i === correctIdx) opt.classList.add('correct-ans');
+    else if(i === selectedIdx) opt.classList.add('wrong-ans');
+  });
+  const isCorrect = selectedIdx === correctIdx;
+  card.classList.add(isCorrect ? 'correct' : 'wrong');
+  document.getElementById('exp-'+qid).classList.add('show');
+  document.getElementById('rbtn-'+qid).disabled = true;
+  mcqAnswered++;
+  if(isCorrect) mcqCorrect++;
+  updateMCQStats();
+}
+
+function updateMCQStats(){
+  const total = mcqs.length;
+  document.getElementById('mcq-answered').textContent = mcqAnswered;
+  document.getElementById('mcq-correct-count').textContent = mcqCorrect;
+  const pct = mcqAnswered > 0 ? Math.round(mcqCorrect / mcqAnswered * 100) : 0;
+  document.getElementById('mcq-pct').textContent = pct + '%';
+  document.getElementById('mcq-bar').style.width = (total > 0 ? mcqAnswered / total * 100 : 0) + '%';
+}
+
+function resetMCQ(){ mcqAnswered = 0; mcqCorrect = 0; updateMCQStats(); renderMCQList(); }
+
+initCounts();
+renderFlashcards();
+renderMCQ();
+</script>
+</body>
+</html>

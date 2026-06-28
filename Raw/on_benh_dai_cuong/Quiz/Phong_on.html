@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>50 Câu Hỏi MCQ — Phong Ôn</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f4f8;color:#2d3748;line-height:1.6;font-size:14px}
+.container{max-width:900px;margin:0 auto;padding:20px}
+header{background:linear-gradient(135deg,#1e3a5f,#1a6fa8);color:white;border-radius:12px;padding:24px 28px;margin-bottom:20px}
+header h1{font-size:22px;font-weight:700;margin-bottom:6px}
+header p{font-size:13px;opacity:0.85}
+.stats-bar{display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+.stat-box{background:white;border-radius:8px;padding:12px 18px;flex:1;min-width:130px;box-shadow:0 1px 4px rgba(0,0,0,.08);text-align:center}
+.stat-box .num{font-size:24px;font-weight:700;color:#1a6fa8}
+.stat-box .lbl{font-size:11px;color:#718096}
+.filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.filter-btn{padding:6px 14px;border-radius:20px;border:2px solid #ddd;background:white;cursor:pointer;font-size:12px;font-weight:600;transition:all .2s}
+.filter-btn.active{border-color:#1a6fa8;background:#1a6fa8;color:white}
+.cat-section{margin-bottom:28px}
+.cat-header{padding:10px 16px;border-radius:8px 8px 0 0;font-size:13px;font-weight:700;color:white;display:flex;align-items:center;gap:8px}
+.q-card{background:white;border-left:4px solid #ddd;margin-bottom:10px;border-radius:0 8px 8px 0;box-shadow:0 1px 3px rgba(0,0,0,.07);overflow:hidden;transition:box-shadow .2s}
+.q-card:hover{box-shadow:0 3px 10px rgba(0,0,0,.12)}
+.q-card:last-child{border-radius:0 8px 8px 8px}
+.q-head{padding:14px 18px;cursor:pointer;display:flex;align-items:flex-start;gap:12px}
+.q-num{background:#1a6fa8;color:white;border-radius:6px;padding:2px 8px;font-size:11px;font-weight:700;min-width:36px;text-align:center;margin-top:2px;flex-shrink:0}
+.q-stem{font-size:13.5px;font-weight:600;flex:1}
+.q-meta{display:flex;gap:6px;align-items:center;flex-shrink:0}
+.lvl-tag{padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700}
+.lvl-0{background:#d5f5e3;color:#1a5c33}
+.lvl-1{background:#d6eaf8;color:#1a4f78}
+.lvl-2{background:#fadbd8;color:#922b21}
+.q-opts{padding:0 18px 14px 18px}
+.opt-row{display:flex;align-items:flex-start;gap:10px;padding:7px 10px;border-radius:6px;margin-bottom:4px;cursor:pointer;border:1.5px solid transparent;transition:all .18s}
+.opt-row:hover{background:#f7fafc;border-color:#bee3f8}
+.opt-row.selected{background:#ebf8ff;border-color:#3182ce}
+.opt-row.correct{background:#f0fff4;border-color:#38a169}
+.opt-row.wrong{background:#fff5f5;border-color:#fc8181}
+.opt-letter{background:#edf2f7;border-radius:4px;padding:1px 7px;font-size:11px;font-weight:700;flex-shrink:0;margin-top:2px}
+.opt-text{font-size:13px}
+.reveal-btn{margin:0 18px 14px 18px;padding:8px 18px;background:#2b6cb0;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12.5px;font-weight:600;transition:background .2s}
+.reveal-btn:hover{background:#2c5282}
+.reveal-btn:disabled{background:#a0aec0;cursor:default}
+.answer-block{margin:0 18px 16px 18px;background:#f8fafc;border-radius:8px;padding:14px 16px;border:1px solid #e2e8f0;display:none}
+.answer-block.show{display:block}
+.ans-correct{display:flex;align-items:center;gap:8px;color:#276749;font-weight:700;font-size:13.5px;margin-bottom:10px}
+.ans-correct span{background:#c6f6d5;padding:2px 10px;border-radius:6px}
+.exp-title{font-size:12px;font-weight:700;color:#4a5568;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px}
+.exp-text{font-size:12.5px;color:#4a5568;margin-bottom:10px;line-height:1.55}
+.wrong-reasons{font-size:12px;color:#718096}
+.wrong-reasons div{margin-bottom:4px;padding-left:10px;border-left:2px solid #fed7d7}
+.wrong-reasons b{color:#c53030}
+.progress-bar-wrap{background:#e2e8f0;border-radius:4px;height:6px;margin-top:10px}
+.progress-bar{background:#1a6fa8;height:6px;border-radius:4px;transition:width .4s}
+.source-note{font-size:11px;color:#a0aec0;text-align:center;margin-top:30px;padding-bottom:20px}
+/* Category colors */
+.cat-c1{background:#ca6f1e}
+.cat-c2{background:#1a6fa8}
+.cat-c3{background:#1e8449}
+.cat-c4{background:#17a589}
+.cat-c5{background:#c0392b}
+.cat-c6{background:#6c3483}
+.cat-c7{background:#2c3e50}
+.border-c1{border-left-color:#ca6f1e}
+.border-c2{border-left-color:#1a6fa8}
+.border-c3{border-left-color:#1e8449}
+.border-c4{border-left-color:#17a589}
+.border-c5{border-left-color:#c0392b}
+.border-c6{border-left-color:#6c3483}
+.border-c7{border-left-color:#2c3e50}
+@media print{.reveal-btn,.filter-bar{display:none}.answer-block{display:block!important}.q-card{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>📋 50 Câu Hỏi MCQ — PHONG ÔN</h1>
+  <p>Nguồn: Giáo trình Ôn Bệnh — TS.BS. Lê Minh Hoàng · BS.CKII. Lê Thị Ngoan &nbsp;|&nbsp; Dạng: Single Best Answer (SBA)</p>
+  <div class="progress-bar-wrap" style="margin-top:12px">
+    <div class="progress-bar" id="prog" style="width:0%"></div>
+  </div>
+</header>
+
+<div class="stats-bar">
+  <div class="stat-box"><div class="num" id="s-total">50</div><div class="lbl">Tổng câu</div></div>
+  <div class="stat-box"><div class="num" id="s-done" style="color:#1e8449">0</div><div class="lbl">Đã trả lời</div></div>
+  <div class="stat-box"><div class="num" id="s-correct" style="color:#276749">0</div><div class="lbl">Đúng</div></div>
+  <div class="stat-box"><div class="num" id="s-pct" style="color:#c0392b">0%</div><div class="lbl">Tỉ lệ đúng</div></div>
+</div>
+
+<div class="filter-bar" id="filterBar"></div>
+<div id="quiz"></div>
+
+<div class="source-note">Mục đích giáo dục — Áp dụng lâm sàng cần cá thể hóa từng bệnh nhân</div>
+</div>
+
+<script>
+const CATS = [
+  {id:"c1", name:"Khái niệm & Định nghĩa", icon:"📖"},
+  {id:"c2", name:"Nguyên nhân & Cơ chế", icon:"🔬"},
+  {id:"c3", name:"Biểu hiện Lâm sàng", icon:"🩺"},
+  {id:"c4", name:"Chẩn đoán xác định", icon:"✅"},
+  {id:"c5", name:"Chẩn đoán Phân biệt", icon:"⚖️"},
+  {id:"c6", name:"Biện chứng Luận trị", icon:"💊"},
+  {id:"c7", name:"Ứng dụng Lâm sàng", icon:"🏥"}
+];
+
+const QS = [
+// ===== CAT 1: KHÁI NIỆM & ĐỊNH NGHĨA =====
+{id:1,cat:"c1",lvl:0,
+ q:"Định nghĩa phong ôn theo Giáo trình Ôn Bệnh là:",
+ A:"Bệnh do cảm thụ phong hàn bệnh tà gây ra, biểu hiện sơ khởi là phế vệ biểu hàn chứng",
+ B:"Bệnh do cảm thụ phong nhiệt bệnh tà gây ra, biểu hiện sơ khởi đặc trưng là phế vệ biểu nhiệt chứng",
+ C:"Bệnh phục tà nội phát do cảm thụ ôn nhiệt từ mùa đông, biểu hiện sơ khởi là lý nhiệt tích thịnh",
+ D:"Bệnh do cảm thụ phong tà ở mùa xuân, biểu hiện sơ khởi là thái dương biểu chứng",
+ ans:"B",
+ exp:"Phong ôn là do cảm thụ phong nhiệt bệnh tà gây ra một loại ngoại cảm nhiệt bệnh cấp tính, biểu hiện đặc trưng sơ khởi là phế vệ biểu nhiệt chứng (sốt, ố phong, ho, miệng hơi khát, rêu mỏng trắng, mạch phù sắc).",
+ wa:"Phong ôn do phong nhiệt không phải phong hàn; biểu hiện là biểu nhiệt không phải biểu hàn.",
+ wc:"Đây là mô tả của xuân ôn (phục tà nội phát), không phải phong ôn.",
+ wd:"Thái dương biểu chứng là của thương hàn học, không phải phong ôn."
+},
+{id:2,cat:"c1",lvl:0,
+ q:"Bệnh danh \"phong ôn\" lần đầu tiên xuất hiện trong tác phẩm nào?",
+ A:"Ôn nhiệt luận của Diệp Thiên Sĩ",
+ B:"Ôn bệnh điều biện của Ngô Cúc Thông",
+ C:"Thương hàn luận của Trương Trọng Cảnh",
+ D:"Bị cấp thiên kim yếu phương của Tôn Tư Hạo",
+ ans:"C",
+ exp:"Bệnh danh phong ôn lần đầu xuất hiện trong Thương hàn luận: \"Thái dương bệnh, phát nhiệt nhi khát, bất ố hàn giả, vi ôn bệnh, nhược phát hạn dĩ, thân chước nhiệt giả, danh viết phong ôn.\"",
+ wa:"Diệp Thiên Sĩ phát triển và xác lập lý luận hoàn chỉnh, không phải người đặt tên đầu tiên.",
+ wb:"Ngô Cúc Thông hệ thống hóa ở đời Thanh, sau Thương hàn luận nhiều thế kỷ.",
+ wd:"Tôn Tư Hạo (đời Đường) dùng Uy nhuy thang điều trị theo Thương hàn luận, không đặt bệnh danh."
+},
+{id:3,cat:"c1",lvl:0,
+ q:"Nhà y học nào đã nêu rõ ràng: \"Phong ôn giả, xuân nguyệt thụ phong, kỳ khí dĩ ôn... Phế vị tối cao, tà tất tiên thương\"?",
+ A:"Trương Trọng Cảnh (nhà Hán)",
+ B:"Bàng An Thường (nhà Tống)",
+ C:"Diệp Thiên Sĩ (nhà Thanh)",
+ D:"Ngô Cúc Thông (nhà Thanh)",
+ ans:"C",
+ exp:"Diệp Thiên Sĩ đã xác lập rõ ràng đặc điểm bệnh cơ, xu hướng truyền biến và nguyên tắc điều trị phong ôn, sáng lập ra vệ khí dinh huyết biện chứng.",
+ wa:"Trương Trọng Cảnh chỉ đặt bệnh danh, chưa có lý luận biện chứng đầy đủ.",
+ wb:"Bàng An Thường có cách nhìn riêng nhưng không xác lập lý luận hoàn chỉnh như Diệp Thiên Sĩ.",
+ wd:"Ngô Cúc Thông viết Ôn bệnh điều biện, hệ thống tam tiêu biện chứng, trên cơ sở lý luận của Diệp Thiên Sĩ."
+},
+{id:4,cat:"c1",lvl:0,
+ q:"Phong ôn hay gặp nhất vào mùa nào trong năm?",
+ A:"Xuân và hạ",
+ B:"Xuân và đông",
+ C:"Hạ và thu",
+ D:"Thu và đông",
+ ans:"B",
+ exp:"\"Bệnh có thể phát sinh trong bốn mùa nhưng gặp nhiều nhất ở mùa xuân và đông.\" Mùa xuân khí hậu ấm áp nhiều gió, mùa đông có thể phong nhiệt khi khí hậu phản thường (lẽ ra lạnh mà lại ấm).",
+ wa:"Hạ thuộc thấp nhiệt, không phải mùa chính của phong ôn.",
+ wc:"Hạ và thu không liên quan đến phong nhiệt bệnh tà đặc trưng.",
+ wd:"Thu thuộc táo khí, đông chỉ gặp khi khí hậu phản thường."
+},
+{id:5,cat:"c1",lvl:0,
+ q:"Phong ôn phát sinh vào mùa đông được gọi là gì?",
+ A:"Xuân ôn",
+ B:"Phục nhiệt",
+ C:"Đông ôn",
+ D:"Hàn ôn",
+ ans:"C",
+ exp:"Theo giáo trình: \"Bệnh có thể phát sinh trong bốn mùa nhưng gặp nhiều nhất ở mùa xuân và đông. Phát sinh vào mùa đông gọi là đông ôn.\"",
+ wa:"Xuân ôn là bệnh riêng biệt do phục tà, không phải phong ôn mùa đông.",
+ wb:"Phục nhiệt không phải thuật ngữ chỉ phong ôn mùa đông.",
+ wd:"Hàn ôn không phải thuật ngữ trong giáo trình này."
+},
+// ===== CAT 2: NGUYÊN NHÂN & CƠ CHẾ =====
+{id:6,cat:"c2",lvl:0,
+ q:"Nguyên nhân chính gây bệnh phong ôn là:",
+ A:"Thấp nhiệt bệnh tà xâm nhập từ bên ngoài",
+ B:"Cảm thụ phong nhiệt bệnh tà vào mùa xuân hoặc đông",
+ C:"Hàn tà từ mùa đông tàng phục, xuân hạ phát bệnh",
+ D:"Táo nhiệt bệnh tà xâm nhập vào phế vệ",
+ ans:"B",
+ exp:"Nguyên nhân phong ôn là cảm thụ phong nhiệt bệnh tà vào mùa xuân hoặc đông. Diệp Thiên Sĩ: \"Xuân nguyệt thụ phong, kỳ khí dĩ ôn.\" Ngô Cúc Thông: \"Đầu xuân dương khí thăng phát, phong thường kèm ôn gây bệnh.\"",
+ wa:"Thấp nhiệt gây thấp ôn, không phải phong ôn.",
+ wc:"Đây là cơ chế của xuân ôn (phục tà), không phải phong ôn.",
+ wd:"Táo nhiệt gây thu táo, không phải phong ôn."
+},
+{id:7,cat:"c2",lvl:1,
+ q:"Phong nhiệt bệnh tà thuộc loại tà khí nào và có đặc tính gì?",
+ A:"Âm tà, tính thu liễm, hạ giáng",
+ B:"Dương tà, tính thăng tán sơ tiết",
+ C:"Âm tà, tính ngưng trệ, tắc nghẽn",
+ D:"Dương tà, tính trầm giáng, xâm nội",
+ ans:"B",
+ exp:"\"Phong nhiệt bệnh tà thuộc dương tà tính chất của dạng này là thăng tán sơ tiết.\" Đặc tính dương tà thăng tán giải thích tại sao tà xâm nhập qua mũi miệng và phạm phế trước tiên.",
+ wa:"Âm tà có đặc tính thu liễm như hàn tà, ngược với phong nhiệt.",
+ wc:"Ngưng trệ là đặc tính của hàn tà và thấp tà, không phải phong nhiệt.",
+ wd:"Phong nhiệt là dương tà thăng tán, không phải trầm giáng."
+},
+{id:8,cat:"c2",lvl:0,
+ q:"Phong nhiệt bệnh tà xâm nhập cơ thể chủ yếu qua đường nào?",
+ A:"Da và cơ nhục",
+ B:"Mũi và miệng",
+ C:"Tai và mắt",
+ D:"Hậu môn và tiết niệu",
+ ans:"B",
+ exp:"\"Phong nhiệt bệnh tà thuộc dương tà... đa số xâm nhập cơ thể bằng đường mũi miệng.\" Đây phù hợp với hiểu biết Tây y về đường lây lan của vi khuẩn/virus gây viêm hô hấp.",
+ wa:"Da và cơ nhục là đường xâm nhập của phong hàn trong thương hàn học.",
+ wc:"Tai mắt không phải đường xâm nhập chính của phong nhiệt.",
+ wd:"Hậu môn là đường xâm nhập của thấp tà, không phải phong nhiệt."
+},
+{id:9,cat:"c2",lvl:1,
+ q:"Tại sao phế là cơ quan đầu tiên bị phong nhiệt xâm hại trong phong ôn?",
+ A:"Phế nằm ở vị trí thấp nhất, tiếp xúc tà khí dễ nhất",
+ B:"Phế nằm ở vị trí cao nhất, phong nhiệt là dương tà thăng tán nên ưu tiên xâm phạm",
+ C:"Phế trực tiếp thông với đại trường nên dễ bị nhiễm trước",
+ D:"Phế chủ huyết, dễ tích nhiệt trong huyết phần",
+ ans:"B",
+ exp:"\"Phế nằm ở vị trí cao nhất cho nên là cơ quan đầu tiên bị phong nhiệt xâm hại.\" Diệp Thiên Sĩ: \"Phế vị tối cao, tà tất tiên thương.\" Phong nhiệt dương tà thăng tán nên xâm phạm tạng cao nhất.",
+ wa:"Phế ở vị trí cao nhất, không phải thấp nhất.",
+ wc:"Phế-đại trường biểu lý nhau nhưng không phải lý do phế bị xâm trước.",
+ wd:"Phế chủ khí thuộc vệ, không chủ huyết (tâm chủ huyết)."
+},
+{id:10,cat:"c2",lvl:1,
+ q:"Trong phong ôn sơ khởi, cơ chế nào giải thích triệu chứng sốt và ố phong hàn?",
+ A:"Dinh khí bị uất trở, không thông với vệ khí",
+ B:"Phong nhiệt phạm phế vệ, vệ khí bị uất mất khả năng đóng mở bì mao",
+ C:"Thận dương hư suy không ôn húc được bì mao",
+ D:"Tỳ khí hư nhược không vận hóa thủy thấp",
+ ans:"B",
+ exp:"\"Phong nhiệt bệnh tà xâm tập phế vệ, vệ khí bị uất mất khả năng đóng mở nên xuất hiện sốt, hơi ố phong hàn, không mồ hôi hoặc ít.\" Phế chủ khí thuộc vệ, hợp với bì mao.",
+ wa:"Dinh khí bị uất là cơ chế của dinh phần, không phải vệ phần sơ khởi.",
+ wc:"Thận dương hư gây sợ lạnh kinh niên, không phải ố phong trong bệnh cấp tính.",
+ wd:"Tỳ khí hư gây phù, tiêu chảy, không liên quan sốt ố phong."
+},
+{id:11,cat:"c2",lvl:1,
+ q:"Cơ chế gây ho trong phong ôn sơ khởi là:",
+ A:"Tỳ hư thấp đàm ứ trệ phế lạc",
+ B:"Thận bất nạp khí, khí nghịch lên gây ho",
+ C:"Phong nhiệt phạm phế, vệ khí bị uất → phế mất đi sự tuyên thông vốn có",
+ D:"Can khí phạm phế, phế khí bị uất nghịch",
+ ans:"C",
+ exp:"\"Phế chủ khí thuộc vệ, mũi lại thông với phế nên khi vệ khí bị uất dẫn đến phế mất đi sự tuyên thông vốn có nên xuất hiện ho.\"",
+ wa:"Đàm thấp ho là ho mạn tính, khác với ho cấp tính do phong nhiệt.",
+ wb:"Thận bất nạp khí gây khó thở mạn, không phải ho cấp.",
+ wd:"Can khí phạm phế (mộc phạm kim) gây ho do can uất, không phải do ngoại cảm."
+},
+{id:12,cat:"c2",lvl:1,
+ q:"Từ giai đoạn phế vệ, nếu tà không giải, bệnh phong ôn có thể truyền theo những hướng nào?",
+ A:"Thuận truyền vào thận và nghịch truyền vào can",
+ B:"Thuận truyền vào vị (khí phần) và nghịch truyền vào tâm bào",
+ C:"Thuận truyền vào tỳ và nghịch truyền vào can",
+ D:"Thuận truyền vào tiểu trường và nghịch truyền vào não",
+ ans:"B",
+ exp:"\"Nếu tà tại phế vệ không giải thì sẽ phát triển theo hai chiều hướng. Thứ nhất là thuận truyền vào vị, thứ hai là nghịch truyền vào tâm bào.\"",
+ wa:"Thận và can không phải đích truyền biến trực tiếp của phong ôn.",
+ wc:"Tỳ không phải đích thuận truyền của phong ôn.",
+ wd:"Tiểu trường và não không phải thuật ngữ biện chứng ôn bệnh cổ điển."
+},
+{id:13,cat:"c2",lvl:2,
+ q:"Điểm đặc trưng để nhận biết nghịch truyền tâm bào trong phong ôn là gì?",
+ A:"Sốt cao + táo bón + bụng cứng đau",
+ B:"Sốt cao + thần chí dị thường (thần hôn, chiêm ngữ, hoặc hôn mê bất ngữ)",
+ C:"Sốt cao + ho suyễn + đàm vàng đặc",
+ D:"Sốt thấp + mồ hôi nhiều + tứ chi mềm yếu",
+ ans:"B",
+ exp:"\"Triệu chứng dứt khoát phải có thần chí dị thường.\" Diệp Thiên Sĩ: \"Ôn tà thượng thụ, thủ tiên phạm phế, nghịch truyền tâm bào.\" Tâm bào nhiệt thịnh → nhiễu loạn thần minh.",
+ wa:"Táo bón + bụng cứng là nhiệt kết trường phủ (thuận truyền dương minh), không phải nghịch truyền.",
+ wc:"Ho suyễn + đàm vàng là khí phần phế, không phải tâm bào.",
+ wd:"Sốt thấp + mồ hôi + tứ chi mềm gợi ý âm hư, không phải nghịch truyền tâm bào."
+},
+// ===== CAT 3: BIỂU HIỆN LÂM SÀNG =====
+{id:14,cat:"c3",lvl:0,
+ q:"Bộ tứ triệu chứng đặc trưng của phong ôn giai đoạn sơ khởi (phế vệ biểu nhiệt) là:",
+ A:"Sốt cao, không ố hàn, phiền khát dữ, mạch trầm hồng",
+ B:"Sốt, ố phong hàn nhẹ, ho, miệng hơi khát",
+ C:"Sốt cao, không mồ hôi, đau đầu nhiều, mạch phù khẩn",
+ D:"Sốt, ố hàn nặng hơn sốt, không khát, mạch phù hoãn",
+ ans:"B",
+ exp:"\"Triệu chứng chủ yếu lúc mới phát là: Sốt. Hơi ố phong hàn. Ho. Miệng hơi khát. Rêu mỏng trắng. Mạch phù sắc.\" Đây là phế vệ biểu nhiệt chứng điển hình.",
+ wa:"Không ố hàn và phiền khát dữ gợi ý lý nhiệt tích thịnh (xuân ôn), không phải sơ khởi phế vệ.",
+ wc:"Không mồ hôi + đau đầu nhiều + mạch phù khẩn là biểu hàn thực (thương hàn), không phải phong ôn.",
+ wd:"Ố hàn nặng hơn sốt + không khát + mạch phù hoãn là phong hàn cảm mạo, không phải phong ôn."
+},
+{id:15,cat:"c3",lvl:0,
+ q:"Mạch đặc trưng trong giai đoạn phế vệ của phong ôn là:",
+ A:"Mạch trầm trì",
+ B:"Mạch phù sắc",
+ C:"Mạch hồng đại",
+ D:"Mạch tế vi",
+ ans:"B",
+ exp:"\"Mạch phù sắc đều là triệu chứng của phong nhiệt tập biểu.\" Phù = biểu chứng, sắc = nhiệt chứng. Kết hợp phù sắc xác nhận phong nhiệt tại biểu.",
+ wa:"Trầm trì gợi ý lý hàn hoặc âm hư, ngược với phong nhiệt.",
+ wc:"Hồng đại là tứ đại chứng dương minh (giai đoạn sau), không phải sơ khởi.",
+ wd:"Tế vi gợi ý hư chứng hoặc tâm dương hư suy, không phải giai đoạn sơ khởi."
+},
+{id:16,cat:"c3",lvl:0,
+ q:"Đặc điểm lưỡi đặc trưng trong phong ôn sơ khởi (tà tập phế vệ) là:",
+ A:"Lưỡi nhợt, rêu trắng mà trơn",
+ B:"Lưỡi đỏ thâm, rêu đen khô nứt",
+ C:"Lưỡi đỏ hai rìa và chót lưỡi, rêu mỏng trắng",
+ D:"Lưỡi đỏ toàn bộ, rêu vàng dày",
+ ans:"C",
+ exp:"\"Rêu lưỡi mỏng trắng, đỏ hai rìa và chót lưỡi, mạch phù sác đều là triệu chứng của phong nhiệt tập biểu.\" Lưỡi đỏ rìa là dấu hiệu nhiệt bắt đầu; rêu mỏng trắng vì bệnh còn nông.",
+ wa:"Lưỡi nhợt rêu trắng trơn là biểu hàn hoặc dương hư, không phải phong nhiệt.",
+ wb:"Lưỡi đỏ thâm rêu đen khô là lý nhiệt tích thịnh giai đoạn nặng, không phải sơ khởi.",
+ wd:"Lưỡi đỏ toàn bộ rêu vàng dày là giai đoạn khí phần hoặc dinh phần, không phải phế vệ sơ khởi."
+},
+{id:17,cat:"c3",lvl:1,
+ q:"Tại sao ở giai đoạn sơ khởi phong ôn, miệng chỉ \"hơi khát\" chứ không khát dữ?",
+ A:"Bệnh mới khởi, phong nhiệt chỉ bắt đầu thương tân dịch, chưa tổn thương nhiều",
+ B:"Bệnh nhân uống đủ nước nên không khát nhiều",
+ C:"Vị khí còn mạnh bảo vệ được tân dịch hoàn toàn",
+ D:"Phế âm còn đủ để cân bằng tất cả nhiệt tà",
+ ans:"A",
+ exp:"\"Phong nhiệt chi tà dễ thương tân dịch, nhưng bệnh chỉ là khởi đầu nên tân dịch ít bị tổn thương cho nên miệng chỉ hơi khát.\" Đây là điểm phân biệt với xuân ôn (phiền khát dữ ngay từ đầu).",
+ wb:"Lý do bệnh lý không phải sinh hoạt bệnh nhân.",
+ wc:"Vị khí còn mạnh là đúng nhưng không phải lý do chính xác từ giáo trình.",
+ wd:"Phế âm không liên quan trực tiếp đến mức độ khát."
+},
+{id:18,cat:"c3",lvl:1,
+ q:"\"Tứ đại chủ chứng\" của dương minh nhiệt tích gồm:",
+ A:"Sốt cao + ố hàn + ho + khát nhẹ",
+ B:"Tráng nhiệt + hạn đại xuất + phiền khát muốn uống lạnh + mạch đại",
+ C:"Triều nhiệt + táo bón + bụng đau + chiêm ngữ",
+ D:"Sốt + thần hôn + tứ chi lạnh + mạch tế",
+ ans:"B",
+ exp:"\"Tráng nhiệt, hạn đại xuất, khát muốn uống, mạch đại, là 'Tứ đại chủ chứng' của dương minh nhiệt tích và cũng là điểm chính trong biện chứng.\" Dùng Bạch hồ thang.",
+ wa:"Ố hàn và khát nhẹ là phế vệ sơ khởi, không phải dương minh.",
+ wc:"Triều nhiệt + táo bón là nhiệt kết trường phủ (dùng Thừa khí thang), một thể riêng trong dương minh.",
+ wd:"Thần hôn + tứ chi lạnh là nghịch truyền tâm bào, không phải dương minh nhiệt tích."
+},
+{id:19,cat:"c3",lvl:2,
+ q:"Hiện tượng \"nhiệt thâm quyết diệp thâm\" trong phong ôn có nghĩa là:",
+ A:"Sốt càng cao thì mồ hôi càng ra nhiều",
+ B:"Tà nhiệt truyền vào càng sâu thì tứ chi quyết lạnh càng nhiều",
+ C:"Nhiệt độ càng cao thì co giật càng mạnh",
+ D:"Bệnh kéo dài thì âm dịch càng hao tổn",
+ ans:"B",
+ exp:"\"Trường hợp nhiệt bề nóng thì tứ chi lạnh ít, nhiệt bề càng nặng thì tứ chi lạnh càng nhiều điều này gọi là 'nhiệt thâm quyết diệp thâm, nhiệt vi quyết diệp vi'.\" Đây là điểm phân biệt với hàn quyết.",
+ wa:"Mồ hôi ra nhiều là do lý nhiệt bức tân, không phải ý nghĩa câu này.",
+ wc:"Co giật liên quan đến nhiệt cực động phong, khác với quyết lạnh tứ chi.",
+ wd:"Âm dịch hao tổn theo thời gian là đúng nhưng không phải ý nghĩa câu trích dẫn này."
+},
+{id:20,cat:"c3",lvl:1,
+ q:"Đặc điểm lưỡi đặc trưng khi nghịch truyền tâm bào trong phong ôn là:",
+ A:"Lưỡi nhợt, rêu trắng mỏng",
+ B:"Lưỡi run, màu lưỡi tươi bóng",
+ C:"Lưỡi vàng rêu nê (dày nhớt)",
+ D:"Lưỡi đỏ thâm, rêu xám đen nứt",
+ ans:"B",
+ exp:"\"Tâm bào nhiệt thịnh dinh âm hao tổn, miếu khiếu của tâm không thông nên lưỡi run nhưng màu sắc lưỡi vẫn tươi bóng.\" Lưỡi run (run giật) do tâm bào nhiệt, màu tươi bóng vì dinh âm chưa kiệt.",
+ wa:"Lưỡi nhợt rêu trắng là hư hàn, ngược với tâm bào nhiệt thịnh.",
+ wc:"Lưỡi vàng rêu nê là thấp nhiệt, không phải tâm bào.",
+ wd:"Rêu xám đen nứt là lý nhiệt tân dịch cực kiệt (nhiệt kết trường phủ nặng), không phải đặc trưng tâm bào."
+},
+// ===== CAT 4: CHẨN ĐOÁN XÁC ĐỊNH =====
+{id:21,cat:"c4",lvl:1,
+ q:"Căn cứ chính để chẩn đoán xác định phong ôn gồm các yếu tố nào?",
+ A:"Mùa thu-đông, sốt cao đột ngột, lý nhiệt tích thịnh từ đầu",
+ B:"Xuất hiện mùa đông-xuân; sơ khởi phế vệ biểu nhiệt chứng; truyền biến từ phế vệ → khí phần/tâm bào; hậu kỳ phế vị âm thương",
+ C:"Bốn mùa, sốt nhẹ, ít truyền biến, khỏi trong vài ngày",
+ D:"Mùa xuân-hạ, phục tà nội phát, lý nhiệt ngay từ đầu, hậu kỳ can thận âm thương",
+ ans:"B",
+ exp:"Ba căn cứ chẩn đoán: (1) Mùa đông xuân; (2) Phát bệnh nhanh, sơ khởi phế vệ biểu nhiệt; (3) Truyền biến từ phế vệ → khí phần → dương minh hoặc nghịch truyền tâm bào; hậu kỳ phế vị âm thương.",
+ wa:"Mùa thu và lý nhiệt ngay từ đầu không đúng với phong ôn.",
+ wc:"Ít truyền biến và khỏi nhanh là cảm mạo, không phải phong ôn.",
+ wd:"Phục tà nội phát và can thận âm thương hậu kỳ là của xuân ôn, không phải phong ôn."
+},
+{id:22,cat:"c4",lvl:1,
+ q:"Khi xét nghiệm máu trong phong ôn thấy bạch cầu tăng cao, trung tính tăng nhiều, điều này gợi ý:",
+ A:"Nhiễm virus",
+ B:"Dị ứng",
+ C:"Nhiễm vi khuẩn",
+ D:"Ký sinh trùng xâm nhập",
+ ans:"C",
+ exp:"\"Viêm phổi thùy... bạch cầu tăng cao, tế bào trung tính tăng nhiều thì thuộc viêm do vi trùng.\" Ngược lại, nếu bình thường hoặc hơi thấp có thể là virus gây nhiễm.",
+ wa:"Virus thường gây BC bình thường hoặc hơi thấp (lymphocyte tăng).",
+ wb:"Dị ứng gây tăng bạch cầu ái toan, không phải trung tính.",
+ wd:"Ký sinh trùng gây tăng bạch cầu ái toan là chủ yếu."
+},
+{id:23,cat:"c4",lvl:1,
+ q:"Đặc điểm hậu kỳ đặc thù của phong ôn, phân biệt với các ôn bệnh khác là:",
+ A:"Can thận âm thương",
+ B:"Tỳ vị khí hư",
+ C:"Phế vị âm thương",
+ D:"Thận dương hư suy",
+ ans:"C",
+ exp:"\"Bệnh vào giai đoạn sau sẽ xuất hiện triệu chứng phế vị âm thương.\" Phong ôn do phong nhiệt thương phế trực tiếp nên hậu kỳ ảnh hưởng phế vị âm. Khác xuân ôn hậu kỳ can thận âm thương.",
+ wa:"Can thận âm thương là hậu kỳ của xuân ôn, không phải phong ôn.",
+ wb:"Tỳ vị khí hư không phải đặc trưng hậu kỳ phong ôn.",
+ wd:"Thận dương hư không liên quan đến bệnh cơ phong ôn."
+},
+// ===== CAT 5: CHẨN ĐOÁN PHÂN BIỆT =====
+{id:24,cat:"c5",lvl:1,
+ q:"Điểm phân biệt cơ bản nhất giữa phong ôn và xuân ôn về cơ chế sinh bệnh là:",
+ A:"Phong ôn do phục tà; xuân ôn do tân cảm",
+ B:"Phong ôn do tân cảm phong nhiệt (cảm ngay phát ngay); xuân ôn do phục tà nội phát (đông tàng xuân phát)",
+ C:"Cả hai đều do tân cảm phong nhiệt, chỉ khác mùa phát bệnh",
+ D:"Phong ôn do hàn tà hóa nhiệt; xuân ôn do nhiệt tà trực tiếp xâm nhập",
+ ans:"B",
+ exp:"Phong ôn = tân cảm (cảm tà lập tức phát bệnh). Xuân ôn = phục tà (\"Đông thương ư hàn, xuân tất ôn bệnh\" — Nội Kinh). Sự khác biệt này dẫn đến khác nhau về sơ khởi bệnh vị và mức độ nặng nhẹ.",
+ wa:"Ngược lại: phong ôn tân cảm, xuân ôn phục tà.",
+ wc:"Chúng khác nhau ở cơ chế tân cảm/phục tà, không chỉ khác mùa.",
+ wd:"Phong ôn không phải do hàn tà hóa nhiệt."
+},
+{id:25,cat:"c5",lvl:1,
+ q:"Điểm khác biệt sơ khởi bệnh vị giữa phong ôn và xuân ôn là:",
+ A:"Phong ôn: sơ khởi dinh phần; xuân ôn: sơ khởi phế vệ",
+ B:"Phong ôn: sơ khởi phế vệ; xuân ôn: sơ khởi khí phần hoặc dinh phần",
+ C:"Cả hai đều sơ khởi phế vệ, chỉ khác mức độ nặng nhẹ triệu chứng",
+ D:"Phong ôn: sơ khởi can thận; xuân ôn: sơ khởi tâm bào",
+ ans:"B",
+ exp:"\"Phong ôn sơ khởi bệnh vị tại phế vệ.\" \"Xuân ôn bệnh vị sơ khởi tại khí phần hoặc dinh phần bệnh tình nặng biến hóa nhanh.\" Sự khác biệt này có ý nghĩa điều trị lớn.",
+ wa:"Ngược lại: phong ôn sơ khởi phế vệ, không phải dinh phần.",
+ wc:"Sơ khởi bệnh vị khác nhau rõ ràng, không chỉ khác mức độ.",
+ wd:"Can thận và tâm bào không phải bệnh vị sơ khởi của cả hai bệnh."
+},
+{id:26,cat:"c5",lvl:1,
+ q:"Điểm khác biệt hậu kỳ giữa phong ôn và xuân ôn là:",
+ A:"Phong ôn hậu kỳ can thận âm thương; xuân ôn hậu kỳ phế vị âm thương",
+ B:"Phong ôn hậu kỳ phế vị âm thương; xuân ôn hậu kỳ can thận âm thương",
+ C:"Cả hai đều là phế vị âm thương ở hậu kỳ",
+ D:"Phong ôn không có giai đoạn hậu kỳ rõ ràng",
+ ans:"B",
+ exp:"Phong ôn trung tâm bệnh tại phế → hậu kỳ phế vị âm thương, dùng Sa sâm mạch đông thang. Xuân ôn do phục tà sâu, hậu kỳ can thận âm thương (hạ tiêu), dùng Phục mạch thang.",
+ wa:"Ngược lại: phong ôn là phế vị, xuân ôn là can thận.",
+ wc:"Chúng khác nhau rõ ràng ở hậu kỳ.",
+ wd:"Phong ôn có giai đoạn hậu kỳ phế vị âm thương rõ ràng."
+},
+{id:27,cat:"c5",lvl:1,
+ q:"Điểm phân biệt chính giữa cảm mạo phong nhiệt và phong ôn là:",
+ A:"Cảm mạo phong nhiệt không có sốt",
+ B:"Cảm mạo phong nhiệt bệnh nhẹ hơn, ngắn ngày, ít truyền biến; phong ôn bệnh nặng hơn, truyền biến nhanh",
+ C:"Cảm mạo phong nhiệt có thể nghịch truyền tâm bào; phong ôn thì không",
+ D:"Cảm mạo phong nhiệt chỉ gặp mùa hè; phong ôn chỉ gặp mùa đông",
+ ans:"B",
+ exp:"\"Phong nhiệt cảm mạo bệnh thường nhẹ nông... triệu chứng toàn thân không nặng... bệnh trình tương đối ngắn vài ngày là khỏi, rất ít truyền biến.\" Cả hai có cùng nguyên nhân phong nhiệt và sơ khởi phế vệ nhưng khác mức độ.",
+ wa:"Cảm mạo phong nhiệt vẫn có sốt.",
+ wc:"Nghịch truyền tâm bào là đặc điểm của phong ôn nặng, không phải cảm mạo.",
+ wd:"Cả hai bệnh gặp ở mùa xuân-đông, không giới hạn như vậy."
+},
+{id:28,cat:"c5",lvl:1,
+ q:"Triệu chứng nào đặc hiệu của sởi (ma chẩn) giúp phân biệt với phong ôn?",
+ A:"Sốt cao kèm táo bón ngay từ đầu",
+ B:"Mắt đỏ, sợ ánh sáng, chảy nhiều nước mắt nước mũi; phát ban sau 2-3 ngày",
+ C:"Thần hôn ngay từ đầu bệnh",
+ D:"Khạc ra mủ máu tanh hôi",
+ ans:"B",
+ exp:"\"Sởi xuất hiện hai mắt đỏ, sợ ánh sáng, hơi phù mi mắt, chảy nhiều nước mắt nước mũi, nghẹt mũi. Sau khi phát bệnh 2-3 ngày xuất hiện chẩn.\" Sởi thường gặp ở trẻ nhỏ, dễ thành dịch.",
+ wa:"Táo bón ngay từ đầu là dương minh, không phải đặc trưng của sởi.",
+ wc:"Thần hôn ngay từ đầu gợi ý xuân ôn hoặc phong ôn nặng, không phải đặc trưng sởi.",
+ wd:"Khạc mủ máu tanh là đặc trưng phế ung, không phải sởi."
+},
+{id:29,cat:"c5",lvl:2,
+ q:"Điểm phân biệt phế ung với phong ôn trong tuần đầu tiên là:",
+ A:"Phế ung không có sốt; phong ôn luôn có sốt",
+ B:"Phế ung có hàn chiến, sốt liên tục không hạ; phong ôn sốt thường lui khi điều trị đúng",
+ C:"Phế ung chỉ có ho khan ngay từ đầu; phong ôn có đàm vàng đặc ngay từ đầu",
+ D:"Phế ung chỉ gặp ở người già; phong ôn gặp mọi lứa tuổi",
+ ans:"B",
+ exp:"\"Phế ung sơ khởi xuất hiện triệu chứng rất rõ ràng thường là hàn chiến, sốt liên tục không hạ.\" Giáo trình cũng lưu ý: nếu sau 1 tuần sốt không lui hoặc lui rồi lại sốt cao → nghĩ đến phế ung.",
+ wa:"Cả hai đều có sốt, đây không phải điểm phân biệt.",
+ wc:"Phế ung sơ khởi giống phong ôn, khó phân biệt — không phải ho khan thuần túy ngay.",
+ wd:"Phế ung không giới hạn tuổi."
+},
+{id:30,cat:"c5",lvl:1,
+ q:"Đặc điểm nào của phế ung rõ nhất ở tuần thứ hai, dễ phân biệt với phong ôn?",
+ A:"Sốt tăng cao đột biến",
+ B:"Xuất hiện mạch tế sắc",
+ C:"Ho khạc rất nhiều mủ máu, đàm tanh hôi; X-quang có bóng mờ tăng mật độ hoặc có mủ",
+ D:"Thần chí dị thường, chiêm ngữ",
+ ans:"C",
+ exp:"\"Thường ở tuần lễ thứ hai ho khạc rất nhiều mủ máu đàm tanh hôi. X quang xuất hiện bóng mờ tăng mật độ hoặc có nước.\" Đây là đặc trưng không thể nhầm của phế ung (áp xe phổi).",
+ wa:"Sốt có thể thay đổi nhưng không phải điểm phân biệt đặc hiệu nhất.",
+ wb:"Mạch tế sắc không đặc hiệu cho phế ung.",
+ wd:"Thần chí dị thường là nghịch truyền tâm bào của phong ôn nặng, không phải phế ung."
+},
+// ===== CAT 6: BIỆN CHỨNG LUẬN TRỊ =====
+{id:31,cat:"c6",lvl:1,
+ q:"Pháp trị và phương điều trị phù hợp nhất khi phong ôn sơ khởi, tà tập phế vệ, thiên về vệ biểu (sốt, ố hàn, không mồ hôi) là:",
+ A:"Ma hạnh thạch cam thang — Thanh nhiệt tuyên phế bình suyễn",
+ B:"Ngân kiều tán — Tân lương giải biểu, tuyên phế tiết nhiệt",
+ C:"Tang cúc ẩm — Tân lương kinh tể, tuyên phế chỉ khái",
+ D:"Bạch hồ thang — Thanh nhiệt bảo tân",
+ ans:"B",
+ exp:"Ngân kiều tán là \"tân lương bình tể\" cho phong nhiệt khách biểu, có Kinh giới + Đậu xỉ tăng sức tán biểu, phù hợp khi còn ố hàn, không mồ hôi. Tang cúc ẩm thiên về ho là chính.",
+ wa:"Ma hạnh thạch cam thang dùng cho tà nhiệt ứng phế khí phần, không phải phế vệ sơ khởi.",
+ wc:"Tang cúc ẩm dùng khi ho là chủ chứng, không thiên về giải biểu vệ biểu.",
+ wd:"Bạch hồ thang dùng cho dương minh nhiệt tích, không phải phế vệ sơ khởi."
+},
+{id:32,cat:"c6",lvl:1,
+ q:"Khi phong ôn sơ khởi với triệu chứng chủ yếu là ho (phế khí thất tuyên là chính), phương điều trị được ưu tiên là:",
+ A:"Ngân kiều tán",
+ B:"Ma hạnh thạch cam thang",
+ C:"Tang cúc ẩm",
+ D:"Điều vị thừa khí thang",
+ ans:"C",
+ exp:"\"Nếu phong nhiệt bệnh tà xâm phạm phế vệ, chủ yếu chỉ xuất hiện ho thì có thể dùng tân lương kinh tể như Tang cúc ẩm điều trị.\" Tang cúc ẩm tuyên phế chỉ khái, sức giải biểu nhẹ hơn Ngân kiều tán.",
+ wa:"Ngân kiều tán mạnh hơn ở giải biểu, phù hợp khi vệ biểu chứng rõ hơn.",
+ wb:"Ma hạnh thạch cam thang dùng cho khí phần, tà nhiệt ứng phế.",
+ wd:"Điều vị thừa khí thang dùng cho nhiệt kết trường phủ."
+},
+{id:33,cat:"c6",lvl:2,
+ q:"Điểm khác biệt chính giữa Ngân kiều tán và Tang cúc ẩm trong điều trị phong ôn là:",
+ A:"Ngân kiều tán thanh nhiệt mạnh hơn nhiều",
+ B:"Ngân kiều tán có Kinh giới và Đậu xỉ (tân tán thấu biểu) nên sức giải biểu mạnh hơn Tang cúc ẩm (tân lương kinh tể, liều nhỏ)",
+ C:"Tang cúc ẩm dùng cho khí phần; Ngân kiều tán chỉ dùng phế vệ",
+ D:"Ngân kiều tán dùng cả sơ khởi lẫn giai đoạn dương minh",
+ ans:"B",
+ exp:"\"Trong Ngân kiều tán có Kinh giới, Đậu xị là thuốc tân tán thấu biểu nên sức giải biểu mạnh. Tang cúc âm lại dùng đa số là thuốc tân lương mà liều lượng nhỏ nên khả năng giải biểu không bằng Ngân kiều tán.\"",
+ wa:"Cả hai đều có tác dụng thanh nhiệt tương đương, điểm khác là sức giải biểu.",
+ wc:"Tang cúc ẩm vẫn dùng cho phế vệ, chỉ thiên về ho.",
+ wd:"Ngân kiều tán không dùng giai đoạn dương minh."
+},
+{id:34,cat:"c6",lvl:1,
+ q:"Chỉ định Ma hạnh thạch cam thang trong phong ôn là thể bệnh nào?",
+ A:"Tà tập phế vệ sơ khởi (sốt + ố phong + mạch phù sắc)",
+ B:"Tà nhiệt ứng phế - khí phần (sốt + mồ hôi + phiền khát + ho suyễn + đàm vàng + ngực đau)",
+ C:"Nhiệt hãm tâm bào (thần hôn, chiêm ngữ)",
+ D:"Phế vị âm thương hậu kỳ",
+ ans:"B",
+ exp:"Ma hạnh thạch cam thang điều trị tà nhiệt ứng phế khí phần: \"sốt, ra mồ hôi, phiền khát, ho suyễn, khạc đàm vàng đặc hoặc có máu, ngực đau tức, lưỡi đỏ rêu vàng, mạch hoạt sắc.\" Pháp: Thanh nhiệt tuyên phế bình suyễn.",
+ wa:"Sơ khởi phế vệ dùng Ngân kiều tán hoặc Tang cúc ẩm.",
+ wc:"Tâm bào dùng Thanh dinh thang + Tam Bảo.",
+ wd:"Phế vị âm thương dùng Sa sâm mạch đông thang."
+},
+{id:35,cat:"c6",lvl:2,
+ q:"Trong Ma hạnh thạch cam thang, tỷ lệ Thạch cao so với Ma hoàng và ý nghĩa phối ngũ là:",
+ A:"Bằng nhau (1:1) — để cân bằng tuyên phế và thanh nhiệt",
+ B:"Ma hoàng nhiều hơn Thạch cao — ưu tiên tuyên phế tán hàn",
+ C:"Thạch cao nhiều hơn Ma hoàng 5-10 lần — Thạch cao chế ngự tân ôn của Ma hoàng, chuyển tác dụng thành tuyên phế bình suyễn",
+ D:"Thạch cao ít hơn — chỉ bổ trợ không ảnh hưởng tác dụng chính",
+ ans:"C",
+ exp:"\"Lượng dùng hai vị thường thì Thạch cao nhiều hơn Ma hoàng từ 5-10 lần.\" Ma hoàng bị hàn lương Thạch cao chế ngự → tuyên phế bình suyễn không phát hãn. Thạch cao bị Ma hoàng ức chế → thanh tả phế nhiệt tốt hơn.",
+ wa:"1:1 không đúng tỷ lệ và không phản ánh đúng cơ chế phối ngũ.",
+ wb:"Ma hoàng nhiều hơn sẽ thiên phát hãn, không phải ý muốn ở khí phần.",
+ wd:"Thạch cao là chủ dược thanh nhiệt, không chỉ bổ trợ."
+},
+{id:36,cat:"c6",lvl:2,
+ q:"Nguyên tắc \"tạng phủ hợp trị\" được áp dụng trong phương nào và thể bệnh nào?",
+ A:"Ngân kiều tán — phế vệ biểu nhiệt",
+ B:"Tuyên bạch thừa khí thang — phế nhiệt phủ thực (phế + đại trường cùng bệnh)",
+ C:"Ma hạnh thạch cam thang — tà nhiệt ứng phế đơn thuần",
+ D:"Sa sâm mạch đông thang — phế vị âm thương",
+ ans:"B",
+ exp:"\"Phương này thực chất là dùng hai phương Bạch hồ và Thừa khí gia giảm... tạng phủ hợp trị pháp.\" Phế-đại trường biểu lý: phế khí bất giáng → phủ khí không thông; đại trường nhiệt kết → phế nhiệt không tiết được. Cần trị đồng thời.",
+ wa:"Ngân kiều tán chỉ trị phế vệ biểu, không có tạng phủ hợp trị.",
+ wc:"Ma hạnh thạch cam thang trị phế đơn thuần, không có thành phần trị đại trường.",
+ wd:"Sa sâm mạch đông thang tư dưỡng phế vị âm, không phải hợp trị cấp tính."
+},
+{id:37,cat:"c6",lvl:1,
+ q:"Phương Cát căn Hoàng cầm Hoàng liên thang điều trị thể bệnh nào trong phong ôn?",
+ A:"Phế vệ biểu nhiệt sơ khởi",
+ B:"Phế nhiệt chuyển trường (sốt + ho + tiêu phân lỏng vàng nóng hôi + hậu môn nóng rát)",
+ C:"Nhiệt hãm tâm bào",
+ D:"Phế vị âm thương hậu kỳ",
+ ans:"B",
+ exp:"Phế nhiệt chuyển trường: \"tà nhiệt tại phế vị hạ dịch đại trường gây ra.\" Biểu hiện: sốt, ho, khát, tiêu phân lỏng vàng nóng hôi, hậu môn nóng rát, rêu vàng, mạch sắc. Pháp: Khổ hàn thanh nhiệt chỉ lợi.",
+ wa:"Sơ khởi phế vệ dùng Ngân kiều tán/Tang cúc ẩm.",
+ wc:"Tâm bào dùng Tam Bảo.",
+ wd:"Hậu kỳ dùng Sa sâm mạch đông thang."
+},
+{id:38,cat:"c6",lvl:2,
+ q:"Khi phong ôn giai đoạn phế nhiệt phát chẩn (ho + tức ngực + ban chẩn đỏ nhuận), phương điều trị là:",
+ A:"Ngân kiều tán bỏ Đậu xị, gia Sinh địa + Đơn bì + Đại thanh diệp + Huyền sâm",
+ B:"Tang cúc ẩm gia giảm không thay vị thuốc",
+ C:"Ma hạnh thạch cam thang gia Sừng trâu",
+ D:"Tuyên bạch thừa khí thang gia Sinh địa",
+ ans:"A",
+ exp:"Phế nhiệt phát chẩn: tà nhiệt lan đến dinh lạc, xuyên nhập huyết lạc. Giữ lại phần lớn Ngân kiều tán để tuyên phế tiết nhiệt, bỏ Đậu xị (không còn tà tại biểu), gia Sinh địa + Đơn bì + Đại thanh diệp + Huyền sâm để lương dinh huyết, thấu chẩn.",
+ wb:"Tang cúc ẩm không có đủ thành phần lương dinh thấu chẩn.",
+ wc:"Sừng trâu vào tâm bào, không phải lương dinh thấu chẩn cho ban chẩn phế nhiệt.",
+ wd:"Tuyên bạch thừa khí thang trị phế + đại trường, không phải ban chẩn."
+},
+{id:39,cat:"c6",lvl:1,
+ q:"\"Tứ cấm\" của Bạch hồ thang (theo Ngô Cúc Thông) là KHÔNG dùng khi nào?",
+ A:"Sốt cao, mạch đại, ra nhiều mồ hôi, phiền khát",
+ B:"Mạch phù huyền mà tế; hoặc mạch trầm; hoặc không khát; hoặc không ra mồ hôi",
+ C:"Bệnh nhân đang dùng kháng sinh đồng thời",
+ D:"Bệnh nhân trẻ em dưới 12 tuổi",
+ ans:"B",
+ exp:"\"Mạch phù huyền mà tế giả, bất khả dữ dã; mạch trầm giả, bất khả dữ dã; bất khát giả, bất khả dữ dã; hạn bất xuất giả, bất khả dữ dã.\" Biểu chứng chưa giải hoặc lý nhiệt chưa thịnh → không dùng Bạch hồ.",
+ wa:"Đây chính là chỉ định dùng Bạch hồ thang, không phải cấm.",
+ wc:"Không phải \"tứ cấm\" của Ngô Cúc Thông.",
+ wd:"Không phải \"tứ cấm\" của Ngô Cúc Thông."
+},
+{id:40,cat:"c6",lvl:1,
+ q:"Điều vị thừa khí thang điều trị thể bệnh nào và pháp trị là gì?",
+ A:"Tà nhiệt ứng phế — Thanh nhiệt tuyên phế",
+ B:"Nhiệt kết trường phủ (triều nhiệt + táo kết + bụng trướng cứng đau) — Nhuận kiên công hạ tiết nhiệt",
+ C:"Nhiệt hãm tâm bào — Thanh tâm khai khiếu",
+ D:"Phế vị âm thương — Tư dưỡng âm tân",
+ ans:"B",
+ exp:"Nhiệt kết trường phủ: \"nhật bộ triều nhiệt, đại tiện bí kết hoặc nhiệt kết bàng lưu, bụng trướng đầy cứng đau, rêu vàng khô, mạch trầm hữu lực.\" Điều vị thừa khí thang (Đại hoàng + Mang tiêu + Cam thảo) — hoãn hạ nhiệt kết.",
+ wa:"Phế ứng dùng Ma hạnh thạch cam thang.",
+ wc:"Tâm bào dùng Tam Bảo.",
+ wd:"Phế vị âm thương dùng Sa sâm mạch đông thang."
+},
+{id:41,cat:"c6",lvl:2,
+ q:"Trong Điều vị thừa khí thang, vai trò của Cam thảo là:",
+ A:"Thanh nhiệt giải độc trực tiếp",
+ B:"Hoãn giải sức công phá của Đại hoàng và Mang tiêu, giúp thuốc lưu lại để táo kết uất nhiệt mới giải được",
+ C:"Tăng cường tuyên phế khí",
+ D:"Sinh tân dưỡng âm chống khô táo",
+ ans:"B",
+ exp:"\"Cam thảo: hoãn giải sức công phá của Đại hoàng, Mang tiêu làm cho thuốc lưu lại, chậm xổ thì táo kết uất nhiệt mới có thể giải được.\" Đây là ứng dụng tính hoãn hòa của Cam thảo trong phương.",
+ wa:"Thanh nhiệt giải độc là của Kim ngân hoa, Liên kiều — không phải Cam thảo ở đây.",
+ wc:"Tuyên phế không phải tác dụng của Cam thảo trong phương này.",
+ wd:"Sinh tân là của Thiên hoa phấn, Lô căn — không phải Cam thảo."
+},
+{id:42,cat:"c6",lvl:1,
+ q:"\"Tam Bảo\" trong điều trị nghịch truyền tâm bào của phong ôn gồm:",
+ A:"Ngân kiều tán + Ma hạnh thạch cam thang + Bạch hồ thang",
+ B:"An cung ngưu hoàng hoàn + Tử tuyết đơn + Chí bảo đơn",
+ C:"Thanh dinh thang + Sâm phụ thang + Điều vị thừa khí thang",
+ D:"Tang cúc ẩm + Bạch hồ thang + Sa sâm mạch đông thang",
+ ans:"B",
+ exp:"\"Tục gọi là 'tam bảo': An cung ngưu hoàng hoàn, Tử tuyết đơn, Chí bảo đơn. Là loại thuốc truyền thống chữa hôn mê cấp cứu.\" Cả ba thuộc loại lương khai tể — thanh nhiệt khai khiếu.",
+ wa:"Ngân kiều, Ma hạnh, Bạch hồ là thuốc cho giai đoạn trước, không phải \"Tam Bảo\" cấp cứu.",
+ wc:"Sâm phụ thang là hồi dương, không phải lương khai.",
+ wd:"Sa sâm mạch đông là hậu kỳ, không phải cấp cứu tâm bào."
+},
+{id:43,cat:"c6",lvl:2,
+ q:"Trong \"Tam Bảo\", thuốc nào có sở trường là chỉ kinh tức phong và thông tiện?",
+ A:"An cung ngưu hoàng hoàn",
+ B:"Chí bảo đơn",
+ C:"Tử tuyết đơn",
+ D:"Ngưu hoàng thừa khí thang",
+ ans:"C",
+ exp:"\"Tử tuyết sở trường ở chỉ kinh tức phong tà nhiệt thông tiện.\" Dùng khi nghịch truyền tâm bào có kèm co giật hoặc táo bón. An cung: thanh nhiệt giải độc. Chí bảo: phương hương tịch uế.",
+ wa:"An cung sở trường thanh nhiệt giải độc mạnh nhất, không phải chỉ kinh.",
+ wb:"Chí bảo sở trường phương hương tịch uế.",
+ wd:"Ngưu hoàng thừa khí thang là phương hợp, không phải một trong Tam Bảo."
+},
+{id:44,cat:"c6",lvl:2,
+ q:"Khi phong ôn nghịch truyền tâm bào có kèm dương minh phủ thực (bụng ấn đau cứng + rêu vàng khô + mạch sắc trầm thực), phương điều trị là:",
+ A:"Thanh dinh thang đơn độc",
+ B:"Ngưu hoàng thừa khí thang (An cung ngưu hoàng hoàn hòa với bột Đại hoàng)",
+ C:"Điều vị thừa khí thang đơn độc",
+ D:"Sâm phụ thang kết hợp Sinh mạch tán",
+ ans:"B",
+ exp:"\"Dùng Ngư hoàng thừa khí thang tức là dùng An cung ngư hoàng 2 hoàn hòa tan trong nước, pha vô 9 gr bột Đại hoàng uống trước 1/2.\" Đây là tạng phủ hợp trị: tâm bào + đại trường cùng bệnh.",
+ wa:"Thanh dinh thang đơn độc không giải quyết được phủ thực.",
+ wc:"Điều vị thừa khí thang không khai khiếu tâm bào.",
+ wd:"Sâm phụ thang dùng cho tâm dương hư suy, không phải nghịch truyền có phủ thực."
+},
+{id:45,cat:"c6",lvl:1,
+ q:"Sâm phụ thang được chỉ định trong thể bệnh nguy kịch nào của phong ôn?",
+ A:"Tà nhiệt ứng phế nặng",
+ B:"Nhiệt hãm tâm bào thuần",
+ C:"Tâm dương hư suy (sốt hạ đột ngột + mồ hôi liên tục + mặt nhợt + tứ chi quyết lạnh + mạch vi tế muốn tuyệt)",
+ D:"Phế vị âm thương nghiêm trọng",
+ ans:"C",
+ exp:"\"Sâm phụ thang: Nhân sâm đại bổ nguyên khí + Phụ tử ôn tráng chân dương → hồi dương ích khí cố thoát, dùng trong chứng dương khí bạo thoát.\" Đây là tâm dương hư suy nguy kịch — sốt hạ đột ngột, vã mồ hôi, tứ chi lạnh ngắt.",
+ wa:"Tà nhiệt ứng phế dùng Ma hạnh thạch cam thang.",
+ wb:"Nhiệt hãm tâm bào thuần dùng Thanh dinh thang + Tam Bảo.",
+ wd:"Phế vị âm thương dùng Sa sâm mạch đông thang."
+},
+{id:46,cat:"c6",lvl:1,
+ q:"Pháp trị và phương điều trị giai đoạn hậu kỳ phong ôn khi phế vị âm thương là:",
+ A:"Sâm phụ thang — Ích khí hồi dương",
+ B:"Sa sâm mạch đông thang — Tư dưỡng phế vị âm tân, thanh dịch dư tà",
+ C:"Bạch hồ thang — Thanh nhiệt bảo tân",
+ D:"Ngân kiều tán — Tân lương giải biểu",
+ ans:"B",
+ exp:"\"Sa sâm mạch đông thang: Sa sâm, Ngọc trúc, Cam thảo, Sinh biển đậu, Thiên hoa phấn, Mạch đông, Đông tang diệp. Pháp: Tư dưỡng phế vị âm tân, thanh dịch dư tà.\" Triệu chứng: sốt thấp/không sốt, ho khan, miệng lưỡi khô, lưỡi đỏ ít rêu, mạch tế.",
+ wa:"Sâm phụ thang dùng cho tâm dương hư suy nguy kịch.",
+ wc:"Bạch hồ thang dùng cho dương minh nhiệt tích còn thực tà.",
+ wd:"Ngân kiều tán dùng cho phế vệ sơ khởi."
+},
+{id:47,cat:"c6",lvl:2,
+ q:"Trong Sa sâm mạch đông thang, khi phế kinh nhiệt tà vẫn còn thịnh nên gia thêm vị nào?",
+ A:"Thạch học, Lô căn",
+ B:"Hạnh nhân, Bối mẫu",
+ C:"Cốc mạch nha, Thần khúc",
+ D:"Tri mẫu, Địa cốt bì",
+ ans:"D",
+ exp:"Theo vận dụng lâm sàng: \"Nếu phế kinh nhiệt tà vẫn thịnh, gia: Tri mẫu, Địa cốt bì.\" Tri mẫu tư âm thanh nhiệt; Địa cốt bì thanh hư nhiệt. Thạch học + Lô căn dùng khi vị âm tổn thương rõ.",
+ wa:"Thạch học + Lô căn gia khi vị âm tổn thương rõ, không phải phế kinh nhiệt còn thịnh.",
+ wb:"Hạnh nhân + Bối mẫu gia khi ho nhiều.",
+ wc:"Cốc mạch nha + Thần khúc gia khi ăn kém, tiêu hóa kém."
+},
+// ===== CAT 7: ỨNG DỤNG LÂM SÀNG =====
+{id:48,cat:"c7",lvl:2,
+ q:"Bệnh nhân nữ 32 tuổi, mùa xuân, sốt 39.5°C, ố phong nhẹ, ho nhiều, đàm vàng đặc, đau ngực, ra mồ hôi, miệng khát, lưỡi đỏ rêu vàng, mạch hoạt sắc. Biện chứng và phương điều trị là:",
+ A:"Tà tập phế vệ → Ngân kiều tán",
+ B:"Tà nhiệt ứng phế (khí phần) → Ma hạnh thạch cam thang",
+ C:"Nhiệt tích dương minh → Bạch hồ thang",
+ D:"Nghịch truyền tâm bào → Thanh dinh thang + Tam Bảo",
+ ans:"B",
+ exp:"Tà tại khí phần: sốt + mồ hôi (không phải ố hàn nặng) + phiền khát + ho suyễn + đàm vàng đặc + ngực đau + lưỡi đỏ rêu vàng + mạch hoạt sắc = điển hình tà nhiệt ứng phế. Pháp: Thanh nhiệt tuyên phế bình suyễn.",
+ wa:"Phế vệ sơ khởi thì mạch phù sắc, không mồ hôi, đàm ít — trường hợp này nặng hơn.",
+ wc:"Tứ đại chứng dương minh không đầy đủ (không có tráng nhiệt + hạn đại xuất đặc trưng).",
+ wd:"Không có thần chí dị thường, không phải tâm bào."
+},
+{id:49,cat:"c7",lvl:2,
+ q:"Bệnh nhân nam 50 tuổi, phong ôn ngày 5, sốt 40°C, thần hôn, chiêm ngữ, tứ chi lạnh, lưỡi run, màu lưỡi tươi bóng, mạch tế sắc. Cần xử trí ưu tiên là:",
+ A:"Tăng liều Ngân kiều tán",
+ B:"Chuyển sang Bạch hồ thang vì sốt cao",
+ C:"Nhận biết nghịch truyền tâm bào → dùng Thanh dinh thang + Tam Bảo ngay",
+ D:"Cho Sâm phụ thang vì tứ chi lạnh",
+ ans:"C",
+ exp:"Thần hôn + chiêm ngữ = thần chí dị thường (triệu chứng bắt buộc khi nghịch truyền tâm bào). Lưỡi run + tươi bóng = tâm bào nhiệt thịnh. Tứ chi lạnh = \"nhiệt thâm quyết diệp thâm\" — không phải hàn chứng. Cấp cứu bằng Tam Bảo.",
+ wa:"Ngân kiều tán là thuốc phế vệ sơ khởi, không đủ mạnh cho tâm bào.",
+ wb:"Bạch hồ thang trị dương minh, không khai khiếu.",
+ wd:"Sâm phụ thang chỉ dùng khi tâm dương hư suy (sốt hạ + mồ hôi nhiều + mạch vi muốn tuyệt) — không phải nghịch truyền có nhiệt."
+},
+{id:50,cat:"c7",lvl:2,
+ q:"Bệnh nhân nam 45 tuổi, phong ôn giai đoạn hồi phục ngày 12. Sốt thấp 37.5°C, ho khan, đàm ít dính, miệng lưỡi khô táo, lưỡi đỏ khô ít rêu, mạch tế. Biện chứng, phương điều trị và nếu vị âm tổn thương rõ nên gia thêm vị gì?",
+ A:"Phế vệ biểu nhiệt chưa giải → Ngân kiều tán; gia Kinh giới Đậu xị",
+ B:"Phế vị âm thương hậu kỳ → Sa sâm mạch đông thang; gia Thạch học + Lô căn",
+ C:"Dương minh nhiệt tích tồn lưu → Bạch hồ thang; gia Tri mẫu",
+ D:"Khí âm lưỡng hư → Sâm phụ thang; gia Mạch đông",
+ ans:"B",
+ exp:"Hồi phục ngày 12 + sốt thấp + ho khan + đàm ít dính + khô lưỡi + lưỡi đỏ ít rêu + mạch tế = phế vị âm thương điển hình. Sa sâm mạch đông thang tư dưỡng phế vị. Khi vị âm tổn thương rõ: \"gia Thạch học, Lô căn.\"",
+ wa:"Biểu chứng đã giải, Ngân kiều tán không còn phù hợp.",
+ wc:"Không có tứ đại chứng dương minh; bệnh đã ở hậu kỳ.",
+ wd:"Sâm phụ thang là ôn dương — dùng cho dương hư, ngược với âm hư nhiệt của ca này."
+}
+];
+
+// ===== RENDER =====
+let score={done:0,correct:0};
+let activeFilter="all";
+
+function catInfo(id){return CATS.find(c=>c.id===id)||{name:"",icon:""};}
+function lvlLabel(l){return["Cơ bản","Trung bình","Nâng cao"][l];}
+function lvlClass(l){return["lvl-0","lvl-1","lvl-2"][l];}
+function catBorder(cat){return"border-"+cat;}
+function catHead(cat){return"cat-"+cat;}
+
+function renderAll(){
+  const groups={};
+  CATS.forEach(c=>{groups[c.id]=[];});
+  QS.forEach(q=>{if(activeFilter==="all"||activeFilter===q.cat)groups[q.cat].push(q);});
+
+  const quiz=document.getElementById("quiz");
+  quiz.innerHTML="";
+  CATS.forEach(cat=>{
+    const qs=groups[cat.id];
+    if(!qs.length)return;
+    const ci=catInfo(cat.id);
+    const sec=document.createElement("div");
+    sec.className="cat-section";
+    sec.innerHTML=`<div class="cat-header ${catHead(cat.id)}">${ci.icon} ${ci.name} <span style="opacity:.7;font-weight:400;font-size:11px">(${qs.length} câu)</span></div>`;
+    qs.forEach(q=>{
+      sec.appendChild(makeCard(q));
+    });
+    quiz.appendChild(sec);
+  });
+}
+
+function makeCard(q){
+  const div=document.createElement("div");
+  div.className=`q-card ${catBorder(q.cat)}`;
+  div.id="q"+q.id;
+  const opts=["A","B","C","D"];
+  const optHtml=opts.map(l=>`<div class="opt-row" id="opt-${q.id}-${l}" onclick="selectOpt(${q.id},'${l}')"><span class="opt-letter">${l}</span><span class="opt-text">${q[l]}</span></div>`).join("");
+  div.innerHTML=`
+  <div class="q-head">
+    <span class="q-num">Câu ${q.id}</span>
+    <span class="q-stem">${q.q}</span>
+    <div class="q-meta"><span class="lvl-tag ${lvlClass(q.lvl)}">${lvlLabel(q.lvl)}</span></div>
+  </div>
+  <div class="q-opts">${optHtml}</div>
+  <button class="reveal-btn" id="btn-${q.id}" onclick="reveal(${q.id})">Xem đáp án</button>
+  <div class="answer-block" id="ans-${q.id}">
+    <div class="ans-correct">✅ Đáp án đúng: <span>${q.ans}. ${q[q.ans]}</span></div>
+    <div class="exp-title">Giải thích</div>
+    <div class="exp-text">${q.exp}</div>
+    <div class="exp-title">Tại sao các đáp án khác sai</div>
+    <div class="wrong-reasons">
+      ${["A","B","C","D"].filter(l=>l!==q.ans).map(l=>`<div><b>${l}.</b> ${q["w"+l.toLowerCase()]||"Không phải đáp án tối ưu."}</div>`).join("")}
+    </div>
+  </div>`;
+  return div;
+}
+
+function selectOpt(id,letter){
+  const q=QS.find(x=>x.id===id);
+  ["A","B","C","D"].forEach(l=>{
+    const el=document.getElementById(`opt-${id}-${l}`);
+    el.classList.remove("selected","correct","wrong");
+  });
+  const sel=document.getElementById(`opt-${id}-${letter}`);
+  sel.classList.add("selected");
+}
+
+function reveal(id){
+  const q=QS.find(x=>x.id===id);
+  const ansBlock=document.getElementById("ans-"+id);
+  const btn=document.getElementById("btn-"+id);
+  const wasAnswered=ansBlock.classList.contains("show");
+  if(wasAnswered)return;
+
+  ansBlock.classList.add("show");
+  btn.disabled=true;
+  btn.textContent="Đã xem";
+
+  // highlight options
+  const sel=document.querySelector(`#q${id} .opt-row.selected`);
+  const selLetter=sel?sel.querySelector(".opt-letter").textContent:null;
+  ["A","B","C","D"].forEach(l=>{
+    const el=document.getElementById(`opt-${id}-${l}`);
+    if(l===q.ans)el.classList.add("correct");
+    else if(l===selLetter)el.classList.add("wrong");
+  });
+
+  score.done++;
+  if(selLetter===q.ans)score.correct++;
+  updateStats();
+}
+
+function updateStats(){
+  document.getElementById("s-done").textContent=score.done;
+  document.getElementById("s-correct").textContent=score.correct;
+  const pct=score.done?Math.round(score.correct/score.done*100):0;
+  document.getElementById("s-pct").textContent=pct+"%";
+  document.getElementById("prog").style.width=(score.done/50*100)+"%";
+}
+
+// Filter buttons
+const fb=document.getElementById("filterBar");
+const allBtn=document.createElement("button");
+allBtn.className="filter-btn active";allBtn.textContent="Tất cả (50)";
+allBtn.onclick=()=>{activeFilter="all";document.querySelectorAll(".filter-btn").forEach(b=>b.classList.remove("active"));allBtn.classList.add("active");renderAll();};
+fb.appendChild(allBtn);
+CATS.forEach(cat=>{
+  const cnt=QS.filter(q=>q.cat===cat.id).length;
+  const b=document.createElement("button");
+  b.className="filter-btn";b.textContent=`${cat.icon} ${cat.name} (${cnt})`;
+  b.onclick=()=>{activeFilter=cat.id;document.querySelectorAll(".filter-btn").forEach(x=>x.classList.remove("active"));b.classList.add("active");renderAll();};
+  fb.appendChild(b);
+});
+
+renderAll();
+</script>
+</body>
+</html>

@@ -5,12 +5,14 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
+    "prebuild": "node scripts/build-quiz.mjs",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
     "ingest:book": "node scripts/ingest-book.mjs",
     "materialize:ingest": "node scripts/materialize-ingest.mjs",
-    "content:delete": "node scripts/delete-content.mjs"
+    "content:delete": "node scripts/delete-content.mjs",
+    "quiz:build": "node scripts/build-quiz.mjs"
   },
   "dependencies": {
     "@astrojs/starlight": "^0.41.1",

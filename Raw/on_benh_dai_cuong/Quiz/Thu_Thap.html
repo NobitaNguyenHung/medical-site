@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thử Thấp — Luyện Tập</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#0f172a;color:#e2e8f0;min-height:100vh}
+header{background:linear-gradient(135deg,#1e3a5f,#0f2744);padding:20px 24px;border-bottom:2px solid #2563eb}
+header h1{font-size:1.5rem;color:#60a5fa;letter-spacing:.5px}
+header p{font-size:.85rem;color:#94a3b8;margin-top:4px}
+.tabs{display:flex;gap:0;background:#1e293b;border-bottom:2px solid #334155}
+.tab-btn{flex:1;padding:14px;cursor:pointer;background:none;border:none;color:#94a3b8;font-size:.95rem;font-weight:600;transition:all .2s;border-bottom:3px solid transparent}
+.tab-btn.active{color:#60a5fa;border-bottom-color:#2563eb;background:#0f172a}
+.tab-btn:hover:not(.active){background:#334155;color:#e2e8f0}
+.tab-content{display:none;padding:20px 16px}
+.tab-content.active{display:block}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.filter-btn{padding:6px 14px;border-radius:20px;border:1px solid #334155;background:#1e293b;color:#94a3b8;cursor:pointer;font-size:.8rem;transition:all .2s}
+.filter-btn.active{background:#2563eb;color:#fff;border-color:#2563eb}
+.stats-bar{display:flex;gap:16px;margin-bottom:16px;padding:10px 16px;background:#1e293b;border-radius:8px;font-size:.85rem}
+.stat{color:#94a3b8}.stat span{color:#60a5fa;font-weight:700}
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.card-wrap{perspective:1000px;height:200px;cursor:pointer}
+.card-wrap.tall{height:300px}
+.card-inner{position:relative;width:100%;height:100%;transition:transform .55s;transform-style:preserve-3d}
+.card-wrap.flipped .card-inner{transform:rotateY(180deg)}
+.card-face{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:12px;padding:16px;display:flex;flex-direction:column;justify-content:space-between}
+.card-front{background:linear-gradient(135deg,#1e3a5f,#0f2744);border:1px solid #2563eb}
+.card-back{background:linear-gradient(135deg,#14532d,#052e16);border:1px solid #16a34a;transform:rotateY(180deg)}
+.card-topic{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;opacity:.7;margin-bottom:8px}
+.card-front .card-topic{color:#60a5fa}
+.card-back .card-topic{color:#4ade80}
+.card-q{font-size:.9rem;line-height:1.5;flex:1;display:flex;align-items:center}
+.card-a{font-size:.82rem;line-height:1.55;flex:1;overflow-y:auto}
+.card-a ul{padding-left:16px}
+.card-a li{margin-bottom:3px}
+.card-hint{font-size:.7rem;color:#64748b;text-align:right}
+.mcq-progress{margin-bottom:20px}
+.progress-bar{height:6px;background:#1e293b;border-radius:3px;margin-top:6px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,#2563eb,#16a34a);transition:width .4s;border-radius:3px}
+.question-card{background:#1e293b;border-radius:12px;padding:20px;margin-bottom:16px;border:1px solid #334155;transition:border-color .3s}
+.question-card.correct{border-color:#16a34a;background:#0f2d1a}
+.question-card.wrong{border-color:#dc2626;background:#2d0f0f}
+.q-header{display:flex;gap:10px;align-items:flex-start;margin-bottom:12px;flex-wrap:wrap}
+.q-num{background:#2563eb;color:#fff;border-radius:6px;padding:2px 8px;font-size:.75rem;font-weight:700;white-space:nowrap}
+.q-topic-tag{background:#334155;color:#94a3b8;border-radius:6px;padding:2px 8px;font-size:.72rem}
+.q-bloom{background:#7c3aed33;color:#a78bfa;border-radius:6px;padding:2px 8px;font-size:.72rem}
+.q-stem{font-size:.92rem;line-height:1.6;color:#e2e8f0;margin-bottom:14px;font-weight:500}
+.q-scenario{background:#0f172a;border-left:3px solid #2563eb;padding:10px 14px;border-radius:4px;font-size:.85rem;color:#94a3b8;margin-bottom:12px;line-height:1.6}
+.options{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+.option{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border-radius:8px;border:1px solid #334155;cursor:pointer;transition:all .2s;background:#0f172a}
+.option:hover:not(.disabled){background:#1e3a5f;border-color:#2563eb}
+.option.selected{background:#1e3a5f;border-color:#2563eb}
+.option.correct-ans{background:#052e16;border-color:#16a34a;color:#4ade80}
+.option.wrong-ans{background:#2d0f0f;border-color:#dc2626;color:#f87171}
+.option.disabled{cursor:default}
+.opt-label{font-weight:700;min-width:20px;color:#60a5fa}
+.opt-text{font-size:.88rem;line-height:1.5}
+.reveal-btn{padding:8px 18px;background:#2563eb;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:.85rem;font-weight:600;transition:all .2s}
+.reveal-btn:hover{background:#1d4ed8}
+.reveal-btn:disabled{background:#334155;color:#64748b;cursor:default}
+.explanation{display:none;margin-top:12px;padding:14px;background:#0f172a;border-radius:8px;border:1px solid #334155}
+.explanation.show{display:block}
+.exp-correct{color:#4ade80;font-weight:700;margin-bottom:8px}
+.exp-text{font-size:.85rem;line-height:1.6;color:#cbd5e1}
+.exp-key{font-size:.82rem;color:#fbbf24;margin-top:8px;font-style:italic}
+.hidden{display:none!important}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:#0f172a}::-webkit-scrollbar-thumb{background:#334155;border-radius:3px}
+.reset-btn{padding:8px 18px;background:#334155;color:#e2e8f0;border:none;border-radius:8px;cursor:pointer;font-size:.85rem;transition:all .2s;margin-left:auto;display:block}
+.reset-btn:hover{background:#475569}
+</style>
+</head>
+<body>
+<header>
+  <h1>🏥 Thử Thấp (暑湿)</h1>
+  <p>Ôn bệnh học — YHCT | Nguồn: kb/on_benh_dai_cuong/02_benh-lam-sang/thu-thap_001.md (Giáo trình Ôn Bệnh — TS.BS Lê Minh Hoàng, BS.CKII Lê Thị Ngoan)</p>
+</header>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('fc')" id="tab-btn-fc">🃏 Flashcard</button>
+  <button class="tab-btn" onclick="switchTab('mcq')" id="tab-btn-mcq">📝 MCQ (SBA)</button>
+</div>
+
+<div id="tab-fc" class="tab-content active">
+  <div class="stats-bar">
+    <div class="stat">Tổng: <span id="fc-total">0</span> thẻ</div>
+    <div class="stat">Đã lật: <span id="fc-flipped">0</span></div>
+    <div class="stat">Chủ đề: <span id="fc-topics">0</span></div>
+  </div>
+  <div class="filters" id="fc-filters"></div>
+  <div class="cards-grid" id="fc-grid"></div>
+</div>
+
+<div id="tab-mcq" class="tab-content">
+  <div class="mcq-progress">
+    <div class="stats-bar">
+      <div class="stat">Đã trả lời: <span id="mcq-answered">0</span>/<span id="mcq-total">0</span></div>
+      <div class="stat">Đúng: <span id="mcq-correct-count">0</span></div>
+      <div class="stat">Tỉ lệ: <span id="mcq-pct">0%</span></div>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="mcq-bar" style="width:0%"></div></div>
+  </div>
+  <div class="filters" id="mcq-filters"></div>
+  <button class="reset-btn" onclick="resetMCQ()">↺ Reset bài</button>
+  <div id="mcq-list" style="margin-top:16px"></div>
+</div>
+
+<script>
+const TOPICS = ['Khái niệm & Lịch sử','Nguyên nhân & Cơ chế','Chẩn đoán & Phân biệt','Biện chứng các thể','Phương dược','Biến chứng & Dự phòng'];
+const COLORS = {
+  'Khái niệm & Lịch sử':'#0ea5e9',
+  'Nguyên nhân & Cơ chế':'#f59e0b',
+  'Chẩn đoán & Phân biệt':'#a855f7',
+  'Biện chứng các thể':'#10b981',
+  'Phương dược':'#ef4444',
+  'Biến chứng & Dự phòng':'#ec4899'
+};
+
+const flashcards = [
+{id:1,topic:'Khái niệm & Lịch sử',q:`Định nghĩa <b>thử thấp</b> theo Ôn bệnh học?`,a:`Ngoại cảm nhiệt bệnh <b>cấp tính</b> do cảm thụ <b>thử thấp bệnh tà</b>; biểu hiện rõ nhất là <b>thấp nhiệt chứng + thấp tà uất trở chứng</b>.`},
+{id:2,topic:'Khái niệm & Lịch sử',q:`Thử thấp phát vào mùa nào?`,a:`Đa số phát trong <b>mùa hè</b> hoặc <b>giao thời hè-thu</b> (thử thấp thịnh).`},
+{id:3,topic:'Khái niệm & Lịch sử',q:`Ngoài thấp nhiệt, lâm sàng thử thấp còn có những dấu nào?`,a:`Hung bĩ, <b>thân thể nặng nề</b>, <b>rêu lưỡi nê</b>, <b>mạch nhu</b> — các dấu ấn của thấp tà.`},
+{id:4,topic:'Khái niệm & Lịch sử',q:`Trần Vô Trạch (Tam nhân phương) nêu bệnh gì và dùng bài nào?`,a:`Nêu <b>thử thấp phong ôn</b> (thử kết hợp phong thấp); chủ trương <b>Phục linh bạch truật thang</b>.`},
+{id:5,topic:'Khái niệm & Lịch sử',q:`Trương Nguyên Tố chủ phương điều trị thử (kèm thấp) là gì?`,a:`<b>Ngũ linh tán</b> — vì hè-thu thuộc thái âm thấp thổ, phát thử đa số kèm thấp nên dùng phép <b>thẩm tiết</b>.`},
+{id:6,topic:'Khái niệm & Lịch sử',q:`Lý Đông Hằng (Tỳ vị luận) điều trị thử hợp thấp mùa hè bằng bài gì?`,a:`<b>Thanh thử ích khí thang</b> (tễ thanh táo).`},
+{id:7,topic:'Khái niệm & Lịch sử',q:`Quy luật chữa thử nổi tiếng của Dụ Gia Ngôn (Y môn pháp luật)?`,a:`<b>Trị bệnh trúng thử mà không kiêng trị thấp là quá dở</b> → thử phải kiêm trị thấp.`},
+{id:8,topic:'Khái niệm & Lịch sử',q:`Tào Bình Chương chia thử thấp thành bao nhiêu chứng?`,a:`<b>13 chứng</b> — hệ thống hóa nhân, chứng, mạch, trị của thử thấp.`},
+{id:9,topic:'Khái niệm & Lịch sử',q:`Các bệnh Tây y tương ứng phạm vi thử thấp (theo KB)?`,a:`<ul><li>Viêm hô hấp trên (mùa hè)</li><li>Viêm tiêu hóa cấp</li><li><b>Bệnh xoắn khuẩn (Leptospirosis)</b></li><li>Viêm não B</li></ul>`},
+{id:10,topic:'Khái niệm & Lịch sử',q:`Câu nói của Diệp Thiên Sĩ tóm tắt bản chất thử thấp?`,a:`<b>Thử tất kiêm thấp</b> — và <b>Thử thấp thương khí, phế tiên thụ bệnh, chư khí giai tỳ</b>.`},
+
+{id:11,topic:'Nguyên nhân & Cơ chế',q:`Thử thấp bệnh tà hình thành thế nào?`,a:`Mùa hè <b>viêm nhiệt + mưa nhiều ẩm thấp</b> → thấp khí và thử nhiệt kết hợp thành thử thấp bệnh tà.`},
+{id:12,topic:'Nguyên nhân & Cơ chế',q:`Nguyên nhân nội tại (nội nhân) phát thử thấp?`,a:`Chính khí suy nhược, đặc biệt <b>tỳ vị hư nhược, nguyên khí bất túc</b>.`},
+{id:13,topic:'Nguyên nhân & Cơ chế',q:`Đặc tính gây bệnh của thử tà trong thử thấp?`,a:`<b>Viêm nhiệt khốc liệt, truyền biến nhanh</b>; hỏa nhiệt chi tà, dễ hao khí thương tân.`},
+{id:14,topic:'Nguyên nhân & Cơ chế',q:`Đặc tính gây bệnh của thấp tà trong thử thấp?`,a:`<b>Trọng (nặng), trọc (dơ)</b> — âm ngưng trọng trọc chi tà; dễ phạm trung tiêu, lan tỏa tam tiêu, bệnh dai dẳng.`},
+{id:15,topic:'Nguyên nhân & Cơ chế',q:`Vì sao thử thấp sơ khởi có thể kiêm hàn?`,a:`Mùa hè nóng → tìm chỗ mát, <b>uống lạnh nhiều, gặp mưa gió</b> → hàn tà xâm phạm → thử thấp kiêm hàn.`},
+{id:16,topic:'Nguyên nhân & Cơ chế',q:`Tạng nào thụ bệnh đầu tiên trong thử thấp?`,a:`<b>Phế</b> (phế tiên thụ bệnh) — tà cảm qua miệng-mũi, ngoài uất cơ biểu, trong bí phế khí.`},
+{id:17,topic:'Nguyên nhân & Cơ chế',q:`Vị trí bệnh biến trọng tâm của thử thấp?`,a:`<b>Trung tiêu (tỳ vị)</b> — đa số khôn trở trung tiêu; còn lan tỏa tam tiêu, úng trệ phế lạc, phạm vị trường.`},
+{id:18,topic:'Nguyên nhân & Cơ chế',q:`Thử thấp hóa táo hóa hỏa có thể dẫn đến đâu?`,a:`Hướng vào <b>dinh huyết phần</b>; nội hãm huyết phần tổn thương phế lạc → <b>khạc máu</b>; hoặc uất kết phát hoàng.`},
+{id:19,topic:'Nguyên nhân & Cơ chế',q:`Thời kỳ hồi phục thử thấp dư tà gây gì?`,a:`Dư tà <b>mông (che) thanh khiếu</b> → hoa mắt, buồn ngủ, khó chịu.`},
+{id:20,topic:'Nguyên nhân & Cơ chế',q:`Vì sao thử thấp dai dẳng khó khỏi?`,a:`<b>Thử là hỏa nhiệt</b>, <b>thấp là âm ngưng trọng trọc</b>; hai tà tương kết → dai dẳng, lại dễ hóa nhiệt hóa táo.`},
+
+{id:21,topic:'Chẩn đoán & Phân biệt',q:`Triệu chứng sơ khởi chủ yếu để chẩn đoán thử thấp?`,a:`Khởi bệnh cấp, sơ khởi <b>hàn nhiệt, đau mình</b>; nhập khí phần → sốt, tâm phiền, tiểu đỏ.`},
+{id:22,topic:'Chẩn đoán & Phân biệt',q:`Tam chứng chính của bệnh xoắn khuẩn (thuộc thử thấp)?`,a:`<b>Hàn nhiệt – đau mỏi toàn thân – mệt mỏi uể oải</b>, kèm mắt đỏ, đau chân, ấn đau cơ bắp chân, sưng hạch.`},
+{id:23,topic:'Chẩn đoán & Phân biệt',q:`Cận lâm sàng gợi ý bệnh xoắn khuẩn?`,a:`<b>BC tăng, trung tính tăng, máu lắng tăng</b>; nước tiểu có protein/hồng cầu; <b>urê máu tăng</b>; chức năng gan bất thường.`},
+{id:24,topic:'Chẩn đoán & Phân biệt',q:`Phân biệt thử thấp với <b>thử ôn</b>?`,a:`Thử ôn = thử nhiệt <b>thuần</b>: sốt cao nổi bật, phiền khát, <b>mạch hồng đại</b>, không/không rõ thấp. Thử thấp có dấu thấp (thân nặng, rêu nê, mạch nhu).`},
+{id:25,topic:'Chẩn đoán & Phân biệt',q:`Phân biệt thử thấp với <b>thấp ôn</b>?`,a:`Thấp ôn: tiết hè-thu, <b>khởi từ từ</b>, bệnh biến chủ yếu tại tỳ vị, nhiệt ẩn trong thấp (không rõ lúc đầu), bệnh trình dài.`},
+{id:26,topic:'Chẩn đoán & Phân biệt',q:`Phân biệt thử thấp với <b>phục thử</b>?`,a:`Phục thử: thử nhiệt phục tàng, <b>sau Lập thu mới phát</b>, phát là lý nhiệt ngay, vệ chứng chỉ thoáng qua, bệnh dai dẳng.`},
+{id:27,topic:'Chẩn đoán & Phân biệt',q:`Bẫy lâm sàng quan trọng nhất khi chẩn đoán thử thấp?`,a:`Khi thử thấp <b>hóa táo hóa hỏa</b> thì biểu hiện <b>rất giống thử ôn</b> → phải truy tiền sử có giai đoạn thấp chứng.`},
+{id:28,topic:'Chẩn đoán & Phân biệt',q:`Hai dấu ấn giúp nhận ra THẤP (không nhầm thử ôn)?`,a:`① <b>Miệng khát mà không uống nhiều</b>; ② <b>mạch nhu + rêu nê + thân nặng</b>.`},
+
+{id:29,topic:'Biện chứng các thể',q:`Thể <b>Thử thấp tại vệ</b>: triệu chứng & mạch?`,a:`Sốt, hơi ố phong hàn, đầu đau căng nặng, thân nặng khớp mỏi, ít/không mồ hôi, quản bĩ, <b>miệng không khát</b>, rêu trắng/vàng nê, <b>mạch phù hoạt sác / nhu sác</b>.`},
+{id:30,topic:'Biện chứng các thể',q:`Thử thấp tại vệ <b>kèm hàn</b> biểu hiện gì?`,a:`Sốt, vô hãn, ố hàn, <b>hàn chiến (lạnh run)</b>, thân co ro, ngực bụng bĩ muộn, tâm phiền, có lúc nôn, mạch phù huyền.`},
+{id:31,topic:'Biện chứng các thể',q:`Thể <b>Tà cán nhiễu vị trường</b>: triệu chứng nổi bật?`,a:`Sốt, đau bụng, nôn liên tục, <b>đại tiện lỏng phân hôi thối thế cấp</b>, miệng khát thích uống, tiểu ngắn đỏ, mạch nhu sác.`},
+{id:32,topic:'Biện chứng các thể',q:`Thể <b>Khôn trở trung tiêu</b>: triệu chứng & mạch?`,a:`<b>Tráng nhiệt, hãn xuất, mặt đỏ</b>, quản bĩ nôn, tiểu không thông, lưỡi đỏ thẫm rêu vàng nê, <b>mạch hồng đại</b> (thử nhiệt thiên thịnh).`},
+{id:33,topic:'Biện chứng các thể',q:`Thể <b>Tràn lan tam tiêu</b>: dấu đặc trưng?`,a:`Sốt, <b>tai điếc</b>, hoa mắt chóng mặt, ho đàm lẫn máu, ngực tức, đại tiện lỏng hôi, tiểu đỏ, mạch hoạt sác (thử nhiệt nặng, thấp nhẹ).`},
+{id:34,topic:'Biện chứng các thể',q:`Thể <b>Thử thương phế lạc</b>: triệu chứng?`,a:`Sốt phiền khát, <b>ho khí suyễn, khạc máu / đàm lẫn máu</b>, phiền thao suyễn thúc, lưỡi đỏ rêu vàng khô, mạch tế sác (thể nặng).`},
+{id:35,topic:'Biện chứng các thể',q:`Thể <b>Thử thấp thương khí</b>: triệu chứng & mạch?`,a:`Sốt <b>tự hãn</b>, tâm phiền khát, ngực tức khí đoản, <b>tứ chi rã rời, uể oải</b>, tiểu ngắn đỏ, đại tiện lỏng, <b>mạch đại vô lực</b> / nhu hoạt đới sắc.`},
+{id:36,topic:'Biện chứng các thể',q:`Thể <b>Dư tà chưa sạch</b> (hậu kỳ): triệu chứng?`,a:`Sốt thấp còn, miệng khát không nhiều, hoa mắt chóng mặt, lưỡi đỏ nhạt rêu mỏng trắng (bệnh nhẹ, vị trí nông).`},
+{id:37,topic:'Biện chứng các thể',q:`Tai điếc trong thử thấp khác điếc thiếu dương thế nào?`,a:`Thử thấp: <b>thấp nhiệt uất chưng</b> bức thanh khiếu. Thiếu dương: <b>đờm nhiệt thượng xung</b>, kèm hàn nhiệt vãng lai, miệng đắng họng khô, mạch huyền.`},
+{id:38,topic:'Biện chứng các thể',q:`Pháp trị cốt lõi (xương sống) của thử thấp?`,a:`<b>Thanh thử tiết nhiệt</b> (đặt ở vị trí đầu tiên) <b>+ tuyên hóa thấp tà</b>.`},
+
+{id:39,topic:'Phương dược',q:`Bài thuốc thể Thử thấp tại vệ (thử nhiệt nhẹ)?`,a:`<b>Vệ phần tuyên thấp ẩm</b> (Hương nhu, Thanh hao, Hoạt thạch, Phục linh, Thông thảo, Hạnh nhân, Hà diệp, Đông qua bì, Trúc diệp) — pháp: thấu tà đạt biểu, địch thử hóa thấp.`},
+{id:40,topic:'Phương dược',q:`Bài cho thử thấp tại vệ khi hàn ngoại thúc + thử thấp nội uất?`,a:`<b>Tân gia hương nhu ẩm</b> (Hương nhu, Hậu phác, Ngân hoa, Liên kiều, Biển đậu hoa) — Ngô Cúc Thông gọi <b>tân ôn phục tân lương pháp</b>.`},
+{id:41,topic:'Phương dược',q:`Lưu ý quan trọng khi dùng Hương nhu?`,a:`Khi thấy <b>hãn xuất nhiệt thoát thì ngưng ngay Hương nhu</b> — thử dễ hao khí, hương nhu phát tán nhiều càng hao khí.`},
+{id:42,topic:'Phương dược',q:`Bài thể Tà cán nhiễu vị trường & cấu tạo?`,a:`<b>Linh quế cam lộ ẩm</b> (= Lục nhất tán + Ngũ linh tán + Thạch cao + Hàn thủy thạch) — pháp: thanh giải thử nhiệt, hóa khí lợi thấp.`},
+{id:43,topic:'Phương dược',q:`Bài thể Khôn trở trung tiêu?`,a:`<b>Thương truật bạch hổ thang gia giảm</b> (Thương truật, sinh Thạch cao, Tri mẫu, Bạch đậu khấu, Hoạt thạch, Thảo quả nhân, Hà diệp, Trúc diệp tâm) — pháp: thanh thử hóa thấp.`},
+{id:44,topic:'Phương dược',q:`Bài thể Tràn lan tam tiêu?`,a:`<b>Tam thạch thang</b> (Hoạt thạch, sinh Thạch cao, Hàn thủy thạch, Hạnh nhân, Trúc nhự, Ngân hoa, Kim trấp, Bạch thông thảo) — pháp: thanh nhiệt lợi thấp, tuyên thông tam tiêu.`},
+{id:45,topic:'Phương dược',q:`Bài thể Thử thương phế lạc (khạc máu)?`,a:`<b>Tê giác (thủy ngưu giác) địa hoàng thang hợp Hoàng liên giải độc thang gia giảm</b> — pháp: lương huyết an lạc, thanh thử bảo phế.`},
+{id:46,topic:'Phương dược',q:`Hai bài Thanh thử ích khí thang — phân biệt?`,a:`<ul><li><b>Lý Đông Hằng</b> → thử <b>thấp</b> thương khí (kiện tỳ táo thấp + ích khí): Hoàng kỳ, Thương/Bạch truật, Thăng ma, Cát căn</li><li><b>Vương Mạnh Anh</b> → thử <b>ôn</b> (dưỡng âm sinh tân): Tây dương sâm, Thạch hộc, Mạch môn</li></ul>`,tall:true},
+{id:47,topic:'Phương dược',q:`Bài giai đoạn hồi phục (dư tà chưa sạch)?`,a:`<b>Thanh lạc ẩm</b> (Rìa lá sen tươi, Ty qua bì, Ngân hoa tươi, Trúc diệp tâm tươi, Tây qua y, Biển đậu hoa tươi) — pháp: thanh hóa thử thấp dư tà.`},
+
+{id:48,topic:'Biến chứng & Dự phòng',q:`Xử trí xuất huyết trong thử thấp? Khi khí tùy huyết thoát?`,a:`Thanh nhiệt tả hỏa + lương huyết chỉ huyết, gia <b>Tam thất / Vân Nam bạch dược</b>. Khí tùy huyết thoát → <b>Sinh mạch ẩm, Độc sâm thang</b> + phối Đông-Tây cấp cứu.`},
+{id:49,topic:'Biến chứng & Dự phòng',q:`Cơ chế & xử trí hoàng đản trong thử thấp?`,a:`Thử thấp <b>uất kết thành độc, độc nhập can kinh</b> → hoàng đản nặng (kèm máu cam, khạc/tiện/niệu huyết, sưng gan). Dùng <b>thanh can, sơ can, chỉ huyết, bổ huyết</b>.`},
+{id:50,topic:'Biến chứng & Dự phòng',q:`Xử trí đau cơ & biện pháp dự phòng dịch thử thấp?`,a:`Đau cơ (chi dưới): gia <b>Phòng kỷ, Tần giao, Khương hoàng</b> + châm <b>Thừa sơn, Phong long</b>. Dự phòng: <b>diệt chuột, quản lý nguồn nước, cách ly, tiêu độc chất thải</b> (ổ chứa: heo, chuột đồng).`}
+];
+
+const mcqs = [
+{id:1,topic:'Khái niệm & Lịch sử',bloom:'Nhớ',scenario:'',stem:`Thử thấp là bệnh do cảm thụ loại bệnh tà nào?`,opts:['A. Phong nhiệt bệnh tà','B. Thử thấp bệnh tà (thử nhiệt kết hợp thấp tà)','C. Thấp nhiệt bệnh tà đơn thuần','D. Táo nhiệt bệnh tà'],ans:'B',exp:`Thử thấp do cảm thụ thử thấp bệnh tà — thử nhiệt kết hợp với thấp khí mùa hè. A là phong ôn; C là thấp ôn; D không liên quan mùa hè.`,key:`Thử thấp = thử nhiệt + thấp, KHÁC thử ôn (thử thuần) và thấp ôn (thấp nhiệt khởi từ từ).`},
+{id:2,topic:'Khái niệm & Lịch sử',bloom:'Nhớ',scenario:'',stem:`Thử thấp đa số phát vào thời điểm nào trong năm?`,opts:['A. Mùa xuân','B. Mùa đông','C. Mùa hè hoặc giao thời hè-thu','D. Sau Lập thu kéo dài đến đông'],ans:'C',exp:`KB ghi thử thấp đa số phát trong mùa hè hoặc giao thời hè-thu. D mô tả phục thử (phát sau Lập thu).`,key:`Mùa phát là tiêu chí dịch tễ phân biệt các ôn bệnh mùa hè.`},
+{id:3,topic:'Khái niệm & Lịch sử',bloom:'Hiểu',scenario:'',stem:`Biểu hiện lâm sàng rõ nhất của thử thấp là gì?`,opts:['A. Thấp nhiệt chứng kèm thấp tà uất trở chứng','B. Táo nhiệt thương phế','C. Hàn thấp khốn tỳ','D. Phong hàn biểu thực'],ans:'A',exp:`Định nghĩa KB: biểu hiện rõ nhất là thấp nhiệt chứng kèm thấp tà uất trở chứng (thân nặng, rêu nê, mạch nhu, hung bĩ).`,key:`Bản chất kép: vừa thấp nhiệt vừa thấp uất trở.`},
+{id:4,topic:'Khái niệm & Lịch sử',bloom:'Nhớ',scenario:'',stem:`Trần Vô Trạch (Tam nhân phương) chủ trương dùng bài nào cho thử thấp?`,opts:['A. Ngũ linh tán','B. Bạch hổ thang','C. Phục linh bạch truật thang','D. Hương nhu tán'],ans:'C',exp:`Trần Vô Trạch nêu bệnh thử thấp phong ôn và chủ trương Phục linh bạch truật thang. Ngũ linh tán là của Trương Nguyên Tố.`,key:`Mạch nguồn học thuật: mỗi y gia gắn một chủ phương riêng.`},
+{id:5,topic:'Khái niệm & Lịch sử',bloom:'Hiểu',scenario:'',stem:`Trương Nguyên Tố cho rằng giữa hè-thu thuộc thái âm thấp thổ nên dùng phép thẩm tiết với chủ phương nào?`,opts:['A. Hoàng liên giải độc thang','B. Ngũ linh tán','C. Thanh lạc ẩm','D. Tam thạch thang'],ans:'B',exp:`Trương Nguyên Tố: hè-thu thuộc thái âm thấp thổ, phát thử đa số kèm thấp nên trị bằng thẩm tiết, lấy Ngũ linh tán làm chủ phương.`,key:`Thẩm tiết (lợi tiểu thấm thấp) phù hợp khi thử kèm thấp.`},
+{id:6,topic:'Khái niệm & Lịch sử',bloom:'Hiểu',scenario:'',stem:`Quy luật chữa thử của Dụ Gia Ngôn nhấn mạnh điều gì?`,opts:['A. Trị thử chỉ cần thanh nhiệt','B. Trị trúng thử mà không kiêng trị thấp là quá dở','C. Trị thử phải ưu tiên bổ khí trước','D. Trị thử dùng hàn lương là đủ'],ans:'B',exp:`Dụ Gia Ngôn (Y môn pháp luật): trị bệnh trúng thử mà không kiêng trị thấp là quá dở — thử phải kiêm trị thấp.`,key:`Nguyên tắc xuyên suốt: thanh thử PHẢI đi kèm hóa thấp.`},
+{id:7,topic:'Khái niệm & Lịch sử',bloom:'Nhớ',scenario:'',stem:`Tào Bình Chương (Thử bệnh chứng trị yếu lược) chia thử thấp thành bao nhiêu chứng để biện chứng luận trị?`,opts:['A. 6 chứng','B. 8 chứng','C. 13 chứng','D. 20 chứng'],ans:'C',exp:`Tào Bình Chương chia thử thấp thành 13 chứng, hệ thống hóa nhân-chứng-mạch-trị.`,key:`Tào Bình Chương hệ thống hóa thử thấp đầy đủ nhất.`},
+{id:8,topic:'Khái niệm & Lịch sử',bloom:'Hiểu',scenario:'',stem:`Bệnh Tây y nào thuộc phạm vi thử thấp có bộ ba triệu chứng và xét nghiệm được KB mô tả chi tiết nhất?`,opts:['A. Sốt xuất huyết Dengue','B. Bệnh xoắn khuẩn (Leptospirosis)','C. Thương hàn','D. Sốt rét'],ans:'B',exp:`KB mô tả tam chứng (hàn nhiệt, đau mỏi toàn thân, mệt uể oải) + mắt đỏ, đau bắp chân + XN (BC, urê, men gan) đặc trưng bệnh xoắn khuẩn.`,key:`Leptospirosis là khuôn mặt Tây y điển hình của thử thấp nặng.`},
+{id:9,topic:'Nguyên nhân & Cơ chế',bloom:'Hiểu',scenario:'',stem:`Nguyên nhân nội tại quan trọng nhất khiến dễ phát thử thấp là gì?`,opts:['A. Phế âm hư','B. Thận dương hư','C. Tỳ vị hư nhược, nguyên khí bất túc','D. Can khí uất kết'],ans:'C',exp:`KB: chính khí suy nhược, đặc biệt tỳ vị hư nhược, nguyên khí bất túc là nguyên nhân nội tại. Mùa hè tỳ vị vận hóa chậm + ăn uống thất điều càng làm tỳ hư.`,key:`Tỳ vị hư là đất cho thử thấp phát sinh.`},
+{id:10,topic:'Nguyên nhân & Cơ chế',bloom:'Hiểu',scenario:'',stem:`Vì sao quá trình bệnh thử thấp có đặc điểm dai dẳng khó khỏi?`,opts:['A. Vì thử tà thuần dương dễ hóa táo','B. Vì thử là hỏa nhiệt và thấp là âm ngưng trọng trọc, hai tà tương kết','C. Vì bệnh chỉ ở vệ phần','D. Vì chính khí luôn đầy đủ'],ans:'B',exp:`Thử (hỏa nhiệt) và thấp (âm ngưng trọng trọc) tương kết → dai dẳng khó khỏi, lại dễ hóa nhiệt hóa táo, thương lạc, uất kết phát hoàng.`,key:`Tính chất nghịch nhau của 2 tà gây bệnh trình kéo dài.`},
+{id:11,topic:'Nguyên nhân & Cơ chế',bloom:'Hiểu',scenario:'',stem:`Theo Diệp Thiên Sĩ, tạng nào thụ bệnh đầu tiên trong thử thấp?`,opts:['A. Tỳ','B. Phế','C. Tâm','D. Thận'],ans:'B',exp:`Thử thấp thương khí, phế tiên thụ bệnh — tà cảm qua miệng-mũi, phạm phế (thượng tiêu) trước, rồi lan trung-hạ tiêu.`,key:`Phế tiên thụ bệnh → trị pháp sơ khởi dùng tân lương hơi khổ.`},
+{id:12,topic:'Nguyên nhân & Cơ chế',bloom:'Hiểu',scenario:'',stem:`Vị trí bệnh biến mà thử thấp đa số khôn trở là ở đâu?`,opts:['A. Thượng tiêu (tâm phế)','B. Trung tiêu (tỳ vị)','C. Hạ tiêu (can thận)','D. Bì mao'],ans:'B',exp:`KB: tà có thể úng trệ phế lạc, lan tỏa tam tiêu, phạm vị trường, nhưng đặc biệt đa số khôn trở trung tiêu (tỳ vị).`,key:`Trung tiêu là trọng tâm bệnh — vì thấp dễ phạm tỳ vị.`},
+{id:13,topic:'Nguyên nhân & Cơ chế',bloom:'Phân tích',scenario:'Bệnh nhân mùa hè sau khi đi mưa về và uống nhiều nước đá, xuất hiện sốt, vô hãn, ố hàn, run lạnh, thân co ro, ngực bụng bĩ muộn.',stem:`Cơ chế nào giải thích bệnh cảnh trên?`,opts:['A. Thử thấp hóa táo nhập huyết','B. Thử thấp nội trở + hàn tà ngoại thúc, tấu lý bế tắc','C. Thử nhiệt thương khí tân','D. Dư tà mông che thanh khiếu'],ans:'B',exp:`Cảm thử thấp rồi cảm hàn → thử thấp nội trở, hàn tà ngoại thúc, tấu lý bế tắc, huyền phủ không mở → vô hãn, ố hàn, hàn chiến. Đây là thể tại vệ kèm hàn.`,key:`Thử thấp kiêm hàn → cần ôn tán (Tân gia hương nhu ẩm).`},
+{id:14,topic:'Nguyên nhân & Cơ chế',bloom:'Hiểu',scenario:'',stem:`Thử thấp hóa táo hóa hỏa, hướng vào huyết phần có thể gây hậu quả nào?`,opts:['A. Tự hãn mạch hư','B. Nội hãm huyết phần tổn thương phế lạc gây khạc máu','C. Hoa mắt buồn ngủ nhẹ','D. Quản bĩ miệng không khát'],ans:'B',exp:`Thử thấp hóa táo hóa hỏa có thể nội hãm huyết phần, tổn thương phế lạc → khạc máu (thể thử thương phế lạc). Các đáp án khác là thể nhẹ/khí phần.`,key:`Hóa táo hóa hỏa nhập huyết = bước ngoặt sang thể nặng.`},
+{id:15,topic:'Chẩn đoán & Phân biệt',bloom:'Nhớ',scenario:'',stem:`Tam chứng chính của bệnh xoắn khuẩn (thuộc phạm vi thử thấp) gồm?`,opts:['A. Sốt cao, co giật, hôn mê','B. Hàn nhiệt, đau mỏi toàn thân, mệt mỏi uể oải','C. Ho, khó thở, đau ngực','D. Vàng da, ngứa, phân bạc màu'],ans:'B',exp:`KB nêu tam chứng: hàn nhiệt, đau môi/mỏi toàn thân và mệt mỏi uể oải, kèm mắt đỏ, đau chân, ấn đau cơ bắp chân, sưng hạch.`,key:`Đau ấn cơ bắp chân + mắt đỏ rất gợi Leptospirosis.`},
+{id:16,topic:'Chẩn đoán & Phân biệt',bloom:'Áp dụng',scenario:'Bệnh nhân nam làm ruộng, sốt cao, đau bắp chân, mắt đỏ, vàng da nhẹ.',stem:`Cận lâm sàng nào phù hợp với chẩn đoán bệnh xoắn khuẩn theo mô tả KB?`,opts:['A. Bạch cầu giảm, tiểu cầu giảm đơn thuần','B. Bạch cầu tăng, trung tính tăng, máu lắng tăng, urê tăng, men gan bất thường','C. Đường huyết tăng cao, ceton niệu','D. Amylase và lipase tăng'],ans:'B',exp:`KB ghi rõ: BC tăng, trung tính tăng, máu lắng tăng, protein/hồng cầu niệu, urê huyết tăng, chức năng gan bất thường.`,key:`Bộ XN gan-thận-viêm phản ánh tổn thương đa cơ quan của Lepto.`},
+{id:17,topic:'Chẩn đoán & Phân biệt',bloom:'Phân tích',scenario:'',stem:`Đặc điểm nào giúp phân biệt thử ôn với thử thấp?`,opts:['A. Thử ôn có thân nặng, rêu nê, mạch nhu rõ','B. Thử ôn sốt cao nổi bật, phiền khát, mạch hồng đại, không/không rõ thấp','C. Thử ôn khởi bệnh từ từ, bệnh tại tỳ vị','D. Thử ôn phát sau Lập thu'],ans:'B',exp:`Thử ôn = thử nhiệt thuần: triệu chứng nhiệt nổi bật (sốt cao, phiền khát, mạch hồng đại). Thử thấp có dấu thấp (thân nặng, rêu nê, mạch nhu) — A đảo ngược; C là thấp ôn; D là phục thử.`,key:`Có/không có dấu thấp là ranh giới thử ôn ↔ thử thấp.`},
+{id:18,topic:'Chẩn đoán & Phân biệt',bloom:'Phân tích',scenario:'',stem:`So với thử thấp, thấp ôn có đặc điểm khởi bệnh nào?`,opts:['A. Khởi bệnh cấp, sốt cao bùng phát','B. Khởi bệnh từ từ, nhiệt ẩn trong thấp, bệnh chủ yếu tại tỳ vị, dai dẳng','C. Phát là lý nhiệt ngay sau Lập thu','D. Vệ chứng chỉ thoáng qua rồi vào huyết'],ans:'B',exp:`Thấp ôn: cảm thấp nhiệt tiết hè-thu, khởi bệnh từ từ, bệnh biến chủ yếu tại tỳ vị, nhiệt ẩn trong thấp nên không rõ lúc đầu, bệnh trình dài.`,key:`Thấp ôn = dai dẳng và âm ỉ nhất trong nhóm.`},
+{id:19,topic:'Chẩn đoán & Phân biệt',bloom:'Phân tích',scenario:'',stem:`Điểm khác biệt then chốt của phục thử so với thử thấp là gì?`,opts:['A. Phục thử phát trong mùa hè cảm tức phát','B. Phục thử do thử nhiệt phục tàng, sau Lập thu mới phát, phát là lý nhiệt ngay','C. Phục thử không có thấp uất','D. Phục thử vệ chứng kéo dài rõ rệt'],ans:'B',exp:`Phục thử: cảm thử nhiệt phục tàng bên trong, sau Lập thu mới phát; phát lập tức xuất hiện lý nhiệt, vệ chứng chỉ thoáng qua, bệnh dai dẳng.`,key:`Thời điểm phát (sau Lập thu) + lý nhiệt ngay = phục thử.`},
+{id:20,topic:'Chẩn đoán & Phân biệt',bloom:'Đánh giá',scenario:'Bệnh nhân vào giữa tháng 8 (sau Lập thu), sốt cao, tâm phiền, lưỡi đỏ, vệ chứng chỉ thoáng qua, bệnh trình dai dẳng, không có giai đoạn thân nặng rêu nê rõ.',stem:`Chẩn đoán phân biệt phù hợp nhất là?`,opts:['A. Thử thấp tại vệ','B. Thử ôn cảm tức phát','C. Phục thử','D. Thấp ôn'],ans:'C',exp:`Phát sau Lập thu + lý nhiệt ngay + vệ chứng chỉ thoáng qua + bệnh dai dẳng → phục thử. Thử thấp/thử ôn cảm tức phát trong hè; thấp ôn khởi từ từ và thấp rất rõ.`,key:`Dịch tễ thời điểm là chìa khóa: sau Lập thu nghĩ phục thử.`},
+{id:21,topic:'Biện chứng các thể',bloom:'Áp dụng',scenario:'Bệnh nhân sốt, hơi ố phong hàn, đầu đau căng nặng, thân nặng khớp mỏi, ít mồ hôi, quản bĩ, miệng không khát, rêu trắng nê, mạch nhu sác.',stem:`Bài thuốc phù hợp nhất (thử nhiệt còn nhẹ) là?`,opts:['A. Tam thạch thang','B. Vệ phần tuyên thấp ẩm','C. Linh quế cam lộ ẩm','D. Thanh lạc ẩm'],ans:'B',exp:`Đây là thử thấp tại vệ, thử nhiệt nhẹ → Vệ phần tuyên thấp ẩm (thấu tà đạt biểu, địch thử hóa thấp). Tam thạch thang cho tam tiêu; Linh quế cam lộ cho vị trường; Thanh lạc ẩm cho hậu kỳ.`,key:`Tại vệ thử nhiệt nhẹ → Vệ phần tuyên thấp ẩm.`},
+{id:22,topic:'Biện chứng các thể',bloom:'Áp dụng',scenario:'Bệnh nhân thử thấp tại vệ nhưng hàn tà ngoại thúc rõ: vô hãn, ố hàn, run lạnh, thân co ro, thử thấp nội uất.',stem:`Bài thuốc thích hợp hơn cả là?`,opts:['A. Tân gia hương nhu ẩm','B. Bạch hổ thang','C. Tê giác địa hoàng thang','D. Thanh lạc ẩm'],ans:'A',exp:`Hàn tà ngoại thúc + thử thấp nội uất → Tân gia hương nhu ẩm (tân ôn phục tân lương pháp của Ngô Cúc Thông): giải biểu tán hàn, hóa thấp, thanh thử.`,key:`Tân gia hương nhu ẩm = phối tân ôn với tân lương cho hàn thúc thử uất.`},
+{id:23,topic:'Biện chứng các thể',bloom:'Áp dụng',scenario:'',stem:`Pháp trị của thể thử thấp tại vệ là gì?`,opts:['A. Lương huyết an lạc, thanh thử bảo phế','B. Thấu tà đạt biểu, địch thử hóa thấp','C. Thanh thử hóa thấp, bồi nguyên hòa trung','D. Thanh nhiệt lợi thấp, tuyên thông tam tiêu'],ans:'B',exp:`Thể tại vệ: pháp thấu tà đạt biểu, địch thử hóa thấp. A là thử thương phế lạc; C là thử thấp thương khí; D là tràn lan tam tiêu.`,key:`Mỗi thể một pháp trị tương ứng — học theo cặp thể-pháp-phương.`},
+{id:24,topic:'Biện chứng các thể',bloom:'Phân tích',scenario:'Bệnh nhân sốt, đau bụng, nôn liên tục, tiêu chảy phân hôi thối thế cấp, miệng khát thích uống, tiểu ngắn đỏ, lưỡi đỏ rêu nê, mạch nhu sác.',stem:`Thể bệnh và bài thuốc phù hợp nhất?`,opts:['A. Khôn trở trung tiêu — Thương truật bạch hổ thang','B. Tà cán nhiễu vị trường — Linh quế cam lộ ẩm','C. Tràn lan tam tiêu — Tam thạch thang','D. Thử thương phế lạc — Tê giác địa hoàng thang'],ans:'B',exp:`Thử thấp trực tiếp xâm phạm trường vị (nôn, tiêu chảy phân hôi thế cấp) → Tà cán nhiễu vị trường, dùng Linh quế cam lộ ẩm (thanh giải thử nhiệt, hóa khí lợi thấp).`,key:`Nôn + tiêu chảy phân hôi cấp = tà cán vị trường.`},
+{id:25,topic:'Biện chứng các thể',bloom:'Áp dụng',scenario:'',stem:`Pháp trị của thể Tà cán nhiễu vị trường là gì?`,opts:['A. Thanh giải thử nhiệt, hóa khí lợi thấp','B. Thấu tà đạt biểu','C. Lương huyết an lạc','D. Thanh hóa dư tà'],ans:'A',exp:`Tà cán nhiễu vị trường: thanh giải thử nhiệt, hóa khí lợi thấp (Linh quế cam lộ ẩm).`,key:`Hóa khí lợi thấp = dùng Ngũ linh tán hợp Lục nhất tán.`},
+{id:26,topic:'Biện chứng các thể',bloom:'Phân tích',scenario:'Bệnh nhân tráng nhiệt, hãn xuất, mặt đỏ, sợ nóng, hơi thở thô gấp, chi thể mỏi nhừ, quản bĩ nôn, tiểu không thông, lưỡi đỏ thẫm rêu vàng nê, mạch hồng đại.',stem:`Thể bệnh và bài thuốc phù hợp nhất?`,opts:['A. Thử thấp khôn trở trung tiêu — Thương truật bạch hổ thang gia giảm','B. Thử ôn khí phần — Bạch hổ thang thuần','C. Dư tà chưa sạch — Thanh lạc ẩm','D. Thử thấp thương khí — Đông Hằng thanh thử ích khí thang'],ans:'A',exp:`Mạch hồng đại + tráng nhiệt hãn xuất (thử nhiệt thiên thịnh) NHƯNG còn rêu vàng nê + chi thể mỏi nhừ (dấu thấp) → khôn trở trung tiêu, dùng Thương truật bạch hổ thang gia giảm (thanh thử hóa thấp).`,key:`Có dấu thấp (rêu nê) nên thêm Thương truật, không dùng Bạch hổ thuần.`},
+{id:27,topic:'Biện chứng các thể',bloom:'Đánh giá',scenario:'',stem:`Vì sao thể khôn trở trung tiêu dùng Thương truật bạch hổ thang gia giảm thay vì Bạch hổ thang thuần?`,opts:['A. Vì bệnh nhân có khí hư cần bổ','B. Vì còn thấp tà trung trở (rêu vàng nê, chi thể nhừ) cần phối táo thấp/phương hương hóa thấp','C. Vì cần lương huyết chỉ huyết','D. Vì bệnh đã sang dinh phần'],ans:'B',exp:`Khác thử ôn thuần (Bạch hổ thang), thể này vẫn còn thấp nên thêm Thương truật, Thảo quả táo thấp + Bạch đậu khấu, Hà diệp phương hương hóa thấp. Thạch cao/Tri mẫu thanh thử nhiệt Dương minh.`,key:`Thử nhiệt thịnh + thấp chưa hết = thanh nhiệt PHẢI kèm hóa thấp.`},
+{id:28,topic:'Biện chứng các thể',bloom:'Áp dụng',scenario:'Bệnh nhân sốt, tai điếc, hoa mắt chóng mặt, ho đàm lẫn máu, ngực tức, đại tiện lỏng hôi, tiểu ngắn đỏ, lưỡi đỏ thẫm rêu vàng nê, mạch hoạt sác.',stem:`Thể bệnh và bài thuốc phù hợp nhất?`,opts:['A. Khôn trở trung tiêu — Thương truật bạch hổ thang','B. Thử thấp tràn lan tam tiêu — Tam thạch thang','C. Tà cán vị trường — Linh quế cam lộ ẩm','D. Dư tà chưa sạch — Thanh lạc ẩm'],ans:'B',exp:`Triệu chứng khắp thượng (tai điếc, ho)-trung (ngực tức)-hạ tiêu (tiểu đỏ, tiêu lỏng) → thử thấp tràn lan tam tiêu, dùng Tam thạch thang (thanh nhiệt lợi thấp, tuyên thông tam tiêu).`,key:`Triệu chứng trải cả 3 tiêu = tràn lan tam tiêu → Tam thạch thang.`},
+{id:29,topic:'Biện chứng các thể',bloom:'Phân tích',scenario:'',stem:`Cơ chế gây tai điếc trong thể thử thấp tràn lan tam tiêu là gì?`,opts:['A. Đờm nhiệt thượng xung theo kinh thiếu dương','B. Thấp nhiệt uất chưng, hai khí đi lên bức che thanh khiếu','C. Can dương thượng cang','D. Thận tinh hư không nuôi tai'],ans:'B',exp:`Diệp Thiên Sĩ: thấp nặng dơ, nhiệt hun chưng, nhiệt ở trong thấp, hai khí đi lên bức che thanh khiếu → tai điếc. Khác điếc thiếu dương (đờm nhiệt thượng xung).`,key:`Tai điếc thử thấp do thấp nhiệt mông che thanh khiếu, không phải đờm nhiệt.`},
+{id:30,topic:'Biện chứng các thể',bloom:'Phân tích',scenario:'',stem:`Tai điếc do thiếu dương (để phân biệt với thử thấp) thường kèm dấu hiệu nào?`,opts:['A. Thân nặng, rêu nê, mạch nhu','B. Hàn nhiệt vãng lai, miệng đắng họng khô, mạch huyền','C. Tự hãn, mạch đại vô lực','D. Khạc máu, mạch tế sác'],ans:'B',exp:`Điếc thiếu dương do đờm nhiệt thượng xung nên kèm hàn nhiệt vãng lai, miệng đắng họng khô, mạch huyền — khác điếc thử thấp do thấp nhiệt uất chưng.`,key:`Bộ tứ thiếu dương (vãng lai, miệng đắng, mạch huyền) giúp loại trừ.`},
+{id:31,topic:'Biện chứng các thể',bloom:'Áp dụng',scenario:'Bệnh nhân sốt phiền khát, ho khí suyễn, khạc máu, phiền thao suyễn thúc, lưỡi đỏ rêu vàng khô, mạch tế sác.',stem:`Bài thuốc phù hợp nhất cho thể này?`,opts:['A. Tam thạch thang','B. Tê giác (thủy ngưu giác) địa hoàng thang hợp Hoàng liên giải độc thang gia giảm','C. Vệ phần tuyên thấp ẩm','D. Đông Hằng thanh thử ích khí thang'],ans:'B',exp:`Thử thương phế lạc (hóa táo hóa hỏa nội hãm huyết, khạc máu) → Tê giác địa hoàng thang hợp Hoàng liên giải độc thang gia giảm (lương huyết an lạc, thanh thử bảo phế).`,key:`Khạc máu do thử nhiệt nhập huyết = lương huyết + thanh nhiệt giải độc.`},
+{id:32,topic:'Biện chứng các thể',bloom:'Đánh giá',scenario:'Bệnh nhân thử thấp khạc máu lượng nhiều, thao động không yên.',stem:`Nguyên tắc xử trí quan trọng nhất ngoài dùng thuốc là gì?`,opts:['A. Khuyến khích vận động cho thông khí','B. Để bệnh nhân nằm yên tĩnh tuyệt đối, phối hợp Đông-Tây cấp cứu','C. Chỉ dùng YHCT, tránh can thiệp Tây y','D. Châm tả mạnh liên tục'],ans:'B',exp:`KB: khạc máu do phế thường rất nguy hiểm, phải để bệnh nhân nằm yên tĩnh tuyệt đối (thao động làm tăng xuất huyết) và phối hợp Đông-Tây tích cực cấp cứu.`,key:`Khạc máu = red flag → nằm yên + cấp cứu phối hợp.`},
+{id:33,topic:'Biện chứng các thể',bloom:'Áp dụng',scenario:'Bệnh nhân sốt, tự hãn, tâm phiền khát, ngực tức khí đoản, tứ chi rã rời, tinh thần uể oải, tiểu ngắn đỏ, đại tiện lỏng, rêu nê, mạch đại vô lực.',stem:`Thể bệnh và bài thuốc phù hợp nhất?`,opts:['A. Thử thấp thương khí — Đông Hằng thanh thử ích khí thang','B. Khôn trở trung tiêu — Thương truật bạch hổ thang','C. Thử thương phế lạc — Tê giác địa hoàng thang','D. Tại vệ — Tân gia hương nhu ẩm'],ans:'A',exp:`Tự hãn + tứ chi rã rời + mạch đại vô lực (khí suy) + rêu nê (thấp) → thử thấp thương khí, dùng Đông Hằng thanh thử ích khí thang (thanh thử hóa thấp, bồi nguyên hòa trung).`,key:`Mạch đại VÔ LỰC + tự hãn mệt lả = thương khí.`},
+{id:34,topic:'Biện chứng các thể',bloom:'Đánh giá',scenario:'',stem:`Trong thử thấp thương khí, KB dùng bài Thanh thử ích khí thang của tác giả nào, và khác bài cùng tên thế nào?`,opts:['A. Vương Mạnh Anh — thiên dưỡng âm sinh tân cho thử ôn','B. Lý Đông Hằng — thiên kiện tỳ táo thấp ích khí cho thử thấp','C. Diệp Thiên Sĩ — thiên khai khiếu','D. Ngô Cúc Thông — thiên tuyên thông tam tiêu'],ans:'B',exp:`KB dùng bài Lý Đông Hằng (Hoàng kỳ, Thương/Bạch truật, Thăng ma, Cát căn...) thiên kiện tỳ táo thấp ích khí — hợp thử THẤP. Bài Vương Mạnh Anh (Tây dương sâm, Thạch hộc, Mạch môn) thiên dưỡng âm — dùng cho thử ÔN.`,key:`Hai bài trùng tên: Lý Đông Hằng cho thử thấp, Vương Mạnh Anh cho thử ôn.`},
+{id:35,topic:'Biện chứng các thể',bloom:'Áp dụng',scenario:'Bệnh nhân giai đoạn hồi phục: thử thấp tà đã giảm nhưng còn sốt thấp, miệng khát không nhiều, hoa mắt chóng mặt, lưỡi đỏ nhạt rêu mỏng trắng.',stem:`Bài thuốc phù hợp nhất là?`,opts:['A. Bạch hổ thang','B. Thanh lạc ẩm','C. Linh quế cam lộ ẩm','D. Tê giác địa hoàng thang'],ans:'B',exp:`Dư tà chưa sạch, bệnh nhẹ vị trí nông → Thanh lạc ẩm (thanh hóa thử thấp dư tà), dùng thuốc nhẹ giai đoạn hồi phục.`,key:`Hậu kỳ dư tà → Thanh lạc ẩm, tránh công phạt mạnh.`},
+{id:36,topic:'Phương dược',bloom:'Hiểu',scenario:'',stem:`Pháp trị xương sống xuyên suốt của thử thấp là gì?`,opts:['A. Phát hãn giải biểu là chính','B. Thanh thử tiết nhiệt đặt hàng đầu, kèm tuyên hóa thấp tà','C. Ôn dương lợi thủy','D. Tư âm giáng hỏa'],ans:'B',exp:`KB tóm tắt: đặt thanh thử tiết nhiệt ở vị trí đầu tiên, đồng thời kèm tuyên hóa thấp tà.`,key:`Thanh thử + hóa thấp luôn đi cùng nhau.`},
+{id:37,topic:'Phương dược',bloom:'Áp dụng',scenario:'Đang dùng Tân gia hương nhu ẩm cho bệnh nhân thử thấp tại vệ, bệnh nhân bắt đầu ra nhiều mồ hôi và nhiệt thoát.',stem:`Xử trí thuốc nào đúng?`,opts:['A. Tăng liều Hương nhu để phát tán mạnh hơn','B. Ngưng dùng Hương nhu ngay','C. Thêm Ma hoàng','D. Thêm Phụ tử ôn dương'],ans:'B',exp:`KB: khi thấy hãn xuất nhiệt thoát thì lập tức ngưng Hương nhu, vì thử dễ hao khí mà Hương nhu phát tán nhiều sẽ càng hao khí.`,key:`Hương nhu là vị tân ôn phát tán — ngưng khi đã có hãn.`},
+{id:38,topic:'Phương dược',bloom:'Nhớ',scenario:'',stem:`Linh quế cam lộ ẩm được cấu thành từ những bài nào?`,opts:['A. Bạch hổ thang + Thừa khí thang','B. Lục nhất tán + Ngũ linh tán, gia Thạch cao và Hàn thủy thạch','C. Tê giác địa hoàng + Hoàng liên giải độc','D. Hương nhu tán + Tứ quân tử thang'],ans:'B',exp:`KB: Linh quế cam lộ ẩm là Lục nhất tán hợp Ngũ linh tán gia Thạch cao, Hàn thủy thạch → thanh giải thử nhiệt, hóa khí lợi thấp.`,key:`Lục nhất tán (thanh thử lợi thấp) + Ngũ linh tán (hóa khí lợi thủy).`},
+{id:39,topic:'Biến chứng & Dự phòng',bloom:'Áp dụng',scenario:'Bệnh nhân thử thấp xuất huyết nghiêm trọng, xuất hiện khí tùy huyết thoát (mạch hư, vã mồ hôi, chi lạnh).',stem:`Phối hợp bài/pháp nào phù hợp với tễ thanh nhiệt tả hỏa?`,opts:['A. Sinh mạch ẩm, Độc sâm thang','B. Ma hoàng thang','C. Đại thừa khí thang','D. Lý trung thang đơn thuần'],ans:'A',exp:`KB: khi xuất huyết nghiêm trọng có khí tùy huyết thoát, dùng Sinh mạch ẩm, Độc sâm thang phối với tễ thanh nhiệt tả hỏa; có thể gia Tam thất, Vân Nam bạch dược tăng chỉ huyết.`,key:`Khí tùy huyết thoát = ích khí cố thoát cấp (Sinh mạch/Độc sâm).`},
+{id:40,topic:'Biến chứng & Dự phòng',bloom:'Áp dụng',scenario:'Bệnh nhân thử thấp xuất hiện hoàng đản nặng dần, kèm máu cam, khạc huyết, niệu huyết và sưng gan.',stem:`Cơ chế và hướng dùng thuốc phù hợp là?`,opts:['A. Thử thấp uất kết thành độc nhập can → thanh can, sơ can, chỉ huyết, bổ huyết','B. Hàn ngưng can mạch → ôn can tán hàn','C. Tỳ hư thấp trệ → kiện tỳ lợi thấp đơn thuần','D. Phế táo → nhuận phế'],ans:'A',exp:`KB: hoàng đản do thử thấp uất kết thành độc, độc nhập can kinh; nặng dần kèm xuất huyết, sưng gan → dùng thanh can, sơ can, chỉ huyết, bổ huyết.`,key:`Hoàng đản thử thấp = độc nhập can, là dấu hiệu nặng.`},
+{id:41,topic:'Biến chứng & Dự phòng',bloom:'Áp dụng',scenario:'Bệnh nhân thử thấp đau cơ nhiều, đặc biệt chi dưới (đau bắp chân).',stem:`Gia vị thuốc và huyệt châm nào phù hợp theo KB?`,opts:['A. Gia Phòng kỷ, Tần giao, Khương hoàng; châm Thừa sơn, Phong long','B. Gia Quế chi, Phụ tử; châm Quan nguyên','C. Gia Sài hồ, Hoàng cầm; châm Phong trì','D. Gia Đại hoàng; châm Thiên xu'],ans:'A',exp:`KB mục đau cơ: thử thấp át trở vệ khí gây đau cơ, gia Phòng kỷ, Tần giao, Khương hoàng và kết hợp châm Thừa sơn, Phong long.`,key:`Đau bắp chân thử thấp → Thừa sơn + Phong long.`},
+{id:42,topic:'Biến chứng & Dự phòng',bloom:'Hiểu',scenario:'',stem:`Biện pháp dự phòng dịch thử thấp (bệnh xoắn khuẩn) theo KB nhấn mạnh điều gì?`,opts:['A. Tiêm kháng sinh dự phòng cho toàn dân','B. Diệt chuột, quản lý nguồn nước, cách ly và tiêu độc chất thải người bệnh','C. Hạn chế uống nước','D. Chỉ cần tăng cường thể lực'],ans:'B',exp:`KB: heo và chuột đồng là ổ chứa, nước tiểu chúng làm ô nhiễm nguồn nước gây dịch → cần diệt chuột, quản lý nguồn nước vùng dịch, cách ly người bệnh, xử lý tiêu độc chất thải, chủng ngừa.`,key:`Cắt nguồn lây (chuột/heo/nước) là cốt lõi dự phòng Lepto.`},
+{id:43,topic:'Chẩn đoán & Phân biệt',bloom:'Phân tích',scenario:'Bệnh nhân mùa hè sốt, thân thể nặng nề, ngực bụng bĩ muộn, miệng khát mà uống không nhiều, đại tiện lỏng phân hôi, rêu lưỡi nê, mạch nhu.',stem:`Nhận định nào đúng nhất về bản chất bệnh?`,opts:['A. Thử nhiệt thuần (thử ôn)','B. Thử thấp — thử nhiệt kèm thấp tà uất trở','C. Phong hàn biểu chứng','D. Táo nhiệt thương phế'],ans:'B',exp:`Thân nặng, rêu nê, mạch nhu, miệng khát uống không nhiều, bĩ muộn — bộ dấu thấp tà uất trở phối với thử nhiệt → thử thấp. Không có dấu thử nhiệt thuần (mạch hồng đại, khát dữ).`,key:`Khát mà uống không nhiều + mạch nhu = dấu chỉ điểm thấp.`},
+{id:44,topic:'Chẩn đoán & Phân biệt',bloom:'Phân tích',scenario:'Bệnh nhân sốt cao, đại hãn, mặt đỏ, mạch hồng đại — thoạt nhìn giống thử ôn. Tuy nhiên còn rêu lưỡi vàng nê và chi thể mỏi nhừ.',stem:`Diễn giải phù hợp nhất là?`,opts:['A. Thử ôn khí phần thuần túy, dùng Bạch hổ thang','B. Thử thấp khôn trở trung tiêu (thử nhiệt thiên thịnh nhưng vẫn còn thấp)','C. Phục thử nhập dinh','D. Thấp ôn giai đoạn đầu'],ans:'B',exp:`Mạch hồng đại + tráng nhiệt giống thử ôn, nhưng rêu vàng NÊ và chi thể nhừ là dấu thấp còn → thử thấp khôn trở trung tiêu, cần Thương truật bạch hổ thang (thêm hóa thấp) chứ không Bạch hổ thuần.`,key:`Rêu NÊ là chìa khóa: thử nhiệt thịnh nhưng thấp chưa hết.`},
+{id:45,topic:'Biện chứng các thể',bloom:'Đánh giá',scenario:'Thử thấp chi tà nhập lý, trở trệ thiếu dương khí phần làm khu cơ bất lợi.',stem:`Pháp trị phù hợp nhất là?`,opts:['A. Phát hãn giải biểu','B. Thanh tiết thiếu dương, phân tiêu thấp nhiệt','C. Ôn bổ tỳ thận','D. Công hạ thực nhiệt'],ans:'B',exp:`KB phần biện chứng tổng quát: thử thấp trở trệ thiếu dương khí phần gây khu cơ bất lợi → thanh tiết thiếu dương, phân tiêu thấp nhiệt.`,key:`Tà trở thiếu dương → thanh tiết thiếu dương + phân tiêu thấp nhiệt.`},
+{id:46,topic:'Nguyên nhân & Cơ chế',bloom:'Hiểu',scenario:'',stem:`Vì sao bệnh nhân thử thấp thường miệng khát nhưng lại không muốn uống nhiều?`,opts:['A. Vì tân dịch hoàn toàn đầy đủ','B. Vì thấp tà nội trở, khí cơ không thông (thấp ngăn) dù có nhiệt','C. Vì hàn ngưng trung tiêu','D. Vì dương khí quá vượng'],ans:'B',exp:`Trong thử thấp, thấp tà nội trở khiến khí cơ không thông, nên dù có thử nhiệt gây khát thì bệnh nhân vẫn không muốn uống nhiều — khác thử ôn khát dữ thích uống.`,key:`Thấp ngăn → khát mà uống không nhiều (dấu phân biệt thử ôn).`},
+{id:47,topic:'Biện chứng các thể',bloom:'Áp dụng',scenario:'',stem:`Đặc điểm mạch nào đặc trưng cho thể thử thấp thương khí?`,opts:['A. Hồng đại hữu lực','B. Phù khẩn','C. Đại (lớn) vô lực hoặc nhu hoạt đới sắc','D. Trầm trì'],ans:'C',exp:`Thử thấp thương khí: nguyên khí hao tổn → mạch đại vô lực; nhu hoạt đới sắc phản ánh thử thấp nội khốn. Mạch hồng đại hữu lực là thực nhiệt (khôn trở trung tiêu).`,key:`Mạch đại nhưng VÔ LỰC = khí đã hư.`},
+{id:48,topic:'Biến chứng & Dự phòng',bloom:'Sáng tạo',scenario:'Bệnh nhân nam 30 tuổi, làm ruộng, mùa mưa, sốt cao, đau bắp chân, mắt đỏ, vàng da, urê máu tăng, men gan tăng — nghĩ nhiều đến bệnh xoắn khuẩn thể thử thấp nặng.',stem:`Hướng xử trí tích hợp hợp lý nhất là?`,opts:['A. Chỉ dùng YHCT thanh thử hóa thấp, theo dõi tại nhà','B. Phối hợp Đông-Tây: cấp cứu/kháng sinh và hồi sức theo YHHĐ, đồng thời biện chứng YHCT thanh thử lợi thấp, lương huyết khi có xuất huyết','C. Chỉ truyền dịch, không cần kháng sinh','D. Châm cứu đơn thuần'],ans:'B',exp:`Thể nặng (vàng da, suy thận, men gan tăng) là red flag → KB nhấn phối hợp Tây y tích cực cấp cứu (kháng sinh, hồi sức) song hành biện chứng YHCT (thanh thử lợi thấp, lương huyết an lạc nếu xuất huyết). YHCT không thay thế điều trị căn nguyên.`,key:`Thể nặng/Lepto = bắt buộc phối hợp Đông-Tây, YHCT bổ trợ.`},
+{id:49,topic:'Chẩn đoán & Phân biệt',bloom:'Phân tích',scenario:'',stem:`Chứng Tà cán nhiễu vị trường (thử thấp) so với thấp nhiệt thổ tả khác nhau chủ yếu ở điểm nào?`,opts:['A. Hoàn toàn giống nhau','B. Thể thử thấp cấp bách hơn, sốt cao hơn, bệnh tình nặng hơn','C. Thử thấp luôn nhẹ hơn thấp nhiệt thổ tả','D. Thử thấp không có nôn tả'],ans:'B',exp:`KB: chứng này giống thấp nhiệt thổ tả về tính chất, chỉ khác nặng-nhẹ; thể thử thấp cấp bách, sốt cao hơn, bệnh tình nặng hơn; do nôn tả nhiều rất dễ thương âm hóa táo nhập dinh huyết.`,key:`Cùng cơ chế nhưng thử thấp cấp và nặng hơn thấp nhiệt thổ tả.`},
+{id:50,topic:'Biến chứng & Dự phòng',bloom:'Đánh giá',scenario:'Bệnh nhân thử thấp xuất hiện đồng thời hoàng đản nặng và khạc máu.',stem:`Thái độ xử trí đúng đắn nhất là?`,opts:['A. Chỉ biện chứng luận trị YHCT, không cần Tây y','B. Vừa biện chứng luận trị, vừa kịp thời xử lý triệu chứng và phối hợp Tây y cấp cứu','C. Ngưng mọi thuốc, chờ tự hồi phục','D. Chỉ dùng thuốc bổ'],ans:'B',exp:`KB: hoàng đản và hóa táo thương lạc gây xuất huyết đều là triệu chứng nghiêm trọng — ngoài biện chứng luận trị cần kịp thời xử lý triệu chứng làm bệnh hoãn giải và cần thiết phải phối hợp Tây y cấp cứu.`,key:`Hai biến chứng nặng đồng thời = bắt buộc phối hợp Tây y cấp cứu.`}
+];
+
+let fcFlipped = 0;
+let mcqAnswered = 0, mcqCorrect = 0;
+let fcFilter = 'Tất cả', mcqFilter = 'Tất cả';
+
+function initCounts(){
+  document.getElementById('tab-btn-fc').textContent = '🃏 ' + flashcards.length + ' Flashcard';
+  document.getElementById('tab-btn-mcq').textContent = '📝 ' + mcqs.length + ' MCQ (SBA)';
+  document.getElementById('fc-total').textContent = flashcards.length;
+  document.getElementById('fc-topics').textContent = TOPICS.length;
+  document.getElementById('mcq-total').textContent = mcqs.length;
+}
+
+function switchTab(t){
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active',i===(t==='fc'?0:1)));
+  document.getElementById('tab-fc').classList.toggle('active',t==='fc');
+  document.getElementById('tab-mcq').classList.toggle('active',t==='mcq');
+}
+
+function buildFilters(containerId, filterVar, onChangeFn){
+  const c = document.getElementById(containerId);
+  const cats = ['Tất cả',...TOPICS];
+  c.innerHTML = '';
+  cats.forEach(function(t){
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn' + (t === filterVar ? ' active' : '');
+    btn.textContent = t;
+    btn.onclick = function(){ onChangeFn(t); };
+    c.appendChild(btn);
+  });
+}
+
+function renderFlashcards(){ buildFilters('fc-filters', fcFilter, fcSetFilter); renderFCGrid(); }
+function fcSetFilter(t){ fcFilter = t; buildFilters('fc-filters', fcFilter, fcSetFilter); renderFCGrid(); }
+
+function renderFCGrid(){
+  const grid = document.getElementById('fc-grid');
+  const cards = fcFilter === 'Tất cả' ? flashcards : flashcards.filter(function(c){ return c.topic === fcFilter; });
+  grid.innerHTML = cards.map(function(c){
+    return '<div class="card-wrap' + (c.tall ? ' tall' : '') + '" id="fc-' + c.id + '" onclick="flipCard(' + c.id + ')">' +
+      '<div class="card-inner">' +
+        '<div class="card-face card-front">' +
+          '<div class="card-topic" style="color:' + COLORS[c.topic] + '">' + c.topic + ' • Thẻ ' + c.id + '</div>' +
+          '<div class="card-q">' + c.q + '</div>' +
+          '<div class="card-hint">Chạm để xem đáp án →</div>' +
+        '</div>' +
+        '<div class="card-face card-back">' +
+          '<div class="card-topic" style="color:' + COLORS[c.topic] + '">' + c.topic + ' • Đáp án</div>' +
+          '<div class="card-a">' + c.a + '</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function flipCard(id){
+  const el = document.getElementById('fc-'+id);
+  const wasFlipped = el.classList.contains('flipped');
+  el.classList.toggle('flipped');
+  if(!wasFlipped){ fcFlipped++; document.getElementById('fc-flipped').textContent = fcFlipped; }
+}
+
+function renderMCQ(){ buildFilters('mcq-filters', mcqFilter, mcqSetFilter); renderMCQList(); }
+function mcqSetFilter(t){ mcqFilter = t; buildFilters('mcq-filters', mcqFilter, mcqSetFilter); renderMCQList(); }
+
+function renderMCQList(){
+  const list = document.getElementById('mcq-list');
+  const qs = mcqFilter === 'Tất cả' ? mcqs : mcqs.filter(function(q){ return q.topic === mcqFilter; });
+  list.innerHTML = qs.map(function(q){
+    const scenario = q.scenario ? '<div class="q-scenario">📋 ' + q.scenario + '</div>' : '';
+    const opts = q.opts.map(function(o, i){
+      return '<div class="option" id="opt-' + q.id + '-' + i + '" onclick="selectOpt(' + q.id + ',' + i + ')">' +
+        '<span class="opt-label">' + String.fromCharCode(65+i) + '.</span>' +
+        '<span class="opt-text">' + o.substring(3) + '</span>' +
+      '</div>';
+    }).join('');
+    return '<div class="question-card" id="qcard-' + q.id + '">' +
+      '<div class="q-header">' +
+        '<span class="q-num">Câu ' + q.id + '</span>' +
+        '<span class="q-topic-tag" style="border-left:3px solid ' + COLORS[q.topic] + ';padding-left:8px">' + q.topic + '</span>' +
+        '<span class="q-bloom">' + q.bloom + '</span>' +
+      '</div>' +
+      scenario +
+      '<div class="q-stem">' + q.stem + '</div>' +
+      '<div class="options">' + opts + '</div>' +
+      '<button class="reveal-btn" id="rbtn-' + q.id + '" onclick="revealAns(' + q.id + ')">Xem đáp án</button>' +
+      '<div class="explanation" id="exp-' + q.id + '">' +
+        '<div class="exp-correct">✓ Đáp án đúng: ' + q.ans + '</div>' +
+        '<div class="exp-text">' + q.exp + '</div>' +
+        '<div class="exp-key">💡 Key: ' + q.key + '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function selectOpt(qid, optIdx){
+  const q = mcqs.find(function(x){ return x.id === qid; });
+  const card = document.getElementById('qcard-'+qid);
+  if(card.classList.contains('correct') || card.classList.contains('wrong')) return;
+  q.opts.forEach(function(_,i){ document.getElementById('opt-'+qid+'-'+i).classList.remove('selected'); });
+  document.getElementById('opt-'+qid+'-'+optIdx).classList.add('selected');
+}
+
+function revealAns(qid){
+  const q = mcqs.find(function(x){ return x.id === qid; });
+  const card = document.getElementById('qcard-'+qid);
+  if(card.classList.contains('correct') || card.classList.contains('wrong')) return;
+  const correctIdx = q.ans.charCodeAt(0) - 65;
+  const selectedEl = document.querySelector('#qcard-'+qid+' .option.selected');
+  let selectedIdx = -1;
+  if(selectedEl) selectedIdx = parseInt(selectedEl.id.split('-')[2]);
+  q.opts.forEach(function(_,i){
+    const opt = document.getElementById('opt-'+qid+'-'+i);
+    opt.classList.add('disabled');
+    if(i === correctIdx) opt.classList.add('correct-ans');
+    else if(i === selectedIdx) opt.classList.add('wrong-ans');
+  });
+  const isCorrect = selectedIdx === correctIdx;
+  card.classList.add(isCorrect ? 'correct' : 'wrong');
+  document.getElementById('exp-'+qid).classList.add('show');
+  document.getElementById('rbtn-'+qid).disabled = true;
+  mcqAnswered++;
+  if(isCorrect) mcqCorrect++;
+  updateMCQStats();
+}
+
+function updateMCQStats(){
+  const total = mcqs.length;
+  document.getElementById('mcq-answered').textContent = mcqAnswered;
+  document.getElementById('mcq-correct-count').textContent = mcqCorrect;
+  const pct = mcqAnswered > 0 ? Math.round(mcqCorrect / mcqAnswered * 100) : 0;
+  document.getElementById('mcq-pct').textContent = pct + '%';
+  document.getElementById('mcq-bar').style.width = (total > 0 ? mcqAnswered / total * 100 : 0) + '%';
+}
+
+function resetMCQ(){ mcqAnswered = 0; mcqCorrect = 0; updateMCQStats(); renderMCQList(); }
+
+initCounts();
+renderFlashcards();
+renderMCQ();
+</script>
+</body>
+</html>

@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz Ôn Bệnh - Đại Cương & Nguyên Tắc Điều Trị</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: #f4f6f9;
+    color: #1a1a2e;
+    min-height: 100vh;
+    padding: 24px 16px 60px;
+  }
+  .header {
+    max-width: 820px;
+    margin: 0 auto 28px;
+    text-align: center;
+  }
+  .header h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 6px;
+  }
+  .header p {
+    font-size: 14px;
+    color: #666;
+  }
+  .stats-bar {
+    max-width: 820px;
+    margin: 0 auto 24px;
+    background: #fff;
+    border-radius: 14px;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    flex-wrap: wrap;
+  }
+  .stat { text-align: center; min-width: 60px; }
+  .stat-num { font-size: 22px; font-weight: 700; color: #3b5bdb; }
+  .stat-label { font-size: 11px; color: #888; margin-top: 2px; }
+  .progress-wrap { flex: 1; min-width: 120px; }
+  .progress-label { font-size: 12px; color: #666; margin-bottom: 6px; }
+  .progress-bar-bg {
+    height: 8px;
+    background: #e8ecf0;
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #3b5bdb, #7950f2);
+    border-radius: 99px;
+    transition: width 0.4s;
+    width: 0%;
+  }
+  .section-header {
+    max-width: 820px;
+    margin: 32px auto 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-badge {
+    background: #3b5bdb;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 99px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .section-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1a1a2e;
+  }
+  .question-card {
+    max-width: 820px;
+    margin: 0 auto 16px;
+    background: #fff;
+    border-radius: 14px;
+    padding: 22px 24px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+    transition: box-shadow 0.2s;
+  }
+  .question-card:hover { box-shadow: 0 3px 12px rgba(0,0,0,0.1); }
+  .q-number {
+    font-size: 11px;
+    font-weight: 700;
+    color: #3b5bdb;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+  }
+  .q-text {
+    font-size: 15px;
+    font-weight: 500;
+    color: #1a1a2e;
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+  .options { display: flex; flex-direction: column; gap: 8px; }
+  .option-btn {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 14px;
+    border: 1.5px solid #e0e4ea;
+    border-radius: 10px;
+    cursor: pointer;
+    background: #fff;
+    text-align: left;
+    font-size: 14px;
+    color: #333;
+    line-height: 1.5;
+    transition: all 0.18s;
+  }
+  .option-btn:hover:not(.disabled) {
+    border-color: #3b5bdb;
+    background: #f0f4ff;
+  }
+  .option-btn.selected {
+    border-color: #3b5bdb;
+    background: #eef2ff;
+    color: #3b5bdb;
+    font-weight: 500;
+  }
+  .option-btn.correct {
+    border-color: #2f9e44;
+    background: #ebfbee;
+    color: #2f9e44;
+    font-weight: 500;
+  }
+  .option-btn.wrong {
+    border-color: #e03131;
+    background: #fff5f5;
+    color: #e03131;
+    font-weight: 500;
+  }
+  .option-btn.show-correct {
+    border-color: #2f9e44;
+    background: #ebfbee;
+    color: #2f9e44;
+    font-weight: 500;
+  }
+  .option-btn.disabled { cursor: default; }
+  .option-key {
+    min-width: 24px;
+    height: 24px;
+    background: #f0f4f8;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: #555;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .option-btn.selected .option-key { background: #3b5bdb; color: #fff; }
+  .option-btn.correct .option-key { background: #2f9e44; color: #fff; }
+  .option-btn.wrong .option-key { background: #e03131; color: #fff; }
+  .option-btn.show-correct .option-key { background: #2f9e44; color: #fff; }
+  .actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+  }
+  .btn-check {
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    background: #3b5bdb;
+    color: #fff;
+    transition: background 0.15s;
+  }
+  .btn-check:hover { background: #2f4cad; }
+  .btn-check:disabled { background: #c0c9e8; cursor: default; }
+  .btn-show {
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    border: 1.5px solid #d0d5de;
+    cursor: pointer;
+    background: transparent;
+    color: #555;
+    transition: all 0.15s;
+  }
+  .btn-show:hover { border-color: #888; color: #333; }
+  .btn-show:disabled { opacity: 0.4; cursor: default; }
+  .result-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 99px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-top: 14px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .result-chip.show { opacity: 1; }
+  .result-chip.correct-chip { background: #ebfbee; color: #2f9e44; }
+  .result-chip.wrong-chip { background: #fff5f5; color: #e03131; }
+  .explanation {
+    margin-top: 14px;
+    padding: 12px 16px;
+    background: #f8f9ff;
+    border-left: 3px solid #3b5bdb;
+    border-radius: 0 8px 8px 0;
+    font-size: 13px;
+    color: #444;
+    line-height: 1.6;
+    display: none;
+  }
+  .explanation.show { display: block; }
+  .explanation strong { color: #3b5bdb; }
+  .reset-area {
+    max-width: 820px;
+    margin: 32px auto 0;
+    text-align: center;
+  }
+  .btn-reset {
+    padding: 12px 32px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    border: 2px solid #3b5bdb;
+    cursor: pointer;
+    background: #fff;
+    color: #3b5bdb;
+    transition: all 0.15s;
+  }
+  .btn-reset:hover { background: #3b5bdb; color: #fff; }
+  @media (max-width: 600px) {
+    body { padding: 16px 10px 50px; }
+    .question-card { padding: 16px; }
+    .stats-bar { padding: 12px 16px; gap: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Quiz Ôn Bệnh Học</h1>
+  <p>Đại Cương Ôn Bệnh &amp; Nguyên Tắc Điều Trị | 61 câu hỏi MCQ</p>
+</div>
+
+<div class="stats-bar">
+  <div class="stat">
+    <div class="stat-num" id="st-done">0</div>
+    <div class="stat-label">Đã trả lời</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num" id="st-correct" style="color:#2f9e44">0</div>
+    <div class="stat-label">Đúng</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num" id="st-wrong" style="color:#e03131">0</div>
+    <div class="stat-label">Sai</div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-label" id="prog-label">Tiến độ: 0 / 61</div>
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="prog-fill"></div>
+    </div>
+  </div>
+</div>
+
+<div id="quiz-container"></div>
+
+<div class="reset-area">
+  <button class="btn-reset" onclick="resetAll()">↺ Làm lại từ đầu</button>
+</div>
+
+<script>
+const QUESTIONS = [
+  {
+    section: "ĐẠI CƯƠNG ÔN BỆNH",
+    questions: [
+      {
+        id: 1,
+        text: "Người sáng lập Vệ, khí, dinh, huyết biện chứng là:",
+        options: ["Diệp Thiên Sĩ","Trương Trọng Cảnh","Ngô Cúc Thông","Quách Ung"],
+        answer: 0,
+        explanation: "Diệp Thiên Sĩ (đời nhà Thanh) đã sáng lập lý luận <strong>Vệ – Khí – Dinh – Huyết biện chứng</strong> trong cuốn Ôn Nhiệt Luận, đây là căn cứ biện chứng chính của Ôn bệnh học."
+      },
+      {
+        id: 2,
+        text: "Người sáng lập Tam tiêu biện chứng là:",
+        options: ["Diệp Thiên Sĩ","Trương Trọng Cảnh","Ngô Cúc Thông","Quách Ung"],
+        answer: 2,
+        explanation: "Ngô Cúc Thông (đời nhà Thanh) trong cuốn <strong>Ôn Bệnh Điều Biện</strong> đã sáng lập <strong>Tam tiêu biện chứng</strong>, bổ sung cho vệ – khí – dinh – huyết của Diệp Thiên Sĩ."
+      },
+      {
+        id: 3,
+        text: "Thuyết Phục khí Ôn bệnh phát vào mùa xuân xuất phát từ:",
+        options: ["Ngô Hựu Khả","Nội kinh","Chu Dương Tuấn","Vương Mạnh Anh"],
+        answer: 1,
+        explanation: "<strong>Nội kinh</strong> là nguồn gốc của thuyết phục khí ôn bệnh: 'Đông thương vụ hàn, xuân tất ôn bệnh' — thu đông cảm hàn tà, phát trước hạ chí là ôn bệnh."
+      },
+      {
+        id: 4,
+        text: "Y gia nói \"Một người bị bệnh gọi là Ôn, một địa phương nhiều người bị bệnh giống nhau gọi là Dịch\" là:",
+        options: ["Ngô Hựu Khả","Nội kinh","Chu Dương Tuấn","Vương Mạnh Anh"],
+        answer: 2,
+        explanation: "<strong>Chu Dương Tuấn</strong> đã phân biệt: một người bệnh = Ôn; nhiều người cùng bệnh tại một địa phương = Dịch."
+      },
+      {
+        id: 5,
+        text: "Sự phát triển của Ôn bệnh được chia làm mấy thời kỳ?",
+        options: ["4","5","6","7"],
+        answer: 0,
+        explanation: "Sự phát triển Ôn bệnh học chia <strong>4 thời kỳ</strong>: (1) Chiến Quốc–Tần–Đường, (2) Tống–Kim–Nguyên, (3) Minh–Thanh, (4) Cận đại."
+      },
+      {
+        id: 6,
+        text: "Thời Tống, y gia nào viết câu: \"phong ôn, thấp ôn trong Ôn bệnh nếu dựa vào Thương hàn phát hãn thì thập tử vô nhất sinh\"?",
+        options: ["Vương Thúc Hòa","Mang An Thường","Chu Quảng","Lưu Hà Gian"],
+        answer: 1,
+        explanation: "<strong>Mang An Thường</strong> (đời Tống) trong Thương Hàn Tổng Bệnh Luận đã cảnh báo rằng áp dụng phương pháp phát hãn thương hàn vào ôn bệnh là vô cùng nguy hiểm."
+      },
+      {
+        id: 7,
+        text: "Thời Kim, Nguyên, người khai sáng phương pháp \"thanh nhiệt giải độc\" là:",
+        options: ["Vương An Đạo","Tôn Tư Hạo","Lưu Hà Gian","Chu Quảng"],
+        answer: 2,
+        explanation: "<strong>Lưu Hà Gian</strong> (tứ đại y gia Kim–Nguyên) đề xuất lục khí đều từ hỏa biến hóa, sáng chế Song giải tán, Phòng phong thông thánh tán — người đầu tiên khai sáng phương pháp <strong>thanh nhiệt giải độc</strong>."
+      },
+      {
+        id: 8,
+        text: "Đời Đường, Y gia nào đã kê \"Uy Nhuy thang\", sau trở thành phương \"Tư âm giải biểu\"?",
+        options: ["Mang An Thường","Tôn Tư Hạo","Lưu Hà Gian","Vương Thúc Hòa"],
+        answer: 1,
+        explanation: "<strong>Tôn Tư Hạo</strong> (đời Đường) trong Bị Cấp Thiên Kim Yếu Phương đã ghi chép Uy Nhuy thang, về sau được các học giả ôn bệnh gia giảm thành phương tư âm giải biểu."
+      },
+      {
+        id: 9,
+        text: "Thời nhà Nguyên, Y gia nào đã viết \"Ôn bệnh không thể nhầm lẫn với Thương hàn\"?",
+        options: ["Vương An Đạo","Tôn Tư Hạo","Lưu Hà Gian","Mang An Thường"],
+        answer: 0,
+        explanation: "<strong>Vương An Đạo</strong> (cuối nhà Nguyên) trong Y Kinh Tố Hồi Tập đã rõ ràng tuyên bố: 'Ôn bệnh không thể nhầm lẫn với Thương hàn' và lập luận pháp trị phải thanh lý nhiệt là chính."
+      },
+      {
+        id: 10,
+        text: "Theo Ngô Cúc Thông, trong \"Ôn bệnh điều biện\", có bao nhiêu loại ngoại cảm nhiệt bệnh?",
+        options: ["9","10","11","12"],
+        answer: 0,
+        explanation: "Ngô Cúc Thông liệt kê <strong>9 loại</strong>: phong ôn, ôn nhiệt, ôn dịch, ôn độc, thử ôn, thấp ôn, thu táo, đông ôn, ôn ngược."
+      },
+      {
+        id: 11,
+        text: "Ôn bệnh có mấy tính chất?",
+        options: ["4","5","6","7"],
+        answer: 1,
+        explanation: "Ôn bệnh có <strong>5 tính chất</strong>: (1) Tính truyền nhiễm, (2) Tính lưu hành, (3) Tính thời tiết, (4) Tính khu vực, (5) Tính giai đoạn."
+      },
+      {
+        id: 12,
+        text: "Bệnh tây y nào thuộc Ôn bệnh?",
+        options: ["Sởi","Bệnh dại","Bệnh uốn ván","Bệnh ký sinh trùng"],
+        answer: 0,
+        explanation: "<strong>Sởi</strong> là bệnh nhiễm trùng cấp tính có đặc điểm ôn bệnh (sốt cao, phát ban, lây nhiễm mạnh). Bệnh dại, uốn ván, và đại bộ phận bệnh ký sinh trùng không có đặc tính nhiệt bệnh của ôn bệnh."
+      },
+      {
+        id: 13,
+        text: "Ôn bệnh có mấy giai đoạn?",
+        options: ["3","4","5","6"],
+        answer: 2,
+        explanation: "Ôn bệnh diễn biến qua <strong>5 giai đoạn</strong>: (1) Tà ở vệ phần, (2) Tà ở khí phần, (3) Tà ở dinh phần, (4) Tà ở huyết phần, (5) Hồi phục."
+      },
+      {
+        id: 14,
+        text: "Có mấy biểu hiện lâm sàng của Ôn bệnh?",
+        options: ["7","6","5","4"],
+        answer: 3,
+        explanation: "Ôn bệnh có <strong>4 biểu hiện lâm sàng</strong>: (1) Khởi bệnh cấp, truyền biến nhanh; (2) Phát nhiệt là chủ chứng; (3) Xuất hiện chứng hầu nguy hiểm; (4) Hao âm thương tân."
+      },
+      {
+        id: 15,
+        text: "Những chứng hầu nguy hiểm của ôn bệnh là:",
+        options: ["Ban chẩn, co giật","Co giật, thổ huyết, tiện huyết","Khạc huyết, thổ huyết, tiện huyết, niệu huyết, co giật, ban chẩn","Tiện huyết, niệu huyết"],
+        answer: 2,
+        explanation: "Chứng nguy hiểm đầy đủ của ôn bệnh gồm: <strong>ban chẩn, co giật (dẫn động can phong)</strong> và <strong>xuất huyết nhiều khiếu</strong> (khạc huyết, thổ huyết, tiện huyết, niệu huyết) do nhiệt thịnh bức huyết vọng hành."
+      },
+      {
+        id: 16,
+        text: "Có bao nhiêu cách phân loại ôn bệnh?",
+        options: ["8","9","10","11"],
+        answer: 0,
+        explanation: "Có <strong>8 cách phân loại</strong>: 3 phương pháp chính thống (theo tính chất bệnh chứng, theo phát bệnh/biểu lý, theo vị trí) + 5 cách đặt tên truyền thống (theo mùa, theo chủ khí, kết hợp mùa và khí, theo triệu chứng, theo tình hình lưu hành)."
+      },
+      {
+        id: 17,
+        text: "Điều đúng về Phong ôn (trong Ôn bệnh học):",
+        options: ["Bệnh cơ vệ dương bị uất hóa nhiệt nhập lý; lục kinh truyền biến theo thứ tự","Triệu chứng: ố hàn phát nhiệt, đau đầu, đau mình, rêu lưỡi trắng mỏng, mạch phù khẩn","Đường xâm nhập từ da và Bàng quang kinh","Nguyên nhân do Phong nhiệt bệnh tà"],
+        answer: 3,
+        explanation: "Phong ôn có <strong>nguyên nhân là Phong nhiệt bệnh tà</strong>, xâm nhập qua miệng/mũi, vào phế kinh; dễ hóa táo thương âm; điều trị bằng tân lương giải biểu. (Các đặc điểm còn lại ở đáp án A, B, C là của Thương hàn.)"
+      },
+      {
+        id: 18,
+        text: "Điều đúng về Thương hàn (trong Thương hàn luận):",
+        options: ["Đường xâm nhập từ miệng, mũi và Phế kinh","Bệnh cơ vệ dương bị uất hóa nhiệt nhập lý; lục kinh truyền biến theo thứ tự","Nguyên nhân do Phong nhiệt bệnh tà","Bệnh cơ dễ hóa táo thương âm, truyền biến nhanh"],
+        answer: 1,
+        explanation: "Thương hàn: nguyên nhân <strong>phong hàn bệnh tà</strong>; xâm nhập từ da, vào túc Thiếu dương bàng quang kinh; bệnh cơ là <strong>vệ dương bị uất hóa nhiệt nhập lý; lục kinh truyền biến theo thứ tự</strong>; điều trị tân ôn giải biểu."
+      },
+      {
+        id: 19,
+        text: "Quan hệ giữa Ôn bệnh học và Thương hàn luận là:",
+        options: ["Thương hàn luận hàm chứa Ôn bệnh học","Ôn bệnh học và Thương hàn luận là hai bệnh lý độc lập","Mối quan hệ kế thừa và phát triển","Ôn bệnh học bao gồm Thương hàn luận"],
+        answer: 2,
+        explanation: "Ôn bệnh học được hình thành trên nền tảng của Thương hàn luận, là <strong>mối quan hệ kế thừa và phát triển</strong> — Thương hàn luận đặt nền móng, Ôn bệnh học phát triển lên một tầm cao mới."
+      },
+      {
+        id: 20,
+        text: "Đặc điểm chủ yếu nhất của Ôn bệnh là gì?",
+        options: ["Đau bụng và tiêu chảy","Phát nhiệt là chủ chứng, dễ hóa táo thương âm","Ho kéo dài và suy nhược","Khởi phát từ nội thương"],
+        answer: 1,
+        explanation: "<strong>Phát nhiệt là chủ chứng, dễ hóa táo thương âm</strong> — đây là đặc điểm cơ bản quyết định thuộc tính ôn nhiệt của Ôn bệnh, phân biệt với thương hàn và nội thương."
+      },
+      {
+        id: 21,
+        text: "Người sáng lập hệ thống biện chứng Vệ – Khí – Dinh – Huyết là ai?",
+        options: ["Ngô Hựu Khả","Vương An Đạo","Diệp Thiên Sĩ","Tiết Sinh Bạch"],
+        answer: 2,
+        explanation: "<strong>Diệp Thiên Sĩ</strong> (đời nhà Thanh) đã sáng lập và hệ thống hóa biện chứng Vệ–Khí–Dinh–Huyết trong Ôn Nhiệt Luận."
+      },
+      {
+        id: 22,
+        text: "Một bệnh nhân sốt cao, khát nước nhiều, miệng khô, mồ hôi nhiều, đại tiện táo. Đặc điểm bệnh lý nổi bật nhất là:",
+        options: ["Hàn tà ngưng trệ","Thấp tà khốn tỳ","Nhiệt thịnh, dễ hao tân thương âm","Khí huyết hư suy"],
+        answer: 2,
+        explanation: "Sốt cao + khát nhiều + mồ hôi nhiều + táo bón = biểu hiện điển hình của <strong>nhiệt thịnh hao tân</strong> — ôn tà dương nhiệt thiêu đốt tân dịch, đây là đặc điểm bệnh lý cốt lõi của Ôn bệnh."
+      },
+      {
+        id: 23,
+        text: "Một địa phương xuất hiện nhiều người mắc cùng một bệnh truyền nhiễm trong thời gian ngắn. Theo Chu Dương Tuấn, tình huống này được gọi là:",
+        options: ["Thương hàn","Ôn bệnh","Dịch","Nội thương"],
+        answer: 2,
+        explanation: "Theo <strong>Chu Dương Tuấn</strong>: 'Một người bị bệnh gọi là Ôn, một địa phương nhiều người bị bệnh giống nhau gọi là <strong>Dịch</strong>'."
+      },
+      {
+        id: 24,
+        text: "Bệnh nhân sốt cao, ho khan, họng khô, không đàm, miệng khô táo. Biểu hiện này phù hợp nhất với tổn thương:",
+        options: ["Thận âm","Can âm","Phế âm","Tỳ dương"],
+        answer: 2,
+        explanation: "Ho khan, họng khô, không đàm, miệng khô táo ở thượng tiêu là biểu hiện điển hình của <strong>Phế âm tổn thương</strong> (bệnh tại thượng tiêu, tổn thương phế âm)."
+      },
+      {
+        id: 25,
+        text: "Một bệnh nhân mắc bệnh truyền nhiễm cấp tính, sốt cao, khởi phát nhanh. Theo Ôn bệnh học, giai đoạn đầu thường là:",
+        options: ["Huyết phần","Dinh phần","Khí phần","Vệ phần"],
+        answer: 3,
+        explanation: "Giai đoạn đầu Ôn bệnh: ôn tà sơ khởi xâm phạm cơ thể → bệnh biến tại <strong>Vệ phần</strong> (nông nhất). Sốt + ố hàn nhẹ + đau đầu + rêu trắng mỏng + mạch phù sác."
+      },
+      {
+        id: 26,
+        text: "Nguyên tắc điều trị ban đầu của phong ôn là:",
+        options: ["Tân ôn giải biểu","Công hạ tả nhiệt","Tân lương giải biểu","Bổ khí dưỡng huyết"],
+        answer: 2,
+        explanation: "Phong ôn do phong nhiệt tà → điều trị bằng <strong>tân lương giải biểu</strong> (thuốc mát nhẹ, giải biểu). Tân ôn giải biểu là phương pháp của thương hàn, dùng sai sẽ gây nguy hiểm."
+      },
+      {
+        id: 27,
+        text: "Một bệnh nhân mắc bệnh vào cuối hạ, sốt không cao, nặng đầu, ngực bụng đầy tức, rêu lưỡi nhớt. Loại Ôn bệnh phù hợp nhất là:",
+        options: ["Phong ôn","Xuân ôn","Thấp ôn","Thu táo"],
+        answer: 2,
+        explanation: "<strong>Thấp ôn</strong> xuất hiện vào cuối hạ, đặc trưng: sốt không cao, nặng đầu, ngực bụng đầy tức, rêu nhớt — biểu hiện thấp tà thiên thịnh, nhiệt nhẹ bị thấp che lấp."
+      },
+      {
+        id: 28,
+        text: "Một người bị sốt sau khi tiếp xúc lâu với thời tiết nắng nóng gay gắt. Trường hợp này thuộc phạm vi Ôn bệnh chủ yếu vì:",
+        options: ["Có tính di truyền","Có đặc tính nhiệt bệnh cấp tính","Có đặc tính miễn dịch","Có tính tự miễn"],
+        answer: 1,
+        explanation: "Trúng nắng/thử ôn thuộc Ôn bệnh vì <strong>có đặc tính nhiệt bệnh cấp tính</strong> — sốt cao, phát bệnh cấp, bệnh cơ là nhiệt. Dù không có tính truyền nhiễm nhưng vẫn thuộc phạm vi Ôn bệnh."
+      },
+      {
+        id: 29,
+        text: "Bệnh nhân sốt cao, tâm phiền, lưỡi đỏ, mạch sắc, xuất hiện chảy máu cam. Nhiều khả năng bệnh tà đã truyền đến:",
+        options: ["Vệ phần","Khí phần","Dinh phần","Huyết phần"],
+        answer: 3,
+        explanation: "Xuất huyết (chảy máu cam) là biểu hiện 'nhiệt thịnh bức huyết vọng hành' đặc trưng của <strong>Huyết phần</strong>. Tâm phiền, lưỡi đỏ, mạch sắc kèm xuất huyết → bệnh tà đã nhập huyết phần."
+      },
+      {
+        id: 30,
+        text: "Một bệnh truyền nhiễm lây lan nhanh trên phạm vi toàn cầu được gọi là:",
+        options: ["Tản phát","Địa phương lưu hành","Đại dịch","Nội dịch"],
+        answer: 2,
+        explanation: "Theo tính lưu hành của ôn bệnh: phạm vi lưu hành cực rộng, có thể lan ra cả thế giới gọi là <strong>đại dịch</strong> (pandemic). Mang An Thường đã mô tả nhiều mức độ lưu hành từ một nhà đến toàn thiên hạ."
+      },
+      {
+        id: 31,
+        text: "Một bệnh nhân sốt, khát nước dữ dội, lưỡi đỏ thẫm, ít rêu. Triệu chứng này phản ánh tổn thương chủ yếu:",
+        options: ["Vị âm","Phế khí","Tỳ dương","Thận dương"],
+        answer: 0,
+        explanation: "Miệng khát dữ dội + lưỡi đỏ thẫm ít rêu = biểu hiện điển hình của <strong>Vị âm tổn thương</strong> (bệnh tại trung tiêu): 'miệng khát, muốn uống nước, lưỡi đỏ thẫm, không rêu, quang bóng như gương'."
+      },
+      {
+        id: 32,
+        text: "Bệnh nhân sốt, co giật, mê sảng. Theo lý luận Ôn bệnh, cơ chế phù hợp nhất là:",
+        options: ["Hàn tà nhập lý","Thấp tà khốn tỳ","Nhiệt tà nội hãm tâm dinh, dẫn động can phong","Khí hư hạ hãm"],
+        answer: 2,
+        explanation: "Co giật + mê sảng trong ôn bệnh do <strong>nhiệt tà nội hãm tâm bào, dẫn động can phong</strong> — ôn tà ứ tâm dinh, tâm khiếu bị bế, can phong nội động."
+      },
+      {
+        id: 33,
+        text: "Một bệnh nhân khởi phát bệnh ngay sau khi cảm nhiễm ngoại tà và biểu hiện ban đầu là biểu nhiệt. Đây là:",
+        options: ["Phục tà ôn bệnh","Tân cảm ôn bệnh","Nội thương phát nhiệt","Hư lao phát nhiệt"],
+        answer: 1,
+        explanation: "<strong>Tân cảm ôn bệnh</strong>: cảm tà lập tức phát bệnh, sơ khởi là biểu nhiệt chứng (phong ôn, thu táo...). Phân biệt với Phục tà ôn bệnh: tà phục tàng, về sau mới phát, sơ khởi là lý nhiệt."
+      },
+      {
+        id: 34,
+        text: "Bệnh nhân sốt cao, khát nước, mê sảng, ban xuất huyết. Chuỗi truyền biến phù hợp nhất là:",
+        options: ["Vệ → Khí → Dinh → Huyết","Khí → Vệ → Dinh → Huyết","Dinh → Khí → Huyết → Vệ","Huyết → Dinh → Khí → Vệ"],
+        answer: 0,
+        explanation: "Quy luật chuẩn của Ôn bệnh học: tà từ ngoài vào sâu theo trình tự <strong>Vệ → Khí → Dinh → Huyết</strong> (từ nông đến sâu, từ nhẹ đến nặng)."
+      },
+      {
+        id: 35,
+        text: "Điểm khác biệt quan trọng nhất giữa phong ôn và thương hàn ở giai đoạn khởi phát là:",
+        options: ["Đều do phong hàn gây nên, và truyền biến theo lục kinh","Đều điều trị bằng tân ôn giải biểu","Phong ôn thuộc nhiệt tà; thương hàn do phong hàn tà","Đều truyền biến theo lục kinh"],
+        answer: 2,
+        explanation: "Điểm khác biệt cốt lõi: <strong>Phong ôn do phong nhiệt bệnh tà</strong> (dương tà, biến nhiệt nhanh, tân lương giải biểu); <strong>Thương hàn do phong hàn bệnh tà</strong> (âm tà, hóa nhiệt chậm, tân ôn giải biểu)."
+      },
+      {
+        id: 36,
+        text: "Một bệnh nhân sốt kéo dài, ban đầu sốt nhẹ, ngực bụng đầy tức, rêu lưỡi nhớt; sau đó xuất hiện miệng khô, lưỡi đỏ, ít tân dịch. Quá trình này cho thấy:",
+        options: ["Hàn tà hóa nhiệt","Thấp nhiệt hóa táo, hao thương âm tân","Dương khí phục hồi","Huyết hư sinh phong"],
+        answer: 1,
+        explanation: "Đây là tiến trình điển hình của thấp nhiệt ôn bệnh: <strong>thấp nhiệt hóa táo hóa hỏa</strong> → hao thương âm tân. Ban đầu thấp nặng (rêu nhớt), sau hóa táo (miệng khô, lưỡi đỏ, ít tân dịch)."
+      },
+      {
+        id: 37,
+        text: "Một bệnh nhân sốt cao, xuất huyết dưới da, tiểu máu. Theo lý luận Ôn bệnh, nguyên nhân trực tiếp nhất là:",
+        options: ["Thấp tà khốn tỳ","Hàn tà ngưng trệ huyết mạch","Nhiệt thịnh bức huyết vọng hành","Khí hư bất nhiếp huyết"],
+        answer: 2,
+        explanation: "<strong>Nhiệt thịnh bức huyết vọng hành</strong>: nhiệt tà cực thịnh tại huyết phần, bức ép huyết dịch tràn ra ngoài mạch → xuất huyết nhiều nơi (da, tiểu máu...)."
+      },
+      {
+        id: 38,
+        text: "Trong một vụ dịch mới, bệnh nhân chủ yếu mắc bệnh sau khi tiếp xúc gần qua đường hô hấp. Nhận định nào phù hợp nhất với học thuyết của Ngô Hựu Khả?",
+        options: ["Bệnh xâm nhập qua da là chủ yếu","Bệnh do lệ khí, xâm nhập qua mũi miệng","Bệnh do thất tình nội thương","Bệnh do ăn uống thất thường"],
+        answer: 1,
+        explanation: "<strong>Ngô Hựu Khả</strong> (cuối nhà Minh): ôn dịch gây ra bởi <strong>lệ khí</strong> (không phải phong hàn thử thấp), xâm nhập qua <strong>mũi miệng</strong> — đây là bước đột phá lớn so với quan điểm tà xâm qua bì mao."
+      },
+      {
+        id: 39,
+        text: "Một bác sĩ gặp bệnh nhân sốt cao, khát nước, họng khô, mạch sắc. Bác sĩ quyết định điều trị theo nguyên tắc \"tân ôn giải biểu\" như thương hàn. Đánh giá nào phù hợp nhất?",
+        options: ["Hoàn toàn chính xác vì mọi ngoại cảm bệnh đều giống nhau","Chấp nhận được vì sốt luôn do hàn tà gây ra","Không phù hợp vì biểu hiện ôn tà; nên biện chứng theo Ôn bệnh học","Không thể đánh giá do thiếu thông tin"],
+        answer: 2,
+        explanation: "Sốt cao + khát + họng khô + mạch sắc = biểu hiện <strong>ôn tà</strong>. Dùng tân ôn giải biểu (ấm, cay) cho ôn bệnh là sai — Mang An Thường đã cảnh báo 'thập tử vô nhất sinh'. Phải <strong>tân lương giải biểu</strong> theo Ôn bệnh học."
+      }
+    ]
+  },
+  {
+    section: "NGUYÊN TẮC ĐIỀU TRỊ ÔN BỆNH",
+    questions: [
+      {
+        id: 40,
+        text: "Yếu tố quan trọng nào dùng để định nghĩa bệnh truyền nhiễm?",
+        options: ["Cơ thể con người","Mầm bệnh","Đường lây","Thời gian phơi nhiễm"],
+        answer: 1,
+        explanation: "<strong>Mầm bệnh</strong> là yếu tố quyết định trong định nghĩa bệnh truyền nhiễm — có mầm bệnh đặc hiệu thì mới có bệnh truyền nhiễm. Không có mầm bệnh → không phải bệnh truyền nhiễm."
+      },
+      {
+        id: 41,
+        text: "Loại mầm bệnh nào chỉ lây bệnh cho người, không lây bệnh cho súc vật?",
+        options: ["Virus dại","Yesinia pestus","Leptospira","Salmonella typhi"],
+        answer: 3,
+        explanation: "<strong>Salmonella typhi</strong> (vi khuẩn thương hàn) chỉ lây bệnh cho người. Virus dại, Yersinia pestis (dịch hạch), Leptospira đều là bệnh lây từ động vật sang người (zoonosis)."
+      },
+      {
+        id: 42,
+        text: "Tiến triển của bệnh truyền nhiễm thường trải qua mấy thời kỳ (giai đoạn)?",
+        options: ["5","4","6","3"],
+        answer: 1,
+        explanation: "Bệnh truyền nhiễm trải qua <strong>4 giai đoạn</strong>: (1) Ủ bệnh (tiềm ẩn), (2) Khởi phát, (3) Toàn phát (cực kỳ), (4) Lui bệnh (hồi phục)."
+      },
+      {
+        id: 43,
+        text: "Đặc điểm nào của ôn bệnh theo YHCT là đúng nhất?",
+        options: ["Không lây","Bệnh khởi đầu bằng lạnh run, vã mồ hôi","Tính chất bệnh thiên về hàn","Diễn biến theo quy luật nhất định"],
+        answer: 3,
+        explanation: "Ôn bệnh YHCT: có tính truyền nhiễm, tính nhiệt, diễn biến cấp, và đặc biệt <strong>diễn biến theo quy luật nhất định</strong> (vệ → khí → dinh → huyết hoặc tam tiêu) — đây là đặc điểm độc đáo giúp biện chứng chính xác."
+      },
+      {
+        id: 44,
+        text: "Nguyên tắc điều trị ôn bệnh theo YHCT là gì?",
+        options: ["Cần giải nhiệt sinh tân","Chú ý bảo tồn tân dịch","Không dùng thuốc quá nhiệt, quá hàn","Tất cả đều đúng"],
+        answer: 3,
+        explanation: "Nguyên tắc điều trị ôn bệnh <strong>bao gồm cả ba</strong>: giải nhiệt sinh tân, bảo tồn tân dịch, và tránh thuốc quá nhiệt (ôn tà thêm nặng) hay quá hàn (cản trở giải tà)."
+      },
+      {
+        id: 45,
+        text: "Khi điều trị ôn bệnh giai đoạn ở Vệ phận, thường sử dụng các vị thuốc nào?",
+        options: ["Hòa giải","Thanh khí","Giải biểu","Lương huyết"],
+        answer: 2,
+        explanation: "Tà ở Vệ phần → phép trị là <strong>giải biểu</strong> (tân lương giải biểu, khinh tuyên phế khí). Bài thuốc đại diện: Ngân Kiều Tán, Tang Cúc Ẩm."
+      },
+      {
+        id: 46,
+        text: "Khi điều trị ôn bệnh giai đoạn ở Khí phận, thường sử dụng các vị thuốc nào?",
+        options: ["Khai khiếu","Công hạ","Thanh dinh","Giải biểu"],
+        answer: 1,
+        explanation: "Tà ở Khí phần → có thể cần <strong>công hạ</strong> (tả hỏa, thông phủ) đặc biệt khi tà nhiệt kết ở dương minh phủ. Bài đại diện: Bạch Hổ Thang (nhiệt tán mạn), Đại Thừa Khí Thang (nhiệt kết phủ)."
+      },
+      {
+        id: 47,
+        text: "Điều trị ôn bệnh giai đoạn Vệ phận, sử dụng bài thuốc nào?",
+        options: ["Ngân kiều tán","An cung ngưu hoàng hoàn","Hoắc hương chính khí tán","Hóa ban thang"],
+        answer: 0,
+        explanation: "<strong>Ngân Kiều Tán</strong> là bài thuốc kinh điển điều trị phong ôn ở giai đoạn Vệ phần — tân lương giải biểu, tuyên phế tán tà. Thành phần gồm Ngân hoa, Liên kiều, Bạc hà, Cát cánh..."
+      },
+      {
+        id: 48,
+        text: "Điều trị ôn bệnh ở Dinh phận, sử dụng bài thuốc nào?",
+        options: ["Tăng dịch thang","An cung ngưu hoàng hoàn","Ích vị thang","Ôn đờm thang"],
+        answer: 1,
+        explanation: "<strong>An Cung Ngưu Hoàng Hoàn</strong> được dùng ở Dinh phần khi tà nhiệt hãm tâm bào, gây bế khiếu (mê sảng, hôn mê) — tác dụng khai khiếu, thanh nhiệt giải độc."
+      },
+      {
+        id: 49,
+        text: "Điều trị ôn bệnh giai đoạn Huyết phận, sử dụng bài thuốc nào?",
+        options: ["Tăng dịch thang","Thanh dinh thang","Ích vị thang","Ôn đớm thang"],
+        answer: 1,
+        explanation: "<strong>Thanh Dinh Thang</strong> (có Tê giác, Sinh địa, Huyền sâm...) có tác dụng thanh dinh lương huyết, có thể dùng cho cả Dinh và Huyết phần. Tê giác là vị chủ dược để lương huyết, chỉ huyết."
+      },
+      {
+        id: 50,
+        text: "Một bệnh nhân nam 56 tuổi, bị sốt hai ngày, ớn lạnh, được chẩn đoán là nhiệt ở vệ phận. Nguyên tắc điều trị nào là phù hợp nhất?",
+        options: ["Thanh khí","Thấu nhiệt","Phát hãn","Tư âm"],
+        answer: 1,
+        explanation: "Vệ phần ôn bệnh → <strong>thấu nhiệt</strong> (minh bạch tà ra ngoài qua biểu) là nguyên tắc đúng. Phát hãn là phương pháp thương hàn (tân ôn), không phù hợp với ôn tà."
+      },
+      {
+        id: 51,
+        text: "Một bệnh nhân nữ 60 tuổi, bị sốt 6 ngày, không ớn lạnh, được chẩn đoán là nhiệt ở dinh phận. Nguyên tắc điều trị nào là phù hợp nhất?",
+        options: ["Thanh khí","Tư âm","Phát hãn","Thấu nhiệt"],
+        answer: 3,
+        explanation: "Dinh phần → nguyên tắc <strong>thấu nhiệt chuyển khí</strong> (透热转气) của Diệp Thiên Sĩ: giúp nhiệt tà từ dinh phần thoát ra khí phần để giải tán, không để tà đọng ở dinh."
+      },
+      {
+        id: 52,
+        text: "Khi nghiên cứu về nguyên tắc điều trị Ôn bệnh, nếu nhiệt ở thượng tiêu thì thuốc dùng có tính chất nào phù hợp nhất?",
+        options: ["Trọng trọc","Khinh thanh","Trầm giáng","Thu sáp"],
+        answer: 1,
+        explanation: "Ngô Cúc Thông: '<strong>Trị thượng tiêu như phi, khinh bất an</strong>' — thuốc điều trị thượng tiêu phải <strong>khinh thanh</strong> (nhẹ, bay, thanh nhẹ) như Bạc hà, Ngưu bàng, cánh hoa... mới đạt được thượng tiêu."
+      },
+      {
+        id: 53,
+        text: "Điều trị Ôn bệnh, nguyên tắc nào phù hợp nhất?",
+        options: ["Giải nhiệt, sinh tân và bảo tồn tân dịch","Cường Tâm nên dùng: Khương, Quế, Phụ tử","Nhiệt ở vệ dùng thuốc khổ hàn làm chủ","Nhiệt ở doanh dùng thuốc tân lương làm chủ"],
+        answer: 0,
+        explanation: "Nguyên tắc tổng quát điều trị ôn bệnh: <strong>giải nhiệt sinh tân và bảo tồn tân dịch</strong> — tân dịch là gốc sinh mệnh, ôn tà luôn hao tổn tân dịch nên phải vừa giải nhiệt vừa bảo tồn âm dịch."
+      },
+      {
+        id: 54,
+        text: "Bệnh nhân mắc bệnh truyền nhiễm cấp tính ngày thứ 4, sốt cao, khát nước nhiều, thích uống nước lạnh, vã mồ hôi như tắm, bứt rứt, mặt đỏ, đại tiện táo, nước tiểu vàng thẫm. Lưỡi đỏ, rêu vàng khô, mạch hồng đại sắc. Vị trí bệnh và bài thuốc phù hợp nhất?",
+        options: ["Bệnh tại Khí phận (Vị nhiệt); xử trí bằng bài thuốc Bạch hổ thang","Bệnh tại Huyết phận; xử trí bằng bài thuốc Tê giác địa hoàng thang","Bệnh tại Dinh phận; xử trí bằng bài thuốc Thanh Dinh Thang","Bệnh tại Vệ phận; xử trí bằng bài thuốc Ngân kiều tán hoặc Tang cúc ẩm"],
+        answer: 0,
+        explanation: "Tứ đại chứng: sốt cao, khát lạnh, mồ hôi nhiều, mạch hồng đại = <strong>vị nhiệt khí phần</strong> (Dương minh nhiệt tán mạn). Bài thuốc: <strong>Bạch Hổ Thang</strong> (Thạch cao, Tri mẫu, Ngạnh mễ, Cam thảo) — thanh khí phần nhiệt."
+      },
+      {
+        id: 55,
+        text: "Thầy thuốc đang điều trị ôn bệnh bằng bài Thanh Dinh Thang do tà nhiệt từ khí phần chuyển vào dinh phần. Theo nguyên tắc của Diệp Thiên Sĩ, hành động nào là đúng đắn nhất?",
+        options: ["Gia thêm Phụ tử, Nhục quế để ôn dương, thông mạch","Giữ nguyên vị Hoàng liên để tăng cường thanh nhiệt tại dinh phần","Thay bằng Đại Thừa Khí Thang để công hạ ngay","Bỏ vị Hoàng liên để tránh quá đắng lạnh giữ tà ở dinh, giúp đẩy nhiệt ra khí phần"],
+        answer: 3,
+        explanation: "Nguyên tắc 'thấu nhiệt chuyển khí' của Diệp Thiên Sĩ: khi dùng Thanh Dinh Thang, <strong>bỏ Hoàng liên</strong> (khổ hàn quá mức có thể khép tà lại ở dinh phần) để giúp nhiệt tà thấu ra khí phần giải tán."
+      },
+      {
+        id: 56,
+        text: "Bệnh nhân nam, sốt âm ỉ kéo dài (nặng hơn về chiều và đêm), lòng bàn tay/chân nóng, miệng khô, họng khát, tiểu ít vàng gắt, phân khô cứng. Thể trạng gầy, lưỡi đỏ sẫm ít rêu, mạch tế sắc. Cơ chế bệnh sinh chính và phép trị?",
+        options: ["Thấp nhiệt kết tụ trung tiêu; thanh nhiệt hóa thấp","Tà nhiệt xâm phạm Vệ phần thượng tiêu; tân lương giải biểu","Nhiệt kết Trường Vị; tả hạ nhiệt kết","Thận âm hư không chế được dương dẫn đến hư nhiệt bốc lên ở Hạ tiêu; tư âm thanh nhiệt"],
+        answer: 3,
+        explanation: "Sốt về chiều/đêm + lòng bàn tay/chân nóng + lưỡi đỏ thẫm ít rêu + mạch tế sắc = hạ tiêu <strong>Thận âm hư, hư nhiệt nội động</strong>. Phép trị: <strong>tư âm thanh nhiệt</strong>. Bài: Đại Bổ Âm Hoàn, Thanh Cốt Tán..."
+      },
+      {
+        id: 57,
+        text: "Ở giai đoạn cuối ôn nhiệt mạn tính, bệnh nhân hôn mê sâu, co giật liên tục, mạch hư nhược sắp tuyệt. Tương ứng hệ thống nào trong YHHĐ và bài thuốc cần chỉ định?",
+        options: ["Sốc nhiễm khuẩn, DIC, suy đa cơ quan tại ICU; Đại Định Phong Châu","Nhiễm trùng hô hấp trên giai đoạn đầu; Ngân Kiều Tán","Viêm dạ dày cấp tính do tăng axit; Bạch Hổ Thang","Hội chứng đáp ứng viêm toàn thân (SIRS); Hoắc Hương Chính Khí Tán"],
+        answer: 0,
+        explanation: "Hôn mê + co giật + mạch hư tuyệt = hạ tiêu <strong>Thận âm bị thiêu rụi, hư phong nội động</strong> → tương ứng sốc nhiễm khuẩn/DIC/suy đa cơ quan. Bài <strong>Đại Định Phong Châu</strong>: tư âm tức phong, ghìm dương tiềm phục."
+      },
+      {
+        id: 58,
+        text: "Tại sao ở giai đoạn Huyết phận, YHCT nhấn mạnh dùng Lương huyết giải độc, Chỉ huyết thay vì thuốc đại nhiệt để trợ tim?",
+        options: ["Vì thuốc Lương huyết tiêu diệt trực tiếp 100% virus và vi khuẩn như kháng sinh phổ rộng","Vì tổn thương bản chất là viêm nội mô lan tỏa, rối loạn đông máu và xuất huyết; Flavonoid, Alkaloide giúp kháng viêm, bảo vệ thành mạch, chống xuất huyết","Vì Lương huyết giúp tăng huyết áp nhanh chóng cho bệnh nhân sốc","Vì thuốc đại nhiệt ức chế miễn dịch, khiến vi trùng bùng phát tại mạch máu"],
+        answer: 1,
+        explanation: "Huyết phần tương ứng viêm nội mô/DIC/xuất huyết nặng. <strong>Flavonoid, Alkaloide</strong> trong thuốc lương huyết có tác dụng <strong>kháng viêm, bảo vệ nội mô mạch máu, chống đông và chống xuất huyết</strong> — phù hợp với cơ chế bệnh sinh YHHĐ."
+      },
+      {
+        id: 59,
+        text: "Bệnh nhân nam 45 tuổi, sốt cao liên tục 5 ngày, tâm phiền bứt rứt dữ dội, mê sảng, ban chẩn đỏ tía, đại tiện phân đen, lưỡi đỏ thẫm khô nứt nát. Tiểu cầu giảm nặng, thời gian đông máu kéo dài. Nhận định nào chính xác nhất?",
+        options: ["Bệnh mới ở Vệ phận; tương ứng nhiễm trùng hô hấp trên giai đoạn khởi phát","Bệnh đã tiến triển vào Huyết phận; tương ứng rối loạn đông máu nội mạch lan tỏa (DIC) và tổn thương nội mô nặng nề","Bệnh thuộc Thấp nhiệt Trung tiêu; tương ứng viêm dạ dày cấp","Bệnh đang ở Khí phận; tương ứng hội chứng đáp ứng viêm toàn thân (SIRS) mức độ nhẹ"],
+        answer: 1,
+        explanation: "Ban đỏ tía + phân đen + lưỡi đỏ thẫm nứt nát + tiểu cầu giảm + thời gian đông máu kéo dài = bệnh tại <strong>Huyết phần</strong>. Tương ứng YHHĐ: <strong>DIC (rối loạn đông máu nội mạch lan tỏa)</strong> với tổn thương nội mô nặng nề."
+      },
+      {
+        id: 60,
+        text: "Theo Ngô Cúc Thông: 'Trị hạ tiêu như quyền, phi trọng bất trầm'. Khi điều trị ôn bệnh giai đoạn muộn tổn thương Thận âm, hư phong nội động gây co giật, thầy thuốc cần vận dụng nguyên tắc này như thế nào?",
+        options: ["Dùng vị thuốc thanh nhẹ, phát tán như Bạc hà, Kinh giới để sơ phong thanh nhiệt","Dùng thuốc đắng lạnh, táo thấp như Hoàng liên, Hoàng cầm để tả hỏa","Chỉ dùng bài thuốc xông hơi bên ngoài để phát hãn","Dùng thuốc trọng lượng nặng, chất keo đặc, dược liệu từ động vật (quy bản, miết giáp) để tư âm ghìm dương, trầm giáng hỏa tà"],
+        answer: 3,
+        explanation: "'Trị hạ tiêu như quyền (nắm đấm), phi trọng bất trầm' = thuốc phải <strong>nặng, đặc, có chất keo</strong> mới đạt được hạ tiêu. Dùng <strong>quy bản, miết giáp, a giao, long cốt, mẫu lệ</strong>... để tư âm trầm giáng, ghìm hư dương nội phong."
+      },
+      {
+        id: 61,
+        text: "Các hợp chất tự nhiên Flavonoid, Alkaloide, Tinh dầu trong bài thuốc cổ phương trị Ôn bệnh đóng vai trò gì khi đối chiếu với cơ chế sinh lý bệnh học hiện đại?",
+        options: ["Chỉ tạo mùi thơm và làm giảm vị đắng, không có hoạt tính sinh học","Thay thế hoàn toàn máy thở và phương tiện hồi sức tại ICU","Hoạt động như chất kháng sinh, kháng viêm, bảo vệ nội mô mạch máu và chống xuất huyết, phù hợp với từng giai đoạn hội chứng nhiễm trùng","Làm tăng tính thấm mao mạch giúp vi khuẩn đi vào máu"],
+        answer: 2,
+        explanation: "Các hoạt chất trong bài thuốc ôn bệnh: <strong>Flavonoid</strong> (kháng viêm, bảo vệ mạch), <strong>Alkaloid</strong> (kháng khuẩn/virus, kháng sốt), <strong>Tinh dầu</strong> (kháng khuẩn, chống oxy hóa) → phù hợp với cơ chế bệnh sinh YHHĐ trong từng giai đoạn nhiễm trùng."
+      }
+    ]
+  }
+];
+
+let state = {};
+let totalCorrect = 0, totalWrong = 0, totalDone = 0;
+const TOTAL = 61;
+
+function renderQuiz() {
+  const container = document.getElementById('quiz-container');
+  container.innerHTML = '';
+  QUESTIONS.forEach((section, si) => {
+    const secDiv = document.createElement('div');
+    secDiv.innerHTML = `<div class="section-header"><span class="section-badge">Phần ${si+1}</span><span class="section-title">${section.section}</span></div>`;
+    container.appendChild(secDiv);
+    section.questions.forEach(q => {
+      const card = createQuestionCard(q);
+      container.appendChild(card);
+    });
+  });
+}
+
+function createQuestionCard(q) {
+  const card = document.createElement('div');
+  card.className = 'question-card';
+  card.id = 'card-' + q.id;
+  const qState = state[q.id] || {selected: null, revealed: false};
+  const isLocked = qState.revealed;
+
+  card.innerHTML = `
+    <div class="q-number">Câu ${q.id}</div>
+    <div class="q-text">${q.text}</div>
+    <div class="options" id="opts-${q.id}">
+      ${q.options.map((opt, i) => {
+        let cls = 'option-btn';
+        if (isLocked) {
+          cls += ' disabled';
+          if (i === q.answer) cls += ' correct';
+          else if (qState.selected === i) cls += ' wrong';
+        } else if (qState.selected === i) {
+          cls += ' selected';
+        }
+        return `<button class="${cls}" onclick="selectOption(${q.id}, ${i})" ${isLocked ? 'disabled' : ''}>
+          <span class="option-key">${String.fromCharCode(65+i)}</span>
+          <span>${opt}</span>
+        </button>`;
+      }).join('')}
+    </div>
+    <div class="actions">
+      <button class="btn-check" id="btn-check-${q.id}" onclick="checkAnswer(${q.id})" ${(!isLocked && qState.selected === null) ? 'disabled' : (isLocked ? 'disabled' : '')}>Kiểm tra</button>
+      <button class="btn-show" id="btn-show-${q.id}" onclick="showAnswer(${q.id})" ${isLocked ? 'disabled' : ''}>Xem đáp án</button>
+    </div>
+    <div class="result-chip ${isLocked ? (qState.selected === q.answer ? 'correct-chip show' : (qState.selected !== null ? 'wrong-chip show' : '')) : ''}" id="chip-${q.id}">
+      ${isLocked ? (qState.selected === q.answer ? '✓ Đúng rồi!' : (qState.selected !== null ? '✗ Chưa đúng' : '')) : ''}
+    </div>
+    <div class="explanation ${isLocked ? 'show' : ''}" id="exp-${q.id}">${q.explanation}</div>
+  `;
+  return card;
+}
+
+function selectOption(qId, optIdx) {
+  if (state[qId] && state[qId].revealed) return;
+  if (!state[qId]) state[qId] = {selected: null, revealed: false};
+  state[qId].selected = optIdx;
+  const opts = document.querySelectorAll(`#opts-${qId} .option-btn`);
+  opts.forEach((btn, i) => {
+    btn.classList.remove('selected');
+    if (i === optIdx) btn.classList.add('selected');
+  });
+  document.getElementById('btn-check-' + qId).disabled = false;
+}
+
+function checkAnswer(qId) {
+  if (!state[qId] || state[qId].selected === null) return;
+  const q = findQ(qId);
+  const sel = state[qId].selected;
+  const isCorrect = sel === q.answer;
+  revealResult(qId, q, sel, isCorrect, true);
+}
+
+function showAnswer(qId) {
+  const q = findQ(qId);
+  const sel = state[qId] ? state[qId].selected : null;
+  revealResult(qId, q, sel, sel === q.answer, false);
+}
+
+function revealResult(qId, q, sel, isCorrect, fromCheck) {
+  if (state[qId] && state[qId].revealed) return;
+  if (!state[qId]) state[qId] = {selected: null, revealed: false};
+  const wasAnswered = state[qId].selected !== null;
+  state[qId].revealed = true;
+
+  const opts = document.querySelectorAll(`#opts-${qId} .option-btn`);
+  opts.forEach((btn, i) => {
+    btn.classList.add('disabled');
+    btn.disabled = true;
+    if (i === q.answer) btn.classList.add('correct');
+    else if (sel === i) btn.classList.add('wrong');
+  });
+
+  document.getElementById('btn-check-' + qId).disabled = true;
+  document.getElementById('btn-show-' + qId).disabled = true;
+
+  const chip = document.getElementById('chip-' + qId);
+  if (sel !== null) {
+    chip.className = 'result-chip ' + (isCorrect ? 'correct-chip' : 'wrong-chip') + ' show';
+    chip.textContent = isCorrect ? '✓ Đúng rồi!' : '✗ Chưa đúng';
+  }
+  document.getElementById('exp-' + qId).classList.add('show');
+
+  totalDone++;
+  if (wasAnswered || fromCheck) {
+    if (isCorrect) totalCorrect++;
+    else if (sel !== null) totalWrong++;
+  }
+  updateStats();
+}
+
+function findQ(id) {
+  for (const s of QUESTIONS) {
+    const q = s.questions.find(q => q.id === id);
+    if (q) return q;
+  }
+}
+
+function updateStats() {
+  document.getElementById('st-done').textContent = totalDone;
+  document.getElementById('st-correct').textContent = totalCorrect;
+  document.getElementById('st-wrong').textContent = totalWrong;
+  document.getElementById('prog-label').textContent = `Tiến độ: ${totalDone} / ${TOTAL}`;
+  document.getElementById('prog-fill').style.width = (totalDone / TOTAL * 100) + '%';
+}
+
+function resetAll() {
+  state = {};
+  totalCorrect = 0;
+  totalWrong = 0;
+  totalDone = 0;
+  updateStats();
+  renderQuiz();
+}
+
+renderQuiz();
+</script>
+</body>
+</html>

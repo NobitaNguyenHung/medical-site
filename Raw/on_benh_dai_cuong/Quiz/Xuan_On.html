@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Xuân Ôn — 50 MCQ SBA</title>
+<style>
+  :root {
+    --bg:#0F172A; --surface:#1E293B; --surface2:#263348; --border:#334155;
+    --text:#F1F5F9; --text2:#94A3B8; --text3:#CBD5E1;
+    --accent:#F59E0B; --green:#22C55E; --red:#EF4444; --blue:#3B82F6;
+    --option-hover:#1D3461; --option-correct:#14532D; --option-wrong:#7F1D1D;
+    --option-selected:#1E3A8A;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh;}
+
+  /* Header */
+  .hdr{background:linear-gradient(135deg,#1E293B,#0F172A);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+  .hdr-left h1{font-size:18px;font-weight:700;color:var(--accent);}
+  .hdr-left p{font-size:11px;color:var(--text2);margin-top:2px;}
+  .hdr-right{display:flex;align-items:center;gap:16px;}
+  .score-chip{background:var(--surface2);border:1px solid var(--border);border-radius:20px;padding:6px 14px;font-size:13px;font-weight:600;}
+  .score-chip span{color:var(--green);}
+
+  /* Progress */
+  .prog-wrap{padding:10px 24px;background:var(--surface);border-bottom:1px solid var(--border);}
+  .prog-bar{height:6px;background:var(--border);border-radius:3px;}
+  .prog-fill{height:100%;background:linear-gradient(90deg,var(--accent),#22C55E);border-radius:3px;transition:width .4s;}
+  .prog-info{display:flex;justify-content:space-between;font-size:11px;color:var(--text2);margin-top:5px;}
+
+  /* Layout */
+  .main{max-width:860px;margin:0 auto;padding:24px 16px;}
+
+  /* Filter tabs */
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;}
+  .tab{padding:5px 14px;border-radius:16px;border:1px solid var(--border);background:var(--surface);color:var(--text2);font-size:12px;cursor:pointer;transition:all .2s;}
+  .tab:hover,.tab.on{background:var(--accent);border-color:var(--accent);color:#000;font-weight:600;}
+
+  /* Question card */
+  .q-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:20px;transition:border-color .3s;}
+  .q-card.done-right{border-color:#166534;}
+  .q-card.done-wrong{border-color:#991B1B;}
+  .q-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px;}
+  .q-num{font-size:11px;font-weight:700;color:var(--accent);white-space:nowrap;}
+  .bloom-chip{font-size:10px;padding:2px 8px;border-radius:10px;white-space:nowrap;}
+  .b1{background:#1E3A8A;color:#93C5FD;}
+  .b2{background:#1E3A8A;color:#93C5FD;}
+  .b3{background:#713F12;color:#FDE68A;}
+  .b4{background:#4C1D95;color:#DDD6FE;}
+  .b5{background:#7F1D1D;color:#FCA5A5;}
+  .b6{background:#134E4A;color:#99F6E4;}
+  .q-stem{font-size:14px;line-height:1.65;color:var(--text3);}
+  .q-stem strong{color:var(--text);font-weight:600;}
+  .clinical-box{background:#0F172A;border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:12px 14px;margin:12px 0;font-size:13px;line-height:1.7;color:#BAE6FD;}
+  .q-ask{font-size:14px;font-weight:600;color:var(--text);margin:14px 0 10px;}
+
+  /* Options */
+  .options{display:grid;gap:8px;margin-bottom:14px;}
+  .opt{padding:11px 14px;border-radius:9px;border:1px solid var(--border);background:var(--surface2);cursor:pointer;font-size:13px;color:var(--text3);display:flex;gap:10px;align-items:flex-start;transition:all .2s;line-height:1.5;}
+  .opt:hover:not(.locked){background:var(--option-hover);border-color:var(--blue);}
+  .opt.selected{background:var(--option-selected);border-color:var(--blue);color:var(--text);}
+  .opt.correct{background:var(--option-correct);border-color:var(--green);color:#86EFAC;}
+  .opt.wrong{background:var(--option-wrong);border-color:var(--red);color:#FCA5A5;}
+  .opt.locked{cursor:default;}
+  .opt-key{font-weight:700;min-width:18px;color:var(--text2);}
+  .opt.selected .opt-key{color:#93C5FD;}
+  .opt.correct .opt-key{color:#86EFAC;}
+  .opt.wrong .opt-key{color:#FCA5A5;}
+
+  /* Action buttons */
+  .q-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+  .btn-check{padding:8px 20px;border-radius:8px;border:none;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;}
+  .btn-check.active{background:var(--blue);color:#fff;}
+  .btn-check:disabled{background:var(--surface2);color:var(--text2);cursor:not-allowed;}
+  .btn-show{padding:8px 16px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text2);font-size:12px;cursor:pointer;}
+  .btn-show:hover{background:var(--surface2);color:var(--text);}
+  .result-chip{font-size:13px;font-weight:700;padding:6px 14px;border-radius:20px;}
+  .chip-right{background:#14532D;color:#86EFAC;}
+  .chip-wrong{background:#7F1D1D;color:#FCA5A5;}
+
+  /* Explanation */
+  .explain{display:none;background:#0F172A;border:1px solid var(--border);border-radius:10px;padding:16px;margin-top:12px;font-size:13px;line-height:1.7;}
+  .explain.show{display:block;}
+  .explain h4{font-size:12px;font-weight:700;color:var(--accent);margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em;}
+  .explain p{color:#BAE6FD;margin-bottom:6px;}
+  .explain .why{color:var(--text2);font-size:12px;}
+  .explain .why span{color:#FCD34D;}
+  .explain .kp{margin-top:10px;background:#1E293B;border-radius:7px;padding:10px 12px;border-left:3px solid var(--green);font-size:12px;color:#86EFAC;}
+
+  /* Summary */
+  .summary{display:none;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px;text-align:center;margin-bottom:30px;}
+  .summary.show{display:block;}
+  .summary h2{font-size:28px;font-weight:800;margin-bottom:8px;}
+  .summary .grade{font-size:48px;font-weight:900;margin:16px 0;}
+  .sum-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0;}
+  .sum-cell{background:#0F172A;border-radius:10px;padding:14px;border:1px solid var(--border);}
+  .sum-val{font-size:22px;font-weight:700;}
+  .sum-label{font-size:11px;color:var(--text2);margin-top:3px;}
+  .btn-restart{background:var(--accent);color:#000;border:none;padding:12px 32px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;margin-top:16px;}
+  .btn-restart:hover{transform:scale(1.03);}
+
+  /* Nav */
+  .nav-bottom{display:flex;gap:10px;justify-content:center;margin-top:10px;flex-wrap:wrap;}
+  .nav-btn{background:var(--surface);border:1px solid var(--border);color:var(--text2);padding:8px 18px;border-radius:8px;font-size:13px;cursor:pointer;}
+  .nav-btn:hover{background:var(--surface2);color:var(--text);}
+
+  /* Bloom legend */
+  .legend{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
+  .leg{font-size:10px;padding:2px 8px;border-radius:10px;}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-left">
+    <h1>🌿 Xuân Ôn — 50 MCQ SBA</h1>
+    <p>春温 · Phục Khí Ôn Bệnh · Nguồn: Giáo trình Ôn Bệnh</p>
+  </div>
+  <div class="hdr-right">
+    <div class="score-chip">Điểm: <span id="live-score">0</span> / <span id="live-done">0</span></div>
+  </div>
+</div>
+
+<div class="prog-wrap">
+  <div class="prog-bar"><div class="prog-fill" id="prog" style="width:0%"></div></div>
+  <div class="prog-info"><span id="prog-label">0 / 50 câu</span><span id="pct-label">0%</span></div>
+</div>
+
+<div class="main">
+  <div class="summary" id="summary">
+    <h2>Hoàn thành bài kiểm tra!</h2>
+    <div class="grade" id="grade-emoji">🎯</div>
+    <div style="font-size:20px;font-weight:700;" id="grade-text"></div>
+    <div class="sum-grid">
+      <div class="sum-cell"><div class="sum-val green" id="s-right">0</div><div class="sum-label">✓ Đúng</div></div>
+      <div class="sum-cell"><div class="sum-val red" id="s-wrong">0</div><div class="sum-label">✗ Sai</div></div>
+      <div class="sum-cell"><div class="sum-val yellow" id="s-pct">0%</div><div class="sum-label">Tỷ lệ đúng</div></div>
+    </div>
+    <button class="btn-restart" onclick="restartAll()">↺ Làm lại từ đầu</button>
+  </div>
+
+  <div class="legend">
+    <span class="leg b1">B1 Nhớ</span>
+    <span class="leg b2">B2 Hiểu</span>
+    <span class="leg b3">B3 Áp dụng</span>
+    <span class="leg b4">B4 Phân tích</span>
+    <span class="leg b5">B5 Đánh giá</span>
+    <span class="leg b6">B6 Tổng hợp</span>
+  </div>
+
+  <div class="tabs" id="tabs">
+    <button class="tab on" onclick="showAll(this)">Tất cả (50)</button>
+    <button class="tab" onclick="filterBloom(1,this)">Bloom 1-2</button>
+    <button class="tab" onclick="filterBloom(3,this)">Bloom 3</button>
+    <button class="tab" onclick="filterBloom(45,this)">Bloom 4-5</button>
+    <button class="tab" onclick="showWrong(this)">✗ Câu sai</button>
+  </div>
+
+  <div id="q-list"></div>
+
+  <div class="nav-bottom">
+    <button class="nav-btn" onclick="scrollTop()">↑ Đầu trang</button>
+    <button class="nav-btn" onclick="checkAll()">Kiểm tra tất cả</button>
+    <button class="nav-btn" onclick="restartAll()">↺ Làm lại</button>
+  </div>
+</div>
+
+<script>
+const QS = [
+  // ===== BLOOM 1-2: NHỚ / HIỂU (Q1-Q10) =====
+  {
+    bloom:1, cat:'khai-niem',
+    stem:'Theo Tố Vấn — Âm Dương Ứng Tượng Đại Luận, căn nguyên của Xuân Ôn được mô tả bằng câu nào?',
+    opts:['A. Thụ nhiệt tà, ngoại phát ôn bệnh','B. Đông thương ư hàn, xuân tất ôn bệnh','C. Xuân thương ư phong, hạ sinh vị tiết','D. Hàn tà nhập lý, hóa nhiệt ôn bệnh'],
+    ans:1,
+    explain:'Câu kinh điển Nội Kinh: "Đông thương ư hàn, xuân tất ôn bệnh" — mùa đông cảm hàn tà nhưng không phát ngay, phục lại đến mùa xuân tất phát thành ôn bệnh.',
+    why:['A. Mô tả ôn bệnh nói chung, không phải câu gốc Nội Kinh về Xuân Ôn','C. Câu về Phong ôn hạ kiết','D. Mô tả cơ chế nhưng không phải câu Nội Kinh gốc'],
+    kp:'Xuân Ôn = Phục khí ôn bệnh. Nội Kinh: "Đông thương ư hàn, xuân tất ôn bệnh"'
+  },
+  {
+    bloom:1, cat:'khai-niem',
+    stem:'Xuân Ôn thuộc loại nào trong phân loại ôn bệnh?',
+    opts:['A. Tân cảm ôn bệnh','B. Phục khí ôn bệnh','C. Thấp nhiệt ôn bệnh','D. Phong nhiệt ôn bệnh'],
+    ans:1,
+    explain:'Xuân Ôn là phục khí ôn bệnh điển hình — tà phục lý từ trước, đến mùa xuân mới phát ra ngoài. Khác với tân cảm (Phong Ôn) là tà mới tiếp xúc và phát ngay.',
+    why:['A. Tân cảm = Phong Ôn — tà vừa tiếp xúc phát ngay','C. Thấp nhiệt = Thấp ôn, Thử thấp','D. Phong nhiệt = ngoại tà phong nhiệt, không phải phục khí'],
+    kp:'Xuân Ôn = Phục khí ôn bệnh. Phong Ôn = Tân cảm ôn bệnh'
+  },
+  {
+    bloom:1, cat:'phan-biet',
+    stem:'Đặc điểm phân biệt QUAN TRỌNG NHẤT của Xuân Ôn so với Phong Ôn là?',
+    opts:['A. Sốt cao hơn Phong Ôn','B. Sơ khởi đã có lý nhiệt tích thịnh, không qua vệ biểu','C. Chỉ xảy ra vào mùa xuân','D. Tổn thương tạng Tâm nhiều hơn'],
+    ans:1,
+    explain:'Điểm then chốt: Xuân Ôn SỞ KHỞI ĐÃ CÓ lý nhiệt tích thịnh (sốt cao, tâm phiền, miệng khát, lưỡi đỏ rêu vàng) — không trải qua giai đoạn Vệ biểu. Phong Ôn bắt đầu từ Phế Vệ.',
+    why:['A. Mức độ sốt không phải điểm phân biệt chính','C. Phong Ôn cũng xảy ra mùa xuân','D. Không phải tiêu chuẩn phân biệt quan trọng'],
+    kp:'Xuân Ôn: sơ khởi = lý nhiệt. Phong Ôn: sơ khởi = Phế Vệ biểu nhiệt'
+  },
+  {
+    bloom:2, cat:'co-che',
+    stem:'Cơ chế bệnh sinh cốt lõi của Xuân Ôn là?',
+    opts:['A. Phong nhiệt tà trực tiếp xâm phạm Phế Vệ','B. Hàn tà phục lý uất hóa nhiệt, xuân dương phát tiết nên bùng phát','C. Thử nhiệt thấp tà xâm phạm Tỳ Vị','D. Táo nhiệt tà tổn thương Phế Vị âm'],
+    ans:1,
+    explain:'Mùa đông cảm hàn tà → hàn tà uất lại hóa nhiệt → phục ở bên trong → mùa xuân dương khí phát tiết → phục nhiệt bùng phát ngoài. Đây là cơ chế "Đông thương ư hàn, xuân tất ôn bệnh".',
+    why:['A. Cơ chế Phong Ôn','C. Cơ chế Thấp Ôn / Thử Thấp','D. Cơ chế Táo Nhiệt'],
+    kp:'Phục khí: hàn tà → uất → hóa nhiệt → phục lý → xuân dương phát tiết → bùng phát'
+  },
+  {
+    bloom:2, cat:'co-che',
+    stem:'Vì sao Xuân Ôn đặc biệt dễ tổn thương âm dịch hơn các ôn bệnh khác?',
+    opts:['A. Do bệnh nhân thường không uống nước đủ','B. Phục nhiệt bùng phát trên nền âm tinh sẵn hư tổn, lý nhiệt tích thịnh từ sơ khởi','C. Do dùng thuốc tân ôn phát hãn gây mất dịch','D. Do bệnh nhân cao tuổi thường có ít âm hơn'],
+    ans:1,
+    explain:'Hai yếu tố cộng hưởng: (1) Người bệnh sẵn âm tinh hư tổn (nội nhân tạo điều kiện phục tà), (2) Lý nhiệt tích thịnh từ ngay sơ khởi → thương âm sớm và sâu.',
+    why:['A. Không phải cơ chế y học','C. Là hậu quả nếu điều trị sai, không phải nguyên nhân bệnh sinh','D. Không phải lý do đặc hiệu của Xuân Ôn'],
+    kp:'Âm tinh hư (nội nhân) + Lý nhiệt từ sơ khởi → thương âm đặc biệt nặng'
+  },
+  {
+    bloom:2, cat:'chan-doan',
+    stem:'Lưỡi điển hình trong Xuân Ôn sơ khởi?',
+    opts:['A. Lưỡi nhợt nhạt rêu trắng mỏng','B. Lưỡi đỏ rêu vàng','C. Lưỡi trắng dày nhớt','D. Lưỡi khô không rêu'],
+    ans:1,
+    explain:'Xuân Ôn sơ khởi: lý nhiệt tích thịnh → lưỡi đỏ (nhiệt tích) rêu vàng (lý nhiệt). Lưỡi nhợt = hàn; rêu trắng dày = thấp; lưỡi khô không rêu = hậu kỳ âm kiệt.',
+    why:['A. Biểu hàn chứng','C. Thấp ôn/thấp tà','D. Hậu kỳ âm kiệt, không phải sơ khởi'],
+    kp:'Sơ khởi Xuân Ôn: lưỡi đỏ rêu vàng = lý nhiệt dấu hiệu'
+  },
+  {
+    bloom:2, cat:'dieu-tri',
+    stem:'Nguyên tắc xuyên suốt trong điều trị Xuân Ôn là?',
+    opts:['A. Tân ôn giải biểu + hóa thấp lợi thấp','B. Thanh tiết lý nhiệt + Cố hộ âm dịch + Thấu tà ngoại xuất','C. Ôn bổ thận dương + tán hàn','D. Khai vị hóa đàm + giáng khí'],
+    ans:1,
+    explain:'3 trụ cột điều trị Xuân Ôn: (1) Thanh tiết lý nhiệt — vì lý nhiệt là bản chất; (2) Cố hộ âm dịch — vì Xuân Ôn đặc biệt hao âm; (3) Thấu tà ngoại xuất — tạo điều kiện tà ra ngoài.',
+    why:['A. Nguyên tắc Tân cảm biểu chứng','C. Điều trị thận dương hư','D. Nguyên tắc đàm bế'],
+    kp:'Xuân Ôn 3 nguyên tắc: Thanh lý nhiệt + Cố âm + Thấu tà. TUYỆT ĐỐI KHÔNG tân ôn phát hãn'
+  },
+  {
+    bloom:1, cat:'phuong-duoc',
+    stem:'"Tam bảo" trong điều trị Xuân Ôn gồm những thuốc nào?',
+    opts:['A. Bạch hổ thang, Lương cách tán, Thanh ôn bại độc ẩm','B. An cung ngưu hoàng hoàn, Tử tuyết đan, Chí bảo đan','C. Hoàng liên giải độc thang, Tê giác địa hoàng thang, Phổ tế tiêu độc ẩm','D. Gia giảm Phục mạch thang, Đại định phong châu, Thanh hao miết giáp thang'],
+    ans:1,
+    explain:'"Tam bảo" là 3 đan hoàn dạng sẵn dùng khai khiếu tỉnh thần trong Xuân Ôn: An cung ngưu hoàng hoàn (hôn mê sâu, sốt cao nhất), Tử tuyết đan (co giật + sốt), Chí bảo đan (đàm trọc + thần hôn).',
+    why:['A. Phương tiêu lý nhiệt, không phải khai khiếu','C. Thanh giải độc nhiệt','D. Phương hậu kỳ dưỡng âm'],
+    kp:'Tam bảo = khai khiếu tỉnh thần. Phân biệt 3 chỉ định'
+  },
+  {
+    bloom:2, cat:'phuong-duoc',
+    stem:'Tại sao Gia giảm Phục mạch thang bỏ Nhân sâm, Quế chi, Khương, Táo, Tửu so với Phục mạch thang gốc (Thương Hàn Luận)?',
+    opts:['A. Vì các vị đó làm tăng độc tính của bài thuốc','B. Vì đây là ôn nhiệt bệnh — âm khuy + nội nhiệt, không cần ôn thông dương khí','C. Vì các vị đó không có sẵn ở Việt Nam','D. Vì Gia giảm Phục mạch thang là bài hoàn toàn mới không liên quan Thương Hàn Luận'],
+    ans:1,
+    explain:'Phục mạch thang gốc = hư lao tổn thương dương khí → cần ôn dương. Xuân Ôn hậu kỳ = chân âm khuy tổn + nội nhiệt → phải bỏ tân cam ôn nhiệt (Quế, Khương, Tửu) vì sẽ làm hao âm thêm.',
+    why:['A. Không phải lý do','C. Không phải lý do y học','D. Sai — bài có nguồn gốc từ Phục mạch thang'],
+    kp:'Nguyên tắc: Ôn nhiệt bệnh hậu kỳ âm khuy → tư âm. KHÔNG ôn dương'
+  },
+  {
+    bloom:2, cat:'co-che',
+    stem:'Phục tà tự phát và Tân cảm dẫn phát trong Xuân Ôn khác nhau thế nào ở giai đoạn sơ khởi?',
+    opts:['A. Phục tà tự phát nặng hơn, Tân cảm dẫn phát nhẹ hơn','B. Phục tà tự phát: thuần lý nhiệt; Tân cảm dẫn phát: lý nhiệt + ố hàn thoáng qua','C. Phục tà tự phát: sốt thấp; Tân cảm dẫn phát: sốt cao','D. Tân cảm dẫn phát bắt đầu từ Phế Vệ như Phong Ôn'],
+    ans:1,
+    explain:'Phục tà tự phát: nội nhiệt bùng phát từ bên trong → sơ khởi thuần lý nhiệt, không có biểu chứng. Tân cảm dẫn phát: ngoại tà kích thích phục nhiệt → sơ khởi lý nhiệt kèm ố hàn đau đầu thoáng qua (rồi mất nhanh).',
+    why:['A. Không nhất thiết phục tà nặng hơn','C. Cả hai đều sốt cao do lý nhiệt','D. Tân cảm dẫn phát KHÁC Phong Ôn — có phục nhiệt bên trong'],
+    kp:'2 con đường phát bệnh: tự phát (thuần lý) vs dẫn phát (lý + biểu thoáng qua)'
+  },
+
+  // ===== BLOOM 3: ÁP DỤNG LÂM SÀNG (Q11-Q30) =====
+  {
+    bloom:3, cat:'khi-phan',
+    stem:'<strong>Ca lâm sàng:</strong> Bệnh nhân nam 28 tuổi, sốt 38.5°C, miệng đắng, nôn khan, khó chịu vùng ngực sườn, tiểu ngắn đỏ, tâm phiền, lưỡi đỏ rêu vàng, mạch huyền sắc. Xuân Ôn thể này thuộc chứng gì?',
+    opts:['A. Khí phần — Hung cách nhiệt nặng','B. Khí phần — Uất nhiệt tại Đởm phủ','C. Dương Minh — Nhiệt tích thương tân','D. Dinh phần — Nhiệt nhập Dinh âm'],
+    ans:1,
+    explain:'Miệng đắng (Đởm nhiệt), nôn khan, khó chịu ngực sườn (Đởm khí uất trệ), tiểu đỏ, tâm phiền, mạch huyền (Đởm mạch) → Khí phần uất nhiệt tại Đởm phủ. Không phải Hung cách (không có sốt cao, ngực bừng nóng, táo bón).',
+    why:['A. Hung cách nhiệt: sốt cao + ngực bừng nóng + táo bón','C. Dương Minh: sốt cao + mồ hôi nhiều + 4 đại chứng','D. Dinh: lưỡi đỏ thẫm + ban chẩn + thần hôn'],
+    kp:'Đởm phủ: miệng đắng + nôn khan + ngực sườn + mạch huyền = Hoàng cầm thang gia vị'
+  },
+  {
+    bloom:3, cat:'khi-phan',
+    stem:'Bệnh nhân trên (miệng đắng, nôn khan, ngực sườn) cần điều trị bằng phương gì?',
+    opts:['A. Bạch hổ thang','B. Chi tử xị thang','C. Hoàng cầm thang gia vị','D. Lương cách tán'],
+    ans:2,
+    explain:'Khí phần uất nhiệt tại Đởm phủ → Hoàng cầm thang gia vị (Hoàng cầm + Đậu xị + Huyền sâm): khổ hàn thanh nhiệt, tuyên uất thấu tà. Chi tử xị thang: Hung cách uất nhiệt nhẹ. Lương cách tán: Hung cách nhiệt nặng.',
+    why:['A. Bạch hổ: Dương Minh nhiệt tích thương tân','B. Chi tử xị: hung cách uất nhiệt nhẹ','D. Lương cách tán: hung cách nhiệt nặng + táo bón'],
+    kp:'Đởm phủ uất nhiệt → Hoàng cầm thang gia vị'
+  },
+  {
+    bloom:3, cat:'khi-phan',
+    stem:'Bệnh nhân 35 tuổi, Xuân Ôn, sốt vừa phải, bực bội ngồi không yên, buồn nôn không nôn được, không táo bón, lưỡi hơi đỏ rêu vàng mỏng. Phương điều trị phù hợp?',
+    opts:['A. Lương cách tán','B. Chi tử xị thang','C. Bạch hổ thang','D. Hoàng cầm thang'],
+    ans:1,
+    explain:'Bực bội + ngồi không yên + buồn nôn không nôn được + không táo bón = Hung cách uất nhiệt NHẸ → Chi tử xị thang (Chi tử thanh giải cách nhiệt + Đậu xị tuyên uất đạt tà). Lương cách tán: khi nặng hơn, có táo bón.',
+    why:['A. Lương cách tán: hung cách nhiệt nặng + táo bón','C. Bạch hổ: sốt rất cao + mạch hồng đại','D. Hoàng cầm: Đởm phủ (miệng đắng + ngực sườn)'],
+    kp:'Chi tử xị thang = Hung cách uất nhiệt NHẸ. Lương cách tán = Hung cách nhiệt NẶNG'
+  },
+  {
+    bloom:3, cat:'duong-minh',
+    stem:'Bệnh nhân Xuân Ôn: sốt 40°C, ra mồ hôi nhiều, rất khát, mạch hồng đại. Nên chọn phương gì?',
+    opts:['A. Tăng dịch thừa khí thang','B. Bạch hổ thang gia vị','C. Linh giác câu đẳng thang','D. Lương cách tán'],
+    ans:1,
+    explain:'4 đại chứng (sốt cao + ra mồ hôi + khát + mạch hồng đại) = Dương Minh nhiệt tích thương tân → Bạch hổ thang gia vị (Thạch cao + Tri mẫu + Gạo lứt + Cam thảo). Tăng dịch thừa khí: khi có táo bón thêm.',
+    why:['A. Tăng dịch thừa khí: nhiệt kết trường phủ + táo bón','C. Linh giác câu đẳng: nhiệt thịnh động phong (co giật)','D. Lương cách tán: Hung cách nhiệt'],
+    kp:'4 đại chứng = Dương Minh nhiệt tích → Bạch hổ thang'
+  },
+  {
+    bloom:3, cat:'duong-minh',
+    stem:'Bệnh nhân Xuân Ôn 7 ngày, táo bón 5 ngày, bụng trướng cứng, sốt, rêu vàng cháy, lưỡi đỏ khô, mạch trầm. Phương phù hợp nhất?',
+    opts:['A. Bạch hổ thang','B. Tân gia hoàng long thang','C. Tăng dịch thừa khí thang','D. Đào nhân thừa khí thang'],
+    ans:2,
+    explain:'Nhiệt kết trường phủ (táo bón + bụng trướng cứng) + dịch khuy (lưỡi đỏ khô) mà không có khí hư → Tăng dịch thừa khí thang (Sinh địa + Huyền sâm + Mạch đông + Đại hoàng + Mang tiêu). Tân gia HL thang: khi thêm khí hư.',
+    why:['A. Bạch hổ: không táo bón','B. Tân gia HL: khí dịch lưỡng hư (có thêm lưỡi nhạt/mạch nhược)','D. Đào nhân thừa khí: nhiệt + huyết kết (có triệu chứng ứ huyết)'],
+    kp:'Nhiệt kết + dịch khuy → Tăng dịch thừa khí. Thêm khí hư → Tân gia hoàng long'
+  },
+  {
+    bloom:3, cat:'duong-minh',
+    stem:'Bệnh nhân Xuân Ôn nặng 10 ngày: táo bón + rêu cháy, THÊM mắt lờ đờ, lưỡi biếng huyết, mạch trầm nhược. Phương phù hợp?',
+    opts:['A. Tăng dịch thừa khí thang','B. Bạch hổ thang','C. Tân gia hoàng long thang','D. Linh giác câu đẳng thang'],
+    ans:2,
+    explain:'Khí dịch lưỡng hư: táo bón + rêu cháy (dịch khuy) + mắt lờ đờ + mạch nhược (khí hư) → Tân gia hoàng long thang (thêm Nhân sâm + Đương quy + Hải sâm + Khương trấp so với Tăng dịch thừa khí).',
+    why:['A. Tăng dịch thừa khí: thuần dịch khuy, không có khí hư','B. Bạch hổ: không táo bón','D. Linh giác câu đẳng: nhiệt thịnh động phong'],
+    kp:'Mắt lờ đờ + mạch nhược = khí hư dấu hiệu → cần thêm ích khí (Nhân sâm)'
+  },
+  {
+    bloom:3, cat:'duong-minh',
+    stem:'Xuân Ôn sốt cao + đột ngột co giật toàn thân + cứng người + lưỡi đỏ thẫm, mạch huyền sắc. Phương điều trị?',
+    opts:['A. An cung ngưu hoàng hoàn','B. Linh giác câu đẳng thang gia Thạch cao, Tri mẫu','C. Tê giác địa hoàng thang','D. Bạch hổ thang'],
+    ans:1,
+    explain:'Nhiệt thịnh động phong (sốt cao + co giật + cứng người) → Linh giác câu đẳng thang gia Thạch cao + Tri mẫu: lương can tức phong + thanh nhiệt tức phong. An cung: khai khiếu (hôn mê). Tê giác địa hoàng: nhiệt động huyết (chảy máu).',
+    why:['A. An cung ngưu hoàng: khai khiếu, chỉ định chính là hôn mê','C. Tê giác địa hoàng: xuất huyết / ban dày','D. Bạch hổ: nhiệt tích thương tân, không có co giật'],
+    kp:'Nhiệt thịnh động phong → Linh giác câu đẳng thang'
+  },
+  {
+    bloom:3, cat:'dinh-huyet',
+    stem:'Xuân Ôn: toàn thân ban chẩn dày đặc màu đỏ thẫm, thổ huyết, nục huyết, lưỡi đỏ thẫm có gai, mạch huyền sắc. Chẩn đoán và phương dược?',
+    opts:['A. Khí dinh lưỡng phiên — Hóa ban thang','B. Nhiệt thịnh động huyết — Tê giác địa hoàng thang','C. Nhiệt nhập Tâm Bào — An cung ngưu hoàng hoàn','D. Dương Minh nhiệt kết — Tăng dịch thừa khí thang'],
+    ans:1,
+    explain:'Ban dày đặc đỏ thẫm + xuất huyết nhiều nơi (thổ, nục huyết) = Nhiệt thịnh động huyết → Tê giác địa hoàng thang (Thủy ngưu giác + Sinh địa + Xích thực + Đơn bì). Hóa ban thang: ban còn lờ mờ.',
+    why:['A. Hóa ban thang: ban chẩn lờ mờ, chưa xuất huyết nhiều','C. An cung: hôn mê là chỉ định chính','D. Tăng dịch: nhiệt kết + táo bón'],
+    kp:'Ban dày + xuất huyết = Nhiệt thịnh động huyết → Tê giác địa hoàng thang'
+  },
+  {
+    bloom:3, cat:'dinh-huyet',
+    stem:'Tê giác địa hoàng thang: khi nào dùng Xích thực thay vì Bạch thực?',
+    opts:['A. Khi bệnh nhân có huyết áp thấp','B. Khi nhiệt động huyết nặng (tán huyết + thanh nhiệt mạnh)','C. Khi có táo bón kèm theo','D. Khi bệnh nhân là phụ nữ có thai'],
+    ans:1,
+    explain:'Xích thực: thanh nhiệt tán huyết → dùng khi nhiệt động huyết nặng, xuất huyết. Bạch thực: dưỡng âm → dùng khi âm thương nặng hơn, xuất huyết ít. Trong Xuân Ôn Nhiệt thịnh động huyết → thường dùng Xích thực.',
+    why:['A. Không liên quan huyết áp','C. Táo bón là chỉ định phương khác','D. Thai kỳ không quyết định Xích/Bạch thực'],
+    kp:'Xích thực = tán huyết + thanh nhiệt. Bạch thực = dưỡng âm. Nhiệt động huyết → Xích thực'
+  },
+  {
+    bloom:3, cat:'tam-bao',
+    stem:'Bệnh nhân Xuân Ôn hôn mê, sốt cao 40.5°C, co giật. Trong Tam bảo, ưu tiên chọn?',
+    opts:['A. Chí bảo đan','B. An cung ngưu hoàng hoàn','C. Tử tuyết đan','D. Hoạt thạch đại hoàng hoàn'],
+    ans:1,
+    explain:'Tam bảo phân biệt chỉ định: An cung = hôn mê SÂU + sốt cao NHẤT (thanh tâm giải độc). Tử tuyết = co giật chủ đạo + sốt (lương can tức phong). Chí bảo = đàm trọc nặng + thần hôn. Ca này HÔN MÊ + SỐT CAO NHẤT → An cung.',
+    why:['A. Chí bảo: đàm trọc nặng là chỉ định chính','C. Tử tuyết: co giật là chỉ định chính (ca này hôn mê nổi bật hơn)','D. Không thuộc Tam bảo'],
+    kp:'An cung = hôn mê sâu + sốt cao. Tử tuyết = co giật. Chí bảo = đàm trọc'
+  },
+  {
+    bloom:3, cat:'tam-bao',
+    stem:'Bệnh nhân Xuân Ôn: nhiệt nhập Tâm Bào, phục nhiệt nội bế. Phương chính điều trị?',
+    opts:['A. Sâm phụ thang + An cung ngưu hoàng hoàn','B. Thanh cung thang + An cung ngưu hoàng hoàn','C. Sinh mạch tán + Chí bảo đan','D. Tê giác địa hoàng thang + Tử tuyết đan'],
+    ans:1,
+    explain:'Phục nhiệt nội bế Tâm Bào: thanh tâm khai khiếu → Thanh cung thang (Huyền sâm + Liên kiều + Trúc diệp + Mạch đông + Thủy ngưu giác) uống cùng An cung ngưu hoàng hoàn. Sâm phụ: chỉ dùng khi có thoát chứng.',
+    why:['A. Sâm phụ: khi có dương hư/thoát chứng','C. Sinh mạch: ích khí liễm âm (thoát chứng)','D. Tê giác địa hoàng: nhiệt động huyết'],
+    kp:'Nội bế Tâm Bào → Thanh cung thang + Tam bảo (An cung/Tử tuyết/Chí bảo)'
+  },
+  {
+    bloom:3, cat:'hau-ky',
+    stem:'Bệnh nhân Xuân Ôn giai đoạn hậu kỳ: đêm sốt sáng mát, sốt không nổi mồ hôi, mạch tế sắc. Phương phù hợp?',
+    opts:['A. Gia giảm Phục mạch thang','B. Thanh hao miết giáp thang','C. Tam giáp phục mạch thang','D. Đại định phong châu'],
+    ans:1,
+    explain:'"Đêm sốt sáng mát" + sốt không nổi mồ hôi = Tà lưu âm phần → Thanh hao miết giáp thang (tư âm thanh nhiệt + sơ tà thấu lạc). Ngô Cúc Thông: Thanh hao dẫn tà ra ngoài, Miết giáp dẫn thuốc vào âm phần.',
+    why:['A. Gia giảm Phục mạch: âm hư phát sốt hoặc chân âm khuy tổn nặng','C. Tam giáp phục mạch: âm hư phong động (run tay)','D. Đại định phong châu: âm hư phong động nặng, thuần hư'],
+    kp:'"Đêm sốt sáng mát" đặc trưng của Tà lưu âm phần → Thanh hao miết giáp thang'
+  },
+  {
+    bloom:3, cat:'hau-ky',
+    stem:'Hậu kỳ Xuân Ôn: tay chân run rẩy nhẹ, âm hư phong động giai đoạn đầu. Phương phù hợp?',
+    opts:['A. Đại định phong châu','B. Linh giác câu đẳng thang','C. Tam giáp phục mạch thang','D. Thanh hao miết giáp thang'],
+    ans:2,
+    explain:'Tay chân run nhẹ = âm hư phong động giai đoạn sớm → Tam giáp phục mạch thang (Gia giảm Phục mạch + thêm Mẫu lệ + Miết giáp). Đại định phong châu: nặng hơn (toàn thân co cứng + thuần hư). Linh giác câu đẳng: nhiệt thịnh động phong.',
+    why:['A. Đại định phong châu: âm hư phong động NẶNG + thuần hư','B. Linh giác câu đẳng: nhiệt thịnh động phong (sốt cao + tà vẫn mạnh)','D. Thanh hao miết giáp: tà lưu âm phần (đêm sốt sáng mát)'],
+    kp:'Âm hư phong động nhẹ → Tam giáp phục mạch. Nặng → Đại định phong châu'
+  },
+  {
+    bloom:3, cat:'hau-ky',
+    stem:'Bệnh nhân Xuân Ôn hậu kỳ: mất ngủ hoàn toàn, phiền bức không nằm được, đau đầu, lưỡi đỏ ít rêu, mạch tế sắc. Phương phù hợp?',
+    opts:['A. Gia giảm Phục mạch thang','B. Đại định phong châu','C. Hoàng liên a giao thang','D. Toan táo nhân thang'],
+    ans:2,
+    explain:'Mất ngủ + phiền bức không nằm được = Âm hư hỏa tích, tâm thận bất giao → Hoàng liên a giao thang (Hoàng liên + Hoàng cầm + A giao + Bạch thực + Kê tử hoàng). Kê tử hoàng "giao thông tâm thận".',
+    why:['A. Gia giảm Phục mạch: âm khuy tổn chính, không nổi bật mất ngủ/phiền bức','B. Đại định phong châu: phong động','D. Toan táo nhân thang: tâm huyết hư, không phải âm hư hỏa tích Xuân Ôn'],
+    kp:'Âm hư hỏa tích + phiền bức mất ngủ → Hoàng liên a giao thang + Kê tử hoàng'
+  },
+  {
+    bloom:3, cat:'nguy-kich',
+    stem:'Bệnh nhân Xuân Ôn nguy kịch: sốt hạ đột ngột, mồ hôi như tắm, tứ chi lạnh ngắt, mạch vi tế muốn tuyệt, nhưng thần hôn còn dai dẳng. Đây là chứng gì?',
+    opts:['A. Nhiệt bế huyết thoát','B. Dương khí bạo thoát','C. Nội bế ngoại thoát','D. Dương hư tà hãm'],
+    ans:2,
+    explain:'Nội bế: tà nhiệt vẫn bế trong (thần hôn). Ngoại thoát: chính khí đã thoát (mồ hôi như tắm + tứ chi lạnh + mạch vi tế muốn tuyệt + sốt hạ ĐỘT NGỘT). Hai trạng thái ĐỒNG THỜI = Nội bế ngoại thoát.',
+    why:['A. Nhiệt bế huyết thoát: ban chẩn dày + khí dịch muốn thoát, không nhất thiết có thần hôn','B. Dương khí bạo thoát: thuần thoát, không có nội bế (thần chứng)','D. Dương hư tà hãm: không giải thích được thần hôn + tà bế'],
+    kp:'Nội bế ngoại thoát: 2 cơ chế ĐỒNG THỜI. Điều trị: khai bế + cố thoát ĐỒNG THỜI'
+  },
+  {
+    bloom:3, cat:'nguy-kich',
+    stem:'Điều trị Nội bế ngoại thoát trong Xuân Ôn: nguyên tắc then chốt?',
+    opts:['A. Chỉ khai bế trước, khi tỉnh lại mới cố thoát','B. Chỉ cố thoát vì thoát là nguy hiểm nhất','C. Khai bế và cố thoát đồng thời','D. Ưu tiên hồi dương cứu nghịch vì dương thoát'],
+    ans:2,
+    explain:'Nguyên tắc tuyệt đối: ĐỒNG THỜI khai bế + cố thoát. Sinh mạch tán/Sâm phụ thang (cố thoát) + An cung/Chí bảo (khai bế) dùng song song. Nếu chỉ khai bế: dương thoát thêm. Nếu chỉ cố thoát: tà vẫn bế không thể hồi phục.',
+    why:['A. Tuần tự hóa nguy hiểm: thoát có thể tử vong trong thời gian chờ','B. Chỉ cố thoát không giải quyết được nội bế','D. Hồi dương cứu nghịch: Dương khí bạo thoát thuần túy'],
+    kp:'Nội bế ngoại thoát → Khai bế + Cố thoát ĐỒNG THỜI là bắt buộc'
+  },
+  {
+    bloom:3, cat:'phuong-duoc',
+    stem:'Thanh ôn bại độc ẩm là hợp phương của?',
+    opts:['A. Bạch hổ thang + Tê giác địa hoàng thang','B. Bạch hổ thang + Lương cách tán + Hoàng liên giải độc thang + Tê giác địa hoàng thang','C. Ngân kiều tán + Bạch hổ thang + Tê giác địa hoàng thang','D. Lương cách tán + Hoàng liên giải độc thang + Đào nhân thừa khí thang'],
+    ans:1,
+    explain:'Thanh ôn bại độc ẩm = hợp 4 phương lớn: Bạch hổ (thanh khí nhiệt) + Lương cách tán (thanh cách nhiệt) + Hoàng liên giải độc thang (thanh nhiệt giải độc) + Tê giác địa hoàng thang (lương huyết giải độc). Chỉ định: khí dinh huyết đều bị.',
+    why:['A. Chỉ 2 phương, không đủ','C. Ngân kiều tán là phương Phong Ôn (Phế Vệ)','D. Đào nhân thừa khí: ứ huyết, không phải thành phần Thanh ôn bại độc ẩm'],
+    kp:'Thanh ôn bại độc ẩm = 4 phương hợp lại → khí dinh huyết đều bị'
+  },
+  {
+    bloom:3, cat:'chan-doan',
+    stem:'Bệnh nhân Xuân Ôn: sốt + ố hàn + đau đầu gáy + thân mình đau mỏi + bụng trướng + rêu vàng táo. Đây là thể nào?',
+    opts:['A. Phục tà tự phát','B. Biểu hàn lý nhiệt','C. Vệ dinh đồng bệnh','D. Khí phần uất nhiệt tại Đởm'],
+    ans:1,
+    explain:'Biểu hàn (ố hàn + đau đầu gáy + thân đau mỏi) + lý nhiệt (bụng trướng + rêu vàng táo) đồng thời → Biểu hàn lý nhiệt = phục tà phát lý + tân cảm phong hàn kích phát đồng thời. Phương: Tăng tổn song giải tán.',
+    why:['A. Phục tà tự phát: thuần lý nhiệt, không có biểu hàn','C. Vệ dinh đồng bệnh: có ban chẩn lờ mờ + ố hàn khác','D. Đởm phủ: miệng đắng + ngực sườn + không có biểu hàn'],
+    kp:'Biểu hàn lý nhiệt = ố hàn đau mỏi (biểu) + bụng trướng rêu vàng (lý) → Tăng tổn song giải tán'
+  },
+  {
+    bloom:3, cat:'chan-doan',
+    stem:'Xuân Ôn: da nổi ban chẩn lờ mờ + sốt + ố hàn nhẹ + đau họng + khát nước + lưỡi đỏ thẫm rêu trắng vàng xen. Thể này là?',
+    opts:['A. Biểu hàn lý nhiệt','B. Tân cảm dẫn phát thuần biểu','C. Vệ dinh đồng bệnh','D. Khí dinh lưỡng phiên'],
+    ans:2,
+    explain:'Ban chẩn lờ mờ (dinh nhiệt thương lạc) + ố hàn đau họng (vệ biểu) + lưỡi đỏ thẫm (dinh nhiệt) = Vệ biểu bị vây khốn + Phục nhiệt tổn dinh âm ĐỒNG THỜI → Vệ dinh đồng bệnh. Khác biểu hàn lý nhiệt: không có ban chẩn.',
+    why:['A. Biểu hàn lý nhiệt: không có ban chẩn + bụng trướng nổi bật hơn','B. Thuần biểu: không có ban chẩn lờ mờ','D. Khí dinh lưỡng phiên: ban dày hơn, không còn biểu chứng'],
+    kp:'Ban lờ mờ + vệ biểu + lưỡi đỏ thẫm = Vệ dinh đồng bệnh → Ngân kiều tán bỏ Đậu xị gia Sinh địa/Đơn bì/Huyền sâm'
+  },
+
+  // ===== BLOOM 4-5: PHÂN TÍCH / ĐÁNH GIÁ (Q31-Q45) =====
+  {
+    bloom:4, cat:'phan-biet',
+    stem:'Bệnh nhân 22 tuổi, mùa xuân, sốt 38°C, HO NHIỀU, đau họng, ố phong nhẹ, lưỡi đỏ nhạt rêu trắng mỏng, mạch phù sắc. Chẩn đoán phân biệt Xuân Ôn hay Phong Ôn?',
+    opts:['A. Xuân Ôn — vì xảy ra mùa xuân','B. Phong Ôn — vì sơ khởi có triệu chứng Phế Vệ (ho + đau họng + ố phong)','C. Xuân Ôn — vì có sốt','D. Cần xét nghiệm máu mới phân biệt được'],
+    ans:1,
+    explain:'Sơ khởi HO NHIỀU + đau họng + ố phong nhẹ = Phế Vệ biểu nhiệt = ĐẶC TRƯNG PHONG ÔN. Xuân Ôn sơ khởi KHÔNG có triệu chứng Phế, phải có lý nhiệt tích thịnh (tâm phiền, khát nhiều, thần kinh). Đây là Phong Ôn.',
+    why:['A. Mùa xuân không đủ để chẩn đoán Xuân Ôn vì Phong Ôn cũng xảy ra mùa xuân','C. Sốt không phân biệt được 2 bệnh','D. Lâm sàng đủ để phân biệt'],
+    kp:'Phong Ôn sơ khởi: HO + đau họng + ố phong. Xuân Ôn sơ khởi: LÝ NHIỆT tích thịnh, không có Phế chứng'
+  },
+  {
+    bloom:4, cat:'phan-biet',
+    stem:'Bệnh nhân sốt cao mùa hè (tháng 7), khát, ra nhiều mồ hôi, người mệt, lưỡi đỏ rêu vàng nhớt, bụng trướng. Phân biệt Xuân Ôn vs Thử Ôn — bệnh nào phù hợp hơn?',
+    opts:['A. Xuân Ôn — vì sốt cao và lý nhiệt','B. Thử Ôn — vì mùa hè (sau Hạ chí), ra nhiều mồ hôi, rêu nhớt (thấp)','C. Không thể phân biệt vì cả hai đều có lý nhiệt sơ khởi','D. Xuân Ôn — vì không có triệu chứng Phế'],
+    ans:1,
+    explain:'Mùa hè (tháng 7, sau Hạ chí) + rêu vàng NHỚT (thấp nhiệt) + bụng trướng + mồ hôi nhiều → Thử Ôn. Xuân Ôn: trước Hạ chí, không có thấp, thần kinh nổi bật hơn.',
+    why:['A. Xuân Ôn: xảy ra TRƯỚC Hạ chí','C. Phân biệt được dựa vào mùa và rêu lưỡi','D. Không có Phế chứng không đủ chẩn đoán Xuân Ôn'],
+    kp:'Thử Ôn: SAU Hạ chí + rêu nhớt (thấp). Xuân Ôn: TRƯỚC Hạ chí + không thấp + thần kinh nổi bật'
+  },
+  {
+    bloom:4, cat:'co-che',
+    stem:'Tại sao trong Xuân Ôn, Ngô Cúc Thông nhấn mạnh TUYỆT ĐỐI KHÔNG dùng tân ôn phát hãn?',
+    opts:['A. Vì thuốc tân ôn quá đắt và khó kiếm','B. Vì phục tà từ lý phát ra, tân ôn tuyên tán làm hao âm + khoét thêm lý nhiệt, gây kiếp dịch nguy tính','C. Vì tân ôn không có tác dụng trong Xuân Ôn','D. Vì Tây y đã có thuốc thay thế tốt hơn'],
+    ans:1,
+    explain:'Xuân Ôn: lý nhiệt tích thịnh + âm tinh sẵn hư. Tân ôn phát hãn (Ma hoàng, Quế chi) → (1) mồ hôi ra nhiều → hao âm dịch thêm, (2) ôn nhiệt → khoét thêm lý nhiệt → nhiệt độc tăng mạnh → động phong/kiếp dịch nguy hiểm.',
+    why:['A. Không phải lý do y học','C. Sai — tân ôn có tác dụng nhưng tác dụng ngược lại trong bối cảnh này','D. Không phải lý do'],
+    kp:'Tân ôn phát hãn trong Xuân Ôn = 2 hại: hao âm + tăng lý nhiệt → tuyệt đối tránh'
+  },
+  {
+    bloom:4, cat:'phuong-duoc',
+    stem:'Hóa ban thang dùng Bạch hổ thang làm cơ sở vì lý do chính yếu gì?',
+    opts:['A. Bạch hổ thang có tác dụng diệt vi khuẩn gây ban chẩn','B. Ban thuộc VỊ — Dương Minh nhiệt độc uất cơ biểu → Bạch hổ thang thanh khí giải cơ để hóa ban','C. Bạch hổ thang có tác dụng hạ sốt nhanh nhất','D. Vì ban chẩn thường xuất hiện khi có 4 đại chứng'],
+    ans:1,
+    explain:'Theo lý luận YHCT: ban (chẩn) do Vị nhiệt xung lên gây — Vị chủ cơ nhục. Dương Minh nhiệt độc uất tại cơ biểu → ban. Bạch hổ thang thanh Dương Minh nhiệt + giải cơ biểu → hóa ban. Thêm Thủy ngưu giác + Huyền sâm: lương huyết giải độc.',
+    why:['A. Không có cơ sở trong YHCT','C. Hạ sốt là tác dụng phụ, không phải lý luận chính','D. Không phải lý do lựa chọn Bạch hổ'],
+    kp:'Ban thuộc Vị. Hóa ban thang = Bạch hổ (thanh Vị giải cơ) + Thủy ngưu giác + Huyền sâm'
+  },
+  {
+    bloom:4, cat:'phuong-duoc',
+    stem:'Ngân kiều tán gia giảm cho thể Vệ dinh đồng bệnh: tại sao bỏ Đậu xị?',
+    opts:['A. Đậu xị có tương tác với Sinh địa','B. Đậu xị tuyên tán biểu phận quá mạnh — khi đã có dinh nhiệt tổn dinh âm, tuyên tán mạnh sẽ hao âm thêm','C. Đậu xị không có tác dụng trong ôn bệnh','D. Đậu xị bị thay thế bởi Đại thanh diệp hiệu quả hơn'],
+    ans:1,
+    explain:'Ngân kiều tán gốc: Đậu xị tuyên tán biểu phận (thích hợp thuần biểu). Vệ dinh đồng bệnh: đã có dinh nhiệt tổn âm → không cần tuyên tán quá mạnh, cần bảo vệ âm. Bỏ Đậu xị + gia Sinh địa/Đơn bì/Huyền sâm để lương dinh tiết nhiệt.',
+    why:['A. Không có tương tác dược lý YHCT như vậy','C. Sai — Đậu xị có tác dụng trong ôn bệnh biểu chứng','D. Không phải lý do — vẫn dùng cả Đại thanh diệp VÀ bỏ Đậu xị'],
+    kp:'Bỏ Đậu xị (tuyên tán mạnh → hao âm) + gia Sinh địa/Huyền sâm (lương dinh bảo âm)'
+  },
+  {
+    bloom:4, cat:'co-che',
+    stem:'Tại sao Đào nhân thừa khí thang dùng trong Xuân Ôn phải BỎ Quế chi và Cam thảo so với nguyên phương Thương Hàn Luận?',
+    opts:['A. Quế chi và Cam thảo gây táo bón thêm','B. Quế chi tân ôn làm tăng nhiệt; Cam thảo cam hoãn làm chậm tác dụng — cả hai không phù hợp trong nhiệt tà bệnh','C. Bỏ để giảm vị trong bài cho bệnh nhân dễ uống','D. Cam thảo tương kỵ với Đào nhân'],
+    ans:1,
+    explain:'Thương Hàn Luận: Đào nhân thừa khí thang dùng Quế chi (ôn thông) + Cam thảo (hoãn trung). Xuân Ôn: nhiệt thịnh → Quế chi tân ôn sẽ khoét thêm lý nhiệt; Cam thảo cam hoãn làm giảm hiệu quả tán huyết + công hạ. Thay bằng Đơn bì + Xích thực + Đương quy.',
+    why:['A. Không phải tác dụng đó','C. Không phải lý do y học','D. Không có tương kỵ này trong YHCT'],
+    kp:'Xuân Ôn nhiệt thịnh: bỏ Quế chi (ôn nhiệt) + Cam thảo (hoãn). Gia Đơn bì + Xích thực + Đương quy'
+  },
+  {
+    bloom:5, cat:'dieu-tri',
+    stem:'Bệnh nhân Xuân Ôn: lâm sàng đủ Dương Minh nhiệt tích nhưng đang được truyền dịch → mồ hôi và khát có thể giảm. Có nên chờ đủ "4 đại chứng" rồi mới dùng Bạch hổ thang không?',
+    opts:['A. Có — cần đủ 4 đại chứng mới chẩn đoán chắc chắn','B. Không — khi đã có sốt cao + mạch hồng đại là đủ chỉ định, không cần đủ 4 đại chứng trong thực tế','C. Cần hội chẩn chuyên khoa trước khi quyết định','D. Chờ kết quả xét nghiệm trước'],
+    ans:1,
+    explain:'Nguyên tắc thực hành: khi bệnh nhân đang truyền dịch hoặc đã dùng thuốc, biểu hiện có thể bị che. Nếu có sốt cao + mạch hồng đại (cốt lõi Dương Minh nhiệt) là đủ chỉ định Bạch hổ thang. Không phải lúc nào cũng đợi đủ 4 đại chứng.',
+    why:['A. Nguyên tắc lý thuyết — lâm sàng thực tế không phải lúc nào cũng đủ','C. Không cần hội chẩn khi đã có chỉ định rõ','D. Xét nghiệm không quyết định chỉ định Bạch hổ thang'],
+    kp:'Thực tế lâm sàng: sốt cao + mạch hồng đại = đủ chỉ định Bạch hổ. Không cần đủ 4 đại chứng'
+  },
+  {
+    bloom:5, cat:'dieu-tri',
+    stem:'Sau khi Xuân Ôn đã ổn định, bệnh nhân còn run tay nhẹ, chân tay mỏi, khát miệng nhẹ. Có nên dùng Đại định phong châu không?',
+    opts:['A. Có — đây là bài thuốc tốt nhất cho âm hư phong động','B. Chỉ dùng khi THUẦN HƯ, không còn nhiệt tà — nếu còn nhiệt tà → không dùng','C. Dùng được vì bệnh đã ổn định','D. Dùng kết hợp với Bạch hổ thang để vừa bổ vừa thanh'],
+    ans:1,
+    explain:'Ngô Cúc Thông: "Tráng hỏa thượng thịnh giả, bất đắc dụng định phong châu." Đại định phong châu rất bổ (A giao + Kê tử hoàng + Ngũ vị...) → nếu còn nhiệt tà → lưu tà. Chỉ dùng khi THUẦN HƯ. Nếu còn khát nhẹ (có thể là dư nhiệt) → kiểm tra trước.',
+    why:['A. Tốt nhất nhưng cần điều kiện đúng','C. Ổn định về lâm sàng chưa đủ — cần thuần hư','D. Kết hợp Bạch hổ + Đại định phong châu mâu thuẫn nhau về chỉ định'],
+    kp:'Đại định phong châu: CHỈ DÙNG khi thuần hư, KHÔNG còn tà nhiệt'
+  },
+  {
+    bloom:5, cat:'dieu-tri',
+    stem:'Bệnh nhân Xuân Ôn: sốt cao 5 ngày + táo bón 3 ngày. Lựa chọn giữa Tăng dịch thừa khí thang vs Tân gia hoàng long thang — yếu tố nào quyết định?',
+    opts:['A. Số ngày bị táo bón','B. Mức độ sốt cao hay thấp','C. Có hay không có khí hư (mắt lờ đờ, lưỡi biếng huyết, mạch nhược)','D. Tuổi bệnh nhân'],
+    ans:2,
+    explain:'Cả hai đều trị nhiệt kết + dịch khuy. Điểm phân biệt: KHÍ HƯ. Tân gia hoàng long thêm Nhân sâm + Đương quy + Hải sâm + Khương trấp → chỉ khi khí dịch LƯỠNG HƯ (mắt lờ đờ, mạch nhược, lưỡi biếng huyết). Thuần dịch khuy → Tăng dịch thừa khí.',
+    why:['A. Không quyết định','B. Không phải yếu tố phân biệt','D. Tuổi không quyết định trực tiếp'],
+    kp:'Phân biệt: KHÍ HƯ hay không. Thuần dịch khuy → Tăng dịch. Khí + dịch hư → Tân gia hoàng long'
+  },
+  {
+    bloom:5, cat:'nguy-kich',
+    stem:'Bệnh nhân Xuân Ôn nguy kịch: sốt ĐỘT NGỘT hạ, tứ chi lạnh băng, mồ hôi lạnh đầm dề, da hoa văn, ban chẩn tím đen từng đám, hơi thở yếu, mạch vi tế muốn tuyệt, KHÔNG thần hôn. Chẩn đoán và điều trị?',
+    opts:['A. Nội bế ngoại thoát — khai bế + cố thoát đồng thời','B. Dương khí bạo thoát — hồi dương cứu nghịch (Hồi dương cứu nghịch thang)','C. Nhiệt bế huyết thoát — Thanh ôn bại độc ẩm + Sinh mạch tán','D. Dương hư tà hãm — Sâm phụ long mẫu thang'],
+    ans:1,
+    explain:'Thuần thoát: sốt hạ đột ngột + tứ chi lạnh băng + mồ hôi lạnh + mạch vi tế muốn tuyệt + KHÔNG thần hôn (không có nội bế) → Dương khí bạo thoát. Điều trị: Hồi dương cứu nghịch thang + Tây y nâng huyết áp chống sốc.',
+    why:['A. Nội bế ngoại thoát: PHẢI có thần hôn (nội bế)','C. Nhiệt bế huyết thoát: ban chẩn + khí dịch muốn thoát, không thuần thoát','D. Dương hư tà hãm: khác cơ chế'],
+    kp:'Dương khí bạo thoát: thuần thoát, KHÔNG thần hôn → Hồi dương cứu nghịch thang'
+  },
+  {
+    bloom:4, cat:'co-che',
+    stem:'Cơ chế "đêm sốt sáng mát, sốt không nổi mồ hôi" trong tà lưu âm phần theo Ngô Cúc Thông?',
+    opts:['A. Ban đêm nhiệt độ môi trường hạ → bệnh nhân sốt hơn','B. Vệ khí đêm vào âm phần gặp phục tà đấu → sốt; ban ngày vệ khí ra dương phần không gặp tà → mát','C. Mồ hôi đêm làm hao âm dịch gây sốt','D. Do thuốc hạ nhiệt giảm tác dụng vào ban ngày'],
+    ans:1,
+    explain:'Ngô Cúc Thông: "Dạ hành âm phần nhi nhiệt, nhật hành dương phần nhi lương." Vệ khí ban ngày đi dương phần, ban đêm vào âm phần → gặp phục tà lưu ở âm phần → đấu → NHIỆT. Mồ hôi KHÔNG nổi = tà vẫn lưu trong âm phần, chưa xuất ra biểu.',
+    why:['A. Không phải cơ chế YHCT','C. Mồ hôi đêm là hậu quả, không phải nguyên nhân','D. Không liên quan thuốc tây'],
+    kp:'Tà lưu âm phần: vệ khí-tà đấu ở âm phần (ban đêm) → sốt. Ban ngày vệ khí ra dương → mát'
+  },
+  {
+    bloom:4, cat:'phuong-duoc',
+    stem:'Trong Thanh hao miết giáp thang, vì sao 2 vị chủ dược Thanh hao và Miết giáp được dùng đồng thời, không dùng riêng lẻ?',
+    opts:['A. Vì cùng có tác dụng thanh nhiệt, dùng chung tăng hiệu quả','B. Thanh hao không tự nhập âm phần → cần Miết giáp dẫn vào; Miết giáp không tự xuất âm phần → cần Thanh hao dẫn tà ra','C. Vì Miết giáp đắt, cần pha loãng với Thanh hao','D. Vì đây là cặp thuốc tương tu theo lý thuyết YHCT cổ điển'],
+    ans:1,
+    explain:'Ngô Cúc Thông giải thích cặp đôi bổ sung: Thanh hao nhẹ, thơm, thấu tán — nhưng không đủ trọng lực nhập sâu vào âm phần → cần Miết giáp nặng dẫn vào. Miết giáp trọng, bổ âm — nhưng không tự đẩy tà ra ngoài → cần Thanh hao dẫn tà xuất biểu. Cơ chế tư âm + thấu tà hoàn chỉnh.',
+    why:['A. Giải thích quá đơn giản, không đúng lý luận YHCT','C. Không phải lý do','D. Quá chung chung — tương tu không giải thích được cơ chế cụ thể'],
+    kp:'Thanh hao + Miết giáp: bổ khuyết nhau. Miết giáp dẫn vào âm; Thanh hao dẫn tà ra ngoài'
+  },
+  {
+    bloom:5, cat:'dieu-tri',
+    stem:'Giữa Gia giảm Phục mạch thang và Tam giáp phục mạch thang — khi nào chọn thang nào?',
+    opts:['A. Gia giảm Phục mạch: bệnh nhẹ; Tam giáp phục mạch: bệnh nặng','B. Gia giảm Phục mạch: chân âm khuy tổn thuần túy; Tam giáp phục mạch: âm hư phong động (thêm run tay + Mẫu lệ + Miết giáp)','C. Gia giảm Phục mạch: mùa hè; Tam giáp phục mạch: mùa đông','D. Gia giảm Phục mạch: trẻ em; Tam giáp phục mạch: người lớn'],
+    ans:1,
+    explain:'Phân biệt: Gia giảm Phục mạch = nền tảng tư âm cho hậu kỳ Xuân Ôn, chân âm khuy tổn. Tam giáp phục mạch = Gia giảm Phục mạch + Mẫu lệ + Miết giáp (tiềm dương tức phong) → khi CÓ THÊM âm hư phong động (run tay, chóng mặt).',
+    why:['A. Không phải tiêu chí phân biệt','C. Mùa không liên quan','D. Tuổi không quyết định'],
+    kp:'Tam giáp = Gia giảm Phục mạch + Mẫu lệ + Miết giáp → chỉ thêm khi có phong động (run tay)'
+  },
+  {
+    bloom:4, cat:'dieu-tri',
+    stem:'Bệnh nhân Xuân Ôn: sốt + táo bón + tiểu ngắn đỏ rát. Ngoài Tăng dịch thừa khí thang, cần thêm gì? Phương phù hợp nhất?',
+    opts:['A. Thêm Mạch đông + Thiên hoa phấn','B. Đạo xích thừa khí thang — có thêm Hoàng liên, Hoàng bá thanh tiểu trường nhiệt','C. Tân gia hoàng long thang','D. Lương cách tán'],
+    ans:1,
+    explain:'Táo bón + tiểu ngắn đỏ rát = nhiệt kết trường phủ + tiểu trường nhiệt thịnh → Đạo xích thừa khí thang: Hoàng liên + Hoàng bá (thanh tiểu trường nhiệt) + Sinh địa + Xích thực (lương huyết) + Đại hoàng + Mang tiêu (thông phủ).',
+    why:['A. Thêm Mạch đông chỉ tư âm, không giải quyết tiểu trường nhiệt','C. Tân gia hoàng long: khí dịch lưỡng hư, không có chỉ định tiểu trường nhiệt','D. Lương cách tán: Hung cách nhiệt'],
+    kp:'Nhiệt kết trường phủ + tiểu trường nhiệt → Đạo xích thừa khí thang'
+  },
+  {
+    bloom:4, cat:'nguy-kich',
+    stem:'Dương hư tà hãm: tại sao phương Sâm phụ long mẫu thang gia vị CẦN THÊM thuốc hoạt huyết (Đan sâm, Đào nhân, Hồng hoa)?',
+    opts:['A. Vì hoạt huyết làm tăng huyết áp','B. Dương thoát → khí không soái huyết → huyết ứ (môi tím, móng xanh, da hoa văn) — cần tán ứ đồng thời hồi dương','C. Vì Đan sâm có tác dụng kháng khuẩn','D. Hoạt huyết giúp thuốc thấm nhanh hơn'],
+    ans:1,
+    explain:'Dương khí hư → khí không có lực soái huyết → huyết vận hành trở ngại → ứ trệ. Dấu hiệu: môi tím, móng xanh, da hoa văn, lưỡi thâm. Thêm hoạt huyết (Đan sâm + Đào nhân + Hồng hoa) xử lý ứ huyết song song với hồi dương.',
+    why:['A. Hoạt huyết không trực tiếp tăng HA','C. Không phải cơ chế YHCT chính','D. Không phải lý do lâm sàng'],
+    kp:'Dương hư → khí không soái huyết → ứ. Thêm hoạt huyết giải quyết ứ huyết + hồi dương'
+  },
+
+  // ===== BLOOM 5-6: TỔNG HỢP / CA PHỨC TẠP (Q46-Q50) =====
+  {
+    bloom:6, cat:'tong-hop',
+    stem:'Ca lâm sàng tích hợp: BN 30 tuổi, tháng 2, sốt đột ngột 40°C, đau đầu dữ dội, cổ cứng, nôn vọt, co giật 1 lần, mạch nổi ban lờ mờ ở ngực, lưỡi đỏ thẫm rêu vàng dày. Giai đoạn bệnh và kế hoạch điều trị YHCT ưu tiên?',
+    opts:['A. Sơ kỳ khí phần → Hoàng cầm thang','B. Trung kỳ — Nhiệt thịnh động phong kèm khí dinh lưỡng phiên → Linh giác câu đẳng thang + Hóa ban thang/Thanh ôn bại độc ẩm','C. Hậu kỳ — Tà lưu âm phần → Thanh hao miết giáp thang','D. Nội bế ngoại thoát → Khai bế + Cố thoát'],
+    ans:1,
+    explain:'Phân tích: Sốt 40°C + đau đầu + cổ cứng (nhiệt thịnh) + co giật (nhiệt thịnh động phong) + ban lờ mờ (khí dinh lưỡng phiên) + lưỡi đỏ thẫm (dinh nhiệt) → Trung kỳ nặng: đồng thời nhiệt thịnh động phong + khí dinh lưỡng phiên. Cần Linh giác câu đẳng (tức phong) + Thanh ôn bại độc ẩm/Hóa ban thang (lương huyết hóa ban).',
+    why:['A. Sơ kỳ nhẹ hơn nhiều, không co giật, không ban','C. Hậu kỳ: hết sốt, âm hư là chính','D. Không có dấu hiệu thoát (mồ hôi lạnh, tứ chi lạnh)'],
+    kp:'Ca nặng trung kỳ: nhiều hội chứng đồng thời → phối hợp phương (tức phong + lương huyết hóa ban)'
+  },
+  {
+    bloom:6, cat:'tong-hop',
+    stem:'Bệnh nhân Xuân Ôn đang điều trị: sau 7 ngày sốt hạ, nhưng đêm vẫn sốt 37.8°C sáng bình thường, run tay nhẹ, mất ngủ, phiền bức, lưỡi đỏ ít rêu. Kế hoạch điều trị hậu kỳ phù hợp nhất?',
+    opts:['A. Một phương: Đại định phong châu','B. Một phương: Gia giảm Phục mạch thang','C. Cần phân biệt: run tay → Tam giáp phục mạch; mất ngủ phiền bức → Hoàng liên a giao thang; đêm sốt → Thanh hao miết giáp thang — xác định hội chứng nổi bật nhất','D. Dùng Bạch hổ thang vì còn sốt'],
+    ans:2,
+    explain:'Hậu kỳ phức tạp: nhiều hội chứng chồng lấp. (1) Đêm sốt sáng mát = tà lưu âm phần → Thanh hao miết giáp. (2) Run tay = âm hư phong động → Tam giáp phục mạch. (3) Mất ngủ phiền bức = âm hư hỏa tích → Hoàng liên a giao thang. Xác định hội chứng NỔIBẬT NHẤT để chọn phương chính.',
+    why:['A. Đại định phong châu: thuần hư, nặng hơn, và còn đêm sốt = còn tà','B. Gia giảm Phục mạch: nền tảng nhưng chưa đủ đặc hiệu cho từng hội chứng','D. Bạch hổ: đêm sốt của âm phần khác hẳn dương minh nhiệt'],
+    kp:'Hậu kỳ Xuân Ôn: phân tích từng hội chứng → chọn phương đặc hiệu nhất cho hội chứng nổi bật'
+  },
+  {
+    bloom:5, cat:'tong-hop',
+    stem:'Xuân Ôn dự phòng theo YHCT: nguyên tắc mùa đông cần làm gì?',
+    opts:['A. Uống nhiều thuốc bổ để tăng cường đề kháng','B. "Tàng tinh" — bảo dưỡng chính khí, tránh lao động quá sức, lao thần, phòng lao quá độ; sinh hoạt điều độ','C. Không ra ngoài trời lạnh toàn bộ mùa đông','D. Chỉ cần chủng ngừa, không cần điều tiết sinh hoạt'],
+    ans:1,
+    explain:'Nội Kinh: "Đông tàng" — mùa đông cần tàng tinh: bảo dưỡng chính khí, tránh tiêu hao âm tinh (lao động quá sức, lao thần, phòng lao). Dự phòng: phát hiện sớm + cách ly + vệ sinh + chủng ngừa + điều độ sinh hoạt.',
+    why:['A. Thuốc bổ không đủ nếu không điều tiết sinh hoạt','C. Không cần cô lập, chỉ cần điều tiết','D. Chủng ngừa quan trọng nhưng không đủ'],
+    kp:'Dự phòng Xuân Ôn: "Đông tàng" = bảo dưỡng chính khí + tàng tinh mùa đông'
+  },
+  {
+    bloom:6, cat:'tong-hop',
+    stem:'Tổng hợp: Nguyên tắc nào SAI TUYỆT ĐỐI trong điều trị Xuân Ôn ở bất kỳ giai đoạn nào?',
+    opts:['A. Thanh tiết lý nhiệt','B. Cố hộ âm dịch','C. Tân ôn phát hãn (Ma hoàng, Quế chi) để giải biểu','D. Thấu tà ngoại xuất'],
+    ans:2,
+    explain:'Tân ôn phát hãn là NGHIÊM CẤM trong Xuân Ôn: (1) Xuân Ôn = phục khí lý nhiệt — không có biểu hàn cần phát tán; (2) Tân ôn làm hao âm + tăng lý nhiệt → nguy; (3) Ngay cả Biểu hàn lý nhiệt cũng chỉ dùng Tăng tổn song giải tán (không phải Ma hoàng/Quế chi nguyên chất).',
+    why:['A. Đúng — là nguyên tắc chính','B. Đúng — xuyên suốt toàn bộ điều trị','D. Đúng — thấu tà ngoại xuất là nguyên tắc bổ trợ'],
+    kp:'SAI TUYỆT ĐỐI: tân ôn phát hãn (Ma hoàng, Quế chi đơn thuần) trong Xuân Ôn'
+  },
+  {
+    bloom:6, cat:'tong-hop',
+    stem:'Bệnh nhân 25 tuổi, tháng 3, vào viện vì sốt cao 39.5°C kéo dài 3 ngày, đau đầu, cổ cứng, phù phổi nhẹ, ban chẩn xuất hiện. Tây y chẩn đoán: NGHI viêm màng não não mô cầu. YHCT cần áp dụng nguyên tắc nào và theo dõi dấu hiệu gì?',
+    opts:['A. Chỉ dùng kháng sinh, YHCT không có vai trò','B. YHCT hỗ trợ: thanh tiết lý nhiệt + cố hộ âm; theo dõi ban chẩn (tính chất, mật độ), thần chí, mạch để phát hiện sớm tà hãm chính suy','C. Dùng ngay Đại định phong châu để dự phòng phong động','D. Ưu tiên tân ôn phát hãn vì bệnh nhân đang sốt cao'],
+    ans:1,
+    explain:'Tiếp cận tích hợp: Kháng sinh Tây y là ưu tiên 1. YHCT hỗ trợ: thanh lý nhiệt + cố âm. Theo dõi YHCT: (1) Ban chẩn: lờ mờ→dày đặc→màu tím = nặng dần; (2) Thần chí: bất an→hôn mê = tà nhập Tâm Bào; (3) Mạch: huyền sắc→vi tế = tà thịnh chính suy. Phát hiện sớm cảnh báo tà hãm chính suy.',
+    why:['A. YHCT có vai trò hỗ trợ quan trọng','C. Đại định phong châu: chỉ dùng hậu kỳ thuần hư, không dùng khi còn tà thịnh','D. Tân ôn phát hãn = nghiêm cấm'],
+    kp:'Tích hợp Đông-Tây: kháng sinh + YHCT thanh lý nhiệt + theo dõi ban/thần/mạch'
+  }
+];
+
+// State
+let answers = new Array(QS.length).fill(null);
+let revealed = new Array(QS.length).fill(false);
+let visibleIdx = QS.map((_,i)=>i);
+
+function bloomClass(b){ return b<=2?'b1':b===3?'b3':b===4?'b4':b===5?'b5':'b6'; }
+function bloomLabel(b){ return b===1?'B1·Nhớ':b===2?'B2·Hiểu':b===3?'B3·Áp dụng':b===4?'B4·Phân tích':b===5?'B5·Đánh giá':'B6·Tổng hợp'; }
+
+function buildCard(i){
+  const q = QS[i];
+  const num = i+1;
+  const bClass = bloomClass(q.bloom);
+  const bLabel = bloomLabel(q.bloom);
+  const isAnswered = revealed[i];
+  const chosen = answers[i];
+  const cardClass = isAnswered ? (chosen===q.ans?'done-right':'done-wrong') : '';
+
+  const optsHtml = q.opts.map((o,oi)=>{
+    let cls = 'opt';
+    if(isAnswered) { cls += ' locked'; if(oi===q.ans) cls+=' correct'; else if(oi===chosen) cls+=' wrong'; }
+    else if(oi===chosen) cls+=' selected';
+    const keyLetters=['A','B','C','D','E'];
+    return `<div class="${cls}" onclick="selectOpt(${i},${oi})"><span class="opt-key">${keyLetters[oi]}.</span><span>${o.replace(/^[A-E]\.\s*/,'')}</span></div>`;
+  }).join('');
+
+  const resultHtml = isAnswered ? `<span class="result-chip ${chosen===q.ans?'chip-right':'chip-wrong'}">${chosen===q.ans?'✓ Đúng rồi!':'✗ Chưa đúng'}</span>` : '';
+
+  const explainHtml = isAnswered ? `
+    <div class="explain show">
+      <h4>Giải thích</h4>
+      <p>${q.explain}</p>
+      ${q.why.map((w,wi)=>{const keys=['A','B','C','D','E'];return`<p class="why"><span>Loại ${keys[wi]}:</span> ${w}</p>`}).join('')}
+      <div class="kp">💡 Điểm cần nhớ: ${q.kp}</div>
+    </div>` : `<div class="explain" id="exp-${i}"></div>`;
+
+  const checkDisabled = answers[i]===null&&!isAnswered ? 'disabled' : '';
+  const checkActive = answers[i]!==null&&!isAnswered ? 'active' : '';
+
+  return `
+    <div class="q-card ${cardClass}" id="qcard-${i}">
+      <div class="q-header">
+        <div class="q-num">Câu ${num} / ${QS.length}</div>
+        <span class="bloom-chip ${bClass}">${bLabel}</span>
+      </div>
+      ${q.stem.includes('<strong>Ca') ? `<div class="clinical-box">${q.stem}</div>` :
+        `<div class="q-stem">${q.stem}</div>`}
+      <div class="q-ask" style="margin-top:${q.stem.includes('<strong>Ca')?0:8}px">Chọn đáp án phù hợp nhất:</div>
+      <div class="options" id="opts-${i}">${optsHtml}</div>
+      <div class="q-actions">
+        <button class="btn-check ${checkActive}" id="chk-${i}" ${checkDisabled} onclick="checkQ(${i})">Kiểm tra</button>
+        <button class="btn-show" onclick="showAns(${i})">Xem đáp án</button>
+        ${resultHtml}
+      </div>
+      ${explainHtml}
+    </div>`;
+}
+
+function render(){
+  const list = document.getElementById('q-list');
+  list.innerHTML = visibleIdx.map(i=>buildCard(i)).join('');
+  updateStats();
+}
+
+function selectOpt(qi, oi){
+  if(revealed[qi]) return;
+  answers[qi] = oi;
+  const card = document.getElementById(`qcard-${qi}`);
+  const opts = card.querySelectorAll('.opt');
+  opts.forEach((el,idx)=>{ el.classList.toggle('selected', idx===oi); });
+  const chk = document.getElementById(`chk-${qi}`);
+  if(chk){ chk.disabled=false; chk.classList.add('active'); }
+}
+
+function checkQ(qi){
+  if(answers[qi]===null||revealed[qi]) return;
+  revealed[qi]=true;
+  refreshCard(qi);
+  updateStats();
+  checkSummary();
+}
+
+function showAns(qi){
+  if(answers[qi]===null) answers[qi]=QS[qi].ans;
+  revealed[qi]=true;
+  refreshCard(qi);
+  updateStats();
+  checkSummary();
+}
+
+function refreshCard(qi){
+  const card = document.getElementById(`qcard-${qi}`);
+  if(!card) return;
+  const tmp = document.createElement('div');
+  tmp.innerHTML = buildCard(qi);
+  card.replaceWith(tmp.firstElementChild);
+}
+
+function checkSummary(){
+  const done = revealed.filter(Boolean).length;
+  if(done===QS.length){
+    const right = QS.filter((_,i)=>answers[i]===QS[i].ans&&revealed[i]).length;
+    const pct = Math.round(right/QS.length*100);
+    document.getElementById('s-right').textContent=right;
+    document.getElementById('s-wrong').textContent=QS.length-right;
+    document.getElementById('s-pct').textContent=pct+'%';
+    document.getElementById('grade-text').textContent = pct>=80?`Xuất sắc! ${pct}%`:pct>=60?`Đạt. ${pct}%`:`Cần ôn thêm. ${pct}%`;
+    document.getElementById('grade-emoji').textContent = pct>=80?'🏆':pct>=60?'✅':'📚';
+    document.getElementById('summary').classList.add('show');
+  }
+}
+
+function updateStats(){
+  const done = revealed.filter(Boolean).length;
+  const right = QS.filter((_,i)=>revealed[i]&&answers[i]===QS[i].ans).length;
+  document.getElementById('live-score').textContent = right;
+  document.getElementById('live-done').textContent = done;
+  const pct = (done/QS.length)*100;
+  document.getElementById('prog').style.width = pct+'%';
+  document.getElementById('prog-label').textContent = `${done} / ${QS.length} câu`;
+  document.getElementById('pct-label').textContent = Math.round(pct)+'%';
+}
+
+function showAll(btn){ setTab(btn); visibleIdx=QS.map((_,i)=>i); render(); }
+function filterBloom(b, btn){
+  setTab(btn);
+  visibleIdx = b===1 ? QS.map((_,i)=>i).filter(i=>QS[i].bloom<=2) :
+               b===3 ? QS.map((_,i)=>i).filter(i=>QS[i].bloom===3) :
+                       QS.map((_,i)=>i).filter(i=>QS[i].bloom>=4);
+  render();
+}
+function showWrong(btn){
+  setTab(btn);
+  visibleIdx=QS.map((_,i)=>i).filter(i=>revealed[i]&&answers[i]!==QS[i].ans);
+  if(!visibleIdx.length){ alert('Chưa có câu sai, hoặc chưa làm câu nào!'); return; }
+  render();
+}
+function setTab(btn){ document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on')); btn.classList.add('on'); }
+
+function checkAll(){
+  visibleIdx.forEach(i=>{ if(answers[i]!==null&&!revealed[i]){ revealed[i]=true; } });
+  render(); updateStats(); checkSummary();
+}
+
+function scrollTop(){ window.scrollTo({top:0,behavior:'smooth'}); }
+
+function restartAll(){
+  answers=new Array(QS.length).fill(null);
+  revealed=new Array(QS.length).fill(false);
+  visibleIdx=QS.map((_,i)=>i);
+  document.getElementById('summary').classList.remove('show');
+  render();
+}
+
+render();
+</script>
+</body>
+</html>

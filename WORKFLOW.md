@@ -495,6 +495,66 @@ Không cần sửa `.mdx`. Build → push.
 > Nếu lỡ bỏ `.html` vào `src/content/docs/...`: chuyển nó ra `public/quiz/<sách>/`,
 > xóa thư mục lạc, rồi trỏ `<QuizEmbed>` tới vị trí mới.
 
+### 6c. Quiz từ MARKDOWN (khuyến nghị) — `npm run quiz:build`
+
+Thay vì viết tay HTML, soạn nội dung bằng **markdown** rồi để dự án tự sinh HTML từ
+**một template chung**. Không lặp lại HTML cho mỗi câu hỏi.
+
+**Thành phần:**
+
+| File | Vai trò |
+|---|---|
+| `scripts/quiz-template.html` | Engine dùng chung (CSS + JS, tab Flashcard + MCQ). KHÔNG sửa khi thêm câu. |
+| `scripts/build-quiz.mjs` | Generator: markdown → JSON → chèn vào template → ghi HTML. |
+| `scripts/quiz-content.template.md` | Mẫu nội dung + cú pháp. Copy file này để soạn. |
+
+**Cách dùng:**
+
+1. Copy `scripts/quiz-content.template.md` → `Raw/<sách>/Quiz/<slug>.md`
+   (vd `Raw/on_benh_dai_cuong/Quiz/nguoc-tat.md`).
+2. Điền câu hỏi / đáp án theo cú pháp (không đụng HTML). Inline: `**đậm**`, `*nghiêng*`, `` `code` ``.
+3. Build:
+
+```bash
+npm run quiz:build Raw/<sách>/Quiz/<slug>.md   # 1 file
+npm run quiz:build                              # toàn bộ Raw/**/Quiz/*.md
+```
+
+4. Ra `public/quiz/<sách-slug>/<slug>.html` (slug hóa tên thư mục sách:
+   `on_benh_dai_cuong` → `on-benh-dai-cuong`). Nhúng như §6a:
+
+```mdx
+<QuizEmbed src="quiz/<sách-slug>/<slug>.html" title="..." height="85vh" />
+```
+
+**Cú pháp markdown (tóm tắt):**
+
+```markdown
+---
+title: ...
+subtitle: ...
+---
+# TOPICS
+- Chủ đề: #hex        # tùy chọn; bỏ qua thì tự suy ra từ dữ liệu
+# FLASHCARDS
+## [Chủ đề]
+Q: câu hỏi?
+A: đáp án
+# MCQ
+## [Chủ đề] (Nhớ)
+Scenario: ...          # tùy chọn, đặt TRƯỚC Stem
+Stem: câu hỏi?
+A. ...
+B. ...
+Answer: B
+Exp: giải thích
+Key: chốt              # tùy chọn
+```
+
+- ID tự đánh số theo thứ tự — không ghi tay.
+- Sửa câu hỏi: sửa `.md` → chạy lại `quiz:build` (ghi đè HTML) → không đụng `.mdx`.
+- §6a/§6b vẫn dùng cho quiz HTML có sẵn (build từ `html-y-khoa`); §6c dành cho quiz soạn mới từ markdown.
+
 ## 7. Deploy
 
 - Workflow: `.github/workflows/deploy.yml` (GitHub Actions, Node 22).
