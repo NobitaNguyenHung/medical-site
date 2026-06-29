@@ -76,6 +76,7 @@ và muốn hiểu **tại sao** — không phải thuộc thêm.
 - Bảng so sánh, phân loại, decision point
 - `<ClinicalPearl>` — điều GS 30 năm sẽ nhấn mạnh
 - `<RedFlags>` — bẫy chẩn đoán, sai lầm thường gặp
+- `<CompareTable>` — bảng phân biệt (xem cú pháp bên dưới)
 - 3 câu hỏi kích thích tư duy cuối bài (không phải MCQ)
 
 **Template:** `src/content/docs/templates/shared/deep-lecture.mdx`
@@ -114,7 +115,80 @@ Trong sidebar Diátaxis:
 > nhưng chỉ file `.md`/`.mdx` mới thành trang; `.html` thô trong `Raw/` không dùng
 > cho quiz. Quiz HTML vẫn phải đặt ở `public/quiz/<sách>/`.
 
-## 3. Trang chủ Dashboard
+## 3. MDX Components — cú pháp chuẩn
+
+Import ở đầu file (chỉ import cái dùng):
+
+```mdx
+import CompareTable from '~/components/CompareTable.astro';
+import KeyPoints from '~/components/KeyPoints.astro';
+import ClinicalPearl from '~/components/ClinicalPearl.astro';
+import RedFlags from '~/components/RedFlags.astro';
+import MedicalNote from '~/components/MedicalNote.astro';
+import SelfCheck from '~/components/SelfCheck.astro';
+import SourceNote from '~/components/SourceNote.astro';
+```
+
+### CompareTable — 2 cách dùng hợp lệ
+
+**Cách 1 — props (plain text, khuyến nghị cho bảng thuần text):**
+
+```mdx
+<CompareTable
+  title="Tên bảng tùy chọn"
+  headers={["", "Cột A", "Cột B"]}
+  rows={[
+    ["Hàng 1", "dữ liệu A", "dữ liệu B"],
+    ["Hàng 2", "dữ liệu A", "dữ liệu B"],
+  ]}
+/>
+```
+
+> Cột đầu tiên (`i === 0`) tự động render `<th scope="row">` — dùng làm nhãn hàng.
+
+**Cách 2 — slot (khi cần markdown / bold / link trong ô):**
+
+```mdx
+<CompareTable title="Tên bảng">
+
+| Tiêu chí | A | B |
+|---|---|---|
+| **Chỉ định** | Ho khan | Ho đờm |
+
+</CompareTable>
+```
+
+> ⚠ Không được trộn 2 cách: nếu có `headers` prop, slot bị bỏ qua.
+
+### KeyPoints
+
+```mdx
+<KeyPoints title="5 ý lõi">
+
+- **Điểm 1:** nội dung
+- **Điểm 2:** nội dung
+
+</KeyPoints>
+```
+
+### ClinicalPearl / RedFlags / MedicalNote
+
+Đều dùng slot — không có props ngoài `title`:
+
+```mdx
+<ClinicalPearl>Nội dung pearl lâm sàng.</ClinicalPearl>
+
+<RedFlags title="Cảnh báo">
+1. Tình huống nguy hiểm A
+2. Tình huống nguy hiểm B
+</RedFlags>
+
+<MedicalNote>Ghi chú bổ sung.</MedicalNote>
+```
+
+---
+
+## 4. Trang chủ Dashboard
 
 > **Quy tắc vàng: không viết lại component — chỉ thêm data.**
 > Mọi thay đổi hiển thị (sách mới, tool mới, stats mới) chỉ cần sửa file `src/data/`.
@@ -223,7 +297,7 @@ export const userProfile = {
 
 ---
 
-## 4. Thêm 1 SÁCH mới (vd `vi-sinh`)
+## 5. Thêm 1 SÁCH mới (vd `vi-sinh`)
 
 ### Cách tự động tạo skeleton từ Raw
 
@@ -375,7 +449,7 @@ Các file đã biên tập tay sẽ không bị ghi đè nếu không còn `gene
 
 > `QuizEmbed` tự thêm base path → quiz chạy đúng cả local lẫn GitHub Pages.
 
-## 5. Chọn template theo Diátaxis
+## 6. Chọn template theo Diátaxis
 
 Trước khi thêm bài, chọn theo nhu cầu người đọc:
 
@@ -437,7 +511,7 @@ không để các câu như “Cần giải thích cơ chế / lý luận”.
   minh họa nếu không phải hình y khoa nguồn thật.
 - Hình y khoa thật: chỉ dùng khi có quyền/nguồn rõ, ưu tiên đặt trong `public/assets/<sách>/`.
 
-## 6. Thêm / cập nhật quiz HTML
+## 7. Thêm / cập nhật quiz HTML
 
 Quiz là file `.html` tương tác (build từ skill `html-y-khoa`). **Đặt trong `public/`,
 KHÔNG đặt trong `src/content/docs/`.**
@@ -555,13 +629,13 @@ Key: chốt              # tùy chọn
 - Sửa câu hỏi: sửa `.md` → chạy lại `quiz:build` (ghi đè HTML) → không đụng `.mdx`.
 - §6a/§6b vẫn dùng cho quiz HTML có sẵn (build từ `html-y-khoa`); §6c dành cho quiz soạn mới từ markdown.
 
-## 7. Deploy
+## 8. Deploy
 
 - Workflow: `.github/workflows/deploy.yml` (GitHub Actions, Node 22).
 - Push `main` → tự build + deploy → https://nobitanguyenhung.github.io/medical-site/
 - Xem trạng thái: `gh run list` / `gh run watch <id>`.
 
-## 8. Xoá chương hoặc xoá sách
+## 9. Xoá chương hoặc xoá sách
 
 Luôn chạy thử trước, vì lệnh xoá có thể ảnh hưởng nhiều view sinh từ cùng một nguồn.
 
