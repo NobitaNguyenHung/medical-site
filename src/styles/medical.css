@@ -84,6 +84,44 @@
 
 .compare-table table {
 	min-width: 42rem;
+	border-collapse: collapse;
+}
+
+/* CompareTable — header row */
+.compare-table table thead tr {
+	background-color: color-mix(in srgb, var(--sl-color-accent) 10%, var(--sl-color-bg));
+}
+
+/* CompareTable — zebra rows */
+.compare-table table tbody tr:nth-child(even) {
+	background-color: color-mix(in srgb, var(--sl-color-gray-5) 22%, var(--sl-color-bg));
+}
+.compare-table table tbody tr:hover {
+	background-color: color-mix(in srgb, var(--sl-color-accent) 8%, var(--sl-color-bg));
+	transition: background-color 0.12s ease;
+}
+
+/* CompareTable — row header (first cell) */
+.compare-table table th[scope="row"] {
+	font-weight: 600;
+	white-space: nowrap;
+	color: var(--sl-color-white);
+}
+
+/* CompareTable — cell padding & borders */
+.compare-table table :is(th, td) {
+	padding: 0.5rem 1rem;
+	border-bottom: 1px solid var(--sl-color-gray-5);
+	vertical-align: baseline;
+}
+
+/* Markdown tables — zebra rows */
+.sl-markdown-content table:not(:where(.not-content *)) tbody tr:nth-child(even) {
+	background-color: color-mix(in srgb, var(--sl-color-gray-5) 22%, var(--sl-color-bg));
+}
+.sl-markdown-content table:not(:where(.not-content *)) tbody tr:hover {
+	background-color: color-mix(in srgb, var(--sl-color-accent) 8%, var(--sl-color-bg));
+	transition: background-color 0.12s ease;
 }
 
 .self-check {
