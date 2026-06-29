@@ -147,8 +147,20 @@ export default defineConfig({
 									label: 'Tóm tắt theo chương',
 									items: [
 										{
+											label: 'Chương 1. Đại cương',
+											items: [
+												{ label: 'Bài 1. Đại cương thuốc YHCT', link: 'books/thuoc-yhct/tom-tat/01-dai-cuong-thuoc-yhct/' },
+												{ label: 'Bài 2. Tính năng thuốc cổ truyền', link: 'books/thuoc-yhct/tom-tat/02-tinh-nang-thuoc-co-truyen/' },
+												{ label: 'Bài 3. Các hợp chất tự nhiên', link: 'books/thuoc-yhct/tom-tat/03-cac-hop-chat-tu-nhien/' },
+											],
+										},
+										{
 											label: 'Chương 2. Các nhóm thuốc',
 											items: [
+												{ label: 'Bài 4. Thuốc giải biểu', link: 'books/thuoc-yhct/tom-tat/04-thuoc-giai-bieu/' },
+												{ label: 'Bài 5. Thuốc khử hàn', link: 'books/thuoc-yhct/tom-tat/05-thuoc-khu-han/' },
+												{ label: 'Bài 6. Thuốc thanh nhiệt', link: 'books/thuoc-yhct/tom-tat/06-thuoc-thanh-nhiet/' },
+												{ label: 'Bài 7. Thuốc hóa đờm, chỉ khái, bình suyễn', link: 'books/thuoc-yhct/tom-tat/07-thuoc-hoa-dom-chi-khai-binh-suyen/' },
 												{ label: 'Bài 19. Thuốc gây nôn', link: 'books/thuoc-yhct/tom-tat/19-thuoc-gay-non/' },
 											],
 										},
@@ -316,8 +328,20 @@ export default defineConfig({
 									label: 'Nguyên thủy theo chương',
 									items: [
 										{
+											label: 'Chương 1. Đại cương',
+											items: [
+												{ label: 'Bài 1. Đại cương thuốc YHCT', link: 'books/thuoc-yhct/nguyen-thuy/01-dai-cuong-thuoc-yhct/' },
+												{ label: 'Bài 2. Tính năng thuốc cổ truyền', link: 'books/thuoc-yhct/nguyen-thuy/02-tinh-nang-thuoc-co-truyen/' },
+												{ label: 'Bài 3. Các hợp chất tự nhiên', link: 'books/thuoc-yhct/nguyen-thuy/03-cac-hop-chat-tu-nhien/' },
+											],
+										},
+										{
 											label: 'Chương 2. Các nhóm thuốc',
 											items: [
+												{ label: 'Bài 4. Thuốc giải biểu', link: 'books/thuoc-yhct/nguyen-thuy/04-thuoc-giai-bieu/' },
+												{ label: 'Bài 5. Thuốc khử hàn', link: 'books/thuoc-yhct/nguyen-thuy/05-thuoc-khu-han/' },
+												{ label: 'Bài 6. Thuốc thanh nhiệt', link: 'books/thuoc-yhct/nguyen-thuy/06-thuoc-thanh-nhiet/' },
+												{ label: 'Bài 7. Thuốc hóa đờm, chỉ khái, bình suyễn', link: 'books/thuoc-yhct/nguyen-thuy/07-thuoc-hoa-dom-chi-khai-binh-suyen/' },
 												{ label: 'Bài 19. Thuốc gây nôn', link: 'books/thuoc-yhct/nguyen-thuy/19-thuoc-gay-non/' },
 											],
 										},
@@ -327,8 +351,20 @@ export default defineConfig({
 									label: 'Giải thích cơ chế theo chương',
 									items: [
 										{
+											label: 'Chương 1. Đại cương',
+											items: [
+												{ label: 'Cơ chế đại cương thuốc YHCT', link: 'topics/explanation/thuoc-yhct-01-dai-cuong-thuoc-yhct/' },
+												{ label: 'Cơ chế tính năng thuốc cổ truyền', link: 'topics/explanation/thuoc-yhct-02-tinh-nang-thuoc-co-truyen/' },
+												{ label: 'Cơ chế hợp chất tự nhiên', link: 'topics/explanation/thuoc-yhct-03-cac-hop-chat-tu-nhien/' },
+											],
+										},
+										{
 											label: 'Chương 2. Các nhóm thuốc',
 											items: [
+												{ label: 'Cơ chế thuốc giải biểu', link: 'topics/explanation/thuoc-yhct-04-thuoc-giai-bieu/' },
+												{ label: 'Cơ chế thuốc khử hàn', link: 'topics/explanation/thuoc-yhct-05-thuoc-khu-han/' },
+												{ label: 'Cơ chế thuốc thanh nhiệt', link: 'topics/explanation/thuoc-yhct-06-thuoc-thanh-nhiet/' },
+												{ label: 'Cơ chế hóa đờm-chỉ khái-bình suyễn', link: 'topics/explanation/thuoc-yhct-07-thuoc-hoa-dom-chi-khai-binh-suyen/' },
 												{ label: 'Cơ chế thuốc gây nôn', link: 'topics/explanation/thuoc-yhct-19-thuoc-gay-non/' },
 											],
 										},

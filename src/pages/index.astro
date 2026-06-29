@@ -6,11 +6,12 @@
  */
 import { books } from '../data/books';
 import {
-  sidebarNav, utilityWide, utilitiesSmall, siteStats, userProfile,
+  sidebarNav, utilityWide, utilitiesSmall, siteStats, userProfile, studyBudget,
 } from '../data/home-config';
 import BookCard  from '../components/home/BookCard.astro';
 import ToolCard  from '../components/home/ToolCard.astro';
 import StatsBar  from '../components/home/StatsBar.astro';
+import StudyBudget from '../components/home/StudyBudget.astro';
 
 const base = '/medical-site';
 ---
@@ -84,6 +85,8 @@ const base = '/medical-site';
           </div>
         </div>
       </header>
+
+      <StudyBudget budget={studyBudget} />
 
       <!-- Môn học -->
       <section class="sec" aria-labelledby="sec-books">

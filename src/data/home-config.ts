@@ -101,6 +101,32 @@ export const utilitiesSmall: SmallUtil[] = [
   },
 ];
 
+// ── Daily study budget ────────────────────────────────────────────────────────
+export interface StudyBudgetMetric {
+  icon: string;
+  label: string;
+  value: string;
+  tone: 'warm' | 'blue' | 'green';
+}
+
+export interface StudyBudget {
+  title: string;
+  subtitle: string;
+  recommendation: 'nhẹ' | 'vừa' | 'nghỉ';
+  metrics: StudyBudgetMetric[];
+}
+
+export const studyBudget: StudyBudget = {
+  title: 'Ngân sách học hôm nay',
+  subtitle: 'Cân bằng nhịp học ngắn hạn và sức bền trong tuần.',
+  recommendation: 'nhẹ',
+  metrics: [
+    { icon: 'ti-clock-hour-5', label: '5h', value: 'x%', tone: 'warm' },
+    { icon: 'ti-calendar-week', label: 'Weekly', value: 'y%', tone: 'blue' },
+    { icon: 'ti-battery-3', label: 'Budget hôm nay', value: 'z%', tone: 'green' },
+  ],
+};
+
 // ── Bottom stats bar ───────────────────────────────────────────────────────────
 export interface SiteStat {
   icon: string;
@@ -109,9 +135,9 @@ export interface SiteStat {
 }
 
 export const siteStats: SiteStat[] = [
-  { icon: 'ti-books',         value: '2',   label: 'Môn học' },
-  { icon: 'ti-school',        value: '109', label: 'Bài giảng' },
-  { icon: 'ti-clock',         value: '∞',   label: 'Thời gian học' },
+  { icon: 'ti-books',         value: '3',   label: 'Môn học' },
+  { icon: 'ti-school',        value: '22',  label: 'Bài giảng' },
+  { icon: 'ti-file-text',     value: '90+', label: 'Trang nội dung' },
   { icon: 'ti-flame',         value: '0',   label: 'Ngày liên tiếp' },
 ];
 
