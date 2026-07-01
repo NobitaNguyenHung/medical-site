@@ -6,8 +6,6 @@ import AstroPWA from '@vite-pwa/astro';
 import remarkObsidianCallout from 'remark-obsidian-callout';
 import remarkWikilinkText from './src/plugins/remark-wikilink-text.mjs';
 import starlightThemeFlexoki from 'starlight-theme-flexoki';
-import { viSearchNormalize } from './src/integrations/vi-search-normalize.mjs';
-
 // https://astro.build/config
 export default defineConfig({
 	// GitHub Pages project site: https://<user>.github.io/medical-site/
@@ -17,9 +15,6 @@ export default defineConfig({
 		remarkPlugins: [remarkObsidianCallout, remarkWikilinkText],
 	},
 	integrations: [
-		// vi-search-normalize PHẢI đứng trước starlight: hook astro:build:done inject
-		// normalized text vào dist/*.html TRƯỚC KHI Starlight chạy Pagefind indexing
-		viSearchNormalize(),
 		// mermaid PHẢI đứng trước starlight (hook vào markdown pipeline)
 		mermaid({ theme: 'forest', autoTheme: true }),
 		starlight({
