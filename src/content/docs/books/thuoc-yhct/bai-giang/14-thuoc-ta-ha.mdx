@@ -1,0 +1,282 @@
+---
+title: "Bài 14. Thuốc tả hạ — Bài giảng chuyên sâu"
+description: "Bài giảng 50-60%: Luồng lâm sàng táo bón YHCT phân 3 thể, Đại hoàng 3 dạng chế biến × 3 tác dụng, Ba đậu phorbol cực độc vs ôn hạ, Ma nhân liều phụ thuộc, Mật ong đa năng, Đại thừa khí thang cơ chế, bẫy thi, câu hỏi tư duy."
+type: "deep-lecture"
+category: "books"
+diataxis: "explanation"
+medicineSystem: "tcm"
+source: "Raw"
+sourceDetail: "Raw/Thuoc_YHCT/chuong-02-cac-nhom-thuoc/bai-14-thuoc-ta-ha_001.md"
+status: "ready"
+generatedBy: "codex-reviewed"
+sidebar:
+  order: 14
+---
+
+import CompareTable from '~/components/CompareTable.astro';
+import ClinicalPearl from '~/components/ClinicalPearl.astro';
+import RedFlags from '~/components/RedFlags.astro';
+import MedicalNote from '~/components/MedicalNote.astro';
+
+## 1. Luồng tư duy lâm sàng — Bài 14
+
+```mermaid
+flowchart TD
+    P["BỆNH NHÂN\nĐại tiện bí táo"]
+
+    P --> Q1{"Phân biệt\nthể bệnh YHCT?"}
+
+    Q1 -->|"Thực NHIỆT\nSốt cao · Khát · Phân cứng\nMê sảng · Lưỡi vàng khô"| HH["HÀN HẠ\nĐẠI HOÀNG chủ lực\n(sắc ngắn / hậu hạ)\n+ Hậu phác + Chỉ thực"]
+
+    Q1 -->|"Thực HÀN\nChân tay lạnh · Không khát\nBụng dưới đau lạnh\nNước tiểu trong"| OH["ÔN HẠ\nBA ĐẬU sương cực nhỏ\n(0,02–0,5 g)\n+ Sinh khương"]
+
+    Q1 -->|"HƯ CHỨNG\nNgười già · Sau sinh\nÂm hư tân dịch kiệt\nHuyết hư"| NH["NHUẬN HẠ\nMA NHÂN 40-60 g\nMẬT ONG 15-30 g\n+ Dưỡng âm / Bổ huyết"]
+
+    HH --> PH1{"Chính khí\ncòn mạnh?"}
+    PH1 -->|"Mạnh"| DT["ĐẠI THỪA KHÍ THANG\nĐại hoàng + Mang tiêu\n+ Hậu phác + Chỉ thực"]
+    PH1 -->|"Yếu"| TH["TIỂU THỪA KHÍ\nĐại hoàng + Hậu phác\n(liều nhẹ hơn)"]
+
+    NH --> PH2{"Nguyên nhân\như chứng?"}
+    PH2 -->|"Âm hư tân dịch"| AV["+ DƯỠNG ÂM\nHuyền sâm · Sinh địa · Mạch môn"]
+    PH2 -->|"Huyết hư"| BH["+ BỔ HUYẾT\nĐương quy · Hà thủ ô"]
+    PH2 -->|"Khí trệ kèm"| LK["+ LÝ KHÍ\nTrần bì · Mộc hương"]
+```
+
+---
+
+## 2. Nguyên tắc "giải biểu trước, công lý sau"
+
+**Tại sao KHÔNG dùng tả hạ khi còn biểu chứng?**
+
+```
+BIỂU CHỨNG CÒN (cảm mạo, sốt, sợ lạnh, nhức mỏi)
+    ↓
+Bệnh tà ở biểu — chưa vào lý
+    ↓
+Dùng tả hạ (thuốc đẩy xuống dưới) khi tà còn ở biểu
+    ↓
+"Dẫn tà vào lý" — kéo bệnh tà vào sâu hơn
+    ↓
+Bệnh trở nên phức tạp hơn (biểu lý đồng bệnh, khó điều trị)
+    ↓
+NGUYÊN TẮC: Giải biểu TRƯỚC → Tà vào lý rồi mới công lý
+```
+
+**Ngoại lệ:** Biểu lý cùng cấp (vừa cảm vừa táo bón nặng) → dùng phép "biểu lý song giải" (Phòng phong thông thánh tán là ví dụ kinh điển).
+
+---
+
+## 3. Đại hoàng — vị thuốc "3 mặt"
+
+**Đây là vị thuốc biến hóa theo chế biến rõ nhất trong YHCT:**
+
+```mermaid
+flowchart LR
+    DH["ĐẠI HOÀNG\n(Thân rễ Rheum)"]
+
+    DH -->|"SINH (sắc ngắn,\nhậu hạ)"| A["Anthranoid nguyên vẹn\n→ TẢ MẠNH\nThực nhiệt bí kết cấp\nSốt cao, mê sảng"]
+
+    DH -->|"SẮC LÂU (30-45 phút)"| B["Anthranoid phân hủy\nTannin còn\n→ TẢ YẾU, hòa hoãn\nBệnh mạn, thể yếu"]
+
+    DH -->|"SAO CHÁY (Thán)"| C["Tannin chiếm ưu thế\n→ CẦM MÁU (chỉ huyết)\nNôn máu · Chảy máu cam\ndo hỏa độc"]
+
+    DH -->|"NGOÀI DA (bột trộn dầu)"| D["Chống viêm tại chỗ\n→ BỎNG nước, bỏng lửa\n(tả hỏa giải độc cục bộ)"]
+```
+
+### Tại sao Đại hoàng phối Cam thảo lại giảm tả?
+
+```
+Cam thảo → Glycyrrhizin
+    ↓
+Glycyrrhizin liên kết với anthranoid (hình thành complex)
+    ↓
+Hấp thu anthranoid chậm hơn + thải trừ dần
+    ↓
+Nồng độ anthranoid trong lòng ruột giảm
+    ↓
+Tả yếu, hòa hoãn
+    ↓
+YHCT nói: "Cam thảo điều hòa các vị thuốc"
+```
+
+### Đại thừa khí thang — giải mã cơ chế 4 vị
+
+```mermaid
+flowchart LR
+    subgraph BAI["ĐẠI THỪA KHÍ THANG"]
+        A["Đại hoàng 12g\n(hậu hạ)"]
+        B["Mang tiêu 9g\n(Na₂SO₄ · ngâm hòa)"]
+        C["Hậu phác 15g"]
+        D["Chỉ thực 12g"]
+    end
+
+    A -->|"Anthranoid\nKích thích ruột"| R["TẢ NHIỆT THÔNG TRƯỜNG\n(Chứng thực nhiệt)"]
+    B -->|"Osmotic laxative\nGiữ nước lòng ruột\nLàm mềm phân cứng"| R
+    C -->|"Magnolol/Honokiol\nGiảm đầy trướng\nGiáng khí"| R
+    D -->|"Synephrine\nHành khí\nTăng nhu động"| R
+```
+
+<ClinicalPearl>
+
+**Lâm sàng Đại thừa khí thang hiện đại:** Nghiên cứu Trung Quốc áp dụng trong tắc ruột cơ năng (paralytic ileus) sau mổ, viêm tụy cấp (giảm áp lực ổ bụng), và hội chứng nhiễm khuẩn đường tiêu hóa nặng. Cơ chế: Đại hoàng tống xuất nội độc tố khỏi lòng ruột nhanh (giảm thời gian tiếp xúc với niêm mạc), Mang tiêu làm tăng áp suất thẩm thấu kéo nước vào lòng ruột → nhu động phục hồi.
+
+</ClinicalPearl>
+
+---
+
+## 4. Ba đậu — ôn hạ cực độc, dùng cực ít
+
+**Ba đậu là vị thuốc nguy hiểm nhất trong tả hạ.** Cần hiểu rõ để tránh sai lầm lâm sàng.
+
+```mermaid
+flowchart TD
+    BD["BA ĐẬU\n(Quả Croton tiglium)"]
+
+    BD --> DM["DẦU BÉO 35-57%\n(Croton oil)"]
+    BD --> PH["PHORBOL ESTER\n(12-O-TPA; phorbol)"]
+    BD --> AC["ACID ARATONIC\n(Crotonic acid)"]
+
+    DM -->|"Kích thích cơ học\nniêm mạc ruột"| T1["Nhu động tăng mạnh\n→ Tiêu chảy dữ dội"]
+    PH -->|"Kích thích PKC\n(Protein Kinase C)"| T2["Co thắt cơ trơn\nruột cực mạnh\n→ Tiêu chảy + Nôn\n→ Hoại tử niêm mạc cục bộ"]
+    AC -->|"Kích thích hóa học\ncục bộ"| T3["Viêm tấy, phỏng\nnếu tiếp xúc da/mắt"]
+
+    T1 --> TM["TÁC DỤNG MỤC TIÊU\n(Liều nhỏ đúng chuẩn)\nThực hàn bí kết\nNgực bụng phù nước"]
+    T2 --> TM
+    T2 --> NG["NGỘ ĐỘC\n(Liều sai / liều cao)\nTiêu chảy không cầm\nTan huyết\nHoại tử ruột\nCó thể tử vong"]
+```
+
+### Ba đậu sương — bước quan trọng giảm độc
+
+```
+BA ĐẬU nguyên hạt
+    ↓
+Ép lấy dầu → Bỏ dầu (loại bỏ phần lớn phorbol ester + croton oil)
+    ↓
+BA ĐẬU SƯƠNG = Bã đậu sau ép
+    ↓
+Giảm 60-80% độc tính
+    ↓
+Liều lên được 0,5–1 g (vs 0,02–0,5 g nguyên hạt)
+    ↓
+Vẫn còn tác dụng ôn hạ (các thành phần còn lại trong bã)
+```
+
+### Giải độc Ba đậu
+
+```
+ĐẬU XANH + HOÀNG LIÊN sắc uống
+    ↓
+Protein đậu xanh → Liên kết với phorbol ester (adsorption)
+→ Giảm hấp thu phorbol vào máu
+    ↓
+Hoàng liên (Berberin) → Kháng khuẩn + Giảm viêm niêm mạc
+→ Bảo vệ niêm mạc GI đã bị tổn thương
+    ↓
+ĐỒNG THỜI:
+Nước cháo lạnh uống → Làm loãng nồng độ phorbol → Giảm kích thích
+Nước cháo ấm uống → Kích thích thêm nếu chưa xổ đủ (nghịch lý)
+```
+
+---
+
+## 5. Ma nhân (Mè đen) — nhuận hạ "kiêm bổ"
+
+**Điểm độc đáo:** Ma nhân vừa nhuận táo vừa bổ → dùng được lâu dài.
+
+```mermaid
+flowchart LR
+    MN["MA NHÂN\n(Hạt Sesamum indicum đen)"]
+
+    MN -->|"DẦU BÉO cao\n(50-60% hạt)"| D1["Bôi trơn lòng ruột\nLàm mềm phân\nNhuận táo TRỰC TIẾP"]
+
+    MN -->|"Sesamin + Sesamolin\n(lignan)"| D2["Chống oxy hóa\nBổ Can Thận\nDưỡng huyết\nTóc bạc sớm"]
+
+    MN -->|"Tocopherol\n(Vitamin E)"| D3["Hạ huyết áp\nGiảm cholesterol\nChống oxy hóa"]
+
+    MN -->|"Vitamin B phức\n+ Calci + Sắt"| D4["Lợi sữa\nChỉ huyết\nBổ sung vi chất"]
+
+    D1 -->|"Liều 40-60 g"| L["LIỀU NHUẬN HẠ\nTáo bón sau sinh\nNgười già hư nhược"]
+    D2 -->|"Liều 12-25 g"| LL["LIỀU BỔ THẤP\nBổ Can Thận\nDưỡng huyết\nTóc bạc"]
+```
+
+### Phân biệt Ma nhân vs Đại ma nhân (cần sa)
+
+| | **Ma nhân (Vừng đen)** | **Đại ma nhân (Hỏa ma nhân)** |
+|---|---|---|
+| Tên khoa học | *Sesamum indicum* | *Cannabis sativa* |
+| Họ thực vật | Vừng (Pedaliaceae) | Gai (Cannabaceae) |
+| Hoạt chất | Dầu béo, sesamin, tocopherol | THC (tetrahydrocannabinol), CBD, dầu béo |
+| Tác dụng | Nhuận hạ + Bổ Can Thận | Nhuận hạ nhẹ + Hoạt huyết (không có THC cao ở hạt) |
+| Pháp lý | Thực phẩm bình thường | Kiểm soát (Cannabis) |
+| YHCT gọi | Ma nhân | Đại ma nhân / Hỏa ma nhân |
+
+---
+
+## 6. Mật ong — "tất cả trong một" của nhuận hạ
+
+**Mật ong không chỉ là nhuận trường** — đây là vị thuốc đa chức năng trong YHCT:
+
+| Công năng YHCT | Ứng dụng thực tế | Cơ chế YHHĐ |
+|---|---|---|
+| Nhuận trường thông tiện | Táo bón nhẹ — 10-20 ml/ngày; Thụt hậu môn trẻ em | Fructose + Sorbitol → osmotic giữ nước; bôi trơn |
+| Bổ Trung | Tá dược bào chế hoàn/tán; nuôi dưỡng GI | Glucose + Fructose → năng lượng nhanh |
+| Nhuận Phế chỉ khái | Ho khan không đờm; Phế táo | Serbitan glycoside → kháng viêm niêm mạc hô hấp |
+| Hoãn cấp giảm đau | Đau dạ dày + Cam thảo | Làm dịu niêm mạc; Glycyrrhizin + Glucose giảm co thắt |
+| Giải độc Ô đầu | Phối hợp với Ô đầu giảm độc | Alkaloid Aconitine liên kết với protein trong mật → giảm hấp thu |
+| Dùng ngoài | Vết thương hở, bỏng, mụn nhọt | Kháng khuẩn qua H₂O₂ + Defensin-1 + pH thấp |
+
+<MedicalNote>
+
+**Mật ong tươi vs Mật ong luyện — tại sao khác nhau?**
+- **Mật tươi:** Enzyme (invertase, glucose oxidase) còn nguyên vẹn → tạo H₂O₂ tự nhiên → kháng khuẩn; fructose + sorbitol → osmotic effect → nhuận trường tốt.
+- **Mật luyện (đun cô đặc):** Enzyme bị biến tính (denaturation); đường cô đặc hơn; thêm thảo dược bài thuốc → tính ôn ấm tăng → phù hợp trị ho giảm đau (nhuận Phế, hoãn cấp) hơn nhuận trường. Ví dụ: Mật ong luyện trong Tỳ bà cao (Pipa Gao) — bài thuốc trị ho kinh điển Trung Quốc.
+
+</MedicalNote>
+
+---
+
+## 7. Phối hợp lâm sàng theo thể bệnh
+
+```mermaid
+flowchart LR
+    subgraph T1["THỰC NHIỆT BÍ KẾT\n(Dương minh phủ chứng)"]
+        A["Đại hoàng 12g (hậu hạ)\n+ Mang tiêu 9g\n+ Hậu phác 15g\n+ Chỉ thực 12g\n→ Đại thừa khí thang"]
+    end
+
+    subgraph T2["THỰC HÀN BÍ KẾT\n(Hàn ngưng tích trệ)"]
+        B["Ba đậu sương 0,1-0,3g\n+ Sinh khương 6g\n+ Đại hoàng 6g\n→ Tam vật bị cấp hoàn"]
+    end
+
+    subgraph T3["ÂM HƯ TÂN DỊCH KIỆT\n(Bệnh lâu, sốt kéo dài)"]
+        C["Ma nhân 30g\n+ Huyền sâm 12g\n+ Sinh địa 15g\n+ Mạch môn 12g\n→ Tăng dịch thừa khí thang"]
+    end
+
+    subgraph T4["HUYẾT HƯ TÁO BÓN\n(Người già, sau sinh)"]
+        D["Ma nhân 40g + Mật ong 20g\n+ Đương quy 12g\n+ Sinh địa 12g\n→ Nhuận trường hoàn"]
+    end
+```
+
+---
+
+<RedFlags title="Bẫy thi — Bài 14">
+
+- **Đại hoàng hậu hạ** — đề hay hỏi "cách sắc Đại hoàng trong Đại thừa khí thang" → Cho vào cuối, sắc thêm 5 phút (không sắc cùng lúc). Nếu sắc lâu cùng → anthranoid phân hủy → tả yếu.
+- **Đại hoàng sao cháy ≠ tả mạnh** — ngược lại, sao cháy = cầm máu (tannin thán). Đề hỏi "chỉ huyết nôn máu do hỏa độc dùng Đại hoàng dạng nào" → Thán (sao cháy).
+- **Ba đậu kỵ Khiên ngư** — không bao giờ phối hợp. Kỵ này phải thuộc lòng (nguy hiểm tính mạng).
+- **Ba đậu tả nhiều → uống nước cháo LẠNH** (để cầm tiêu chảy). Tả ít → uống nước cháo NÓNG/ẤM (để kích thích thêm). Ngược chiều nhau.
+- **Biểu chứng còn → không tả hạ** — câu hỏi tình huống: "Bệnh nhân sốt, sợ lạnh, đại tiện bí — có dùng Đại hoàng không?" → Không, phải giải biểu trước.
+- **Ma nhân kiêng kỵ: Âm suy cơ thể khô ráo** — nghe có vẻ nghịch lý (Ma nhân nhuận mà lại kiêng âm hư?) → Vì dầu béo Ma nhân có thể làm nặng chứng khô nóng nếu không phối dưỡng âm. Phải phối hợp đúng.
+- **Mật ong không cho trẻ dưới 1 tuổi** (đề dễ đánh bẫy ở câu hỏi "lưu ý khi dùng Mật ong") — Clostridium botulinum bào tử trong mật ong → trẻ sơ sinh thiếu acid dạ dày để tiêu diệt.
+- **Anthranoid liều phụ thuộc** = hàn hạ theo liều: liều thấp nhuận, liều cao tả. Không phải nhuận hạ thuần túy. Đề thi hỏi "nhóm hoạt chất nào tả phụ thuộc liều" → Anthranoid.
+
+</RedFlags>
+
+---
+
+## 8. 3 câu hỏi tư duy
+
+1. Bệnh nhân 65 tuổi, sau viêm phổi kéo dài 2 tuần, sốt đã hạ nhưng đại tiện bí 5 ngày, miệng khô, lưỡi đỏ ít rêu, mạch tế sác. YHCT chẩn: Âm hư táo bón. Tại sao KHÔNG dùng Đại hoàng? Thiết kế bài thuốc 4–5 vị.
+
+2. Đại hoàng có công năng "trục ứ thông kinh" (dùng cho bế kinh, chấn thương ứ huyết) — điều này có vẻ không liên quan đến tả hạ. Giải thích tại sao vị thuốc tả hạ lại có tác dụng hoạt huyết, trục ứ? Hoạt chất nào chịu trách nhiệm?
+
+3. Mật ong "giải độc Ô đầu" — trong lâm sàng, Ô đầu thường được chế biến với Mật ong (Chế Ô đầu = đun với mật ong). Cơ chế nào của Mật ong làm giảm độc alkaloid aconitine? Liên hệ với tính chất "hoãn cấp" trong YHCT.

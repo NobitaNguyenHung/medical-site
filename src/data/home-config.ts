@@ -15,6 +15,7 @@ export interface NavItem {
 
 export const sidebarNav: NavItem[] = [
   { icon: 'ti-layout-dashboard', label: 'Tổng quan',       href: `${base}/`,               active: true },
+  { icon: 'ti-school',           label: 'Learning',        href: `${base}/learn/books/on-benh-dai-cuong/tom-tat/01-bai-1-dai-cuong-ve-on-benh/` },
   { icon: 'ti-books',            label: 'Môn học',          href: '#' },
   { icon: 'ti-tools',            label: 'Công cụ học tập',  href: '#' },
   { icon: 'ti-route',            label: 'Lộ trình',         href: `${base}/learning-paths/` },

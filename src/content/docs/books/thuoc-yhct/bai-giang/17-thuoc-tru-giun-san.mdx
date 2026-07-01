@@ -1,0 +1,195 @@
+---
+title: "Bài 17. Thuốc trừ giun sán — Bài giảng chuyên sâu"
+description: "Bài giảng 50-60%: Luồng tư duy chọn thuốc theo loại KST và thể trạng, Arecolin cơ chế nicotinic ACh antagonist làm liệt sán, Allicin thiol-reactive diệt đa tác nhân, Sử quân tử trigonellin + acid quisqualis đôi tác dụng khu trùng kiện Tỳ, Trâm bầu terpenoid bảo vệ gan, Phối ngũ hợp lý cho từng thể bệnh."
+type: "deep-lecture"
+category: "books"
+diataxis: "explanation"
+medicineSystem: "tcm"
+source: "Raw"
+sourceDetail: "Raw/Thuoc_YHCT/chuong-02-cac-nhom-thuoc/bai-17-thuoc-tru-giun-san_001.md"
+status: "ready"
+generatedBy: "codex-reviewed"
+sidebar:
+  order: 17
+---
+
+import CompareTable from '~/components/CompareTable.astro';
+import ClinicalPearl from '~/components/ClinicalPearl.astro';
+import RedFlags from '~/components/RedFlags.astro';
+import MedicalNote from '~/components/MedicalNote.astro';
+
+## 1. Luồng tư duy lâm sàng — Bài 17 từ đầu đến cuối
+
+```mermaid
+flowchart TD
+    P["BỆNH NHÂN\nNghi nhiễm giun sán\n(da xanh, kém ăn, đau bụng, nghiến răng)"]
+    P --> Q1{"Xác định loại KST?"}
+
+    Q1 -->|"Sán dây / Sán sơ mít"| A["BÌNH LANG (ưu tiên)\nArecolin → liệt cơ sán\nSán dây: 3-10g\nSán sơ mít: 30-60g"]
+    Q1 -->|"Giun đũa / Giun kim (trẻ em cam tích)"| B["SỬ QUÂN TỬ\nKhu trùng + Kiện Tỳ\nTrẻ: 3-8g · Người lớn: 8-12g"]
+    Q1 -->|"Giun đũa (đơn thuần)"| C["TRÂM BẦU\nPhối Mơ lông · 20-50g\nNhuận gan hỗ trợ"]
+    Q1 -->|"Giun kim / Giun móc / Amíp / Trùng roi"| D["TỎI\nAllicin phổ rộng\nDùng ngoài hoặc uống"]
+
+    A & B & C & D --> E{"Thể trạng bệnh nhân?"}
+
+    E -->|"Tỳ Vị hư nhược"| F1["Phối kiện Tỳ\n(Bạch truật, Đảng sâm, Hoài sơn)"]
+    E -->|"Thiếu máu, huyết hư"| F2["Phối bổ huyết\n(Đương quy, Thục địa)"]
+    E -->|"Nhiễm lâu ngày"| F3["Phối tiêu đạo\n(Sơn tra, Thần khúc, Mạch nha)"]
+    E -->|"Thể trạng bình thường"| F4["Dùng đơn vị · Theo dõi"]
+
+    F1 & F2 & F3 & F4 --> G["THỜI ĐIỂM DÙNG\nSáng sớm · Đói bụng\nNghỉ ngơi sau uống"]
+```
+
+---
+
+## 2. Bình lang — Arecolin và cơ chế liệt cơ sán
+
+Bình lang là vị thuốc trừ giun **mạnh nhất, phổ rộng nhất** trong bài, đặc biệt với sán sơ mít — loại ký sinh trùng khó diệt nhất trong nhóm.
+
+```mermaid
+flowchart LR
+    BL["BÌNH LANG\nAreca catechu\nSemen Arecae"]
+
+    BL -->|"Alkaloid chính"| AC["ARECOLIN\n→ Chủ vận muscarinic ACh receptor\n→ Gây co cơ → cơ giun sán co liên tục\n→ Liệt mềm sau khi kiệt sức"]
+
+    AC --> S1["SÁN DÂY\n3-10g đủ liệt"]
+    AC --> S2["SÁN SƠ MÍT\nCần 30-60g\nSán khỏe hơn, đầu bám sâu hơn"]
+    AC --> S3["GIUN ĐŨA · GIUN KIM\nPhối Hạt Bí đỏ tăng hiệu quả"]
+    AC --> S4["SÁN LÁ GAN · GIUN CHỈ\nTác dụng dược lý YHHĐ xác nhận"]
+
+    BL -->|"Công năng mở rộng"| E1["HÀNH KHÍ THÔNG TIỆN\nKhí trệ · Táo bón · Đầy trướng"]
+    BL -->|"Công năng mở rộng"| E2["LỢI THỦY\nThủy thũng · Phù"]
+    BL -->|"Công năng mở rộng"| E3["TRIỆT NGƯỢC\nSốt rét"]
+```
+
+<ClinicalPearl>
+
+**Tại sao sán sơ mít cần liều 30–60 g trong khi sán dây chỉ cần 3–10 g?**
+
+Sán sơ mít (*Taenia solium*) có đầu sán (scolex) bám rất sâu vào niêm mạc ruột và sán có sức đề kháng cao hơn với arecolin. Liều thấp chỉ làm liệt tạm thời thân sán nhưng không đủ để scolex nhả bám → sán tái phát. Liều 30–60 g duy trì nồng độ arecolin đủ cao để làm liệt toàn bộ kể cả scolex.
+
+**Thực hành:** Thường phối Bình lang với Hạt Bí đỏ (cucurbitin) — Hạt Bí làm liệt đốt sán, Bình lang đẩy sán ra ngoài nhờ tăng nhu động ruột.
+
+</ClinicalPearl>
+
+---
+
+## 3. Sử quân tử — Vị thuốc duy nhất khu trùng + kiện Tỳ
+
+Sử quân tử có vị trí đặc biệt vì **đồng thời** giải quyết cả 2 vấn đề thường gặp trong nhiễm giun trẻ em: giun sán và suy dinh dưỡng/cam tích.
+
+```mermaid
+flowchart TD
+    SQ["SỬ QUÂN TỬ\nQuisqualis indica\nSemen Quisqualis\nVị ngọt · Ôn · Tỳ Vị"]
+
+    SQ --> C1["TRIGONELLIN (Alkaloid)\n→ Ức chế thần kinh cơ giun\n→ Giun mất bám → thải qua phân"]
+    SQ --> C2["ACID QUISQUALIS\n→ Co mạch cấp máu giun\n→ Giun chết do thiếu oxy"]
+
+    C1 & C2 --> R1["Khu trùng: Giun đũa, giun kim"]
+
+    SQ --> C3["DẦU BÉO + VỊ NGỌT\n→ Kiện Tỳ Vị\n→ Tăng hấp thu dinh dưỡng\n→ Tiêu cam tích"]
+
+    C3 --> R2["Trẻ em cam tích, da xanh\nBài: Phi nhi cam tích tán"]
+
+    SQ -->|"Tương tác"| I1["KIÊNG TRÀ XANH\nTannin Trà + Trigonellin\n→ Tủa → kích thích TK thực vật\n→ Nấc, chóng mặt, buồn nôn"]
+```
+
+<MedicalNote>
+
+**Phi nhi cam tích tán** — bài thuốc kinh điển cho trẻ em nhiễm giun + cam tích:
+Sử quân tử (khu trùng + kiện Tỳ) + Thần khúc, Sơn tra, Mạch nha (tiêu đạo) + Bạch truật, Phục linh (kiện Tỳ). Logic: diệt giun trước, sau đó bổ Tỳ để hồi phục.
+
+</MedicalNote>
+
+---
+
+## 4. Tỏi — Allicin và cơ chế đa đích
+
+Tỏi là vị thuốc **đa năng nhất** trong bài nhờ allicin — hợp chất sulfur phản ứng mạnh với nhiều loại protein sinh học:
+
+```mermaid
+flowchart LR
+    TO["TỎI\nAllium sativum\nAllicin (Diallyl thiosulfinate)\nVị cay · Ôn · Phế Tỳ Vị"]
+
+    TO -->|"Sulfur tấn công SH protein"| M1["KHÁNG KÝ SINH TRÙNG\nAllicin → phá thiol enzyme KST\n→ Giun kim, móc, amíp, trùng roi"]
+    TO -->|"Ức chế biosynthesis"| M2["KHÁNG KHUẨN\nLao · Tụ cầu · Liên cầu · Trực khuẩn lỵ\n(ức chế RNA polymerase, tổng hợp vách)"]
+    TO -->|"Neuraminidase inhibition"| M3["KHÁNG VIRUS\nPhòng cúm, sốt rét"]
+    TO -->|"ACE inhibition + NO↑"| M4["HẠ HUYẾT ÁP\nGiãn mạch · Chống xơ vữa"]
+    TO -->|"Ức chế HMG-CoA reductase"| M5["HẠ LIPID MÁU\nHạ cholesterol, triglycerid"]
+    TO -->|"Quercetin + Ajoen"| M6["KHÁNG VIÊM + KHÁNG UNG THƯ\nỨc chế NF-κB · Apoptosis"]
+
+    M1 --> YDCT1["YHCT: Sát trùng tiêu tích"]
+    M2 & M3 --> YDCT2["YHCT: Giải độc"]
+    M4 --> YDCT3["YHCT: Hành khí ôn Trung"]
+    M5 & M6 --> YDCT4["YHCT: Trừ đờm · Hạ áp"]
+```
+
+<ClinicalPearl>
+
+**Tỏi dùng ngoài — hiệu quả nhưng dễ bỏ qua:**
+
+Trị giun kim: Ngâm 100 g Tỏi/1 L nước × 24h → rửa hậu môn liên tục 7 ngày. Cơ chế: allicin phân tán trong nước đủ nồng độ tiếp xúc trực tiếp với giun kim ở hậu môn, không cần hấp thu toàn thân → ít tác dụng phụ.
+
+Trị viêm nhiễm da: Giã nát + thêm nước → bôi. Tránh để quá 20 phút tránh phỏng da (allicin kích thích tế bào da khi nồng độ cao kéo dài).
+
+</ClinicalPearl>
+
+---
+
+## 5. Trâm bầu — Vị thuốc địa phương, phổ hẹp nhưng có giá trị hỗ trợ
+
+```mermaid
+flowchart TD
+    TB["TRÂM BẦU\nCombretum quadrangulare\nQuả + Vỏ + Lá\nVị đắng nhẹ · Lương · Đại trường"]
+
+    TB --> T1["TERPENOID · SAPONIN\n→ Tạo màng bao quanh giun đũa\n→ Giun đũa mất khả năng bám"]
+    TB --> T2["TANNIN · FLAVONOID\n→ Kháng khuẩn + Bảo vệ niêm mạc\n→ NHUẬN GAN\n→ Kháng virus HIV (nghiên cứu lab)"]
+
+    T1 --> R1["Phối Mơ lông (lá): tăng hiệu quả diệt giun đũa\nDùng lúc đói"]
+    T2 --> R2["Tiêu hóa kém, tiêu ít\n→ Kích thích bài tiết dịch tiêu hóa"]
+```
+
+**Hạn chế:** Chỉ tác dụng trên giun đũa, không diệt sán hay giun kim hiệu quả. Liều cao (20–50 g) so với các vị khác — cần dùng nhiều nguyên liệu hơn.
+
+---
+
+## 6. So sánh 4 vị — quyết định chọn thuốc
+
+<CompareTable
+  headers={["Tiêu chí", "Bình lang", "Sử quân tử", "Trâm bầu", "Tỏi"]}
+  rows={[
+    ["Hoạt chất chính", "Arecolin (nicotinic ACh)", "Trigonellin + Acid quisqualis", "Terpenoid + Tannin", "Allicin (thiol-reactive sulfur)"],
+    ["Cơ chế YHHĐ", "Co cơ → liệt mềm KST", "Ức chế TK cơ + co mạch KST", "Bao màng + kháng khuẩn", "Phá thiol enzyme KST đa loại"],
+    ["Phổ KST", "Rộng nhất (sán, giun, KST máu)", "Hẹp (giun đũa, giun kim)", "Hẹp (giun đũa)", "Rộng (giun kim, móc, amíp, trùng roi)"],
+    ["Ưu tiên dùng khi", "Sán dây, sán sơ mít", "Trẻ em cam tích, Tỳ hư", "Giun đũa + tiêu hóa kém", "Nhiều loại giun + cần đa tác dụng"],
+    ["Ưu điểm đặc biệt", "Mạnh với sán, hành khí thêm", "Duy nhất kiện Tỳ tiêu cam", "Bảo vệ gan, tận dụng cây địa phương", "Không cần đơn thuốc, dễ dùng, rẻ"],
+    ["Nhược điểm", "Liều sán sơ mít cao (30-60g)", "Phổ hẹp, kiêng Trà xanh", "Phổ hẹp, liều cao (20-50g)", "Mùi khó chịu, dùng lâu tổn Can"],
+    ["Tính vị YHCT", "Cay đắng · Ôn", "Ngọt · Ôn", "Đắng nhẹ · Lương", "Cay · Ôn"],
+  ]}
+/>
+
+---
+
+## 7. Nguyên tắc phối ngũ thực hành
+
+<CompareTable
+  headers={["Tình huống lâm sàng", "Phối ngũ", "Lý do"]}
+  rows={[
+    ["Nhiễm sán sơ mít", "Bình lang 30-60g + Hạt Bí đỏ", "Cucurbitin (Bí đỏ) liệt đốt sán, Bình lang đẩy ra"],
+    ["Trẻ cam tích + giun đũa", "Sử quân tử + Bạch truật + Sơn tra", "Khu trùng đồng thời kiện Tỳ tiêu tích"],
+    ["Nhiễm giun lâu ngày + kém ăn", "Bình lang/Sử quân tử + Thần khúc, Mạch nha", "Tiêu đạo giải ứ thực sau nhiều ngày nhiễm"],
+    ["Nhiễm giun + thiếu máu", "Thuốc trừ giun + Đương quy, Thục địa", "Giun tiêu thụ sắt + dinh dưỡng → huyết hư"],
+    ["Nhiễm giun + Tỳ Vị hư", "Thuốc trừ giun + Đảng sâm, Hoài sơn", "Cần nền Tỳ Vị khỏe để thải KST hiệu quả"],
+    ["Giun kim tái phát", "Tỏi ngoài (rửa hậu môn) + uống Sử quân tử", "Phối ngoài-trong kép, tránh tái phát"],
+  ]}
+/>
+
+---
+
+## 8. Câu hỏi kích thích tư duy
+
+1. **Tại sao Bình lang cần liều 30–60 g cho sán sơ mít nhưng chỉ 3–10 g cho sán dây?** Hãy giải thích theo cơ chế dược lý của arecolin và đặc điểm sinh học của 2 loại sán. Nếu bệnh nhân hư nhược, bạn xử lý như thế nào?
+
+2. **Một trẻ 5 tuổi bị cam tích, da xanh, thỉnh thoảng nôn ra giun.** Phân tích tại sao Sử quân tử là lựa chọn hợp lý hơn Bình lang trong trường hợp này. Bài phối ngũ cụ thể là gì?
+
+3. **Allicin là hợp chất thiol-reactive — điều này có nghĩa là nó tấn công nhóm SH trên protein.** Giải thích tại sao đặc tính này vừa là lợi thế (phổ kháng rộng) vừa là nguy cơ (tổn thương Can Mật khi dùng lâu)?

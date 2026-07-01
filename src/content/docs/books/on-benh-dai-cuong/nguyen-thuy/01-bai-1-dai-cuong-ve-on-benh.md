@@ -616,3 +616,31 @@ Tính chất bệnh râm rộ không như bản chất bệnh thông thường c
 Triệu chứng thường cục bộ như sưng, nóng, đỏ, đau hoặc nặng hơn thì lở, loét.
 
 ## 4. PHÂN BIỆT ÔN BỆNH VÀ THƯƠNG HÀN
+
+#### 4.1. Phân biệt ôn tà và ngoại cảm hàn tà
+
+Ôn tà là phong ôn gây bệnh trong Ôn bệnh học và ngoại cảm hàn tà gây bệnh trong Thương hàn. Hai loại bệnh đều thuộc phạm vi ngoại cảm, nhưng tính chất tà khí, đường xâm nhập, bệnh cơ, triệu chứng khởi đầu và phép trị ban đầu khác nhau.
+
+**Bảng 1.1. Bảng phân biệt Phong ôn và Thương hàn**
+
+| Mặt so sánh | Phong ôn trong Ôn bệnh học | Thương hàn trong Thương hàn luận |
+| --- | --- | --- |
+| Nguyên nhân | Phong nhiệt bệnh tà | Phong hàn bệnh tà |
+| Đường xâm nhập | Từ miệng và mũi, bắt đầu từ thủ Thái âm phế kinh | Từ da lông/cơ biểu, thường bắt đầu ở biểu hàn |
+| Bệnh cơ | Phong nhiệt dương tà, dễ hóa táo thương âm, truyền biến nhanh, có quá trình vệ-khí-dinh-huyết | Hàn thúc cơ biểu, vệ dương bị uất, hóa nhiệt nhập lý, có quá trình lục kinh truyền biến |
+| Triệu chứng khởi đầu | Sốt, hơi ố hàn, miệng khát, ho, không mồ hôi hoặc ít mồ hôi, đau đầu, rêu lưỡi trắng mỏng, đầu lưỡi đỏ, mạch phù sác | Ố hàn phát nhiệt, đau đầu, đau mình, rêu lưỡi trắng mỏng, mạch phù khẩn |
+| Điều trị ban đầu | Tân lương giải biểu | Tân ôn giải biểu |
+
+### 4.2. Phân biệt Ôn bệnh và Thương hàn
+
+Trong y tịch cổ xưa, Thương hàn từng được dùng theo nghĩa rộng để chỉ chung nhiều ngoại cảm nhiệt bệnh. Theo nghĩa này, Ôn bệnh có lúc được đặt trong phạm vi Thương hàn. Nhưng về sau, khi nhận thức về Ôn bệnh phát triển, người xưa nhận ra Ôn bệnh có tính chất ôn nhiệt riêng, không thể dùng máy móc phép Thương hàn để xử trí.
+
+Với nghĩa hẹp, Thương hàn là ngoại cảm phong hàn. Ôn bệnh là ngoại cảm ôn tà, thiên nhiệt, dễ hóa táo, dễ thương âm tân và truyền biến nhanh. Vì vậy, Ôn bệnh và Thương hàn có thể cùng là ngoại cảm bệnh, nhưng khác nhau về nhân, chứng, mạch và trị.
+
+Nếu phân tích theo học thuyết, Ôn bệnh học không phủ định Thương hàn luận. Ôn bệnh học kế thừa nền tảng ngoại cảm bệnh của Thương hàn luận, rồi phát triển hệ thống riêng phù hợp với ôn tà, nhất là vệ-khí-dinh-huyết và tam tiêu biện chứng.
+
+Điểm cương lĩnh của Diệp Thiên Sĩ là: ôn tà cảm thụ vào phần trên, trước hết phạm vào phế, có thể thuận truyền xuống khí phần hoặc nghịch truyền vào tâm bào. Phế chủ khí thuộc vệ, tâm chủ huyết thuộc dinh. Biện vệ, khí, dinh, huyết tuy có chỗ tương thông với cách xét nông sâu trong Thương hàn, nhưng bàn đến phép chữa thì rất khác Thương hàn.
+
+Thương hàn là cảm thụ hàn tà, hàn tính âm ngưng, lúc mới đầu thường lưu luyến ở biểu, vệ dương bị uất, xuất hiện biểu hàn nên dùng tân ôn giải biểu. Ôn tà là dương tà, nhiệt biến nhanh, lúc mới phát ở biểu đã nặng về nhiệt, nên dùng tân lương nhẹ để giải biểu, thấu nhiệt và bảo vệ tân dịch.
+
+Ôn tà lại thường kiêm phong hoặc thấp. Nếu kiêm phong, phong và nhiệt đều thuộc dương tà, dễ hóa táo và làm khô thanh khiếu, nên cần thấu phong ra ngoài nhiệt. Nếu kiêm thấp, thấp có tính dính trệ, dễ bế nhiệt, nên cần hóa thấp, thấm thấp, không để thấp cấu kết với nhiệt.

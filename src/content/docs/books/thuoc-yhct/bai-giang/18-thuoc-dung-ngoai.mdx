@@ -1,0 +1,185 @@
+---
+title: "Bài 18. Thuốc dùng ngoài — Bài giảng chuyên sâu"
+description: "Bài giảng 50-60%: Luồng tư duy chọn thuốc dùng ngoài theo vị trí-tính chất tổn thương, Calanolid A cơ chế kháng HIV (Mù u), Betel-phenol ức chế màng tế bào vi khuẩn (Trầu không), Osthole coumarin PDE5i + ôn Thận (Xà sàng tử), Terpenoid glycosid kháng viêm bảo vệ gan (Bạch đồng nữ), Phối ngũ trong-ngoài kép."
+type: "deep-lecture"
+category: "books"
+diataxis: "explanation"
+medicineSystem: "tcm"
+source: "Raw"
+sourceDetail: "Raw/Thuoc_YHCT/chuong-02-cac-nhom-thuoc/bai-18-thuoc-dung-ngoai_001.md"
+status: "ready"
+generatedBy: "codex-reviewed"
+sidebar:
+  order: 18
+---
+
+import CompareTable from '~/components/CompareTable.astro';
+import ClinicalPearl from '~/components/ClinicalPearl.astro';
+import RedFlags from '~/components/RedFlags.astro';
+import MedicalNote from '~/components/MedicalNote.astro';
+
+## 1. Luồng tư duy lâm sàng — Bài 18 từ đầu đến cuối
+
+```mermaid
+flowchart TD
+    P["BỆNH NHÂN\nTổn thương phần biểu\n(da, niêm mạc, ngoại khoa)"]
+    P --> Q1{"Vị trí và tính chất?"}
+
+    Q1 -->|"Bỏng · Vết loét · Mụn nhọt\nCần sinh cơ + sát trùng"| A["MÙ U\nDầu bôi · Calanolid\nSinh cơ · Lành vết thương"]
+    Q1 -->|"Nhiễm trùng da · Chốc lở\nGhẻ · Mụn nhọt · Chốc đầu"| B["BẠCH ĐỒNG NỮ\nNấu nước rửa · Terpenoid\nKháng khuẩn · Thanh nhiệt"]
+    Q1 -->|"Vết thương có mủ · Bỏng\nNhiễm trùng vi khuẩn"| C["TRẦU KHÔNG\nGiã vắt nước bôi\nBetel-phenol kháng khuẩn mạnh"]
+    Q1 -->|"Viêm âm đạo · Ngứa âm hộ\nChàm · Nhiễm trùng da"| D["XÀ SÀNG TỬ\nXông/rửa + khô phèn\nSát khuẩn kháng nấm"]
+
+    A & B & C & D --> E{"Có tổn thương toàn thân\nhoặc nặng?"}
+
+    E -->|"Có: Nhiễm trùng nặng\nNhiệt độc lan rộng"| F1["Phối thuốc thanh nhiệt\ngiải độc đường UỐNG\n(Kim ngân hoa, Bồ công anh)"]
+    E -->|"Có: Tỳ Vị hư\nKhí huyết hư"| F2["Phối kiện Tỳ bổ khí\n(Bạch truật, Đảng sâm)"]
+    E -->|"Không: Chỉ tại chỗ"| F3["Dùng ngoài đơn thuần\nTheo dõi tiến triển"]
+
+    F1 & F2 & F3 --> G["LƯU Ý AN TOÀN\nKhoáng/kim loại: không đầu mặt\nKhông liều cao, không dài ngày"]
+```
+
+---
+
+## 2. Mù u — Calanolid và cơ chế sinh cơ lành vết thương
+
+Mù u có vị trí đặc biệt trong nhóm: **dùng DẦU từ HẠT** (không phải lá/thân), và chứa coumarin phức tạp nhất với hoạt tính kháng HIV được nghiên cứu kỹ.
+
+```mermaid
+flowchart TD
+    MU["MÙ U\nCalophyllum inophyllum\nDầu ép hạt tinh chế\nVị mặn đắng · Đại hàn"]
+
+    MU --> C1["CALANOLID A, B\n(Coumarin phức tạp)\n→ Non-nucleoside RT inhibitor (NNRTI)\n→ Ức chế HIV-1 reverse transcriptase\n→ Kháng cả chủng kháng AZT"]
+    MU --> C2["INOPHYLLUM B, P\n(Coumarin)\n→ Ức chế HIV-1 integrase\n→ Kháng virus thêm đích"]
+    MU --> C3["DẦU BÉO\n(Oleic acid, Linoleic acid)\n→ Tạo màng bảo vệ\n→ Dưỡng ẩm, mềm da\n→ Nền dẫn hoạt chất vào tổ chức"]
+    MU --> C4["FLAVONOID\n→ Kháng viêm (COX-2 ↓)\n→ Chống oxy hóa\n→ Bảo vệ tế bào sợi"]
+
+    C3 & C4 --> R1["SINH CƠ · LÀM LÀNH VẾT THƯƠNG\nTăng collagen tổng hợp\nTăng tưới máu vi mạch\nGiảm viêm tại chỗ"]
+    C1 & C2 --> R2["KHÁNG VIRUS\n(Nghiên cứu dược lý)"]
+    MU --> R3["SÁT TRÙNG\nKháng khuẩn + Kháng nấm\n→ Phòng nhiễm trùng vết thương"]
+```
+
+<MedicalNote>
+
+**Calanolid A — từ cây Mù u đến thuốc HIV:**
+
+Calanolid A được phát hiện từ cây Mù u (*Calophyllum inophyllum*) vào thập niên 1990. Nó là NNRTI — ức chế enzyme reverse transcriptase của HIV-1 tại vị trí allosteric (không phải vị trí catalytic), nên kháng cả các chủng đã kháng AZT (nucleoside analog). Đây là ví dụ điển hình của **dược liệu cổ truyền → phân lập hoạt chất → thuốc hiện đại**. Trong YHCT, Mù u "tính đại hàn" phản ánh hoạt tính kháng virus mạnh, đặc biệt với nhiễm trùng "nhiệt độc" nặng.
+
+</MedicalNote>
+
+---
+
+## 3. Trầu không — Betel-phenol và cơ chế kháng khuẩn phổ rộng
+
+Trầu không là vị có **hoạt tính kháng khuẩn mạnh nhất trong bài**, nhờ betel-phenol — một họ hợp chất phenol bay hơi:
+
+```mermaid
+flowchart LR
+    TK["TRẦU KHÔNG\nPiper betle · Lá\nTinh dầu (betel-phenol)\nCay ôn · Tỳ Phế"]
+
+    TK -->|"Betel-phenol\n(đồng phân eugenol/chavicol)"| M1["PHÁ VỠ MÀNG TẾ BÀO VI KHUẨN\nLiên kết phospholipid → rò màng\n→ Mất ATP → Chết tế bào vi khuẩn"]
+
+    M1 --> S1["Tụ cầu khuẩn (Staph. aureus)"]
+    M1 --> S2["Liên cầu khuẩn (Streptococcus)"]
+    M1 --> S3["Song cầu khuẩn (Neisseria)"]
+    M1 --> S4["B. subtilis · E. coli"]
+
+    TK -->|"Tính ôn, cay nồng\nBay hơi khi đun"| M2["TÁC DỤNG THEO ĐƯỜNG HÔ HẤP\nKhi nấu nước rửa / hơ\n→ Diệt khuẩn trên niêm mạc họng\n→ Phát tán phong hàn\n→ Hóa đàm (thư giãn phế quản)"]
+
+    TK -->|"Phenol hydroxyl groups"| M3["CHỐNG OXY HÓA\nDọn gốc tự do tại vùng tổn thương\n→ Giảm viêm → Sinh cơ"]
+```
+
+<ClinicalPearl>
+
+**Trầu không + vôi + cau (trầu cau):** Hỗn hợp cổ truyền này không chỉ có ý nghĩa văn hóa:
+- Vôi (Ca(OH)₂): kiềm hóa → tăng giải phóng betel-phenol từ lá → nồng độ kháng khuẩn cao hơn.
+- Hạt Cau: arecolin kích thích nước bọt → rửa trôi vi khuẩn miệng.
+- Tác dụng phụ: nhai lâu ngày → tăng nguy cơ ung thư miệng (arecolin) — không khuyến cáo dùng dài ngày.
+
+**Ứng dụng dùng ngoài thực tế:** Lá Trầu không giã nát, vắt nước → bôi bỏng nhẹ. Nước sắc Trầu không → rửa vết thương nhiễm trùng, trĩ, viêm hạch. Tác dụng nhanh hơn nhiều kháng sinh tổng hợp yếu thông thường trong nhiễm khuẩn nông.
+
+</ClinicalPearl>
+
+---
+
+## 4. Xà sàng tử — Coumarin, ôn Thận và "hai mặt" của một vị thuốc
+
+Xà sàng tử là ví dụ điển hình về vị thuốc YHCT có **hai nhóm chứng hoàn toàn khác nhau**: da liễu phụ khoa và bổ Thận nam giới.
+
+```mermaid
+flowchart TD
+    XST["XÀ SÀNG TỬ\nCnidium monnieri · Quả chín\nCoumarin (osthole), Tinh dầu\nCay đắng · Ôn · Thận"]
+
+    XST --> N1["OSTHOLE (Coumarin)\n→ Ức chế PDE5\n→ cGMP ↑ → cương dương\n(Giống sildenafil, nhẹ hơn)"]
+    XST --> N2["OSTHOLE\n→ Estrogen-like (yếu)\n→ Tăng estrogen receptor sensitivity\n→ Cải thiện âm đạo khô, ngứa"]
+    XST --> N3["TINH DẦU TERPENOID\n→ Phá vỡ màng nấm Candida\n→ Kháng khuẩn gram (+), (-)\n→ Giảm ngứa (ức chế histamine)"]
+    XST --> N4["OSTHOLE\n→ Kích thích OPG/RANKL\n→ Ức chế hủy cốt bào\n→ Chống loãng xương"]
+
+    N1 --> R1["ÔN THẬN TRÁNG DƯƠNG\nLiệt dương, di tinh, mộng tinh"]
+    N2 & N3 --> R2["SÁT KHUẨN GIẢM NGỨA\nViêm âm đạo, xích bạch đới\nChàm, ghẻ ngứa"]
+    N4 --> R3["KHỬ PHONG THẤP\nĐau khớp, phong thấp\nChống loãng xương"]
+
+    XST -->|"Phối khô phèn\n(KAl(SO₄)₂·12H₂O)"| P1["Khô phèn làm se niêm mạc\n+ Tính acid (pH↓) ức chế Candida\n→ Xà sàng tử + khô phèn =\nKháng nấm kép khi rửa âm hộ"]
+```
+
+---
+
+## 5. Bạch đồng nữ — Terpenoid và cơ chế đa hướng
+
+```mermaid
+flowchart LR
+    BDN["BẠCH ĐỒNG NỮ\nClerodendrum chinense\nThân lá · Terpenoid, Flavonoid\nĐắng · Lương · Tâm Tỳ"]
+
+    BDN --> T1["TERPENOID (clerodane)\n→ Ức chế NF-κB → Kháng viêm\n→ Bất hoạt enzyme vi khuẩn\n→ Kháng khuẩn ngoài da"]
+    BDN --> T2["FLAVONOID (luteolin, apigenin)\n→ Chống oxy hóa mạnh\n→ Bảo vệ tế bào gan (CYP2E1 ↓)\n→ Hạ đường huyết (GLUT4 ↑)"]
+    BDN --> T3["GLYCOSID (phenylethanol glycoside)\n→ Ức chế ACE → Hạ huyết áp\n→ Bảo vệ tế bào thần kinh (Nrf2 ↑)"]
+    BDN --> T4["STEROID\n→ Estrogen-like nhẹ\n→ Hỗ trợ điều hòa kinh nguyệt\n→ Phối Ích mẫu + Ngải cứu + Hương phụ"]
+
+    T1 --> R1["Ngoài da: Ghẻ, mụn nhọt, chốc lở\n(Nấu nước rửa)"]
+    T2 & T3 --> R2["Uống trong: Viêm gan vàng da\nHạ áp, bảo vệ thần kinh"]
+    T4 --> R3["Rối loạn kinh nguyệt\nViêm loét tử cung"]
+```
+
+---
+
+## 6. So sánh 4 vị — quyết định chọn thuốc
+
+<CompareTable
+  headers={["Tiêu chí", "Mù u", "Trầu không", "Xà sàng tử", "Bạch đồng nữ"]}
+  rows={[
+    ["Cơ chế kháng khuẩn", "Calanolid kháng virus; dầu béo chống nấm", "Betel-phenol phá màng vi khuẩn", "Osthole + tinh dầu phá màng nấm/khuẩn", "Terpenoid ức chế NF-κB"],
+    ["Đặc trưng độc đáo", "Kháng HIV (calanolid A, NNRTI)", "Kháng khuẩn phổ rộng nhất (gram+/-)", "Duy nhất ôn Thận tráng dương trong nhóm", "Dùng trong + ngoài; bảo vệ gan thần kinh"],
+    ["Dùng ngoài dạng gì", "Dầu bôi trực tiếp", "Nước sắc rửa / nước vắt lá tươi bôi", "Nước sắc xông/rửa (+ khô phèn)", "Nước sắc rửa"],
+    ["Có thể uống không?", "Không", "Có (8-16g sắc)", "Có (4-12g sắc)", "Có (10-12g sắc)"],
+    ["Chứng dùng ngoài tốt nhất", "Bỏng, vết loét, sinh cơ", "Vết thương nhiễm trùng vi khuẩn", "Viêm âm đạo/nấm, chàm, ghẻ ngứa", "Ghẻ, mụn nhọt, chốc đầu"],
+    ["Tính vị YHCT", "Mặn đắng · Đại hàn", "Cay nồng · Ôn", "Cay đắng · Ôn", "Đắng · Lương"],
+    ["Thận trọng", "Không dùng dầu thô; không uống", "Nhai lâu ngày tăng nguy cơ ung thư miệng", "Không dùng kéo dài khi Âm hư nội nhiệt", "Không dùng đơn độc khi Dương hư"],
+  ]}
+/>
+
+---
+
+## 7. Phối ngũ "trong-ngoài kép" — chiến lược điều trị toàn diện
+
+Nguyên tắc bài 18: **Dùng ngoài là chủ, phối trong là bổ trợ** khi cần.
+
+<CompareTable
+  headers={["Tình huống", "Dùng ngoài", "Phối uống thêm", "Mục đích phối"]}
+  rows={[
+    ["Viêm âm đạo nhiễm nấm + vi khuẩn", "Xà sàng tử + Khô phèn xông rửa", "Xà sàng tử 8g + Long đởm thảo sắc uống", "Kháng nấm tại chỗ + Thanh Can thấp nhiệt"],
+    ["Nhiễm trùng da nặng, nhiệt độc", "Bạch đồng nữ nấu nước rửa", "Kim ngân hoa + Bồ công anh + Liên kiều uống", "Thanh nhiệt giải độc toàn thân"],
+    ["Bỏng + nhiễm trùng thứ phát", "Mù u dầu bôi + Trầu không nước rửa", "Hoàng liên + Ngân hoa uống", "Sinh cơ + Kháng khuẩn + Thanh nhiệt"],
+    ["Rối loạn kinh nguyệt + viêm tử cung", "Bạch đồng nữ nấu nước rửa âm đạo", "Bạch đồng nữ + Ích mẫu + Ngải cứu + Hương phụ uống", "Điều kinh + Thanh nhiệt từ trong"],
+    ["Đau khớp + viêm da kết hợp", "Xà sàng tử + Trầu không đắp ngoài", "Xà sàng tử + Độc hoạt + Tục đoạn uống", "Khu phong thấp từ ngoài + Bổ Thận trong"],
+  ]}
+/>
+
+---
+
+## 8. Câu hỏi kích thích tư duy
+
+1. **Mù u "tính đại hàn" trong YHCT — tại sao một loại dầu béo lại có tính hàn mạnh?** Hãy kết nối với cơ chế calanolid kháng virus (nhiệt độc) và tác dụng kháng viêm mạnh. Nếu bệnh nhân có vết bỏng nhưng thể hàn (sợ lạnh, tay chân lạnh), bạn có còn dùng Mù u không và tại sao?
+
+2. **Xà sàng tử dùng một vị có thể trị cả liệt dương lẫn viêm âm đạo — đây là mâu thuẫn hay nhất quán?** Giải thích bằng cơ chế osthole (PDE5i + estrogen-like) và tại sao YHCT gọi cả hai đều là "Thận hư" nhưng biểu hiện trái ngược nhau.
+
+3. **Betel-phenol của Trầu không kháng khuẩn rất mạnh nhưng không được dùng để điều trị nhiễm khuẩn toàn thân.** Giải thích giới hạn dược động học của hợp chất tinh dầu bay hơi so với kháng sinh hấp thu toàn thân. Trong trường hợp nào Trầu không đường uống có ý nghĩa lâm sàng?

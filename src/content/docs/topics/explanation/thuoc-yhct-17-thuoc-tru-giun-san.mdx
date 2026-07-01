@@ -1,0 +1,179 @@
+---
+title: "Cơ chế phân tử — Bài 17: Thuốc trừ giun sán"
+description: "Cơ chế phân tử: Arecolin nicotinic ACh agonist làm liệt cơ KST (Bình lang), Trigonellin ức chế TK cơ + acid quisqualis co mạch (Sử quân tử), Allicin thiol-reactive diệt đa tác nhân + ức chế ACE (Tỏi), Terpenoid saponin bao màng giun (Trâm bầu). Worked example sán sơ mít phối Bình lang + Bí đỏ."
+type: "deep-explanation"
+category: "topics"
+diataxis: "explanation"
+medicineSystem: "tcm"
+source: "Raw"
+sourceDetail: "Raw/Thuoc_YHCT/chuong-02-cac-nhom-thuoc/bai-17-thuoc-tru-giun-san_001.md"
+status: "ready"
+generatedBy: "codex-reviewed"
+sidebar:
+  order: 17
+---
+
+import MedicalNote from '~/components/MedicalNote.astro';
+import ClinicalPearl from '~/components/ClinicalPearl.astro';
+
+## Bản đồ cơ chế tổng quan — Bài 17
+
+```mermaid
+flowchart TD
+    subgraph G1["NHÓM ALKALOID"]
+        B1["Bình lang\n(Arecolin)"]
+        B2["Sử quân tử\n(Trigonellin + Acid quisqualis)"]
+    end
+    subgraph G2["NHÓM SULFUR"]
+        B3["Tỏi\n(Allicin, Alliin, Ajoen)"]
+    end
+    subgraph G3["NHÓM TERPENOID/TANNIN"]
+        B4["Trâm bầu\n(Terpenoid, Saponin, Tannin)"]
+    end
+
+    B1 -->|"Muscarinic ACh agonist\n→ Co cơ trơn KST liên tục\n→ Liệt mềm cơ bắp sán"| P1["TÊ LIỆT KÝ SINH TRÙNG\nMất bám niêm mạc\n→ Thải qua tẩy xổ"]
+
+    B2 -->|"Trigonellin: ức chế TK cơ giun\nAcid quisqualis: co mạch nuôi KST\n→ Giun chết do thiếu O₂"| P1
+
+    B3 -->|"Allicin phản ứng với -SH\ntrên enzyme KST\n(pyruvate kinase, cysteine protease)"| P2["PHONG TỎA ENZYME\nKÝ SINH TRÙNG\n→ Mất ATP → Chết"]
+
+    B4 -->|"Saponin tạo phức\nvới cholesterol màng KST\n→ Tăng tính thấm màng"| P3["PHÁ VỠ MÀNG\nKÝ SINH TRÙNG\n→ Rò rỉ nội bào → Chết"]
+
+    B1 -->|"Ngoài KST"| EX1["HÀNH KHÍ THÔNG TIỆN\nArecolin kích thích nhu động ruột\nLÔI CUỐN KST RA NGOÀI"]
+
+    B3 -->|"Ngoài KST"| EX2["ĐA TÁC DỤNG HỆ THỐNG\nACE inhibition → Hạ áp\nHMG-CoA reductase ↓ → Hạ lipid\nNF-κB ↓ → Kháng viêm, kháng khối u"]
+
+    B4 -->|"Ngoài KST"| EX3["BẢO VỆ GAN\nTerpenoid + Flavonoid\n→ Chống oxy hóa tế bào gan\n→ Kháng virus HIV (lab)"]
+```
+
+---
+
+## Cơ chế chi tiết — Bình lang (Arecolin)
+
+```mermaid
+sequenceDiagram
+    participant A as Arecolin
+    participant R as Muscarinic M1/M3 receptor (trên cơ sán)
+    participant G as G-protein (Gq)
+    participant IP3 as IP3 / DAG
+    participant Ca as Ca²⁺ nội bào
+    participant M as Co cơ trơn
+
+    A->>R: Gắn kết (chủ vận)
+    R->>G: Hoạt hóa Gq
+    G->>IP3: PLC → IP3 + DAG
+    IP3->>Ca: Giải phóng Ca²⁺ từ ER
+    Ca->>M: Calmodulin → MLCK → co cơ
+    Note over M: Co liên tục → kiệt sức cơ sán → liệt mềm
+    Note over M: Sán mất bám niêm mạc → bị đẩy ra ngoài bởi nhu động ruột + tẩy xổ
+```
+
+**Tại sao sán sơ mít cần liều cao hơn?**
+Sán sơ mít (*Taenia solium*): Scolex (đầu sán) có 4 giác hút + 2 vòng móc bám sâu vào nhung mao. Cần nồng độ arecolin cao và kéo dài hơn để làm liệt toàn bộ bộ máy bám. Sán dây (*Taenia saginata*): Không có móc, chỉ có giác hút → liệt dễ hơn với liều thấp.
+
+---
+
+## Cơ chế chi tiết — Tỏi (Allicin)
+
+```mermaid
+flowchart LR
+    ALN["ALLIIN\n(Tiền chất, không hoạt tính)\nTích trữ trong không bào Tỏi"]
+    ALN -->|"Alliinase giải phóng\nkhi tế bào Tỏi bị phá vỡ"| ALC["ALLICIN\n(Diallyl thiosulfinate)\nHoạt chất chính"]
+
+    ALC -->|"Phản ứng Michael với -SH"| T1["Cysteine protease KST → Bất hoạt\nPyruvate kinase KST → Ức chế\n→ Giun mất ATP, mất hoạt động"]
+
+    ALC -->|"Biến đổi thêm"| AJOEN["AJOEN\n→ Ức chế kết tập tiểu cầu\n→ Kháng HIV (in vitro)"]
+
+    ALC -->|"Biến đổi thêm"| DAS["DIALLYL SULFIDE (DAS)\n→ Ức chế CYP2E1\n→ Bảo vệ gan khỏi các hóa chất độc"]
+
+    ALC -->|"ACE inhibition"| BP["HẠ HUYẾT ÁP\nGiảm Angiotensin II → Giãn mạch"]
+
+    ALC -->|"HMG-CoA reductase ↓"| LIP["HẠ LIPID MÁU\nCholesterol LDL giảm"]
+
+    ALC -->|"Dùng lâu (tích lũy)"| TOX["ĐỘC TÍNH\nAllicin oxy hóa tế bào gan khi liều cao\n→ YHCT: Tổn thương Can Mật\nKiêng dùng khi Can Thận hỏa vượng"]
+```
+
+<MedicalNote>
+
+**Tại sao Tỏi phải dùng tươi (hoặc mới giã)?**
+
+Alliin → Allicin chỉ xảy ra khi enzyme alliinase tiếp xúc với cơ chất (khi Tỏi bị nghiền/giã/cắt). Tỏi đun nấu kỹ: alliinase bị biến tính nhiệt → allicin không tạo thành → mất tác dụng kháng khuẩn và trừ giun. Giải pháp: Giã tỏi trước 10 phút, để phản ứng hoàn tất, sau đó mới đun nếu cần — allicin đã hình thành sẽ bền nhiệt hơn.
+
+</MedicalNote>
+
+---
+
+## Cơ chế chi tiết — Sử quân tử
+
+```mermaid
+flowchart TD
+    SQ["SỬ QUÂN TỬ\nHạt · Quisqualis indica"]
+
+    SQ --> TG["TRIGONELLIN\n(N-methylnicotinic acid)\n→ Đồng phân của Nicotinic acid\n→ Tác dụng nicotinic-like trên TK cơ giun\n→ Ức chế dẫn truyền TK cơ\n→ Giun tê liệt, nhả bám"]
+
+    SQ --> AQ["ACID QUISQUALIS\n→ Co thắt mạch nuôi ký sinh trùng\n→ Giun thiếu O₂ + glucose\n→ Chết dần"]
+
+    SQ --> OIL["DẦU BÉO\n→ Không diệt KST\n→ Bao bọc niêm mạc Tỳ Vị\n→ Giảm kích thích, dễ tiêu hóa\n→ Kiện Tỳ tiêu cam"]
+
+    TG & AQ --> ANTI["KHU TRÙNG\nGiun đũa, giun kim"]
+    OIL --> TONIC["KIỆN TỲ\nCam tích trẻ em"]
+```
+
+---
+
+## Worked example — Sán sơ mít: Phối Bình lang + Hạt Bí đỏ
+
+```mermaid
+flowchart LR
+    subgraph Step1["Bước 1 — Liệt đốt sán"]
+        BI["Hạt Bí đỏ\n(Cucurbita moschata)\nCucurbitin (amino acid)"]
+        BI -->|"Ức chế oxidative phosphorylation\ncủa tế bào đốt sán (proglottid)"| S1["Đốt sán liệt\nkhông co bóp được"]
+    end
+
+    subgraph Step2["Bước 2 — Liệt đầu sán"]
+        BL["Bình lang\n30-60g\nArecolin"]
+        BL -->|"Muscarinic → co cơ → liệt\ncả Scolex (đầu sán)"| S2["Đầu sán nhả bám\nkhỏi niêm mạc ruột"]
+    end
+
+    subgraph Step3["Bước 3 — Thải trừ"]
+        S1 & S2 --> S3["Nhu động ruột + Tẩy xổ\n→ Toàn bộ sán (kể cả đầu) tống ra ngoài"]
+    end
+
+    Note["LƯU Ý: Phải xác nhận\nĐẦU SÁN ra khỏi cơ thể!\nNếu đầu sán còn lại → sán tái sinh"]
+    S3 --> Note
+```
+
+<ClinicalPearl>
+
+**Tại sao phải xác nhận đầu sán ra ngoài?**
+
+Sán dây và sán sơ mít tái sinh từ đầu sán (scolex). Nếu thân sán (proglottid) thải ra nhưng scolex còn gắn trong ruột → trong vài tuần, sán mọc lại hoàn toàn. Điều trị thành công = **phải thấy đầu sán trong phân** (kiểm tra kính hiển vi). Đây là lý do Bình lang liều cao (30–60 g) bắt buộc với sán sơ mít — đủ nồng độ để liệt cả scolex vốn bám rất chắc.
+
+</ClinicalPearl>
+
+---
+
+## Bảng cơ chế so sánh — góc nhìn dược lý YHHĐ
+
+<table>
+<thead>
+<tr><th>Vị thuốc</th><th>Hoạt chất</th><th>Đích phân tử</th><th>Hậu quả với KST</th><th>Công năng YHCT tương ứng</th></tr>
+</thead>
+<tbody>
+<tr><td>Bình lang</td><td>Arecolin</td><td>Muscarinic M1/M3 receptor cơ sán</td><td>Co cơ → liệt mềm → mất bám</td><td>Sát trùng, hành khí (thông tiện đẩy KST)</td></tr>
+<tr><td>Sử quân tử</td><td>Trigonellin</td><td>Nicotinic-like receptor TK cơ giun</td><td>Ức chế dẫn truyền → liệt giun</td><td>Khu trùng tiêu tích</td></tr>
+<tr><td>Sử quân tử</td><td>Acid quisqualis</td><td>Mạch máu nuôi KST</td><td>Co mạch → giun thiếu O₂ → chết</td><td>Khu trùng tiêu tích</td></tr>
+<tr><td>Tỏi</td><td>Allicin</td><td>Nhóm -SH enzyme KST (pyruvate kinase, cysteine protease)</td><td>Bất hoạt enzyme → mất ATP → chết</td><td>Sát trùng, giải độc</td></tr>
+<tr><td>Trâm bầu</td><td>Saponin, Terpenoid</td><td>Cholesterol màng tế bào KST</td><td>Tăng tính thấm màng → rò rỉ nội bào</td><td>Khử trùng</td></tr>
+</tbody>
+</table>
+
+---
+
+## Câu hỏi cơ chế nâng cao
+
+1. **Arecolin là chủ vận muscarinic — vậy tại sao nó không gây co thắt ruột nguy hiểm cho bệnh nhân?** Hãy phân tích ngưỡng nồng độ và cơ chế chọn lọc giữa ruột người và cơ sán.
+
+2. **Allicin phản ứng với nhóm thiol (-SH) trên enzyme KST, nhưng gan người cũng có nhiều enzyme chứa -SH (GSH, cysteine protease).** Tại sao dùng Tỏi liều bình thường không gây tổn thương gan ngay, nhưng dùng lâu lại tổn thương Can Mật theo YHCT?
+
+3. **Sử quân tử có dầu béo giúp kiện Tỳ — đây là ví dụ điển hình về "đa dụng trong một vị thuốc".** Hãy giải thích cơ chế dầu béo bảo vệ niêm mạc Tỳ Vị và tại sao điều này lại quan trọng hơn với trẻ em cam tích so với người lớn?

@@ -6,6 +6,7 @@ import AstroPWA from '@vite-pwa/astro';
 import remarkObsidianCallout from 'remark-obsidian-callout';
 import remarkWikilinkText from './src/plugins/remark-wikilink-text.mjs';
 import starlightThemeFlexoki from 'starlight-theme-flexoki';
+import { viSearchNormalize } from './src/integrations/vi-search-normalize.mjs';
 
 // https://astro.build/config
 export default defineConfig({
@@ -16,6 +17,9 @@ export default defineConfig({
 		remarkPlugins: [remarkObsidianCallout, remarkWikilinkText],
 	},
 	integrations: [
+		// vi-search-normalize PHẢI đứng trước starlight: hook astro:build:done inject
+		// normalized text vào dist/*.html TRƯỚC KHI Starlight chạy Pagefind indexing
+		viSearchNormalize(),
 		// mermaid PHẢI đứng trước starlight (hook vào markdown pipeline)
 		mermaid({ theme: 'forest', autoTheme: true }),
 		starlight({
@@ -27,51 +31,67 @@ export default defineConfig({
 			// Theme nạp CSS trước -> medical.css (customCss) nạp cuối, KHÔNG bị đè.
 			plugins: [starlightThemeFlexoki({ accentColor: 'blue' })],
 			customCss: ['./src/styles/medical.css'],
+			head: [
+				{
+					tag: 'script',
+					attrs: { src: '/medical-site/js/svg-zoom.js', defer: true },
+				},
+			],
 			// Pagefind search = mặc định Starlight, bật sẵn
 			sidebar: [
 				{
 					label: 'Học theo lộ trình',
+					collapsed: true,
 					items: [
 						{ label: 'Cách học theo lộ trình', link: 'learning-paths/' },
 						{
 							label: 'Ôn bệnh đại cương',
+							collapsed: true,
 							items: [
 								{ label: 'Lộ trình học', link: 'learning-paths/on-benh-dai-cuong/' },
 								{
 									label: 'Lượng giá',
+									collapsed: true,
 									items: [{ autogenerate: { directory: 'books/on-benh-dai-cuong/luong-gia' } }],
 								},
 							],
 						},
 						{
 							label: 'Thuốc YHCT',
+							collapsed: true,
 							items: [
 								{
 									label: 'Lượng giá',
+									collapsed: true,
 									items: [{ autogenerate: { directory: 'books/thuoc-yhct/luong-gia' } }],
 								},
 							],
 						},
-						{ label: 'Ca học từng bước', items: [{ autogenerate: { directory: 'cases' } }] },
+						{ label: 'Ca học từng bước', collapsed: true, items: [{ autogenerate: { directory: 'cases' } }] },
 					],
 				},
 				{
 					label: 'Xử trí lâm sàng',
+					collapsed: true,
 					items: [
-						{ label: 'Cập nhật điều trị', items: [{ autogenerate: { directory: 'updates' } }] },
+						{ label: 'Cập nhật điều trị', collapsed: true, items: [{ autogenerate: { directory: 'updates' } }] },
 					],
 				},
 				{
 					label: 'Tra cứu nhanh',
+					collapsed: true,
 					items: [
 						{
 							label: 'Ôn bệnh đại cương',
+							collapsed: true,
 							items: [
 								{
 									label: 'Tóm tắt theo chương',
+									collapsed: true,
 									items: [
 										{
 											label: 'Bài 1. Đại cương Ôn bệnh',
+											collapsed: true,
 											items: [
 												{ label: 'Đại cương về Ôn bệnh', link: 'books/on-benh-dai-cuong/tom-tat/01-bai-1-dai-cuong-ve-on-benh/' },
 												{ label: 'Phân biệt Ôn bệnh và Thương hàn', link: 'books/on-benh-dai-cuong/tom-tat/02-4-1-phan-biet-on-ta-va-ngoai-cam-han-ta/' },
@@ -79,6 +99,7 @@ export default defineConfig({
 										},
 										{
 											label: 'Bài 2. Nguyên nhân và phát bệnh',
+											collapsed: true,
 											items: [
 												{ label: 'Nguyên nhân bệnh và phát bệnh', link: 'books/on-benh-dai-cuong/tom-tat/03-bai-2-nguyen-nhan-benh-va-phat-benh/' },
 												{ label: 'Táo nhiệt, ôn nhiệt, ôn độc và tân cảm', link: 'books/on-benh-dai-cuong/tom-tat/04-2-1-5-on-nhiet-benh-ta/' },
@@ -87,6 +108,7 @@ export default defineConfig({
 										},
 										{
 											label: 'Bài 3. Biện chứng Ôn bệnh',
+											collapsed: true,
 											items: [
 												{ label: 'Biện chứng Ôn bệnh', link: 'books/on-benh-dai-cuong/tom-tat/06-bai-3-bien-chung-ve-on-benh/' },
 												{ label: 'Vệ-khí-dinh-huyết và tam tiêu', link: 'books/on-benh-dai-cuong/tom-tat/07-2-3-moi-quan-he-giua-ve-khi-dinh-huyet-benh-chung-va-tam-tieu-benh-chung/' },
@@ -94,6 +116,7 @@ export default defineConfig({
 										},
 										{
 											label: 'Bài 4. Chẩn đoán Ôn bệnh',
+											collapsed: true,
 											items: [
 												{ label: 'Chẩn đoán Ôn bệnh', link: 'books/on-benh-dai-cuong/tom-tat/08-bai-4-chan-doan-on-benh/' },
 												{ label: 'Biện các chứng thường gặp', link: 'books/on-benh-dai-cuong/tom-tat/09-2-4-bien-nhung-chung-thuong-gap/' },
@@ -102,12 +125,14 @@ export default defineConfig({
 										},
 										{
 											label: 'Bài 5. Dự phòng Ôn bệnh',
+											collapsed: true,
 											items: [
 												{ label: 'Dự phòng Ôn bệnh', link: 'books/on-benh-dai-cuong/tom-tat/11-bai-5-du-phong-on-benh/' },
 											],
 										},
 										{
 											label: 'Ngược tật',
+											collapsed: true,
 											items: [
 												{ label: 'Ngược tật', link: 'books/on-benh-dai-cuong/tom-tat/12-nguoc-tat/' },
 												{ label: 'Xử trí triệu chứng và dự phòng', link: 'books/on-benh-dai-cuong/tom-tat/13-6-dieu-tri-trieu-chung/' },
@@ -115,6 +140,7 @@ export default defineConfig({
 										},
 										{
 											label: 'Phong ôn',
+											collapsed: true,
 											items: [
 												{ label: 'Phong ôn', link: 'books/on-benh-dai-cuong/tom-tat/14-phong-on/' },
 												{ label: 'Dương minh, tâm bào và hồi phục', link: 'books/on-benh-dai-cuong/tom-tat/15-5-4-nhiet-nhap-tam-bao/' },
@@ -123,12 +149,14 @@ export default defineConfig({
 										},
 										{
 											label: 'Thử thấp',
+											collapsed: true,
 											items: [
 												{ label: 'Thử thấp', link: 'books/on-benh-dai-cuong/tom-tat/17-thu-thap/' },
 											],
 										},
 										{
 											label: 'Xuân ôn',
+											collapsed: true,
 											items: [
 												{ label: 'Xuân ôn', link: 'books/on-benh-dai-cuong/tom-tat/18-xuan-on/' },
 												{ label: 'Khí dinh huyết và tâm bào', link: 'books/on-benh-dai-cuong/tom-tat/19-5-3-1-khi-dinh-huyet-luong-phien/' },
@@ -137,17 +165,20 @@ export default defineConfig({
 										},
 									],
 								},
-								{ label: 'Bảng tra cứu', items: [{ autogenerate: { directory: 'topics/reference' } }] },
+								{ label: 'Bảng tra cứu', collapsed: true, items: [{ autogenerate: { directory: 'topics/reference' } }] },
 							],
 						},
 						{
 							label: 'Thuốc YHCT',
+							collapsed: true,
 							items: [
 								{
 									label: 'Tóm tắt theo chương',
+									collapsed: true,
 									items: [
 										{
 											label: 'Chương 1. Đại cương',
+											collapsed: true,
 											items: [
 												{ label: 'Bài 1. Đại cương thuốc YHCT', link: 'books/thuoc-yhct/tom-tat/01-dai-cuong-thuoc-yhct/' },
 												{ label: 'Bài 2. Tính năng thuốc cổ truyền', link: 'books/thuoc-yhct/tom-tat/02-tinh-nang-thuoc-co-truyen/' },
@@ -156,12 +187,21 @@ export default defineConfig({
 										},
 										{
 											label: 'Chương 2. Các nhóm thuốc',
+											collapsed: true,
 											items: [
 												{ label: 'Bài 4. Thuốc giải biểu', link: 'books/thuoc-yhct/tom-tat/04-thuoc-giai-bieu/' },
 												{ label: 'Bài 5. Thuốc khử hàn', link: 'books/thuoc-yhct/tom-tat/05-thuoc-khu-han/' },
 												{ label: 'Bài 6. Thuốc thanh nhiệt', link: 'books/thuoc-yhct/tom-tat/06-thuoc-thanh-nhiet/' },
 												{ label: 'Bài 7. Thuốc hóa đờm, chỉ khái, bình suyễn', link: 'books/thuoc-yhct/tom-tat/07-thuoc-hoa-dom-chi-khai-binh-suyen/' },
 										{ label: 'Bài 8. Thuốc bình can tức phong, an thần, khai khiếu', link: 'books/thuoc-yhct/tom-tat/08-thuoc-binh-can-tuc-phong-an-than-khai-khieu/' },
+												{ label: 'Bài 9. Thuốc lý khí', link: 'books/thuoc-yhct/tom-tat/09-thuoc-ly-khi/' },
+												{ label: 'Bài 10. Thuốc lý huyết', link: 'books/thuoc-yhct/tom-tat/10-thuoc-ly-huyet/' },
+												{ label: 'Bài 11. Thuốc lợi thủy, trục thủy', link: 'books/thuoc-yhct/tom-tat/11-thuoc-loi-thuy-truc-thuy/' },
+												{ label: 'Bài 12. Thuốc trừ thấp', link: 'books/thuoc-yhct/tom-tat/12-thuoc-tru-thap/' },
+												{ label: 'Bài 13. Thuốc tiêu đạo', link: 'books/thuoc-yhct/tom-tat/13-thuoc-tieu-dao/' },
+												{ label: 'Bài 14. Thuốc tả hạ', link: 'books/thuoc-yhct/tom-tat/14-thuoc-ta-ha/' },
+												{ label: 'Bài 15. Thuốc cố sáp', link: 'books/thuoc-yhct/tom-tat/15-thuoc-co-sap/' },
+												{ label: 'Bài 16. Thuốc bổ dưỡng', link: 'books/thuoc-yhct/tom-tat/16-thuoc-bo-duong/' },
 												{ label: 'Bài 19. Thuốc gây nôn', link: 'books/thuoc-yhct/tom-tat/19-thuoc-gay-non/' },
 											],
 										},
@@ -173,16 +213,20 @@ export default defineConfig({
 				},
 				{
 					label: 'Hiểu sâu',
+					collapsed: true,
 					items: [
 						{
 							label: 'Ôn bệnh đại cương',
+							collapsed: true,
 							items: [
-								{ label: 'Bài giảng chuyên sâu', items: [{ autogenerate: { directory: 'books/on-benh-dai-cuong/bai-giang' } }] },
+								{ label: 'Bài giảng chuyên sâu', collapsed: true, items: [{ autogenerate: { directory: 'books/on-benh-dai-cuong/bai-giang' } }] },
 								{
 									label: 'Nguyên thủy theo chương',
+									collapsed: true,
 									items: [
 										{
 											label: 'Bài 1. Đại cương Ôn bệnh',
+											collapsed: true,
 											items: [
 												{ label: 'Đại cương về Ôn bệnh', link: 'books/on-benh-dai-cuong/nguyen-thuy/01-bai-1-dai-cuong-ve-on-benh/' },
 												{ label: 'Phân biệt Ôn bệnh và Thương hàn', link: 'books/on-benh-dai-cuong/nguyen-thuy/02-4-1-phan-biet-on-ta-va-ngoai-cam-han-ta/' },
@@ -190,6 +234,7 @@ export default defineConfig({
 										},
 										{
 											label: 'Bài 2. Nguyên nhân và phát bệnh',
+											collapsed: true,
 											items: [
 												{ label: 'Nguyên nhân bệnh và phát bệnh', link: 'books/on-benh-dai-cuong/nguyen-thuy/03-bai-2-nguyen-nhan-benh-va-phat-benh/' },
 												{ label: 'Táo nhiệt, ôn nhiệt, ôn độc và tân cảm', link: 'books/on-benh-dai-cuong/nguyen-thuy/04-2-1-5-on-nhiet-benh-ta/' },
@@ -198,6 +243,7 @@ export default defineConfig({
 										},
 										{
 											label: 'Bài 3. Biện chứng Ôn bệnh',
+											collapsed: true,
 											items: [
 												{ label: 'Biện chứng Ôn bệnh', link: 'books/on-benh-dai-cuong/nguyen-thuy/06-bai-3-bien-chung-ve-on-benh/' },
 												{ label: 'Vệ-khí-dinh-huyết và tam tiêu', link: 'books/on-benh-dai-cuong/nguyen-thuy/07-2-3-moi-quan-he-giua-ve-khi-dinh-huyet-benh-chung-va-tam-tieu-benh-chung/' },
@@ -205,6 +251,7 @@ export default defineConfig({
 										},
 										{
 											label: 'Bài 4. Chẩn đoán Ôn bệnh',
+											collapsed: true,
 											items: [
 												{ label: 'Chẩn đoán Ôn bệnh', link: 'books/on-benh-dai-cuong/nguyen-thuy/08-bai-4-chan-doan-on-benh/' },
 												{ label: 'Biện các chứng thường gặp', link: 'books/on-benh-dai-cuong/nguyen-thuy/09-2-4-bien-nhung-chung-thuong-gap/' },
@@ -213,12 +260,14 @@ export default defineConfig({
 										},
 										{
 											label: 'Bài 5. Dự phòng Ôn bệnh',
+											collapsed: true,
 											items: [
 												{ label: 'Dự phòng Ôn bệnh', link: 'books/on-benh-dai-cuong/nguyen-thuy/11-bai-5-du-phong-on-benh/' },
 											],
 										},
 										{
 											label: 'Ngược tật',
+											collapsed: true,
 											items: [
 												{ label: 'Ngược tật', link: 'books/on-benh-dai-cuong/nguyen-thuy/12-nguoc-tat/' },
 												{ label: 'Xử trí triệu chứng và dự phòng', link: 'books/on-benh-dai-cuong/nguyen-thuy/13-6-dieu-tri-trieu-chung/' },
@@ -226,6 +275,7 @@ export default defineConfig({
 										},
 										{
 											label: 'Phong ôn',
+											collapsed: true,
 											items: [
 												{ label: 'Phong ôn', link: 'books/on-benh-dai-cuong/nguyen-thuy/14-phong-on/' },
 												{ label: 'Dương minh, tâm bào và hồi phục', link: 'books/on-benh-dai-cuong/nguyen-thuy/15-5-4-nhiet-nhap-tam-bao/' },
@@ -234,12 +284,14 @@ export default defineConfig({
 										},
 										{
 											label: 'Thử thấp',
+											collapsed: true,
 											items: [
 												{ label: 'Thử thấp', link: 'books/on-benh-dai-cuong/nguyen-thuy/17-thu-thap/' },
 											],
 										},
 										{
 											label: 'Xuân ôn',
+											collapsed: true,
 											items: [
 												{ label: 'Xuân ôn', link: 'books/on-benh-dai-cuong/nguyen-thuy/18-xuan-on/' },
 												{ label: 'Khí dinh huyết và tâm bào', link: 'books/on-benh-dai-cuong/nguyen-thuy/19-5-3-1-khi-dinh-huyet-luong-phien/' },
@@ -250,9 +302,11 @@ export default defineConfig({
 								},
 								{
 									label: 'Giải thích cơ chế theo chương',
+									collapsed: true,
 									items: [
 										{
 											label: 'Bài 1. Đại cương Ôn bệnh',
+											collapsed: true,
 											items: [
 												{ label: 'Cơ chế nền của Ôn bệnh', link: 'topics/explanation/on-benh-dai-cuong-bai-1-dai-cuong-ve-on-benh/' },
 												{ label: 'Vì sao Ôn bệnh khác Thương hàn', link: 'topics/explanation/on-benh-dai-cuong-4-1-phan-biet-on-ta-va-ngoai-cam-han-ta/' },
@@ -260,6 +314,7 @@ export default defineConfig({
 										},
 										{
 											label: 'Bài 2. Nguyên nhân và phát bệnh',
+											collapsed: true,
 											items: [
 												{ label: 'Cơ chế nguyên nhân và phát bệnh', link: 'topics/explanation/on-benh-dai-cuong-bai-2-nguyen-nhan-benh-va-phat-benh/' },
 												{ label: 'Cơ chế ôn nhiệt bệnh tà', link: 'topics/explanation/on-benh-dai-cuong-2-1-5-on-nhiet-benh-ta/' },
@@ -268,6 +323,7 @@ export default defineConfig({
 										},
 										{
 											label: 'Bài 3. Biện chứng Ôn bệnh',
+											collapsed: true,
 											items: [
 												{ label: 'Cơ chế biện chứng Ôn bệnh', link: 'topics/explanation/on-benh-dai-cuong-bai-3-bien-chung-ve-on-benh/' },
 												{ label: 'Vệ-khí-dinh-huyết và tam tiêu', link: 'topics/explanation/on-benh-dai-cuong-2-3-moi-quan-he-giua-ve-khi-dinh-huyet-benh-chung-va-tam-tieu-benh-chung/' },
@@ -276,6 +332,7 @@ export default defineConfig({
 										},
 										{
 											label: 'Bài 4. Chẩn đoán Ôn bệnh',
+											collapsed: true,
 											items: [
 												{ label: 'Cơ chế chẩn đoán Ôn bệnh', link: 'topics/explanation/on-benh-dai-cuong-bai-4-chan-doan-on-benh/' },
 												{ label: 'Cơ chế các chứng thường gặp', link: 'topics/explanation/on-benh-dai-cuong-2-4-bien-nhung-chung-thuong-gap/' },
@@ -284,12 +341,14 @@ export default defineConfig({
 										},
 										{
 											label: 'Bài 5. Dự phòng Ôn bệnh',
+											collapsed: true,
 											items: [
 												{ label: 'Cơ chế dự phòng Ôn bệnh', link: 'topics/explanation/on-benh-dai-cuong-bai-5-du-phong-on-benh/' },
 											],
 										},
 										{
 											label: 'Ngược tật',
+											collapsed: true,
 											items: [
 												{ label: 'Cơ chế ngược tật', link: 'topics/explanation/on-benh-dai-cuong-nguoc-tat/' },
 												{ label: 'Cơ chế điều trị triệu chứng', link: 'topics/explanation/on-benh-dai-cuong-6-dieu-tri-trieu-chung/' },
@@ -297,6 +356,7 @@ export default defineConfig({
 										},
 										{
 											label: 'Phong ôn',
+											collapsed: true,
 											items: [
 												{ label: 'Cơ chế phong ôn', link: 'topics/explanation/on-benh-dai-cuong-phong-on/' },
 												{ label: 'Cơ chế nhiệt nhập tâm bào', link: 'topics/explanation/on-benh-dai-cuong-5-4-nhiet-nhap-tam-bao/' },
@@ -305,12 +365,14 @@ export default defineConfig({
 										},
 										{
 											label: 'Thử thấp',
+											collapsed: true,
 											items: [
 												{ label: 'Cơ chế thử thấp', link: 'topics/explanation/on-benh-dai-cuong-thu-thap/' },
 											],
 										},
 										{
 											label: 'Xuân ôn',
+											collapsed: true,
 											items: [
 												{ label: 'Cơ chế xuân ôn', link: 'topics/explanation/on-benh-dai-cuong-xuan-on/' },
 												{ label: 'Cơ chế khí dinh huyết và tâm bào', link: 'topics/explanation/on-benh-dai-cuong-5-3-1-khi-dinh-huyet-luong-phien/' },
@@ -323,13 +385,16 @@ export default defineConfig({
 						},
 						{
 							label: 'Thuốc YHCT',
+							collapsed: true,
 							items: [
-								{ label: 'Bài giảng chuyên sâu', items: [{ autogenerate: { directory: 'books/thuoc-yhct/bai-giang' } }] },
+								{ label: 'Bài giảng chuyên sâu', collapsed: true, items: [{ autogenerate: { directory: 'books/thuoc-yhct/bai-giang' } }] },
 								{
 									label: 'Nguyên thủy theo chương',
+									collapsed: true,
 									items: [
 										{
 											label: 'Chương 1. Đại cương',
+											collapsed: true,
 											items: [
 												{ label: 'Bài 1. Đại cương thuốc YHCT', link: 'books/thuoc-yhct/nguyen-thuy/01-dai-cuong-thuoc-yhct/' },
 												{ label: 'Bài 2. Tính năng thuốc cổ truyền', link: 'books/thuoc-yhct/nguyen-thuy/02-tinh-nang-thuoc-co-truyen/' },
@@ -338,12 +403,21 @@ export default defineConfig({
 										},
 										{
 											label: 'Chương 2. Các nhóm thuốc',
+											collapsed: true,
 											items: [
 												{ label: 'Bài 4. Thuốc giải biểu', link: 'books/thuoc-yhct/nguyen-thuy/04-thuoc-giai-bieu/' },
 												{ label: 'Bài 5. Thuốc khử hàn', link: 'books/thuoc-yhct/nguyen-thuy/05-thuoc-khu-han/' },
 												{ label: 'Bài 6. Thuốc thanh nhiệt', link: 'books/thuoc-yhct/nguyen-thuy/06-thuoc-thanh-nhiet/' },
 												{ label: 'Bài 7. Thuốc hóa đờm, chỉ khái, bình suyễn', link: 'books/thuoc-yhct/nguyen-thuy/07-thuoc-hoa-dom-chi-khai-binh-suyen/' },
 										{ label: 'Bài 8. Thuốc bình can tức phong, an thần, khai khiếu', link: 'books/thuoc-yhct/nguyen-thuy/08-thuoc-binh-can-tuc-phong-an-than-khai-khieu/' },
+												{ label: 'Bài 9. Thuốc lý khí', link: 'books/thuoc-yhct/nguyen-thuy/09-thuoc-ly-khi/' },
+												{ label: 'Bài 10. Thuốc lý huyết', link: 'books/thuoc-yhct/nguyen-thuy/10-thuoc-ly-huyet/' },
+												{ label: 'Bài 11. Thuốc lợi thủy, trục thủy', link: 'books/thuoc-yhct/nguyen-thuy/11-thuoc-loi-thuy-truc-thuy/' },
+												{ label: 'Bài 12. Thuốc trừ thấp', link: 'books/thuoc-yhct/nguyen-thuy/12-thuoc-tru-thap/' },
+												{ label: 'Bài 13. Thuốc tiêu đạo', link: 'books/thuoc-yhct/nguyen-thuy/13-thuoc-tieu-dao/' },
+												{ label: 'Bài 14. Thuốc tả hạ', link: 'books/thuoc-yhct/nguyen-thuy/14-thuoc-ta-ha/' },
+												{ label: 'Bài 15. Thuốc cố sáp', link: 'books/thuoc-yhct/nguyen-thuy/15-thuoc-co-sap/' },
+												{ label: 'Bài 16. Thuốc bổ dưỡng', link: 'books/thuoc-yhct/nguyen-thuy/16-thuoc-bo-duong/' },
 												{ label: 'Bài 19. Thuốc gây nôn', link: 'books/thuoc-yhct/nguyen-thuy/19-thuoc-gay-non/' },
 											],
 										},
@@ -351,9 +425,11 @@ export default defineConfig({
 								},
 								{
 									label: 'Giải thích cơ chế theo chương',
+									collapsed: true,
 									items: [
 										{
 											label: 'Chương 1. Đại cương',
+											collapsed: true,
 											items: [
 												{ label: 'Cơ chế đại cương thuốc YHCT', link: 'topics/explanation/thuoc-yhct-01-dai-cuong-thuoc-yhct/' },
 												{ label: 'Cơ chế tính năng thuốc cổ truyền', link: 'topics/explanation/thuoc-yhct-02-tinh-nang-thuoc-co-truyen/' },
@@ -362,12 +438,21 @@ export default defineConfig({
 										},
 										{
 											label: 'Chương 2. Các nhóm thuốc',
+											collapsed: true,
 											items: [
 												{ label: 'Cơ chế thuốc giải biểu', link: 'topics/explanation/thuoc-yhct-04-thuoc-giai-bieu/' },
 												{ label: 'Cơ chế thuốc khử hàn', link: 'topics/explanation/thuoc-yhct-05-thuoc-khu-han/' },
 												{ label: 'Cơ chế thuốc thanh nhiệt', link: 'topics/explanation/thuoc-yhct-06-thuoc-thanh-nhiet/' },
 												{ label: 'Cơ chế hóa đờm-chỉ khái-bình suyễn', link: 'topics/explanation/thuoc-yhct-07-thuoc-hoa-dom-chi-khai-binh-suyen/' },
 										{ label: 'Cơ chế bình can-an thần-khai khiếu', link: 'topics/explanation/thuoc-yhct-08-thuoc-binh-can-tuc-phong-an-than-khai-khieu/' },
+												{ label: 'Cơ chế thuốc lý khí', link: 'topics/explanation/thuoc-yhct-09-thuoc-ly-khi/' },
+												{ label: 'Cơ chế thuốc lý huyết', link: 'topics/explanation/thuoc-yhct-10-thuoc-ly-huyet/' },
+												{ label: 'Cơ chế thuốc lợi thủy, trục thủy', link: 'topics/explanation/thuoc-yhct-11-thuoc-loi-thuy-truc-thuy/' },
+												{ label: 'Cơ chế thuốc trừ thấp', link: 'topics/explanation/thuoc-yhct-12-thuoc-tru-thap/' },
+												{ label: 'Cơ chế thuốc tiêu đạo', link: 'topics/explanation/thuoc-yhct-13-thuoc-tieu-dao/' },
+												{ label: 'Cơ chế thuốc tả hạ', link: 'topics/explanation/thuoc-yhct-14-thuoc-ta-ha/' },
+												{ label: 'Cơ chế thuốc cố sáp', link: 'topics/explanation/thuoc-yhct-15-thuoc-co-sap/' },
+												{ label: 'Cơ chế thuốc bổ dưỡng', link: 'topics/explanation/thuoc-yhct-16-thuoc-bo-duong/' },
 												{ label: 'Cơ chế thuốc gây nôn', link: 'topics/explanation/thuoc-yhct-19-thuoc-gay-non/' },
 											],
 										},

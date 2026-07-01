@@ -98,6 +98,42 @@ flowchart LR
 
 Tân cảm và phục tà không phải hai tên gọi để học thuộc. Chúng là **hai mô hình khởi bệnh**. Tân cảm giúp giải thích ca sốt mới khởi còn biểu hiện ở nông. Phục tà giúp giải thích ca vừa phát đã thấy lý nhiệt, ít biểu chứng, hoặc có dấu hao tân âm sớm.
 
+## Cụm cơ chế cần đọc chung: táo nhiệt, ôn nhiệt, ôn độc, tân cảm, phục tà
+
+Các mục này dễ bị tách thành danh sách tên gọi, nhưng trong Bài 2 chúng tạo thành một chuỗi quyết định:
+
+```mermaid
+flowchart TD
+  A["Gặp bệnh sốt cấp"] --> B{"Dấu hiệu khô ở phế?"}
+  B -->|Có| C["Táo nhiệt\nkhô + nhiệt, thương phế tân"]
+  B -->|Không| D{"Mới khởi đã lý nhiệt rõ?"}
+  D -->|Có| E["Ôn nhiệt / phục tà\nlý nhiệt nội phát"]
+  D -->|Không| F{"Biểu chứng phế vệ rõ sau cảm tà?"}
+  F -->|Có| G["Tân cảm\nbiểu trước, thấu tà"]
+  F -->|Không rõ| H{"Độc nhiệt hoặc nhiều ca cùng mắc?"}
+  H -->|Có| I["Ôn độc / lệ khí\nđộc nhiệt + phòng dịch"]
+  H -->|Không| J["Quay lại xét chính khí,\nđường vào và tầng bệnh"]
+```
+
+<CompareTable title="Cơ chế chuyên biệt">
+
+| Mục | Vì sao phát bệnh | Vì sao dấu hiệu như vậy | Nguyên tắc đọc tiếp |
+| --- | --- | --- | --- |
+| Táo nhiệt | Táo tà kiêm nhiệt, thường theo mũi miệng phạm phế | Phế ghét khô, nên ho khan, ít đàm, mũi họng khô, đại tiện táo | Đừng chỉ thanh nhiệt; phải chú ý sinh tân, nhuận táo |
+| Ôn nhiệt | Nhiệt tà thịnh hoặc nhiệt phục bên trong được kích phát | Khởi đã sốt cao, phiền khát, tiểu đỏ, lưỡi đỏ; có thể vào khí/dinh/huyết sớm | Hỏi có phải lý nhiệt ngay từ đầu không |
+| Ôn độc | Lục dâm uẩn tích hóa độc, độc nhiệt công xuyên/uẩn kết | Sưng nóng đỏ đau, ban chẩn, hầu họng, thần chí hoặc huyết lạc | Thanh nhiệt giải độc, theo dõi chuyển nặng |
+| Lệ khí | Tà có tính lây nhiễm mạnh, thường thành cụm/dịch | Nhiều người cùng mắc, phát cấp, bệnh nặng, đường lây rõ | Thêm lớp phòng dịch, cách ly, kiểm soát nguồn |
+| Tân cảm | Cảm tà rồi phát ngay, tà còn ở biểu/phế vệ | Sốt, hơi ố phong, ho, đau đầu, rêu mỏng | Thấu tà giải biểu theo tính ôn nhiệt |
+| Phục tà | Tà không phát ngay, phục tàng rồi gặp cơ hội bùng lên | Lý nhiệt mạnh ngay, ít biểu chứng, bệnh nặng/dài hơn | Thanh lý nhiệt, dưỡng âm, thấu tà; tránh phát hãn mạnh |
+
+</CompareTable>
+
+<ClinicalPearl>
+
+Khi đọc Bài 2, đừng hỏi “đây là tên tà gì?” trước. Hãy hỏi: **nó làm khô, làm thấp bế, làm độc nhiệt, hay phát từ lý?** Câu hỏi cơ chế sẽ tự dẫn đến tên tà và hướng xử trí.
+
+</ClinicalPearl>
+
 ## Worked example
 
 Một người bệnh sốt sau tiếp xúc thời khí, ho, khát, hơi sợ gió, rêu lưỡi mỏng:

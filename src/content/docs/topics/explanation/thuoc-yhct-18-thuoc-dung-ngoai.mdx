@@ -1,0 +1,208 @@
+---
+title: "Cơ chế phân tử — Bài 18: Thuốc dùng ngoài"
+description: "Cơ chế phân tử: Calanolid A NNRTI kháng HIV-RT (Mù u), Betel-phenol phá màng tế bào vi khuẩn phổ rộng (Trầu không), Osthole PDE5 inhibitor + estrogen-like + chống loãng xương (Xà sàng tử), Terpenoid clerodane NF-κB (Bạch đồng nữ). Worked example viêm âm đạo phối Xà sàng tử + khô phèn."
+type: "deep-explanation"
+category: "topics"
+diataxis: "explanation"
+medicineSystem: "tcm"
+source: "Raw"
+sourceDetail: "Raw/Thuoc_YHCT/chuong-02-cac-nhom-thuoc/bai-18-thuoc-dung-ngoai_001.md"
+status: "ready"
+generatedBy: "codex-reviewed"
+sidebar:
+  order: 18
+---
+
+import MedicalNote from '~/components/MedicalNote.astro';
+import ClinicalPearl from '~/components/ClinicalPearl.astro';
+
+## Bản đồ cơ chế tổng quan — Bài 18
+
+```mermaid
+flowchart TD
+    subgraph G1["COUMARIN PHỨC TẠP"]
+        M1["Mù u\n(Calanolid A, B · Inophyllum)"]
+        X1["Xà sàng tử\n(Osthole · Isopimpinellin)"]
+    end
+    subgraph G2["TINH DẦU PHENOL"]
+        T1["Trầu không\n(Betel-phenol · Chavicol · Eugenol)"]
+    end
+    subgraph G3["TERPENOID · FLAVONOID"]
+        B1["Bạch đồng nữ\n(Clerodane terpenoid · Luteolin · Phenylethanol glycosid)"]
+    end
+
+    M1 -->|"Calanolid A:\nNNRTI — ức chế HIV-1 RT\ntại vị trí allosteric"| P1["KHÁNG VIRUS HIV-1\nKháng cả chủng kháng AZT"]
+    M1 -->|"Dầu béo + Flavonoid:\nCOX-2 ↓ · Collagen ↑\nVEGF ↑"| P2["SINH CƠ · LÀM LÀNH VẾT THƯƠNG\nTăng tưới máu vi mạch"]
+
+    X1 -->|"Osthole:\nPDE5 inhibition → cGMP ↑"| P3["ÔN THẬN TRÁNG DƯƠNG\nCải thiện cương dương"]
+    X1 -->|"Osthole:\nEstrogen-like (ERβ)\nHistamine H1 antagonism"| P4["SÁT KHUẨN GIẢM NGỨA\nKháng nấm · Chống dị ứng"]
+    X1 -->|"Osthole:\nOPG/RANKL ↑\nOsteoclast ↓"| P5["CHỐNG LOÃNG XƯƠNG\n(Tác dụng phụ có lợi)"]
+
+    T1 -->|"Betel-phenol:\nphá vỡ phospholipid bilayer\nvi khuẩn → lý ozmosis"| P6["KHÁNG KHUẨN PHỔ RỘNG\nGram (+) và Gram (-)"]
+    T1 -->|"Chavicol:\nRelax bronchial smooth muscle"| P7["HÓA ĐÀM · PHÁT TÁN PHONG HÀN\nGiãn phế quản · Thông mũi"]
+
+    B1 -->|"Clerodane terpenoid:\nNF-κB pathway ↓\nTNF-α ↓ · IL-6 ↓"| P8["KHÁNG VIÊM TOÀN DIỆN\nKháng khuẩn + Bảo vệ gan"]
+    B1 -->|"Phenylethanol glycosid:\nACE inhibition"| P9["HẠ HUYẾT ÁP\nBảo vệ thần kinh"]
+```
+
+---
+
+## Cơ chế chi tiết — Calanolid A (Mù u) kháng HIV
+
+```mermaid
+flowchart LR
+    subgraph VIRUS["HIV-1 Lifecycle"]
+        VR["HIV-1 RNA genome"]
+        RT["Reverse Transcriptase\n(RT enzyme)"]
+        DNA["HIV DNA"]
+        INT["Integrase\nchèn vào genome tế bào"]
+    end
+
+    subgraph DRUG["Ức chế bởi Mù u"]
+        CA["CALANOLID A\n(NNRTI)\nGắn pocket NNRTI\n(allosteric site)"]
+        IP["INOPHYLLUM B, P\n(Coumarin)\nỨc chế Integrase"]
+    end
+
+    VR -->|"Transcription"| RT
+    RT -->|"Tổng hợp"| DNA
+    DNA --> INT
+
+    CA -->|"Gắn vào vị trí allosteric\n→ Thay đổi cấu hình RT\n→ RT không xúc tác được"| RT
+    IP -->|"Ức chế integrase\n→ HIV DNA không\nchèn được vào nhân"| INT
+
+    Note1["Ưu điểm Calanolid A:\nNhắm allosteric site\n→ Kháng khi nucleotide\nbinding site bị đột biến\n→ Vẫn tác dụng khi AZT kháng"]
+```
+
+<MedicalNote>
+
+**Calanolid A vs Efavirenz (NNRTI tổng hợp thông dụng):**
+
+Cả hai đều là NNRTI nhưng cấu trúc hóa học khác nhau → vị trí gắn trong pocket NNRTI khác nhau. Điều này có ý nghĩa: khi HIV đột biến kháng Efavirenz (K103N), Calanolid A vẫn có thể còn tác dụng. Đây là lý do tại sao nghiên cứu Calanolid A vẫn tiếp tục dù đã có NNRTI tổng hợp — nhằm mở rộng kho vũ khí trị liệu HIV kháng thuốc.
+
+Trong YHCT: Mù u "tính đại hàn" — chỉ số hàn cao nhất trong bài — phản ánh tác dụng mạnh lên "nhiệt độc" (virus, vi khuẩn). Dùng ngoài để tránh tác dụng phụ toàn thân khi dùng uống.
+
+</MedicalNote>
+
+---
+
+## Cơ chế chi tiết — Betel-phenol (Trầu không) kháng khuẩn
+
+```mermaid
+sequenceDiagram
+    participant BP as Betel-phenol (Chavicol/Eugenol đồng phân)
+    participant M as Màng tế bào vi khuẩn (phospholipid bilayer)
+    participant P as Protein màng (enzyme, transporter)
+    participant C as Tế bào chất vi khuẩn
+
+    BP->>M: Xuyên qua màng kỵ nước (lipophilic)
+    BP->>M: Tương tác với phospholipid đầu ưa nước
+    M->>M: Màng mất tính nguyên vẹn → Tăng tính thấm
+    BP->>P: Biến tính protein màng (nhóm -OH phenol + protein)
+    M->>C: Rò K⁺, Mg²⁺, ATP ra ngoài
+    C->>C: Mất gradient điện hóa → Mất động lực proton motive force
+    C->>C: Tổng hợp ATP ngừng → Tế bào chết
+
+    Note over BP,C: Phổ rộng: Gram (+) và Gram (-) đều bị ảnh hưởng<br/>Vì phospholipid màng là thành phần chung
+```
+
+**Tại sao betel-phenol không được dùng điều trị nhiễm khuẩn toàn thân?**
+
+- **Dược động học:** Tinh dầu phenol bay hơi → hấp thu kém qua đường uống, phân bố không ổn định.
+- **Tính chọn lọc:** Cơ chế phá màng không phân biệt tế bào vi khuẩn và tế bào người → độc tế bào nếu nồng độ hệ thống cao.
+- **Kết luận:** Tác dụng tốt nhất ở nồng độ cao tại chỗ (ngoài da, niêm mạc) → đây là lý do thuốc dùng ngoài.
+
+---
+
+## Cơ chế chi tiết — Osthole (Xà sàng tử) đa đích
+
+```mermaid
+flowchart TD
+    OST["OSTHOLE\n(7-methoxy-8-isopentenylcoumarin)\nTừ Cnidium monnieri"]
+
+    OST --> A1["ỨC CHẾ PDE5\n(Phosphodiesterase-5)\n→ cGMP không bị phân hủy\n→ cGMP ↑ → PKG ↑\n→ Giãn cơ trơn mạch máu dương vật\n→ CẢI THIỆN CƯƠNG DƯƠNG"]
+
+    OST --> A2["GẮN ERβ (Estrogen Receptor β)\n→ Estrogen-like tác dụng\n→ Tăng độ ẩm niêm mạc âm đạo\n→ Giảm triệu chứng viêm teo âm đạo"]
+
+    OST --> A3["ỨC CHẾ HISTAMINE H1 RECEPTOR\n+ Ức chế giải phóng histamine từ tế bào mast\n→ Giảm ngứa\n→ Chống dị ứng"]
+
+    OST --> A4["KÍCH THÍCH OPG\nỨC CHẾ RANKL\n→ OPG/RANKL ↑\n→ Hủy cốt bào ↓\n→ CHỐNG LOÃNG XƯƠNG"]
+
+    OST --> A5["ỨC CHẾ PROLIFERATION\nNGUYÊN BÀO SỢI (fibroblast)\n→ Giảm sẹo lồi\n→ Vết thương lành ít sẹo hơn"]
+
+    A1 --> YHCT1["YHCT: Ôn Thận tráng dương\nTrị liệt dương, di tinh"]
+    A2 & A3 --> YHCT2["YHCT: Sát khuẩn giảm ngứa\nViêm âm đạo, xích bạch đới"]
+    A4 --> YHCT3["YHCT: Khử phong thấp\nĐau khớp, mỏi xương"]
+```
+
+<ClinicalPearl>
+
+**Xà sàng tử ôn Thận + Trầu không mát (cay ôn nhưng nhẹ hơn) + Xà sàng tử sát khuẩn — tại sao Xà sàng tử quy kinh Thận?**
+
+Osthole tác động trực tiếp lên trục Thận-sinh dục (testosterone, cương dương, loãng xương — đều thuộc phạm vi Thận YHCT). Xà sàng tử "vị cay, ôn" phản ánh tác động ấm → kích hoạt Thận dương. Trong khi đó Trầu không "cay ôn" nhưng quy kinh Tỳ Phế — ôn trung hành khí, không ảnh hưởng Thận. Quy kinh phản ánh đích tác dụng ưu tiên, không chỉ là tính nhiệt.
+
+</ClinicalPearl>
+
+---
+
+## Worked example — Viêm âm đạo do nấm Candida + vi khuẩn hỗn hợp
+
+```mermaid
+flowchart LR
+    subgraph BN["BỆNH NHÂN"]
+        S1["Âm hộ ngứa rát\nKhí hư hôi màu vàng\nBệnh nhân nữ 30 tuổi"]
+    end
+
+    subgraph CHAN["Chẩn đoán YHCT"]
+        C1["Thấp nhiệt hạ chú\nCan kinh thấp nhiệt"]
+    end
+
+    subgraph XT["Điều trị ngoài"]
+        T1["XÀ SÀNG TỬ 30g\n+ KHÔ PHÈN 15g\nSắc nước xông rửa\n2 lần/ngày × 7 ngày"]
+        T2["Osthole → Kháng Candida\nTinh dầu → Kháng vi khuẩn\nKhô phèn → pH ↓ → Candida ↓"]
+    end
+
+    subgraph UONG["Phối uống"]
+        U1["LONG ĐỞM THẢO + HOÀNG CẦM\n+ TRẠCH TẢ + XA TIỀN TỬ\nSắc uống — Thanh Can thấp nhiệt"]
+    end
+
+    BN --> CHAN
+    CHAN --> XT
+    CHAN --> UONG
+    T1 --> T2
+    T2 --> R1["Ngứa giảm sau 3 ngày\nKhí hư giảm sau 5 ngày\nHết sau 7 ngày"]
+    U1 --> R2["Giảm thấp nhiệt toàn thân\nPhòng tái phát"]
+```
+
+**Cơ chế phối hợp Xà sàng tử + Khô phèn:**
+- **Xà sàng tử (pH trung tính):** Osthole phá màng Candida, tinh dầu kháng vi khuẩn.
+- **Khô phèn (KAl(SO₄)₂):** pH ↓ (acid) → môi trường bất lợi cho Candida (vốn phát triển tốt ở pH 5.5–6.5, bị ức chế ở pH < 4.5). Ngoài ra khô phèn làm se niêm mạc → giảm tiết dịch → giảm môi trường cho vi khuẩn kỵ khí.
+- **Tác dụng kép:** Xà sàng tử diệt mầm bệnh + Khô phèn thay đổi môi trường → kháng nấm/khuẩn mạnh hơn từng vị đơn lẻ.
+
+---
+
+## Bảng cơ chế so sánh — góc nhìn dược lý phân tử
+
+<table>
+<thead>
+<tr><th>Vị thuốc</th><th>Hoạt chất</th><th>Đích phân tử</th><th>Cơ chế</th><th>Công năng YHCT</th></tr>
+</thead>
+<tbody>
+<tr><td>Mù u</td><td>Calanolid A</td><td>HIV-1 Reverse Transcriptase (allosteric)</td><td>NNRTI → ức chế tổng hợp HIV DNA</td><td>Sát trùng (nhiệt độc)</td></tr>
+<tr><td>Mù u</td><td>Dầu béo + Flavonoid</td><td>COX-2, VEGF, Collagen synthesis</td><td>Kháng viêm + Tăng sinh cơ</td><td>Sinh cơ, chỉ thống</td></tr>
+<tr><td>Trầu không</td><td>Betel-phenol (chavicol)</td><td>Phospholipid màng vi khuẩn</td><td>Phá vỡ màng → mất ATP → chết khuẩn</td><td>Tiêu độc, sát trùng</td></tr>
+<tr><td>Xà sàng tử</td><td>Osthole</td><td>PDE5 enzyme</td><td>cGMP ↑ → giãn cơ trơn → cương dương</td><td>Ôn Thận tráng dương</td></tr>
+<tr><td>Xà sàng tử</td><td>Osthole</td><td>Estrogen receptor β + H1 receptor</td><td>Estrogen-like + kháng histamine → giảm ngứa</td><td>Sát khuẩn giảm ngứa</td></tr>
+<tr><td>Bạch đồng nữ</td><td>Clerodane terpenoid</td><td>NF-κB pathway</td><td>NF-κB ↓ → TNF-α, IL-6 ↓ → kháng viêm</td><td>Thanh nhiệt giải độc, tiêu viêm</td></tr>
+<tr><td>Bạch đồng nữ</td><td>Phenylethanol glycosid</td><td>ACE enzyme</td><td>ACE inhibition → Angiotensin II ↓ → Hạ áp</td><td>Khu phong trừ thấp (bảo vệ mạch máu)</td></tr>
+</tbody>
+</table>
+
+---
+
+## Câu hỏi cơ chế nâng cao
+
+1. **Osthole ức chế PDE5 (như sildenafil) — tại sao Xà sàng tử không được dùng để thay thế sildenafil trong rối loạn cương dương?** Hãy phân tích sự khác biệt về dược động học, mức độ ức chế PDE5, và nguy cơ khi phối hợp với nitrate.
+
+2. **Calanolid A là NNRTI nhắm allosteric site khác Efavirenz — điều này có nghĩa là kháng chéo (cross-resistance) sẽ thấp hơn hay cao hơn?** Giải thích cơ chế đột biến K103N của HIV-RT và tại sao vị trí gắn thuốc quan trọng hơn loại thuốc.
+
+3. **Betel-phenol phá màng tế bào vi khuẩn — nhưng tế bào người cũng có màng phospholipid.** Tại sao ở nồng độ điều trị (dùng ngoài da) nó không gây độc tế bào da, nhưng nhai lá Trầu không lâu ngày lại tăng nguy cơ ung thư miệng?

@@ -1,3 +1,96 @@
+/* ── Vietnamese Search Normalize ── */
+.pagefind-vi-normalized {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+	white-space: nowrap;
+}
+
+/* ── SVG Zoom Lightbox ── */
+.szl-zoomable {
+	cursor: zoom-in;
+	transition: opacity 0.15s;
+}
+.szl-zoomable:hover {
+	opacity: 0.88;
+}
+
+#svg-zoom-overlay {
+	display: none;
+	position: fixed;
+	inset: 0;
+	z-index: 9999;
+	align-items: center;
+	justify-content: center;
+}
+#svg-zoom-overlay.szl-active {
+	display: flex;
+}
+
+.szl-backdrop {
+	position: absolute;
+	inset: 0;
+	background: rgba(0, 0, 0, 0.78);
+	backdrop-filter: blur(3px);
+}
+
+.szl-modal {
+	position: relative;
+	z-index: 1;
+	width: min(92vw, 1100px);
+	max-height: 92vh;
+	background: var(--sl-color-bg);
+	border: 1px solid var(--sl-color-gray-5);
+	border-radius: 14px;
+	box-shadow: 0 32px 80px rgba(0, 0, 0, 0.55);
+	padding: 2.5rem 1.5rem 1.5rem;
+	overflow: auto;
+	animation: szl-pop 0.18s ease-out;
+}
+
+@keyframes szl-pop {
+	from { opacity: 0; transform: scale(0.92); }
+	to   { opacity: 1; transform: scale(1); }
+}
+
+.szl-close {
+	position: absolute;
+	top: 0.5rem;
+	right: 0.75rem;
+	background: none;
+	border: none;
+	font-size: 2rem;
+	line-height: 1;
+	cursor: pointer;
+	color: var(--sl-color-gray-3);
+	padding: 0.2rem 0.5rem;
+	border-radius: 6px;
+	transition: color 0.15s, background 0.15s;
+}
+.szl-close:hover,
+.szl-close:focus-visible {
+	color: var(--sl-color-text);
+	background: var(--sl-color-gray-6);
+	outline: none;
+}
+
+.szl-content {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.szl-content svg {
+	width: 100% !important;
+	height: auto !important;
+	max-height: 80vh;
+}
+
+body.szl-no-scroll {
+	overflow: hidden;
+}
+
 /* ── Layout: nội dung giữa rộng hơn, 2 sidebar hẹp lại ── */
 :root {
 	--sl-content-width: 56rem;   /* mặc định 45rem -> rộng cho bảng/h1 dài */

@@ -1,0 +1,217 @@
+---
+title: "Bài 9. Thuốc lý khí — Bài giảng chuyên sâu"
+description: "Bài giảng 50-60%: Luồng tư duy lâm sàng chứng khí trệ-uất-nghịch, phân tầng hành khí vs giáng khí, Hương phụ điều kinh cơ chế, Mộc hương kỵ lửa-tại sao, Thanh bì giáng vs Trần bì thăng, Thị đế nôn nấc."
+type: "deep-lecture"
+category: "books"
+diataxis: "explanation"
+medicineSystem: "tcm"
+source: "Raw"
+sourceDetail: "Raw/Thuoc_YHCT/chuong-02-cac-nhom-thuoc/bai-09-thuoc-ly-khi_001.md"
+status: "ready"
+generatedBy: "codex-reviewed"
+sidebar:
+  order: 9
+---
+
+import CompareTable from '~/components/CompareTable.astro';
+import ClinicalPearl from '~/components/ClinicalPearl.astro';
+import RedFlags from '~/components/RedFlags.astro';
+import MedicalNote from '~/components/MedicalNote.astro';
+
+## 1. Luồng tư duy lâm sàng — Bài 9 từ đầu đến cuối
+
+```mermaid
+flowchart TD
+    P["BỆNH NHÂN\nRối loạn khí cơ"]
+    P --> Q1{"Vị trí tắc trệ?"}
+    Q1 -->|"Tỳ Vị\nđầy bụng, khó tiêu, ợ chua"| TV["Hậu phác · Mộc hương · Ô dược\n+ Trần bì nếu thêm đờm"]
+    Q1 -->|"Can khí uất kết\nđau sườn, kinh không đều"| CAN["Hương phụ · Thanh bì\n+ Uất kim nếu huyết ứ"]
+    Q1 -->|"Phế khí nghịch\nho, tức ngực"| PHE["Hậu phác · Trần bì · Chi xác\n+ Bán hạ nếu đờm nhiều"]
+    Q1 -->|"Vị khí nghịch\nnôn, nấc"| VGN["Thị đế (chuyên nôn nấc)\n+ Can khương (Vị hàn)\n+ Trúc nhự (Vị nhiệt)"]
+    Q1 -->|"Khí kết nặng\nkhối cục, sán khí"| GK["CHI THỰC · CHI XÁC · THANH BÌ\nPhá khí — mạnh hơn hành khí"]
+    TV --> PC{"Phối hợp\ntheo hàn-nhiệt-hư-thực"}
+    CAN --> PC
+    PHE --> PC
+    GK --> PC
+    PC -->|"Khí hư + trệ"| BK["+ Nhân sâm / Đảng sâm\n(bổ khí)"]
+    PC -->|"Hàn ngưng khí trệ"| OT["+ Can khương / Nhục quế\n(ôn trung)"]
+    PC -->|"Khí uất hóa hỏa"| TN["+ Hoàng liên / Chi tử\n(thanh nhiệt)"]
+    PC -->|"Khí trệ huyết ứ"| HH["+ Đan sâm / Xuyên khung\n(hoạt huyết)"]
+```
+
+---
+
+## 2. Phân tầng hành khí vs giáng khí: Chìa khóa chọn nhóm
+
+Bài 9 có 2 nhóm — nhưng mức độ bệnh khác nhau hoàn toàn:
+
+<CompareTable
+  headers={["", "Hành khí giải uất", "Giáng khí (Phá khí)"]}
+  rows={[
+    ["Mức độ tắc trệ", "Nhẹ — khí vận hành khó khăn, uất kết", "Nặng — khí nghịch lên, khí kết thành khối cục"],
+    ["Cơ chế YHCT", "Khí tắc → huyết trệ → đau; điều hòa khí cơ", "Khí đảo chiều (thượng nghịch) hoặc ngưng tụ lâu ngày"],
+    ["Bệnh cảnh điển hình", "Đau bụng âm ỉ, kinh không đều, tức ngực nhẹ", "Ho suyễn khó thở, nôn nấc liên tục, bụng cứng trướng, sán khí"],
+    ["Cường độ", "Nhẹ-vừa; dùng được dài ngày hơn", "Mạnh; không dùng kéo dài; kiêng thai"],
+    ["Đại biểu", "Hương phụ, Mộc hương, Hậu phác, Trần bì, Ô dược", "Chi thực, Chi xác, Thanh bì, Thị đế"],
+    ["Tính", "Ôn, mùi thơm, khô táo", "Một số hơi hàn (Chi thực, Chi xác); một số ôn (Thanh bì)"],
+  ]}
+/>
+
+---
+
+## 3. Hương phụ — "thuốc vạn năng của phụ nữ"
+
+YHCT có câu: *"Hương phụ là khí trung chi huyết dược"* — nghĩa là vị thuốc điều hòa khí đồng thời ảnh hưởng đến huyết, đặc biệt ở phụ nữ.
+
+```mermaid
+flowchart LR
+    HP["HƯƠNG PHỤ\nRhizoma Cyperi"]
+    HP -->|"Can khí uất → kinh không đều"| K["Khai uất điều kinh\nThống kinh · Bế kinh · PMS"]
+    HP -->|"Can khí → đau sườn, bụng"| D["Hành khí chỉ thống\nĐau bụng · Đau 2 bên sườn"]
+    HP -->|"Khí trệ → kém tiêu"| V["Kiện Vị tiêu thực\nĐầy trướng · Ợ hơi"]
+    HP -->|"Can hỏa → mắt đỏ"| M["Thanh Can hỏa\nĐau mắt đỏ · Sung huyết"]
+```
+
+**Tại sao Hương phụ điều kinh được?**
+
+- Tinh dầu Hương phụ (α-cyperone) có tác dụng **phytoestrogen** — bắt chước estrogen ở thụ thể ER-β.
+- Ức chế tổng hợp prostaglandin (PG) → giảm co thắt tử cung → giảm thống kinh.
+- Giãn cơ trơn tử cung → điều hòa co bóp → kinh đều hơn.
+
+**Lâm sàng:** Hương phụ không chỉ dùng riêng mà thường phối:
+- + Ích mẫu → hoạt huyết điều kinh (chứng huyết ứ)
+- + Ngải diệp → ôn kinh (chứng cung lạnh)
+- + Bạch thược → giảm đau (chứng Can khí uất kết)
+
+---
+
+## 4. Mộc hương kỵ lửa — giải thích cơ chế
+
+Thành phần tác dụng chính của Mộc hương là **costunolide** và **dehydrocostus lactone** (sesquiterpene lactone) trong tinh dầu.
+
+**Tại sao không sắc?**
+
+| Phương pháp dùng | Điều xảy ra | Kết quả |
+|---|---|---|
+| Sắc lâu (>30 phút, >100°C) | Sesquiterpene lactone bị thủy phân + bay hơi cùng hơi nước | Mất 70-80% hoạt chất → mất tác dụng kháng co thắt, kháng khuẩn |
+| Dạng bột (4-6 g) | Hoạt chất nguyên vẹn | Tác dụng đầy đủ |
+| Mài với nước sắc thuốc khác | Hoạt chất hòa tan vào dung dịch đã nguội | Tác dụng tốt nhất |
+
+**Kỹ thuật đúng:** Sắc bài thuốc thang hoàn chỉnh, lấy ra, để nguội bớt (~60°C), rồi mài hoặc khuấy bột Mộc hương vào → uống ngay.
+
+<ClinicalPearl>
+
+**Bài Mộc hương tân lang hoàn** (Mộc hương + Tân lang/Cau + Đại hoàng + Khiên ngưu tử) — bài kinh điển trị thực tích nặng, bụng cứng trướng, táo bón. Mộc hương dùng **bột** (không sắc), khuấy vào nước sắc của các vị khác. Logic: Mộc hương hành khí + Tân lang phá khí + Đại hoàng tả hạ → giải phóng "tắc nghẽn" từ cả 3 hướng.
+
+</ClinicalPearl>
+
+---
+
+## 5. Thanh bì vs Trần bì — cùng nguồn, đối lập tác dụng
+
+Đây là cặp phân biệt quan trọng nhất trong bài:
+
+```mermaid
+flowchart LR
+    CQ["CÂY QUÝT\nCitrus reticulata"]
+    CQ -->|"Quả non/xanh\nThu sớm"| TB["THANH BÌ\nVỏ quả non"]
+    CQ -->|"Quả chín\nPhơi lâu"| TRB["TRẦN BÌ\nVỏ quả già"]
+    TB -->|"Can Đờm Vị"| TBT["GIÁNG\nSơ Can phá khí\nTiêu tích trệ\nĐau sườn, sán khí"]
+    TRB -->|"Phế Tỳ Vị"| TRBT["THĂNG PHÙ\nHành khí kiện Vị\nHóa đờm chỉ khái\nĐầy bụng, ho đờm"]
+```
+
+**Logic YHCT giải thích sự khác nhau:**
+
+- Quả non (Thanh bì) → khí chất tập trung, cô đặc, mạnh → đi xuống (giáng), phá mạnh.
+- Quả già phơi lâu (Trần bì = "bì trần cũ") → khí đã chuyển hóa, nhẹ nhàng → đi lên (thăng), hòa hoãn.
+
+<CompareTable
+  headers={["Tiêu chí", "Thanh bì", "Trần bì"]}
+  rows={[
+    ["Quy kinh chính", "Can, Đờm, Vị", "Phế, Tỳ, Vị"],
+    ["Hướng tác dụng", "Giáng (đi xuống)", "Thăng phù (nhẹ, đi lên)"],
+    ["Cường độ", "Mạnh — phá khí", "Nhẹ — hành khí"],
+    ["Chỉ định đặc trưng", "Đau sườn (Can khí), sán khí, hạch vú", "Ho đờm, đầy bụng, buồn nôn"],
+    ["Phối hợp điển hình", "Hương phụ + Uất kim (đau sườn)", "Bán hạ + Phục linh (đờm thấp)"],
+    ["Kiêng kỵ", "Can huyết hư không khí trệ", "Âm hư có nhiệt, ho khan"],
+  ]}
+/>
+
+---
+
+## 6. Thị đế — đơn giản nhưng không thể thay
+
+Thị đế (tai hồng, đài hoa quả hồng) là vị thuốc **chuyên biệt nhất bài** — chỉ làm một việc: giáng Vị khí nghịch để trị nôn nấc.
+
+**Thuật toán dùng Thị đế:**
+
+```mermaid
+flowchart TD
+    N["BỆNH NHÂN\nNôn nấc"]
+    N --> Q{"Nguyên nhân?"}
+    Q -->|"Vị hàn\n(lạnh bụng, nôn ra nước trong)"| VH["Thị đế + Can khương + Đinh hương\n(Đinh hương Thị đế thang)"]
+    Q -->|"Vị nhiệt\n(nôn ra dịch đắng, lưỡi đỏ)"| VNh["Thị đế + Trúc nhự + Mộc hương"]
+    Q -->|"Khí nghịch đơn thuần\n(thai nghén, ợ hơi)"| KN["Thị đế đơn độc 4,5-9g sắc uống"]
+    Q -->|"Trẻ sơ sinh nấc"| TE["Mài Thị đế với sữa → uống từng ít"]
+```
+
+**Tác dụng YHHĐ:** Acid ursolic trong Thị đế có tác dụng **ức chế thụ thể 5-HT3** ở vùng Area postrema và ruột — đây là cơ chế tương tự một số thuốc chống nôn hiện đại (ondansetron).
+
+---
+
+## 7. Nguyên tắc phối hợp hành khí + hoạt huyết
+
+Nguyên tắc YHCT: **"Khí hành thì huyết hành, khí trệ thì huyết ứ."**
+
+Vì vậy, trong nhiều bệnh cảnh có cả khí trệ lẫn huyết ứ (chấn thương, thống kinh, đau mãn tính), cần phối hợp cả 2 nhóm:
+
+| Bệnh cảnh | Thuốc hành khí | Thuốc hoạt huyết |
+|---|---|---|
+| Thống kinh | Hương phụ, Ô dược | Ích mẫu, Đan sâm |
+| Chấn thương đau | Mộc hương, Trần bì | Xuyên khung, Đào nhân |
+| Đau dạ dày mãn | Hậu phác, Sa nhân | Tam thất, Uất kim |
+| Đau sườn | Hương phụ, Thanh bì | Uất kim, Diên hồ sách |
+
+**Lý do:** Hành khí giúp hoạt huyết "đi" được, hoạt huyết xử lý huyết ứ đã hình thành. Chỉ dùng một trong hai sẽ không triệt để.
+
+---
+
+## 8. Hậu phác — đa năng hơn tưởng
+
+Hậu phác có 3 công năng nhìn có vẻ không liên quan nhưng cùng một cơ chế:
+
+```mermaid
+flowchart LR
+    HPD["HẬU PHÁ\nMagnolol + Honokiol"]
+    HPD --> H1["Ôn trung hạ khí\nTỳ Vị hàn thấp → đầy trướng"]
+    HPD --> H2["Táo thấp tiêu đờm\nPhế khí tắc → ho suyễn"]
+    HPD --> H3["Thanh trường chỉ lệ\nĐại tràng bị loạn → kiết lỵ"]
+    H1 --> M["Cơ chế chung:\nGiảm co thắt cơ trơn\nKháng khuẩn\nChống viêm niêm mạc"]
+    H2 --> M
+    H3 --> M
+```
+
+**Bình Vị tán** — bài thuốc kinh điển dùng Hậu phác: Thương truật + Hậu phác + Trần bì + Cam thảo + Đại táo. Trị Tỳ Vị hàn thấp, bụng đầy, ăn kém, buồn nôn.
+
+---
+
+<RedFlags title="Điểm dễ nhầm — bẫy thi">
+
+- **Thanh bì kiêng Can huyết hư** (không có khí trệ). Nếu đau sườn do huyết hư (không phải khí trệ) → Thanh bì làm nặng hơn vì phá khí mà không có khí dư để phá.
+- **Mộc hương không sắc** — dạng bột/mài. Nếu đề hỏi "kỵ lửa" → Mộc hương.
+- **Hương phụ bình — không phải ôn** (tính bình, không phải tính ôn như đa số nhóm). Điểm khác biệt so với các vị khác.
+- **Thị đế** không có tác dụng "giảm đau" mà **chuyên giáng nghịch** — đừng dùng cho bụng đầy trướng không có nôn nấc.
+- **Giáng khí kiêng phụ nữ có thai** — Chi thực, Chi xác, Thanh bì đều kiêng thai.
+- **Không sắc lâu** — nguyên tắc chung cho tất cả vị hành khí có tinh dầu. Không chỉ Mộc hương.
+
+</RedFlags>
+
+---
+
+## 9. 3 câu hỏi tư duy
+
+1. Bệnh nhân nữ 35 tuổi, kinh nguyệt không đều 3 tháng nay, đau bụng kinh dữ, ngực tức, dễ cáu, lưỡi tím nhạt, mạch huyền sáp. Dùng Hương phụ thôi có đủ không? Cần thêm gì và tại sao?
+
+2. Thanh bì và Trần bì đều từ vỏ quýt — tại sao YHCT phân biệt chúng rõ ràng thành 2 vị khác nhau? Cơ sở lý luận YHCT là gì? YHHĐ giải thích khác biệt đó ra sao?
+
+3. Bệnh nhân nôn nấc sau phẫu thuật ổ bụng, Vị nhiệt (lưỡi đỏ rêu vàng). Chọn Thị đế phối với gì? Nếu bệnh nhân không nuốt được, xử trí thế nào?
