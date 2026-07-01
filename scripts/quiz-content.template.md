@@ -51,7 +51,7 @@ B. Lựa chọn B
 C. Lựa chọn C
 D. Lựa chọn D
 Answer: B
-Exp: Giải thích vì sao B đúng, các phương án khác sai.
+Exp: Giải thích vì sao B đúng, các phương án khác sai. Giải thích các phương án khác tại sao sai. 
 Key: Câu chốt ghi nhớ (tùy chọn).
 
 ## [Chẩn đoán & Phân biệt] (Áp dụng)
@@ -62,7 +62,8 @@ B. Soi lam máu nhuộm Giemsa
 C. Công thức máu
 D. Siêu âm bụng
 Answer: B
-Exp: Giemsa giọt đặc + mỏng vừa tìm KST vừa định loài.
+Exp: Giemsa giọt đặc + mỏng vừa tìm KST vừa định loài. Giải thích các phương án khác tại sao sai.
+
 Key: Giemsa = tiêu chuẩn vàng.
 ```
 
@@ -75,3 +76,4 @@ Key: Giemsa = tiêu chuẩn vàng.
 - **Flashcard**: từng cặp `Q:` / `A:` liên tiếp dưới cùng một heading chủ đề.
 - **MCQ**: mỗi câu gồm `Stem:` bắt buộc, `Scenario:` tùy chọn (đặt TRƯỚC Stem), các phương án `A.` `B.` `C.` `D.`, `Answer:` (1 chữ cái), `Exp:`, `Key:` (tùy chọn). Nhiều câu cùng chủ đề/Bloom có thể đặt chung 1 heading hoặc tách riêng — cách nào cũng được.
 - **ID tự đánh số** theo thứ tự xuất hiện — không cần ghi tay.
+- - **Nguồn** trích dẫn nguồn tài liệu
