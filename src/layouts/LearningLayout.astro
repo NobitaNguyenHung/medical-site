@@ -1,0 +1,1110 @@
+---
+import { learningCourses, learningTabs, sampleObjectives, type LearningWorkflow } from '~/data/learning-courses';
+
+interface Props {
+	title: string;
+	description?: string;
+	entryId: string;
+	estimatedTime?: string;
+	difficulty?: string;
+	workflow: LearningWorkflow;
+}
+
+const {
+	title,
+	description = 'Học theo cấu trúc 80/20, liên kết bài giảng và lượng giá.',
+	entryId,
+	estimatedTime = '2h 36 phút',
+	difficulty = 'Trung bình',
+	workflow,
+} = Astro.props;
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const course = learningCourses['on-benh-dai-cuong'];
+const canonicalDocsPath = `${base}/${entryId.replace(/\/$/, '')}/`;
+const quizUrl = `${base}/${workflow.quiz.src}`;
+const objectives = workflow.objectives ?? sampleObjectives;
+const progress = 60;
+---
+
+<!doctype html>
+<html lang="vi">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>{title} - YHCT Learn</title>
+		<meta name="description" content={description} />
+		<link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+	</head>
+	<body>
+		<div class="learn-shell">
+			<aside class="learn-sidebar" aria-label="Điều hướng học tập">
+				<a class="brand" href={`${base}/`}>
+					<span class="brand-mark" aria-hidden="true">⌁</span>
+					<span>
+						<strong>YHCT Learn</strong>
+						<small>{course.subtitle}</small>
+					</span>
+				</a>
+
+				<nav class="side-nav">
+					<a class="side-link" href={`${base}/`}>⌂<span>Tổng quan</span></a>
+					<a class="side-link active" href={`${base}${course.basePath}/tom-tat/01-bai-1-dai-cuong-ve-on-benh/`}>▣<span>Học của tôi</span></a>
+					<a class="side-link" href={canonicalDocsPath}>☰<span>Đọc tài liệu</span></a>
+					<a class="side-link" href={`${base}/books/on-benh-dai-cuong/luong-gia/02-dai-cuong/`}>☑<span>Lượng giá</span></a>
+				</nav>
+
+				<section class="course-nav" aria-labelledby="course-title">
+					<div class="course-head">
+						<p>Môn học <span aria-hidden="true">⌃</span></p>
+						<div class="course-group" data-collapse-group>
+							<a class="course-pill" id="course-title" href={`${base}${course.basePath}/tom-tat/01-bai-1-dai-cuong-ve-on-benh/`}>
+								<span aria-hidden="true">⌂</span>
+								<strong>{course.title}</strong>
+							</a>
+							<button
+								class="collapse-btn"
+								type="button"
+								aria-label={`Thu gọn ${course.title}`}
+								aria-expanded="true"
+								data-collapse-target="course-lessons"
+								data-collapse-toggle
+							>
+								⌃
+							</button>
+						</div>
+					</div>
+					<div class="course-tree" id="course-lessons" data-collapse-panel>
+					{course.chapters.map((chapter) => (
+						<div class="chapter">
+							<div class="chapter-head" data-collapse-group>
+								<p class="chapter-label">{chapter.label}</p>
+								<button
+									class="collapse-btn subtle"
+									type="button"
+									aria-label={`Thu gọn ${chapter.label}`}
+									aria-expanded="true"
+									data-collapse-target="chapter-summary-lessons"
+									data-collapse-toggle
+								>
+									⌃
+								</button>
+							</div>
+							<div class="lesson-tree" id="chapter-summary-lessons" data-collapse-panel>
+							{chapter.items.map((item) => (
+								<a class={`chapter-link${item.href.includes(entryId) ? ' active' : ''}`} href={`${base}${item.href}`}>
+									{item.label}
+								</a>
+							))}
+							</div>
+						</div>
+					))}
+					</div>
+				</section>
+
+				<div class="study-card">
+					<div class="ring" style={`--value:${progress}%`}>{progress}%</div>
+					<div>
+						<strong>Tiến độ học tập</strong>
+						<span>36/50 bài đã hoàn thành</span>
+					</div>
+				</div>
+			</aside>
+
+			<div class="learn-main">
+				<header class="topbar">
+					<button class="icon-btn menu-btn" type="button" aria-label="Mở menu">☰</button>
+					<a class="mobile-brand" href={`${base}/`} aria-label="Trang chủ">⌁</a>
+					<label class="search-box">
+						<span aria-hidden="true">⌕</span>
+						<input type="search" placeholder="Tìm kiếm..." />
+						<kbd>⌘K</kbd>
+					</label>
+					<div class="top-actions">
+						<button class="icon-btn" type="button" aria-label="Thông báo">◌</button>
+						<span class="avatar" aria-label="Bs. Hùng">H</span>
+					</div>
+				</header>
+
+				<main class="content-grid">
+					<section class="lesson">
+						<nav class="breadcrumb" aria-label="Breadcrumb">
+							<a href={`${base}${course.basePath}/`}>{course.title}</a>
+							<span>/</span>
+							<span>Workflow học</span>
+						</nav>
+
+						<div class="lesson-hero">
+							<div>
+								<h1>{title}</h1>
+								<p>{description}</p>
+								<div class="meta-row">
+									<span>▣ 5 bài học</span>
+									<span>◴ {estimatedTime}</span>
+									<span>☆ Độ khó: {difficulty}</span>
+								</div>
+							</div>
+							<div class="progress-card">
+								<div class="ring large" style={`--value:${progress}%`}>{progress}%</div>
+								<div>
+									<strong>Tiến độ chương</strong>
+									<span>3/5 mục đã hoàn thành</span>
+									<div class="bar"><i style={`width:${progress}%`}></i></div>
+								</div>
+							</div>
+						</div>
+
+						<nav class="tabs" aria-label="Chế độ học" data-learning-tabs>
+							{learningTabs.map((tab) => (
+								<a
+									class={`tab${tab.active ? ' active' : ''}`}
+									href={`#${tab.id}`}
+									data-tab-target={tab.id}
+									aria-controls={tab.id}
+									aria-selected={tab.active ? 'true' : 'false'}
+								>
+									{tab.label}
+								</a>
+							))}
+						</nav>
+
+						<div class="tab-panels" data-tab-panels>
+						<article class="lesson-card tab-section active" id="eightyTwenty" data-tab-panel="eightyTwenty">
+							<div class="lesson-card-head">
+								<div>
+									<p class="eyebrow">80/20</p>
+									<h2>20% kiến thức cốt lõi tạo ra 80% giá trị</h2>
+								</div>
+								<a class="quiet-btn" href={canonicalDocsPath}>Mở bản tài liệu</a>
+							</div>
+							<div class="markdown-content">
+								<slot />
+							</div>
+						</article>
+
+						<article class="lesson-card tab-section" id="deep" data-tab-panel="deep" hidden>
+							<div class="lesson-card-head">
+								<div>
+									<p class="eyebrow">Bài giảng sâu</p>
+									<h2>Giải phẫu tầng bệnh và cơ chế truyền biến</h2>
+								</div>
+								<a class="quiet-btn" href={`${base}/${workflow.deepLecture}/`}>Mở bản tài liệu</a>
+							</div>
+							<div class="markdown-content">
+								<slot name="deep" />
+							</div>
+						</article>
+
+						<article class="lesson-card tab-section" id="source" data-tab-panel="source" hidden>
+							<div class="lesson-card-head">
+								<div>
+									<p class="eyebrow">Nội dung gốc</p>
+									<h2>Bản nguyên thủy để đối chiếu</h2>
+								</div>
+								<a class="quiet-btn" href={`${base}/${workflow.source}/`}>Mở bản tài liệu</a>
+							</div>
+							<div class="source-frame markdown-content">
+								<slot name="source" />
+							</div>
+						</article>
+
+						<article class="lesson-card tab-section" id="reasoning" data-tab-panel="reasoning" hidden>
+							<div class="lesson-card-head">
+								<div>
+									<p class="eyebrow">Lý giải sâu</p>
+									<h2>Từ cơ chế đến quyết định lâm sàng</h2>
+								</div>
+								<a class="quiet-btn" href={`${base}/${workflow.reasoning}/`}>Mở bản tài liệu</a>
+							</div>
+							<div class="markdown-content">
+								<slot name="reasoning" />
+							</div>
+						</article>
+
+						<article class="lesson-card tab-section" id="quiz" data-tab-panel="quiz" hidden>
+							<div class="lesson-card-head">
+								<div>
+									<p class="eyebrow">Lượng giá</p>
+									<h2>{workflow.quiz.title}</h2>
+								</div>
+								<a class="quiet-btn" href={quizUrl} target="_blank" rel="noopener">Mở toàn màn hình</a>
+							</div>
+							<iframe
+								class="quiz-frame"
+								src={quizUrl}
+								title={workflow.quiz.title}
+								loading="lazy"
+							></iframe>
+						</article>
+
+						<article class="lesson-card tab-section" id="case" data-tab-panel="case" hidden>
+							<div class="lesson-card-head">
+								<div>
+									<p class="eyebrow">Ca lâm sàng</p>
+									<h2>{workflow.caseStudy.title}</h2>
+								</div>
+							</div>
+							<div class="case-study">
+								<section>
+									<h3>Bệnh cảnh</h3>
+									<p>{workflow.caseStudy.stem}</p>
+								</section>
+								<section>
+									<h3>Nhiệm vụ</h3>
+									<ol>
+										{workflow.caseStudy.tasks.map((task) => <li>{task}</li>)}
+									</ol>
+								</section>
+								<section class="answer-card">
+									<h3>Gợi ý đáp án</h3>
+									<ul>
+										{workflow.caseStudy.keyPoints.map((point) => <li>{point}</li>)}
+									</ul>
+								</section>
+							</div>
+						</article>
+						</div>
+					</section>
+
+					<aside class="right-rail" aria-label="Thông tin bài học">
+						<section class="panel">
+							<h2>Mục tiêu cần đạt</h2>
+							<ul class="check-list">
+								{objectives.map((item, index) => (
+									<li class={index < 4 ? 'done' : ''}>{item}</li>
+								))}
+							</ul>
+						</section>
+
+						<section class="panel">
+							<h2>Khái niệm trọng tâm</h2>
+							<div class="chips">
+								<span>Ôn nhiệt</span>
+								<span>Vệ khí</span>
+								<span>Dinh huyết</span>
+								<span>Truyền biến</span>
+								<span>Biểu lý</span>
+								<span>Phân chứng</span>
+							</div>
+						</section>
+
+						<section class="panel">
+							<h2>Liên kết liên quan</h2>
+							<a href={`${base}/${workflow.reasoning}/`}>Lý giải cơ chế</a>
+							<a href={`${base}/${workflow.source}/`}>Nội dung nguyên thủy</a>
+							<a href={`${base}/books/on-benh-dai-cuong/tom-tat/07-2-3-moi-quan-he-giua-ve-khi-dinh-huyet-benh-chung-va-tam-tieu-benh-chung/`}>Vệ khí dinh huyết và tam tiêu</a>
+						</section>
+					</aside>
+				</main>
+			</div>
+		</div>
+
+		<nav class="mobile-nav" aria-label="Điều hướng di động">
+			<a href={`${base}/`}>⌂<span>Trang chủ</span></a>
+			<a class="active" href={`${base}${course.basePath}/tom-tat/01-bai-1-dai-cuong-ve-on-benh/`}>▣<span>Học tập</span></a>
+			<a href={`${base}/books/on-benh-dai-cuong/luong-gia/02-dai-cuong/`}>☑<span>Lượng giá</span></a>
+			<a href={canonicalDocsPath}>☰<span>Tài liệu</span></a>
+		</nav>
+
+		<div class="zoom-modal" data-svg-zoom-modal hidden>
+			<button class="zoom-close" type="button" aria-label="Đóng hình phóng to" data-svg-zoom-close>×</button>
+			<div class="zoom-stage" data-svg-zoom-stage></div>
+		</div>
+
+		<script>
+			const tabLinks = Array.from(document.querySelectorAll('[data-tab-target]'));
+			const tabPanels = Array.from(document.querySelectorAll('[data-tab-panel]'));
+
+			function showLearningTab(tabId, shouldUpdateHash = true) {
+				const targetPanel = tabPanels.find((panel) => panel.id === tabId);
+				if (!targetPanel) return;
+
+				for (const link of tabLinks) {
+					const isActive = link.getAttribute('data-tab-target') === tabId;
+					link.classList.toggle('active', isActive);
+					link.setAttribute('aria-selected', isActive ? 'true' : 'false');
+				}
+
+				for (const panel of tabPanels) {
+					const isActive = panel.id === tabId;
+					panel.hidden = !isActive;
+					panel.classList.toggle('active', isActive);
+				}
+
+				if (shouldUpdateHash) {
+					history.replaceState(null, '', `#${tabId}`);
+				}
+			}
+
+			for (const link of tabLinks) {
+				link.addEventListener('click', (event) => {
+					event.preventDefault();
+					showLearningTab(link.getAttribute('data-tab-target') || 'eightyTwenty');
+				});
+			}
+
+			const initialTab = window.location.hash.replace('#', '');
+			showLearningTab(initialTab || 'eightyTwenty', Boolean(initialTab));
+
+			const collapseButtons = Array.from(document.querySelectorAll('[data-collapse-toggle]'));
+			for (const button of collapseButtons) {
+				button.addEventListener('click', () => {
+					const panel = document.getElementById(button.getAttribute('data-collapse-target') || '');
+					if (!panel) return;
+
+					const expanded = button.getAttribute('aria-expanded') === 'true';
+					button.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+					button.textContent = expanded ? '⌄' : '⌃';
+					panel.hidden = expanded;
+				});
+			}
+
+			const zoomModal = document.querySelector('[data-svg-zoom-modal]');
+			const zoomStage = document.querySelector('[data-svg-zoom-stage]');
+			const zoomClose = document.querySelector('[data-svg-zoom-close]');
+
+			function closeSvgZoom() {
+				if (!zoomModal || !zoomStage) return;
+				zoomModal.hidden = true;
+				zoomStage.replaceChildren();
+				document.body.classList.remove('zoom-open');
+			}
+
+			function getZoomSource(target) {
+				const element = target instanceof Element ? target : null;
+				if (!element) return null;
+
+				const svg = element.closest('.markdown-content svg');
+				if (svg && !svg.closest('.sl-anchor-link')) return svg;
+
+				const mermaid = element.closest('.markdown-content .mermaid');
+				if (!mermaid) return null;
+				return mermaid.querySelector('svg') || mermaid;
+			}
+
+			function openSvgZoom(source) {
+				if (!zoomModal || !zoomStage || !source) return;
+				const clone = source.cloneNode(true);
+				zoomStage.replaceChildren(clone);
+				zoomModal.hidden = false;
+				document.body.classList.add('zoom-open');
+			}
+
+			for (const content of document.querySelectorAll('.markdown-content')) {
+				content.addEventListener('click', (event) => {
+					const source = getZoomSource(event.target);
+					if (!source) return;
+					event.preventDefault();
+					openSvgZoom(source);
+				});
+			}
+
+			zoomClose?.addEventListener('click', closeSvgZoom);
+			zoomModal?.addEventListener('click', (event) => {
+				if (event.target === zoomModal) closeSvgZoom();
+			});
+			document.addEventListener('keydown', (event) => {
+				if (event.key === 'Escape') closeSvgZoom();
+			});
+		</script>
+	</body>
+</html>
+
+<style>
+	:root {
+		--ink: #20221f;
+		--muted: #72756e;
+		--line: #e8e3dc;
+		--paper: #fbfaf7;
+		--surface: #ffffff;
+		--wash: #f5f1ea;
+		--green: #157149;
+		--green-soft: #e8f3eb;
+		--gold-soft: #f6eddd;
+		--shadow: 0 18px 45px rgba(45, 39, 28, 0.08);
+		font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+	}
+
+	* { box-sizing: border-box; }
+
+	body {
+		margin: 0;
+		color: var(--ink);
+		background:
+			linear-gradient(90deg, rgba(246, 241, 232, .8), transparent 34rem),
+			var(--paper);
+	}
+
+	a { color: inherit; text-decoration: none; }
+
+	.learn-shell { display: flex; min-height: 100vh; }
+
+	.learn-sidebar {
+		position: sticky;
+		top: 0;
+		display: flex;
+		flex-direction: column;
+		width: 17rem;
+		height: 100vh;
+		padding: 1.25rem .95rem;
+		border-right: 1px solid var(--line);
+		background: rgba(255, 255, 255, .78);
+		backdrop-filter: blur(18px);
+		overflow-y: auto;
+	}
+
+	.brand,
+	.side-link,
+	.chapter-link,
+	.study-card,
+	.topbar,
+	.progress-card,
+	.tabs,
+	.lesson-card,
+	.panel {
+		border: 1px solid var(--line);
+		background: rgba(255, 255, 255, .86);
+	}
+
+	.brand {
+		display: flex;
+		align-items: center;
+		gap: .75rem;
+		border: 0;
+		background: transparent;
+		margin-bottom: 1.25rem;
+	}
+
+	.brand-mark,
+	.mobile-brand {
+		display: grid;
+		place-items: center;
+		width: 2.4rem;
+		height: 2.4rem;
+		border-radius: 999px;
+		color: var(--green);
+		background: var(--green-soft);
+		font-size: 1.5rem;
+		font-weight: 800;
+	}
+
+	.brand strong,
+	.brand small { display: block; }
+	.brand small { color: var(--muted); font-size: .78rem; }
+
+	.side-nav,
+	.course-nav,
+	.chapter { display: grid; gap: .3rem; }
+	.side-nav { margin-bottom: 1.65rem; }
+	.side-link,
+	.chapter-link {
+		display: flex;
+		align-items: center;
+		border-color: transparent;
+		border-radius: .46rem;
+		padding: .48rem .6rem;
+		color: #5f635c;
+		font-size: .82rem;
+		line-height: 1.25;
+	}
+	.side-link {
+		gap: .5rem;
+		background: transparent;
+	}
+	.side-link.active,
+	.chapter-link.active {
+		color: var(--green);
+		background: var(--green-soft);
+		font-weight: 700;
+	}
+
+	.course-head p,
+	.chapter-label,
+	.eyebrow {
+		margin: 0;
+		color: var(--muted);
+		font-size: .72rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: .04em;
+	}
+	.course-head p {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin-bottom: .45rem;
+	}
+	.course-pill {
+		display: grid;
+		grid-template-columns: auto minmax(0, 1fr);
+		align-items: center;
+		gap: .5rem;
+		padding: .52rem .62rem;
+		border-radius: .45rem;
+		color: #24583e;
+		background: var(--green-soft);
+		font-size: .82rem;
+		font-weight: 800;
+	}
+	.course-pill strong {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+	.course-group,
+	.chapter-head {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) auto;
+		align-items: center;
+		gap: .25rem;
+	}
+	.course-group {
+		margin-bottom: 1.05rem;
+	}
+	.collapse-btn {
+		display: grid;
+		place-items: center;
+		width: 1.9rem;
+		height: 1.9rem;
+		border: 0;
+		border-radius: .45rem;
+		background: var(--green-soft);
+		color: #557263;
+		font: inherit;
+		font-weight: 800;
+		cursor: pointer;
+	}
+	.collapse-btn:hover {
+		color: var(--green);
+		background: #dcece2;
+	}
+	.collapse-btn.subtle {
+		width: 1.55rem;
+		height: 1.55rem;
+		background: transparent;
+		color: #858983;
+	}
+	.chapter { margin-bottom: 1rem; }
+	.chapter-label {
+		margin-bottom: .35rem;
+		color: #7a7d77;
+	}
+	.chapter-head {
+		margin-bottom: .2rem;
+	}
+	.lesson-tree {
+		position: relative;
+		display: grid;
+		gap: .22rem;
+		padding-left: 1.05rem;
+	}
+	.lesson-tree::before {
+		content: "";
+		position: absolute;
+		top: .15rem;
+		bottom: .4rem;
+		left: .43rem;
+		width: 1px;
+		background: #e5e0d8;
+	}
+	.chapter-link {
+		position: relative;
+		min-height: 2rem;
+		padding-left: .7rem;
+		background: transparent;
+	}
+	.chapter-link::before {
+		content: "";
+		position: absolute;
+		left: -.73rem;
+		top: 50%;
+		width: .3rem;
+		height: .3rem;
+		border-radius: 999px;
+		background: transparent;
+		transform: translateY(-50%);
+	}
+	.chapter-link.active::before {
+		background: var(--green);
+	}
+
+	.study-card {
+		display: flex;
+		align-items: center;
+		gap: .8rem;
+		margin-top: auto;
+		padding: .8rem;
+		border-radius: .75rem;
+		background: linear-gradient(135deg, var(--green-soft), #fff);
+	}
+	.study-card strong,
+	.study-card span,
+	.progress-card strong,
+	.progress-card span {
+		display: block;
+	}
+	.study-card span,
+	.progress-card span { color: var(--muted); font-size: .78rem; }
+
+	.ring {
+		--value: 60%;
+		display: grid;
+		place-items: center;
+		flex: 0 0 auto;
+		width: 3.25rem;
+		height: 3.25rem;
+		border-radius: 999px;
+		background:
+			radial-gradient(circle at center, white 58%, transparent 60%),
+			conic-gradient(var(--green) var(--value), #e9e4dc 0);
+		font-size: .8rem;
+		font-weight: 800;
+	}
+	.ring.large { width: 4.1rem; height: 4.1rem; }
+
+	.learn-main { flex: 1; min-width: 0; }
+
+	.topbar {
+		position: sticky;
+		top: 0;
+		z-index: 5;
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		min-height: 4.5rem;
+		padding: .9rem 1.5rem;
+		border-width: 0 0 1px;
+		backdrop-filter: blur(16px);
+	}
+	.mobile-brand,
+	.menu-btn { display: none; }
+
+	.search-box {
+		display: flex;
+		align-items: center;
+		gap: .6rem;
+		width: min(30rem, 52vw);
+		margin-left: auto;
+		padding: .65rem .8rem;
+		border: 1px solid var(--line);
+		border-radius: .55rem;
+		background: white;
+		color: var(--muted);
+	}
+	.search-box input {
+		width: 100%;
+		border: 0;
+		outline: 0;
+		font: inherit;
+		background: transparent;
+	}
+	kbd { color: var(--muted); font-size: .75rem; }
+	.top-actions { display: flex; align-items: center; gap: .75rem; }
+	.icon-btn {
+		display: grid;
+		place-items: center;
+		width: 2.4rem;
+		height: 2.4rem;
+		border: 1px solid var(--line);
+		border-radius: .55rem;
+		background: white;
+		color: var(--ink);
+	}
+	.avatar {
+		display: grid;
+		place-items: center;
+		width: 2.35rem;
+		height: 2.35rem;
+		border-radius: 999px;
+		color: white;
+		background: #243829;
+		font-weight: 800;
+	}
+
+	.content-grid {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) 19rem;
+		gap: 1rem;
+		max-width: 78rem;
+		margin: 0 auto;
+		padding: 1.75rem;
+	}
+	.lesson { min-width: 0; }
+
+	.breadcrumb {
+		display: flex;
+		gap: .5rem;
+		margin-bottom: .65rem;
+		color: var(--muted);
+		font-size: .9rem;
+	}
+	.breadcrumb a { color: #51564f; }
+
+	.lesson-hero {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(17rem, 28rem);
+		gap: 1rem;
+		align-items: end;
+		margin-bottom: 1.2rem;
+	}
+	h1 {
+		margin: 0;
+		font-size: clamp(2rem, 4vw, 3rem);
+		line-height: 1.05;
+		letter-spacing: 0;
+	}
+	.lesson-hero p {
+		max-width: 42rem;
+		margin: .75rem 0 0;
+		color: var(--muted);
+	}
+	.meta-row {
+		display: flex;
+		flex-wrap: wrap;
+		gap: .55rem;
+		margin-top: 1rem;
+	}
+	.meta-row span {
+		padding: .45rem .7rem;
+		border-radius: .5rem;
+		background: var(--wash);
+		color: #5d5b55;
+		font-size: .84rem;
+	}
+
+	.progress-card {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		padding: 1rem;
+		border-radius: .8rem;
+		box-shadow: var(--shadow);
+	}
+	.bar {
+		width: 14rem;
+		max-width: 100%;
+		height: .28rem;
+		margin-top: .7rem;
+		border-radius: 999px;
+		background: #ece8e0;
+		overflow: hidden;
+	}
+	.bar i { display: block; height: 100%; border-radius: inherit; background: var(--green); }
+
+	.tabs {
+		display: flex;
+		gap: .3rem;
+		margin-bottom: 1rem;
+		padding: .35rem;
+		border-radius: .9rem;
+		overflow-x: auto;
+	}
+	.tab {
+		flex: 0 0 auto;
+		padding: .75rem 1rem;
+		border-radius: .65rem;
+		color: #4f554d;
+		font-size: .88rem;
+	}
+	.tab.active {
+		color: var(--green);
+		background: var(--green-soft);
+		font-weight: 800;
+	}
+
+	.tab-panels {
+		min-width: 0;
+	}
+
+	.tab-section[hidden] {
+		display: none;
+	}
+
+	.lesson-card {
+		margin-bottom: 1rem;
+		border-radius: .85rem;
+		padding: 1.25rem;
+		box-shadow: var(--shadow);
+	}
+	.tab-section { scroll-margin-top: 5.5rem; }
+	.lesson-card-head {
+		display: flex;
+		justify-content: space-between;
+		gap: 1rem;
+		align-items: start;
+		margin-bottom: 1rem;
+	}
+	.lesson-card-head h2 { margin: .2rem 0 0; font-size: 1.3rem; }
+	.quiet-btn {
+		flex: 0 0 auto;
+		padding: .65rem .85rem;
+		border: 1px solid var(--line);
+		border-radius: .5rem;
+		background: #fff;
+		font-size: .86rem;
+	}
+
+	.markdown-content :global(h2) {
+		margin-top: 2rem;
+		padding-top: 1.1rem;
+		border-top: 1px solid var(--line);
+		font-size: 1.25rem;
+	}
+	.markdown-content :global(h2:first-child) {
+		margin-top: 0;
+		padding-top: 0;
+		border-top: 0;
+	}
+	.markdown-content :global(p),
+	.markdown-content :global(li) {
+		line-height: 1.75;
+	}
+	.markdown-content :global(table) {
+		width: 100%;
+		border-collapse: collapse;
+		font-size: .93rem;
+	}
+	.markdown-content :global(th),
+	.markdown-content :global(td) {
+		padding: .75rem;
+		border-bottom: 1px solid var(--line);
+		text-align: left;
+		vertical-align: top;
+	}
+	.markdown-content :global(.medical-box),
+	.markdown-content :global(.medical-note) {
+		margin: 1rem 0;
+		padding: 1rem;
+		border: 1px solid var(--line);
+		border-radius: .75rem;
+		background: var(--green-soft);
+	}
+	.markdown-content :global(.medical-box__title) {
+		margin: 0 0 .5rem;
+		color: var(--green);
+		font-weight: 800;
+	}
+	.markdown-content :global(.compare-table) { overflow-x: auto; }
+	.markdown-content :global(.mermaid),
+	.markdown-content :global(svg:not(.sl-anchor-icon svg)) {
+		cursor: zoom-in;
+	}
+	.markdown-content :global(.svg-zoom-trigger) {
+		display: block;
+		width: 100%;
+		margin: 1rem 0;
+		padding: .75rem;
+		border: 1px solid var(--line);
+		border-radius: .75rem;
+		background: #fff;
+		cursor: zoom-in;
+		overflow: auto;
+	}
+	.markdown-content :global(.svg-zoom-trigger:hover) {
+		border-color: color-mix(in srgb, var(--green) 34%, var(--line));
+		background: #fbfdfb;
+	}
+	.markdown-content :global(.svg-zoom-trigger svg) {
+		display: block;
+		max-width: 100%;
+		height: auto;
+		margin: 0 auto;
+	}
+	.markdown-content :global(.sl-heading-wrapper) {
+		display: block;
+	}
+	.markdown-content :global(.sl-anchor-link) {
+		color: var(--muted);
+		margin-left: .35rem;
+	}
+	.markdown-content :global(.sr-only) {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
+	}
+	.source-frame {
+		max-height: 42rem;
+		overflow: auto;
+		padding-right: .5rem;
+	}
+	.quiz-frame {
+		display: block;
+		width: 100%;
+		height: min(78vh, 48rem);
+		border: 1px solid var(--line);
+		border-radius: .75rem;
+		background: white;
+	}
+	.case-study {
+		display: grid;
+		gap: 1rem;
+	}
+	.case-study h3 {
+		margin: 0 0 .45rem;
+		font-size: 1rem;
+	}
+	.case-study p,
+	.case-study li {
+		line-height: 1.7;
+	}
+	.answer-card {
+		padding: 1rem;
+		border: 1px solid color-mix(in srgb, var(--green) 18%, var(--line));
+		border-radius: .75rem;
+		background: var(--green-soft);
+	}
+
+	.right-rail {
+		position: sticky;
+		top: 5.5rem;
+		display: grid;
+		align-self: start;
+		gap: .8rem;
+	}
+	.panel {
+		display: grid;
+		gap: .75rem;
+		padding: 1rem;
+		border-radius: .85rem;
+	}
+	.panel h2 { margin: 0; font-size: 1rem; }
+	.panel a { color: #3f5146; font-size: .9rem; }
+	.check-list {
+		display: grid;
+		gap: .55rem;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		color: #545b52;
+		font-size: .9rem;
+	}
+	.check-list li::before {
+		content: "○";
+		margin-right: .5rem;
+		color: #9aa197;
+	}
+	.check-list li.done::before {
+		content: "✓";
+		color: var(--green);
+		font-weight: 800;
+	}
+	.chips {
+		display: flex;
+		flex-wrap: wrap;
+		gap: .5rem;
+	}
+	.chips span {
+		padding: .4rem .55rem;
+		border-radius: .45rem;
+		background: var(--green-soft);
+		color: #1b6747;
+		font-size: .78rem;
+		font-weight: 700;
+	}
+
+	.mobile-nav { display: none; }
+
+	.zoom-open {
+		overflow: hidden;
+	}
+	.zoom-modal {
+		position: fixed;
+		inset: 0;
+		z-index: 50;
+		display: grid;
+		place-items: center;
+		padding: 2rem;
+		background: rgba(22, 24, 21, .68);
+		backdrop-filter: blur(10px);
+	}
+	.zoom-modal[hidden] {
+		display: none;
+	}
+	.zoom-stage {
+		display: grid;
+		place-items: center;
+		width: min(92vw, 72rem);
+		height: min(86vh, 48rem);
+		padding: 1.25rem;
+		border-radius: .9rem;
+		background: white;
+		box-shadow: 0 30px 80px rgba(0, 0, 0, .28);
+		overflow: auto;
+	}
+	.zoom-stage svg {
+		width: max-content;
+		min-width: min(80vw, 54rem);
+		max-width: none;
+		height: auto;
+	}
+	.zoom-close {
+		position: fixed;
+		top: 1rem;
+		right: 1rem;
+		display: grid;
+		place-items: center;
+		width: 2.75rem;
+		height: 2.75rem;
+		border: 1px solid rgba(255,255,255,.3);
+		border-radius: 999px;
+		background: rgba(255,255,255,.92);
+		color: #20221f;
+		font-size: 1.55rem;
+		line-height: 1;
+		cursor: pointer;
+	}
+
+	@media (max-width: 70rem) {
+		.learn-sidebar { display: none; }
+		.mobile-brand,
+		.menu-btn { display: grid; }
+		.search-box { margin-left: 0; width: 100%; }
+		.content-grid { grid-template-columns: 1fr; padding: 1rem 1rem 5.5rem; }
+		.right-rail { position: static; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); }
+		.lesson-hero { grid-template-columns: 1fr; }
+		.topbar { padding: .75rem 1rem; gap: .65rem; }
+		.top-actions { gap: .45rem; }
+		.mobile-nav {
+			position: fixed;
+			right: 1rem;
+			bottom: 1rem;
+			left: 1rem;
+			z-index: 10;
+			display: grid;
+			grid-template-columns: repeat(4, 1fr);
+			padding: .45rem;
+			border: 1px solid var(--line);
+			border-radius: 1rem;
+			background: rgba(255, 255, 255, .94);
+			box-shadow: var(--shadow);
+			backdrop-filter: blur(14px);
+		}
+		.mobile-nav a {
+			display: grid;
+			place-items: center;
+			gap: .15rem;
+			padding: .45rem .25rem;
+			border-radius: .75rem;
+			color: #555b53;
+			font-size: 1rem;
+		}
+		.mobile-nav a span { font-size: .68rem; }
+		.mobile-nav a.active { color: var(--green); background: var(--green-soft); font-weight: 800; }
+	}
+
+	@media (max-width: 42rem) {
+		.top-actions .icon-btn { display: none; }
+		.search-box kbd { display: none; }
+		.lesson-card,
+		.panel,
+		.progress-card { border-radius: .7rem; }
+		.lesson-card-head { flex-direction: column; }
+		.quiet-btn { width: 100%; text-align: center; }
+	}
+</style>

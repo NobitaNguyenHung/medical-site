@@ -1,0 +1,56 @@
+---
+import { getCollection, render } from 'astro:content';
+import LearningLayout from '~/layouts/LearningLayout.astro';
+import { getLearningWorkflowBySummary, learningWorkflows } from '~/data/learning-courses';
+
+export async function getStaticPaths() {
+	const entries = await getCollection('docs');
+	const paths = learningWorkflows
+		.map((workflow) => {
+			const entry = entries.find((item) => item.id === workflow.summary);
+
+			if (!entry) return undefined;
+
+			return {
+				params: { slug: entry.id },
+				props: { entry, workflow },
+			};
+		})
+		.filter(Boolean);
+
+	return paths;
+}
+
+const { entry, workflow: workflowProp } = Astro.props;
+const entries = await getCollection('docs');
+const findEntry = (id: string) => entries.find((item) => item.id === id);
+const workflow = workflowProp ?? getLearningWorkflowBySummary(entry.id);
+
+if (!workflow) {
+	throw new Error(`Missing learning workflow for ${entry.id}`);
+}
+
+const summaryEntry = entry;
+const deepEntry = findEntry(workflow.deepLecture);
+const sourceEntry = findEntry(workflow.source);
+const reasoningEntry = findEntry(workflow.reasoning);
+
+const { Content: SummaryContent } = await render(summaryEntry);
+const { Content: DeepContent } = deepEntry ? await render(deepEntry) : { Content: undefined };
+const { Content: SourceContent } = sourceEntry ? await render(sourceEntry) : { Content: undefined };
+const { Content: ReasoningContent } = reasoningEntry ? await render(reasoningEntry) : { Content: undefined };
+---
+
+<LearningLayout
+	title={entry.data.title}
+	description={entry.data.description}
+	entryId={entry.id}
+	estimatedTime={entry.data.estimatedTime}
+	difficulty={entry.data.difficulty}
+	workflow={workflow}
+>
+	<SummaryContent />
+	{DeepContent && <DeepContent slot="deep" />}
+	{SourceContent && <SourceContent slot="source" />}
+	{ReasoningContent && <ReasoningContent slot="reasoning" />}
+</LearningLayout>
